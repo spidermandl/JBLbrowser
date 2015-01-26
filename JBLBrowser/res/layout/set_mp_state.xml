@@ -7,7 +7,7 @@
   android:background="@drawable/set_bg"
   android:gravity="center_horizontal"
 >
-  <com.zixun.piratesfantasy.view.TitleView
+  <com.jbl.browser.view.TitleView
       android:id="@+id/title_view"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"

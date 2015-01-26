@@ -15,12 +15,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import com.zixun.piratesfantasy.model.ErrorInfo;
-import com.zixun.piratesfantasy.model.MusicModel;
-import com.zixun.piratesfantasy.model.ResponseModel;
-import com.zixun.piratesfantasy.model.UserInfo;
-import com.zixun.piratesfantasy.utils.StringUtils;
-import com.zixun.piratesfantasy.utils.UrlUtils;
+import com.jbl.browser.model.ErrorInfo;
+import com.jbl.browser.model.MusicModel;
+import com.jbl.browser.model.ResponseModel;
+import com.jbl.browser.model.UserInfo;
+import com.jbl.browser.utils.StringUtils;
+import com.jbl.browser.utils.UrlUtils;
 
 import android.app.Activity;
 import android.content.Context;

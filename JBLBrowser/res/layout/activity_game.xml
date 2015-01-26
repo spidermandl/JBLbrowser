@@ -17,7 +17,7 @@
   android:layout_height="match_parent"
   android:background="#000000" 
 >
-  <com.zixun.piratesfantasy.view.TitleView
+  <com.jbl.browser.view.TitleView
     android:id="@+id/title_view"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"

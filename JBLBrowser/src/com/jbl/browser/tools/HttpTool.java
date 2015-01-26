@@ -10,9 +10,9 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import com.zixun.piratesfantasy.model.ErrorInfo;
-import com.zixun.piratesfantasy.utils.StringUtils;
-import com.zixun.piratesfantasy.utils.UrlUtils;
+import com.jbl.browser.model.ErrorInfo;
+import com.jbl.browser.utils.StringUtils;
+import com.jbl.browser.utils.UrlUtils;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;

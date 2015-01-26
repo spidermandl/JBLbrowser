@@ -1,6 +1,6 @@
 package com.jbl.browser.tools;
 
-import com.zixun.piratesfantasy.model.ErrorInfo;
+import com.jbl.browser.model.ErrorInfo;
 
 import android.os.Bundle;
 
