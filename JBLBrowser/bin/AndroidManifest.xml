@@ -1,0 +1,219 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.mobage.g13000309"
+    android:versionCode="6"
+    android:versionName="1.4.3" >
+
+    <uses-sdk android:minSdkVersion="8" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_SMS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_LOGS" >
+    </uses-permission>
+    <uses-permission android:name="android.hardware.sensor.accelerometer"/>
+    <!-- common -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- sms pay -->
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+	<supports-screens
+	android:anyDensity="true"
+	android:largeScreens="true"
+	android:normalScreens="true"
+	android:smallScreens="true" />
+
+    
+    <application
+        android:icon="@drawable/app_icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5105def85270153afe000038" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="s_android" />
+
+        <activity
+            android:name=".GameActivity"
+            android:label="@string/app_name"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="mobage-cn-13000309" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="cn.mobage.g13000309.RUN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".SetMpStateAct"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ShareActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Transparent" >
+        </activity>
+        <activity
+            android:name="com.iapppay.mpay.ifmgr.PayManagerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|navigation"
+            android:launchMode="singleTop"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <service
+            android:name="com.iapppay.mpay.downmgr.DownLoadService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
+        <!-- 银联 -->
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.SplashActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.CardMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.PayMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.PayItActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.PayResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.AccountMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.ChooseBankActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.GetpassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.ResetpassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.EditpassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.EditinfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.AddCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.AddCardFromAuthActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.UserProtocalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.CheckCardBalanceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.CardInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.CardBalanceResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.upomp.bypay.activity.CardBankResultActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 一键支付 -->
+
+        <activity
+            android:name="com.iapppay.oneclickpay.FastPayActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.iapppay.oneclickpay.InputCardActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.iapppay.oneclickpay.LLUnbindCardActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.iapppay.oneclickpay.YPUnbindCardActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.iapppay.oneclickpay.SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.iapppay.oneclickpay.AgreementActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.fastpay.sdk.activity.FastPay"
+            android:configChanges="keyboardHidden|orientation|screenSize|navigation"
+            android:launchMode="singleTop"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+    </application>
+
+</manifest>
