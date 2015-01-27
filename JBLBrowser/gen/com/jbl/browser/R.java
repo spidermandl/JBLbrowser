@@ -26,284 +26,5187 @@ public final class R {
         public static final int slip_right_in=0x7f04000e;
         public static final int slip_right_out=0x7f04000f;
     }
+    public static final class array {
+        public static final int card_type=0x7f070001;
+        public static final int iapppay_month=0x7f070002;
+        public static final int identity_type=0x7f070000;
+    }
     public static final class attr {
+        /**  Custom divider drawable to use for elements in the action bar. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionBarDivider=0x7f01000e;
+        /**  Custom item state list drawable background for action bar items. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionBarItemBackground=0x7f01000f;
+        /**  Size of the Action Bar, including the contextual
+             bar used to present Action Modes. 
+         <p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+<p>May be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>wrap_content</code></td><td>0</td><td></td></tr>
+</table>
+         */
+        public static final int actionBarSize=0x7f01000d;
+        /**  Reference to a style for the split Action Bar. This style
+             controls the split component that holds the menu/action
+             buttons. actionBarStyle is still used for the primary
+             bar. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionBarSplitStyle=0x7f01000b;
+        /**  Reference to a style for the Action Bar 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionBarStyle=0x7f01000a;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionBarTabBarStyle=0x7f010007;
+        /**  Default style for tabs within an action bar 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionBarTabStyle=0x7f010006;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionBarTabTextStyle=0x7f010008;
+        /**  Reference to a theme that should be used to inflate widgets
+             and layouts destined for the action bar. Most of the time
+             this will be a reference to the current theme, but when
+             the action bar has a significantly different contrast
+             profile than the rest of the activity the difference
+             can become important. If this is set to @null the current
+             theme will be used.
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionBarWidgetTheme=0x7f01000c;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionButtonStyle=0x7f01003a;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionDropDownStyle=0x7f010039;
+        /**  TextAppearance style that will be applied to text that
+             appears within action menu items. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionMenuTextAppearance=0x7f010010;
+        /**  Color for text that appears within action menu items. 
+         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int actionMenuTextColor=0x7f010011;
+        /**  Background drawable to use for action mode UI 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionModeBackground=0x7f010014;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionModeCloseButtonStyle=0x7f010013;
+        /**  Drawable to use for the close action mode button 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionModeCloseDrawable=0x7f010016;
+        /**  PopupWindow style to use for action modes when showing as a window overlay. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionModePopupWindowStyle=0x7f010018;
+        /**  Drawable to use for the Share action button in WebView selection action modes 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionModeShareDrawable=0x7f010017;
+        /**  Background drawable to use for action mode UI in the lower split bar 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionModeSplitBackground=0x7f010015;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionModeStyle=0x7f010012;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionOverflowButtonStyle=0x7f010009;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionSpinnerItemStyle=0x7f01003f;
+        /**  Drawable used as a background for activated items. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int activatedBackgroundIndicator=0x7f010047;
+        /**  Default ActivityChooserView style. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int activityChooserViewStyle=0x7f010046;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int background=0x7f010002;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int backgroundSplit=0x7f010003;
+        /**  Specifies a background drawable for a second stacked row of the action bar. 
+         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int backgroundStacked=0x7f01004f;
+        /**  Small Button style. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int buttonStyleSmall=0x7f010019;
+        /**  Specifies a layout for custom navigation. Overrides navigationMode. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int customNavigationLayout=0x7f010050;
+        /**  Options affecting how the action bar is displayed. 
+         <p>Must be one or more (separated by '|') of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>useLogo</code></td><td>0x1</td><td></td></tr>
+<tr><td><code>showHome</code></td><td>0x2</td><td></td></tr>
+<tr><td><code>homeAsUp</code></td><td>0x4</td><td></td></tr>
+<tr><td><code>showTitle</code></td><td>0x8</td><td></td></tr>
+<tr><td><code>showCustom</code></td><td>0x10</td><td></td></tr>
+<tr><td><code>disableHome</code></td><td>0x20</td><td></td></tr>
+</table>
+         */
+        public static final int displayOptions=0x7f01004a;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int divider=0x7f010005;
+        /**  Drawable to use for generic vertical dividers. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int dividerVertical=0x7f010038;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int dropDownHintAppearance=0x7f010048;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int dropDownListViewStyle=0x7f01003c;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int dropdownListPreferredItemHeight=0x7f01003e;
+        /**  The drawable to show in the button for expanding the activities overflow popup.
+             <strong>Note:</strong> Clients would like to set this drawable
+             as a clue about the action the chosen activity will perform. For
+             example, if share activity is to be chosen the drawable should
+             give a clue that sharing is to be performed.
+         
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int expandActivityOverflowButtonDrawable=0x7f01005f;
+        /**  Default background for the menu header. 
+         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int headerBackground=0x7f010059;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int height=0x7f010004;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int homeAsUpIndicator=0x7f01003b;
+        /**  Specifies a layout to use for the "home" section of the action bar. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int homeLayout=0x7f010051;
+        /**  Default horizontal divider between rows of menu items. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int horizontalDivider=0x7f010057;
+        /**  Specifies the drawable used for the application icon. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int icon=0x7f01004d;
+        /**  The default state of the SearchView. If true, it will be iconified when not in
+             use and expanded when clicked. 
+         <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int iconifiedByDefault=0x7f010060;
+        /**  Specifies a style resource to use for an indeterminate progress spinner. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int indeterminateProgressStyle=0x7f010053;
+        /**  The maximal number of items initially shown in the activity list. 
+         <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int initialActivityCount=0x7f01005e;
+        /**  Default background for each menu item. 
+         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int itemBackground=0x7f01005a;
+        /**  Default disabled icon alpha for each menu item that shows an icon. 
+         <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int itemIconDisabledAlpha=0x7f01005c;
+        /**  Specifies padding that should be applied to the left and right sides of
+             system-provided items in the bar. 
+         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int itemPadding=0x7f010055;
+        /**  Default appearance of menu item text. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int itemTextAppearance=0x7f010056;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int listPopupWindowStyle=0x7f010045;
+        /**  A smaller, sleeker list item height. 
+         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int listPreferredItemHeightSmall=0x7f010032;
+        /**  The preferred padding along the left edge of list items. 
+         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int listPreferredItemPaddingLeft=0x7f010033;
+        /**  The preferred padding along the right edge of list items. 
+         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int listPreferredItemPaddingRight=0x7f010034;
+        /**  Specifies the drawable used for the application logo. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int logo=0x7f01004e;
+        /**  The type of navigation to use. 
+         <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>normal</code></td><td>0</td><td> Normal static title text </td></tr>
+<tr><td><code>listMode</code></td><td>1</td><td> The action bar will use a selection list for navigation. </td></tr>
+<tr><td><code>tabMode</code></td><td>2</td><td> The action bar will use a series of horizontal tabs for navigation. </td></tr>
+</table>
+         */
+        public static final int navigationMode=0x7f010049;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int popupMenuStyle=0x7f01003d;
+        /**  Whether space should be reserved in layout when an icon is missing. 
+         <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int preserveIconSpacing=0x7f01005d;
+        /**  Specifies the horizontal padding on either end for an embedded progress bar. 
+         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int progressBarPadding=0x7f010054;
+        /**  Specifies a style resource to use for an embedded progress bar. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int progressBarStyle=0x7f010052;
+        /**  An optional query hint string to be displayed in the empty query field. 
+         <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int queryHint=0x7f010061;
+        /**  SearchView AutoCompleteTextView style 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int searchAutoCompleteTextView=0x7f010024;
+        /**  SearchView dropdown background 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int searchDropdownBackground=0x7f010025;
+        /**  The list item height for search results. @hide 
+         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int searchResultListItemHeight=0x7f01002f;
+        /**  SearchView close button icon 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int searchViewCloseIcon=0x7f010026;
+        /**  SearchView query refinement icon 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int searchViewEditQuery=0x7f01002a;
+        /**  SearchView query refinement icon background 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int searchViewEditQueryBackground=0x7f01002b;
+        /**  SearchView Go button icon 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int searchViewGoIcon=0x7f010027;
+        /**  SearchView Search icon 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int searchViewSearchIcon=0x7f010028;
+        /**  SearchView text field background for the left section 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int searchViewTextField=0x7f01002c;
+        /**  SearchView text field background for the right section 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int searchViewTextFieldRight=0x7f01002d;
+        /**  SearchView Voice button icon 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int searchViewVoiceIcon=0x7f010029;
+        /**  Background drawable for standalone items that need focus/pressed states. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int selectableItemBackground=0x7f01001a;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int spinnerDropDownItemStyle=0x7f010023;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int spinnerItemStyle=0x7f010022;
+        /**  Specifies subtitle text used for navigationMode="normal" 
+         <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int subtitle=0x7f01004c;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int subtitleTextStyle=0x7f010001;
+        /**  Text color, typeface, size, and style for the text inside of a popup menu. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int textAppearanceLargePopupMenu=0x7f01001c;
+        /**  The preferred TextAppearance for the primary text of small list items. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int textAppearanceListItemSmall=0x7f010035;
+        /**  Text color, typeface, size, and style for system search result subtitle. Defaults to primary inverse text color. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int textAppearanceSearchResultSubtitle=0x7f010031;
+        /**  Text color, typeface, size, and style for system search result title. Defaults to primary inverse text color. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int textAppearanceSearchResultTitle=0x7f010030;
+        /**  Text color, typeface, size, and style for "small" text. Defaults to secondary text color. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int textAppearanceSmall=0x7f01001e;
+        /**  Text color, typeface, size, and style for small text inside of a popup menu. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int textAppearanceSmallPopupMenu=0x7f01001d;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int textColorPrimary=0x7f01001f;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int textColorPrimaryDisableOnly=0x7f010020;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int textColorPrimaryInverse=0x7f010021;
+        /**  Text color for urls in search suggestions, used by things like global search and the browser. @hide 
+         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int textColorSearchUrl=0x7f01002e;
+        /**  Specifies title text used for navigationMode="normal" 
+         <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int title=0x7f01004b;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int titleTextStyle=0x7f010000;
+        /**  Default vertical divider between menu items. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int verticalDivider=0x7f010058;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int windowActionBar=0x7f010041;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int windowActionBarOverlay=0x7f010042;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int windowActionModeOverlay=0x7f010043;
+        /**  Default animations for the menu. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int windowAnimationStyle=0x7f01005b;
+        /**  This Drawable is overlaid over the foreground of the Window's content area, usually
+             to place a shadow below the title.  
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int windowContentOverlay=0x7f01001b;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int windowMinWidthMajor=0x7f010036;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int windowMinWidthMinor=0x7f010037;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int windowNoTitle=0x7f010040;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int windowSplitActionBar=0x7f010044;
+    }
+    public static final class bool {
+        public static final int abs__action_bar_embed_tabs=0x7f0d0000;
+        public static final int abs__action_bar_expanded_action_views_exclusive=0x7f0d0002;
+        /**  Whether action menu items should be displayed in ALLCAPS or not.
+         Defaults to true. If this is not appropriate for specific locales
+         it should be disabled in that locale's resources. 
+         */
+        public static final int abs__config_actionMenuItemAllCaps=0x7f0d0004;
+        /**  Whether action menu items should obey the "withText" showAsAction
+         flag. This may be set to false for situations where space is
+         extremely limited. 
+ Whether action menu items should obey the "withText" showAsAction
+         flag. This may be set to false for situations where space is
+         extremely limited. 
+         */
+        public static final int abs__config_allowActionMenuItemTextWithIcon=0x7f0d0005;
+        /**  Sets whether menu shortcuts should be displayed on panel menus when
+         a keyboard is present. 
+         */
+        public static final int abs__config_showMenuShortcutsWhenKeyboardPresent=0x7f0d0003;
+        public static final int abs__split_action_bar_is_narrow=0x7f0d0001;
     }
     public static final class color {
-        public static final int black=0x7f070003;
-        public static final int blue=0x7f070004;
-        public static final int darkred=0x7f070008;
-        public static final int gray=0x7f070001;
-        public static final int hyaline=0x7f070002;
-        public static final int maroon=0x7f070007;
-        public static final int pink=0x7f070005;
-        public static final int tan=0x7f070006;
-        public static final int transparent_background=0x7f070009;
-        public static final int white=0x7f070000;
-        public static final int yellow=0x7f07000a;
+        public static final int abs__background_holo_dark=0x7f080034;
+        public static final int abs__background_holo_light=0x7f080035;
+        public static final int abs__bright_foreground_disabled_holo_dark=0x7f080038;
+        public static final int abs__bright_foreground_disabled_holo_light=0x7f080039;
+        public static final int abs__bright_foreground_holo_dark=0x7f080036;
+        public static final int abs__bright_foreground_holo_light=0x7f080037;
+        public static final int abs__primary_text_disable_only_holo_dark=0x7f08004c;
+        public static final int abs__primary_text_disable_only_holo_light=0x7f08004d;
+        public static final int abs__primary_text_holo_dark=0x7f08004e;
+        public static final int abs__primary_text_holo_light=0x7f08004f;
+        public static final int background_normal=0x7f080000;
+        public static final int black=0x7f080001;
+        public static final int black_transparent=0x7f080002;
+        public static final int blue=0x7f08000e;
+        public static final int capture_text_cover_bg=0x7f080044;
+        public static final int contents_text=0x7f08003a;
+        public static final int cyan=0x7f080010;
+        public static final int darkblue=0x7f08000f;
+        public static final int darkcyan=0x7f080011;
+        public static final int darkgreen=0x7f080013;
+        public static final int darkorange=0x7f08000b;
+        public static final int darkorange_alipay=0x7f08000d;
+        public static final int darkpurple=0x7f080017;
+        public static final int darkred=0x7f080015;
+        public static final int encode_view=0x7f08003b;
+        public static final int gray=0x7f080006;
+        public static final int green=0x7f080012;
+        public static final int hyaline=0x7f080046;
+        public static final int iapppay_bg_card_info=0x7f080028;
+        public static final int iapppay_bg_content=0x7f080027;
+        public static final int iapppay_bg_edit_border=0x7f080029;
+        public static final int iapppay_bg_error_red=0x7f08001d;
+        public static final int iapppay_bg_text_common=0x7f08002a;
+        public static final int iapppay_bg_text_important=0x7f08002d;
+        public static final int iapppay_bg_text_protel=0x7f08002b;
+        public static final int iapppay_bg_text_toast=0x7f08002c;
+        /**  框架 
+         */
+        public static final int iapppay_bg_title=0x7f080025;
+        public static final int iapppay_bg_title_line=0x7f080026;
+        public static final int iapppay_black=0x7f080020;
+        public static final int iapppay_black_transparent=0x7f080019;
+        public static final int iapppay_darkorange=0x7f08001c;
+        public static final int iapppay_gray=0x7f080021;
+        /**  键盘 
+         */
+        public static final int iapppay_kb_bg=0x7f08002e;
+        public static final int iapppay_kb_comm_bt=0x7f080032;
+        public static final int iapppay_kb_key=0x7f080033;
+        public static final int iapppay_kb_sure_bt=0x7f080031;
+        public static final int iapppay_kb_text=0x7f080030;
+        public static final int iapppay_kb_title=0x7f08002f;
+        public static final int iapppay_light_gray=0x7f08001b;
+        public static final int iapppay_line_gray=0x7f08001e;
+        public static final int iapppay_red=0x7f080022;
+        public static final int iapppay_translucent_background=0x7f080024;
+        public static final int iapppay_transparent=0x7f080023;
+        public static final int iapppay_white=0x7f08001f;
+        public static final int iapppay_white_half_trans=0x7f08001a;
+        public static final int light_gray=0x7f080007;
+        public static final int line_gray=0x7f080018;
+        public static final int maroon=0x7f080049;
+        public static final int orange=0x7f08000a;
+        public static final int orange_alipay=0x7f08000c;
+        public static final int pink=0x7f080047;
+        public static final int possible_result_points=0x7f08003c;
+        public static final int purple=0x7f080016;
+        public static final int red=0x7f080014;
+        /**  Android standard ICS color 
+         */
+        public static final int result_minor_text=0x7f08003d;
+        public static final int result_points=0x7f08003e;
+        /**  Android standard ICS color 
+         */
+        public static final int result_text=0x7f08003f;
+        public static final int result_view=0x7f080040;
+        public static final int seek_bar_text=0x7f080045;
+        public static final int status_text=0x7f080041;
+        public static final int tan=0x7f080048;
+        public static final int translucent_background=0x7f080009;
+        public static final int transparent=0x7f080008;
+        public static final int transparent_background=0x7f08004a;
+        public static final int viewfinder_laser=0x7f080042;
+        /**  Android standard ICS color 
+         */
+        public static final int viewfinder_mask=0x7f080043;
+        public static final int white=0x7f080003;
+        public static final int white_half_trans=0x7f080004;
+        public static final int white_half_trans77=0x7f080005;
+        public static final int yellow=0x7f08004b;
     }
     public static final class dimen {
-        public static final int padding_large=0x7f080002;
-        public static final int padding_medium=0x7f080001;
-        public static final int padding_small=0x7f080000;
+        /**  Default height of an action bar. 
+ Default height of an action bar. 
+ Default height of an action bar. 
+ Default height of an action bar. 
+ Default height of an action bar. 
+ Default height of an action bar. 
+ Default height of an action bar. 
+ Default height of an action bar. 
+         */
+        public static final int abs__action_bar_default_height=0x7f090014;
+        /**  Vertical padding around action bar icons. 
+ Vertical padding around action bar icons. 
+ Vertical padding around action bar icons. 
+ Vertical padding around action bar icons. 
+ Vertical padding around action bar icons. 
+ Vertical padding around action bar icons. 
+ Vertical padding around action bar icons. 
+ Vertical padding around action bar icons. 
+         */
+        public static final int abs__action_bar_icon_vertical_padding=0x7f090015;
+        /**  Bottom margin for action bar subtitles 
+ Bottom margin for action bar subtitles 
+ Bottom margin for action bar subtitles 
+ Bottom margin for action bar subtitles 
+ Bottom margin for action bar subtitles 
+ Bottom margin for action bar subtitles 
+ Bottom margin for action bar subtitles 
+ Bottom margin for action bar subtitles 
+         */
+        public static final int abs__action_bar_subtitle_bottom_margin=0x7f090019;
+        /**  Text size for action bar subtitles 
+ Text size for action bar subtitles 
+ Text size for action bar subtitles 
+ Text size for action bar subtitles 
+ Text size for action bar subtitles 
+ Text size for action bar subtitles 
+ Text size for action bar subtitles 
+ Text size for action bar subtitles 
+         */
+        public static final int abs__action_bar_subtitle_text_size=0x7f090017;
+        /**  Top margin for action bar subtitles 
+ Top margin for action bar subtitles 
+ Top margin for action bar subtitles 
+ Top margin for action bar subtitles 
+ Top margin for action bar subtitles 
+ Top margin for action bar subtitles 
+ Top margin for action bar subtitles 
+ Top margin for action bar subtitles 
+         */
+        public static final int abs__action_bar_subtitle_top_margin=0x7f090018;
+        /**  Text size for action bar titles 
+ Text size for action bar titles 
+ Text size for action bar titles 
+ Text size for action bar titles 
+ Text size for action bar titles 
+ Text size for action bar titles 
+ Text size for action bar titles 
+ Text size for action bar titles 
+         */
+        public static final int abs__action_bar_title_text_size=0x7f090016;
+        /**  Minimum width for an action button in the menu area of an action bar 
+ Minimum width for an action button in the menu area of an action bar 
+ Minimum width for an action button in the menu area of an action bar 
+ Minimum width for an action button in the menu area of an action bar 
+         */
+        public static final int abs__action_button_min_width=0x7f09001a;
+        /**  The maximum width we would prefer dialogs to be.  0 if there is no
+         maximum (let them grow as large as the screen).  Actual values are
+         specified for -large and -xlarge configurations. 
+         */
+        public static final int abs__config_prefDialogWidth=0x7f090013;
+        /**  The platform's desired minimum size for a dialog's width when it
+         is along the major axis (that is the screen is landscape).  This may
+         be either a fraction or a dimension. 
+         */
+        public static final int abs__dialog_min_width_major=0x7f090020;
+        /**  The platform's desired minimum size for a dialog's width when it
+         is along the minor axis (that is the screen is portrait).  This may
+         be either a fraction or a dimension. 
+         */
+        public static final int abs__dialog_min_width_minor=0x7f090021;
+        /**  Width of the icon in a dropdown list 
+         */
+        public static final int abs__dropdownitem_icon_width=0x7f09001d;
+        /**  Text padding for dropdown items 
+         */
+        public static final int abs__dropdownitem_text_padding_left=0x7f09001b;
+        /**  Text padding for dropdown items 
+         */
+        public static final int abs__dropdownitem_text_padding_right=0x7f09001c;
+        /**  Preferred width of the search view. 
+         */
+        public static final int abs__search_view_preferred_width=0x7f09001f;
+        /**  Minimum width of the search view text entry area. 
+         */
+        public static final int abs__search_view_text_min_width=0x7f09001e;
+        public static final int iapppay_line_margin_10=0x7f090007;
+        public static final int iapppay_padding_large=0x7f090011;
+        public static final int iapppay_padding_small=0x7f090010;
+        public static final int iapppay_protel_actionbar_heigth=0x7f09000b;
+        /** 框架定义
+         */
+        public static final int iapppay_title_heigth=0x7f090008;
+        public static final int iapppay_title_img_heigth=0x7f090009;
+        public static final int iapppay_title_line_heigth=0x7f09000d;
+        public static final int iapppay_title_logo_heigth=0x7f09000a;
+        public static final int iapppay_title_logo_width=0x7f09000c;
+        public static final int line_height=0x7f090012;
+        public static final int line_margin_10=0x7f090005;
+        public static final int line_margin_12=0x7f090004;
+        public static final int line_margin_15=0x7f090006;
+        public static final int line_margin_20=0x7f090003;
+        public static final int padding_large=0x7f090024;
+        public static final int padding_medium=0x7f090023;
+        public static final int padding_small=0x7f090022;
+        public static final int text_size_15=0x7f090002;
+        public static final int text_size_20=0x7f090001;
+        public static final int text_size_25=0x7f090000;
+        public static final int text_size_common=0x7f09000e;
+        public static final int text_size_important=0x7f09000f;
     }
     public static final class drawable {
-        public static final int acount=0x7f020000;
-        public static final int app_icon=0x7f020001;
-        public static final int app_icon2=0x7f020002;
-        public static final int back=0x7f020003;
-        public static final int back_down=0x7f020004;
-        public static final int back_up=0x7f020005;
-        public static final int bottom_bg=0x7f020006;
-        public static final int btn_bg=0x7f020007;
-        public static final int btn_normal3=0x7f020008;
-        public static final int btn_pressed3=0x7f020009;
-        public static final int btn_state3=0x7f02000a;
-        public static final int checkbox_checked=0x7f02000b;
-        public static final int checkbox_selector=0x7f02000c;
-        public static final int checkbox_uncheck=0x7f02000d;
-        public static final int close=0x7f02000e;
-        public static final int icon=0x7f02000f;
-        public static final int later_down=0x7f020010;
-        public static final int later_up=0x7f020011;
-        public static final int loading_four=0x7f020012;
-        public static final int loading_one=0x7f020013;
-        public static final int loading_three=0x7f020014;
-        public static final int loading_two=0x7f020015;
-        public static final int logintittle=0x7f020016;
-        public static final int new_notice=0x7f020017;
-        public static final int no_propmt=0x7f020018;
-        public static final int no_propmt_down=0x7f020019;
-        public static final int no_propmt_up=0x7f02001a;
-        public static final int notification=0x7f02001b;
-        public static final int refresh=0x7f02001c;
-        public static final int refresh_down=0x7f02001d;
-        public static final int refresh_up=0x7f02001e;
-        public static final int resume_ad_close=0x7f02001f;
-        public static final int retry=0x7f020020;
-        public static final int retry_bg=0x7f020021;
-        public static final int retry_down=0x7f020022;
-        public static final int retry_up=0x7f020023;
-        public static final int rsume_ads=0x7f020024;
-        public static final int set_bg=0x7f020025;
-        public static final int start_bg=0x7f020026;
-        public static final int tab_call=0x7f020027;
-        public static final int tab_call_down=0x7f020028;
-        public static final int tab_call_up=0x7f020029;
-        public static final int tab_fight=0x7f02002a;
-        public static final int tab_fight_down=0x7f02002b;
-        public static final int tab_fight_up=0x7f02002c;
-        public static final int tab_menu=0x7f02002d;
-        public static final int tab_menu_down=0x7f02002e;
-        public static final int tab_menu_up=0x7f02002f;
-        public static final int tab_page=0x7f020030;
-        public static final int tab_page_down=0x7f020031;
-        public static final int tab_page_up=0x7f020032;
-        public static final int tab_story=0x7f020033;
-        public static final int tab_story_down=0x7f020034;
-        public static final int tab_story_up=0x7f020035;
-        public static final int tab_top=0x7f020036;
-        public static final int tab_top_down=0x7f020037;
-        public static final int tab_top_up=0x7f020038;
-        public static final int title_bg=0x7f020039;
-        public static final int title_close=0x7f02003a;
-        public static final int title_close_pressed=0x7f02003b;
-        public static final int title_logo=0x7f02003c;
-        public static final int top=0x7f02003d;
-        public static final int top_bg=0x7f02003e;
-        public static final int top_down=0x7f02003f;
-        public static final int top_up=0x7f020040;
-        public static final int topbar_backgame_normal=0x7f020041;
-        public static final int topbar_backgame_pressed=0x7f020042;
-        public static final int translucent_background=0x7f020055;
-        public static final int voice=0x7f020043;
-        public static final int voice_down=0x7f020044;
-        public static final int voice_up=0x7f020045;
-        public static final int weibosdk_bg_btn=0x7f020046;
-        public static final int weibosdk_bg_content=0x7f020047;
-        public static final int weibosdk_bg_delwords=0x7f020048;
-        public static final int weibosdk_bg_delwords_nor=0x7f020049;
-        public static final int weibosdk_bg_delwords_sel=0x7f02004a;
-        public static final int weibosdk_bg_title=0x7f02004b;
-        public static final int weibosdk_close_normal=0x7f02004c;
-        public static final int weibosdk_close_press=0x7f02004d;
-        public static final int weibosdk_close_selector=0x7f02004e;
-        public static final int weibosdk_del_pic=0x7f02004f;
-        public static final int weibosdk_dialog_bg=0x7f020050;
-        public static final int weibosdk_icon_delwords=0x7f020051;
-        public static final int weibosdk_image_background=0x7f020052;
-        public static final int weibosdk_title_logo=0x7f020053;
-        public static final int welcome_bg=0x7f020054;
+        public static final int abs__ab_bottom_solid_dark_holo=0x7f020000;
+        public static final int abs__ab_bottom_solid_inverse_holo=0x7f020001;
+        public static final int abs__ab_bottom_solid_light_holo=0x7f020002;
+        public static final int abs__ab_bottom_transparent_dark_holo=0x7f020003;
+        public static final int abs__ab_bottom_transparent_light_holo=0x7f020004;
+        public static final int abs__ab_share_pack_holo_dark=0x7f020005;
+        public static final int abs__ab_share_pack_holo_light=0x7f020006;
+        public static final int abs__ab_solid_dark_holo=0x7f020007;
+        public static final int abs__ab_solid_light_holo=0x7f020008;
+        public static final int abs__ab_solid_shadow_holo=0x7f020009;
+        public static final int abs__ab_stacked_solid_dark_holo=0x7f02000a;
+        public static final int abs__ab_stacked_solid_light_holo=0x7f02000b;
+        public static final int abs__ab_stacked_transparent_dark_holo=0x7f02000c;
+        public static final int abs__ab_stacked_transparent_light_holo=0x7f02000d;
+        public static final int abs__ab_transparent_dark_holo=0x7f02000e;
+        public static final int abs__ab_transparent_light_holo=0x7f02000f;
+        public static final int abs__activated_background_holo_dark=0x7f020010;
+        public static final int abs__activated_background_holo_light=0x7f020011;
+        public static final int abs__btn_cab_done_default_holo_dark=0x7f020012;
+        public static final int abs__btn_cab_done_default_holo_light=0x7f020013;
+        public static final int abs__btn_cab_done_focused_holo_dark=0x7f020014;
+        public static final int abs__btn_cab_done_focused_holo_light=0x7f020015;
+        public static final int abs__btn_cab_done_holo_dark=0x7f020016;
+        public static final int abs__btn_cab_done_holo_light=0x7f020017;
+        public static final int abs__btn_cab_done_pressed_holo_dark=0x7f020018;
+        public static final int abs__btn_cab_done_pressed_holo_light=0x7f020019;
+        public static final int abs__cab_background_bottom_holo_dark=0x7f02001a;
+        public static final int abs__cab_background_bottom_holo_light=0x7f02001b;
+        public static final int abs__cab_background_top_holo_dark=0x7f02001c;
+        public static final int abs__cab_background_top_holo_light=0x7f02001d;
+        public static final int abs__ic_ab_back_holo_dark=0x7f02001e;
+        public static final int abs__ic_ab_back_holo_light=0x7f02001f;
+        public static final int abs__ic_cab_done_holo_dark=0x7f020020;
+        public static final int abs__ic_cab_done_holo_light=0x7f020021;
+        public static final int abs__ic_clear=0x7f020022;
+        public static final int abs__ic_clear_disabled=0x7f020023;
+        public static final int abs__ic_clear_holo_light=0x7f020024;
+        public static final int abs__ic_clear_normal=0x7f020025;
+        public static final int abs__ic_clear_search_api_disabled_holo_light=0x7f020026;
+        public static final int abs__ic_clear_search_api_holo_light=0x7f020027;
+        public static final int abs__ic_commit_search_api_holo_dark=0x7f020028;
+        public static final int abs__ic_commit_search_api_holo_light=0x7f020029;
+        public static final int abs__ic_go=0x7f02002a;
+        public static final int abs__ic_go_search_api_holo_light=0x7f02002b;
+        public static final int abs__ic_menu_moreoverflow_holo_dark=0x7f02002c;
+        public static final int abs__ic_menu_moreoverflow_holo_light=0x7f02002d;
+        public static final int abs__ic_menu_moreoverflow_normal_holo_dark=0x7f02002e;
+        public static final int abs__ic_menu_moreoverflow_normal_holo_light=0x7f02002f;
+        public static final int abs__ic_menu_share_holo_dark=0x7f020030;
+        public static final int abs__ic_menu_share_holo_light=0x7f020031;
+        public static final int abs__ic_search=0x7f020032;
+        public static final int abs__ic_search_api_holo_light=0x7f020033;
+        public static final int abs__ic_voice_search=0x7f020034;
+        public static final int abs__ic_voice_search_api_holo_light=0x7f020035;
+        public static final int abs__item_background_holo_dark=0x7f020036;
+        public static final int abs__item_background_holo_light=0x7f020037;
+        public static final int abs__list_activated_holo=0x7f020038;
+        public static final int abs__list_divider_holo_dark=0x7f020039;
+        public static final int abs__list_divider_holo_light=0x7f02003a;
+        public static final int abs__list_focused_holo=0x7f02003b;
+        public static final int abs__list_longpressed_holo=0x7f02003c;
+        public static final int abs__list_pressed_holo_dark=0x7f02003d;
+        public static final int abs__list_pressed_holo_light=0x7f02003e;
+        public static final int abs__list_selector_background_transition_holo_dark=0x7f02003f;
+        public static final int abs__list_selector_background_transition_holo_light=0x7f020040;
+        public static final int abs__list_selector_disabled_holo_dark=0x7f020041;
+        public static final int abs__list_selector_disabled_holo_light=0x7f020042;
+        public static final int abs__list_selector_holo_dark=0x7f020043;
+        public static final int abs__list_selector_holo_light=0x7f020044;
+        public static final int abs__menu_dropdown_panel_holo_dark=0x7f020045;
+        public static final int abs__menu_dropdown_panel_holo_light=0x7f020046;
+        public static final int abs__progress_bg_holo_dark=0x7f020047;
+        public static final int abs__progress_bg_holo_light=0x7f020048;
+        public static final int abs__progress_horizontal_holo_dark=0x7f020049;
+        public static final int abs__progress_horizontal_holo_light=0x7f02004a;
+        public static final int abs__progress_medium_holo=0x7f02004b;
+        public static final int abs__progress_primary_holo_dark=0x7f02004c;
+        public static final int abs__progress_primary_holo_light=0x7f02004d;
+        public static final int abs__progress_secondary_holo_dark=0x7f02004e;
+        public static final int abs__progress_secondary_holo_light=0x7f02004f;
+        public static final int abs__search_dropdown_dark=0x7f020050;
+        public static final int abs__search_dropdown_light=0x7f020051;
+        public static final int abs__spinner_48_inner_holo=0x7f020052;
+        public static final int abs__spinner_48_outer_holo=0x7f020053;
+        public static final int abs__spinner_ab_default_holo_dark=0x7f020054;
+        public static final int abs__spinner_ab_default_holo_light=0x7f020055;
+        public static final int abs__spinner_ab_disabled_holo_dark=0x7f020056;
+        public static final int abs__spinner_ab_disabled_holo_light=0x7f020057;
+        public static final int abs__spinner_ab_focused_holo_dark=0x7f020058;
+        public static final int abs__spinner_ab_focused_holo_light=0x7f020059;
+        public static final int abs__spinner_ab_holo_dark=0x7f02005a;
+        public static final int abs__spinner_ab_holo_light=0x7f02005b;
+        public static final int abs__spinner_ab_pressed_holo_dark=0x7f02005c;
+        public static final int abs__spinner_ab_pressed_holo_light=0x7f02005d;
+        public static final int abs__tab_indicator_ab_holo=0x7f02005e;
+        public static final int abs__tab_selected_focused_holo=0x7f02005f;
+        public static final int abs__tab_selected_holo=0x7f020060;
+        public static final int abs__tab_selected_pressed_holo=0x7f020061;
+        public static final int abs__tab_unselected_pressed_holo=0x7f020062;
+        public static final int abs__textfield_search_default_holo_dark=0x7f020063;
+        public static final int abs__textfield_search_default_holo_light=0x7f020064;
+        public static final int abs__textfield_search_right_default_holo_dark=0x7f020065;
+        public static final int abs__textfield_search_right_default_holo_light=0x7f020066;
+        public static final int abs__textfield_search_right_selected_holo_dark=0x7f020067;
+        public static final int abs__textfield_search_right_selected_holo_light=0x7f020068;
+        public static final int abs__textfield_search_selected_holo_dark=0x7f020069;
+        public static final int abs__textfield_search_selected_holo_light=0x7f02006a;
+        public static final int abs__textfield_searchview_holo_dark=0x7f02006b;
+        public static final int abs__textfield_searchview_holo_light=0x7f02006c;
+        public static final int abs__textfield_searchview_right_holo_dark=0x7f02006d;
+        public static final int abs__textfield_searchview_right_holo_light=0x7f02006e;
+        public static final int abs__toast_frame=0x7f02006f;
+        public static final int acount=0x7f020070;
+        public static final int app_icon=0x7f020071;
+        public static final int app_icon2=0x7f020072;
+        public static final int back=0x7f020073;
+        public static final int back_down=0x7f020074;
+        public static final int back_up=0x7f020075;
+        public static final int bg_dialog_btn=0x7f020076;
+        public static final int bottom_bg=0x7f020077;
+        public static final int btn_bg=0x7f020078;
+        public static final int btn_normal3=0x7f020079;
+        public static final int btn_pressed3=0x7f02007a;
+        public static final int btn_state3=0x7f02007b;
+        public static final int checkbox_checked=0x7f02007c;
+        public static final int checkbox_selector=0x7f02007d;
+        public static final int checkbox_uncheck=0x7f02007e;
+        public static final int close=0x7f02007f;
+        public static final int iapppay_oneclickpay_bg_bond_card_normal=0x7f020080;
+        public static final int iapppay_oneclickpay_bg_bond_card_selected=0x7f020081;
+        public static final int iapppay_oneclickpay_bg_check_box=0x7f020082;
+        public static final int iapppay_oneclickpay_bg_check_box_seletor=0x7f020083;
+        public static final int iapppay_oneclickpay_bg_checkbox_seletor=0x7f020084;
+        public static final int iapppay_oneclickpay_bg_clear_selector=0x7f020085;
+        public static final int iapppay_oneclickpay_bg_close_button=0x7f020086;
+        public static final int iapppay_oneclickpay_bg_confrim_selector=0x7f020087;
+        public static final int iapppay_oneclickpay_bg_dialog_btn=0x7f020088;
+        public static final int iapppay_oneclickpay_bg_edit_seletor=0x7f020089;
+        public static final int iapppay_oneclickpay_bg_id_card=0x7f02008a;
+        public static final int iapppay_oneclickpay_bg_send_sms=0x7f02008b;
+        public static final int iapppay_oneclickpay_bg_send_sms_disabled=0x7f02008c;
+        public static final int iapppay_oneclickpay_bg_send_sms_normal=0x7f02008d;
+        public static final int iapppay_oneclickpay_bg_send_sms_pressed=0x7f02008e;
+        public static final int iapppay_oneclickpay_bt_confirm_bg_normal=0x7f02008f;
+        public static final int iapppay_oneclickpay_bt_confirm_bg_pressed=0x7f020090;
+        public static final int iapppay_oneclickpay_bt_disable=0x7f020091;
+        public static final int iapppay_oneclickpay_bt_wt_disable=0x7f020092;
+        public static final int iapppay_oneclickpay_bt_wt_normal=0x7f020093;
+        public static final int iapppay_oneclickpay_bt_wt_pressed=0x7f020094;
+        public static final int iapppay_oneclickpay_bt_wt_selector=0x7f020095;
+        public static final int iapppay_oneclickpay_clear_normal=0x7f020096;
+        public static final int iapppay_oneclickpay_clear_pressed=0x7f020097;
+        public static final int iapppay_oneclickpay_close=0x7f020098;
+        public static final int iapppay_oneclickpay_close_normal=0x7f020099;
+        public static final int iapppay_oneclickpay_date_btn_bg=0x7f02009a;
+        public static final int iapppay_oneclickpay_date_btn_nomal=0x7f02009b;
+        public static final int iapppay_oneclickpay_date_btn_press=0x7f02009c;
+        public static final int iapppay_oneclickpay_date_dialog_bg=0x7f02009d;
+        public static final int iapppay_oneclickpay_date_view_middle=0x7f02009e;
+        public static final int iapppay_oneclickpay_date_view_tail=0x7f02009f;
+        public static final int iapppay_oneclickpay_date_view_top=0x7f0200a0;
+        public static final int iapppay_oneclickpay_dot_normal=0x7f0200a1;
+        public static final int iapppay_oneclickpay_dot_selected=0x7f0200a2;
+        public static final int iapppay_oneclickpay_ic_airplane=0x7f0200a3;
+        public static final int iapppay_oneclickpay_ic_airplane_gray=0x7f0200a4;
+        public static final int iapppay_oneclickpay_ic_airplane_white=0x7f0200a5;
+        public static final int iapppay_oneclickpay_ic_bank=0x7f0200a6;
+        public static final int iapppay_oneclickpay_ic_cvv2=0x7f0200a7;
+        public static final int iapppay_oneclickpay_ic_identity=0x7f0200a8;
+        public static final int iapppay_oneclickpay_ic_logo=0x7f0200a9;
+        public static final int iapppay_oneclickpay_ic_mobile=0x7f0200aa;
+        public static final int iapppay_oneclickpay_ic_people=0x7f0200ab;
+        public static final int iapppay_oneclickpay_ic_valid_date=0x7f0200ac;
+        public static final int iapppay_oneclickpay_round_title_bottom=0x7f0200ad;
+        public static final int iapppay_oneclickpay_round_title_top=0x7f0200ae;
+        public static final int iapppay_oneclickpay_shape_line_gray=0x7f0200af;
+        public static final int iapppay_oneclickpay_shape_rect_blue=0x7f0200b0;
+        public static final int iapppay_oneclickpay_wheel_bg=0x7f0200b1;
+        public static final int iapppay_oneclickpay_wheel_val=0x7f0200b2;
+        public static final int ic_launcher=0x7f0200b3;
+        public static final int icon=0x7f0200b4;
+        public static final int later_down=0x7f0200b5;
+        public static final int later_up=0x7f0200b6;
+        public static final int loading_four=0x7f0200b7;
+        public static final int loading_one=0x7f0200b8;
+        public static final int loading_three=0x7f0200b9;
+        public static final int loading_two=0x7f0200ba;
+        public static final int logintittle=0x7f0200bb;
+        public static final int new_notice=0x7f0200bc;
+        public static final int no_propmt=0x7f0200bd;
+        public static final int no_propmt_down=0x7f0200be;
+        public static final int no_propmt_up=0x7f0200bf;
+        public static final int notification=0x7f0200c0;
+        public static final int refresh=0x7f0200c1;
+        public static final int refresh_down=0x7f0200c2;
+        public static final int refresh_up=0x7f0200c3;
+        public static final int resume_ad_close=0x7f0200c4;
+        public static final int retry=0x7f0200c5;
+        public static final int retry_bg=0x7f0200c6;
+        public static final int retry_down=0x7f0200c7;
+        public static final int retry_up=0x7f0200c8;
+        public static final int rsume_ads=0x7f0200c9;
+        public static final int scan_corner_bottom_left=0x7f0200ca;
+        public static final int scan_corner_bottom_right=0x7f0200cb;
+        public static final int scan_corner_top_left=0x7f0200cc;
+        public static final int scan_corner_top_right=0x7f0200cd;
+        public static final int scan_flashlight=0x7f0200ce;
+        public static final int scan_flashlight_normal=0x7f0200cf;
+        public static final int scan_flashlight_pressed=0x7f0200d0;
+        public static final int scan_laser=0x7f0200d1;
+        public static final int scan_photo=0x7f0200d2;
+        public static final int scan_photo_normal=0x7f0200d3;
+        public static final int scan_photo_pressed=0x7f0200d4;
+        public static final int set_bg=0x7f0200d5;
+        public static final int start_bg=0x7f0200d6;
+        public static final int tab_call=0x7f0200d7;
+        public static final int tab_call_down=0x7f0200d8;
+        public static final int tab_call_up=0x7f0200d9;
+        public static final int tab_fight=0x7f0200da;
+        public static final int tab_fight_down=0x7f0200db;
+        public static final int tab_fight_up=0x7f0200dc;
+        public static final int tab_menu=0x7f0200dd;
+        public static final int tab_menu_down=0x7f0200de;
+        public static final int tab_menu_up=0x7f0200df;
+        public static final int tab_page=0x7f0200e0;
+        public static final int tab_page_down=0x7f0200e1;
+        public static final int tab_page_up=0x7f0200e2;
+        public static final int tab_story=0x7f0200e3;
+        public static final int tab_story_down=0x7f0200e4;
+        public static final int tab_story_up=0x7f0200e5;
+        public static final int tab_top=0x7f0200e6;
+        public static final int tab_top_down=0x7f0200e7;
+        public static final int tab_top_up=0x7f0200e8;
+        public static final int title_bg=0x7f0200e9;
+        public static final int title_close=0x7f0200ea;
+        public static final int title_close_pressed=0x7f0200eb;
+        public static final int title_logo=0x7f0200ec;
+        public static final int top=0x7f0200ed;
+        public static final int top_bg=0x7f0200ee;
+        public static final int top_down=0x7f0200ef;
+        public static final int top_up=0x7f0200f0;
+        public static final int topbar_backgame_normal=0x7f0200f1;
+        public static final int topbar_backgame_pressed=0x7f0200f2;
+        public static final int translucent_background=0x7f020190;
+        public static final int upomp_bypay_btn_big_bg=0x7f0200f3;
+        public static final int upomp_bypay_btn_big_bg_click=0x7f0200f4;
+        public static final int upomp_bypay_btn_button=0x7f0200f5;
+        public static final int upomp_bypay_btn_enter=0x7f0200f6;
+        public static final int upomp_bypay_btn_esc=0x7f0200f7;
+        public static final int upomp_bypay_btn_esc_bg=0x7f0200f8;
+        public static final int upomp_bypay_btn_esc_bg_click=0x7f0200f9;
+        public static final int upomp_bypay_btn_letter=0x7f0200fa;
+        public static final int upomp_bypay_btn_month=0x7f0200fb;
+        public static final int upomp_bypay_btn_newweb=0x7f0200fc;
+        public static final int upomp_bypay_btn_number=0x7f0200fd;
+        public static final int upomp_bypay_btn_small_bg=0x7f0200fe;
+        public static final int upomp_bypay_btn_small_bg_click=0x7f0200ff;
+        public static final int upomp_bypay_btn_sub1=0x7f020100;
+        public static final int upomp_bypay_btn_sub2=0x7f020101;
+        public static final int upomp_bypay_btn_sub3=0x7f020102;
+        public static final int upomp_bypay_btn_symbol=0x7f020103;
+        public static final int upomp_bypay_btn_webv=0x7f020104;
+        public static final int upomp_bypay_btn_xzm=0x7f020105;
+        public static final int upomp_bypay_btn_xzm_click=0x7f020106;
+        public static final int upomp_bypay_btn_year=0x7f020107;
+        public static final int upomp_bypay_card_btn1=0x7f020108;
+        public static final int upomp_bypay_card_btn2=0x7f020109;
+        public static final int upomp_bypay_card_btn3=0x7f02010a;
+        public static final int upomp_bypay_card_btn4=0x7f02010b;
+        public static final int upomp_bypay_card_btn_1=0x7f02010c;
+        public static final int upomp_bypay_card_btn_1_on=0x7f02010d;
+        public static final int upomp_bypay_card_btn_1a=0x7f02010e;
+        public static final int upomp_bypay_card_btn_2=0x7f02010f;
+        public static final int upomp_bypay_card_btn_2_on=0x7f020110;
+        public static final int upomp_bypay_card_btn_3=0x7f020111;
+        public static final int upomp_bypay_card_btn_3_on=0x7f020112;
+        public static final int upomp_bypay_card_btn_4=0x7f020113;
+        public static final int upomp_bypay_card_btn_4_on=0x7f020114;
+        public static final int upomp_bypay_card_btn_bg=0x7f020115;
+        public static final int upomp_bypay_card_info_bg=0x7f020116;
+        public static final int upomp_bypay_card_info_bot=0x7f020117;
+        public static final int upomp_bypay_card_info_title=0x7f020118;
+        public static final int upomp_bypay_card_list=0x7f020119;
+        public static final int upomp_bypay_card_list_bg=0x7f02011a;
+        public static final int upomp_bypay_card_list_bg_click=0x7f02011b;
+        public static final int upomp_bypay_icon_what=0x7f02011c;
+        public static final int upomp_bypay_input_bg=0x7f02011d;
+        public static final int upomp_bypay_input_bg_on=0x7f02011e;
+        public static final int upomp_bypay_input_btn2=0x7f02011f;
+        public static final int upomp_bypay_input_btn4=0x7f020120;
+        public static final int upomp_bypay_input_btn_2=0x7f020121;
+        public static final int upomp_bypay_input_btn_2_click=0x7f020122;
+        public static final int upomp_bypay_input_btn_4=0x7f020123;
+        public static final int upomp_bypay_input_btn_4_click=0x7f020124;
+        public static final int upomp_bypay_input_btn_hq=0x7f020125;
+        public static final int upomp_bypay_input_btn_hq_click=0x7f020126;
+        public static final int upomp_bypay_keyboard_bg=0x7f020127;
+        public static final int upomp_bypay_keyboard_btn1_default=0x7f020128;
+        public static final int upomp_bypay_keyboard_btn1_on=0x7f020129;
+        public static final int upomp_bypay_keyboard_btn_clear=0x7f02012a;
+        public static final int upomp_bypay_keyboard_btn_clear_default=0x7f02012b;
+        public static final int upomp_bypay_keyboard_btn_clear_on=0x7f02012c;
+        public static final int upomp_bypay_keyboard_btn_enter=0x7f02012d;
+        public static final int upomp_bypay_keyboard_btn_enter_default=0x7f02012e;
+        public static final int upomp_bypay_keyboard_btn_enter_on=0x7f02012f;
+        public static final int upomp_bypay_keyboard_btn_l_clear=0x7f020130;
+        public static final int upomp_bypay_keyboard_fh_bg=0x7f020131;
+        public static final int upomp_bypay_keyboard_fh_bg_on=0x7f020132;
+        public static final int upomp_bypay_keyboard_input_bg=0x7f020133;
+        public static final int upomp_bypay_keyboard_letter_a1=0x7f020134;
+        public static final int upomp_bypay_keyboard_letter_a2=0x7f020135;
+        public static final int upomp_bypay_keyboard_letter_bg=0x7f020136;
+        public static final int upomp_bypay_keyboard_letter_bg_on=0x7f020137;
+        public static final int upomp_bypay_keyboard_letter_clear_bg=0x7f020138;
+        public static final int upomp_bypay_keyboard_letter_clear_bg_on=0x7f020139;
+        public static final int upomp_bypay_keyboard_nav_bg=0x7f02013a;
+        public static final int upomp_bypay_keyboard_number_bg=0x7f02013b;
+        public static final int upomp_bypay_keyboard_number_bg_on=0x7f02013c;
+        public static final int upomp_bypay_keyboard_pw_bg=0x7f02013d;
+        public static final int upomp_bypay_loading=0x7f02013e;
+        public static final int upomp_bypay_loading_bg=0x7f02013f;
+        public static final int upomp_bypay_loading_bg2=0x7f020140;
+        public static final int upomp_bypay_loading_dialog=0x7f020141;
+        public static final int upomp_bypay_main_bg=0x7f020142;
+        public static final int upomp_bypay_member_btn_bg=0x7f020143;
+        public static final int upomp_bypay_my_checkbox=0x7f020144;
+        public static final int upomp_bypay_my_radiobutton=0x7f020145;
+        public static final int upomp_bypay_nav1_click=0x7f020146;
+        public static final int upomp_bypay_nav1_default=0x7f020147;
+        public static final int upomp_bypay_nav1_on=0x7f020148;
+        public static final int upomp_bypay_nav2_click=0x7f020149;
+        public static final int upomp_bypay_nav2_default=0x7f02014a;
+        public static final int upomp_bypay_nav2_on=0x7f02014b;
+        public static final int upomp_bypay_nav3_click=0x7f02014c;
+        public static final int upomp_bypay_nav3_default=0x7f02014d;
+        public static final int upomp_bypay_nav3_on=0x7f02014e;
+        public static final int upomp_bypay_nav4_click=0x7f02014f;
+        public static final int upomp_bypay_nav4_default=0x7f020150;
+        public static final int upomp_bypay_progress=0x7f020151;
+        public static final int upomp_bypay_progress_init=0x7f020152;
+        public static final int upomp_bypay_psw_bg=0x7f020153;
+        public static final int upomp_bypay_select_card_add=0x7f020154;
+        public static final int upomp_bypay_select_card_bg=0x7f020155;
+        public static final int upomp_bypay_select_card_default_bg=0x7f020156;
+        public static final int upomp_bypay_select_card_on_bg=0x7f020157;
+        public static final int upomp_bypay_select_dx=0x7f020158;
+        public static final int upomp_bypay_select_dx_on=0x7f020159;
+        public static final int upomp_bypay_select_month=0x7f02015a;
+        public static final int upomp_bypay_select_month_on=0x7f02015b;
+        public static final int upomp_bypay_select_year=0x7f02015c;
+        public static final int upomp_bypay_select_year_on=0x7f02015d;
+        public static final int upomp_bypay_spinner=0x7f02015e;
+        public static final int upomp_bypay_sub10_default=0x7f02015f;
+        public static final int upomp_bypay_sub10_on=0x7f020160;
+        public static final int upomp_bypay_sub11_default=0x7f020161;
+        public static final int upomp_bypay_sub11_on=0x7f020162;
+        public static final int upomp_bypay_sub1_click=0x7f020163;
+        public static final int upomp_bypay_sub1_default=0x7f020164;
+        public static final int upomp_bypay_sub1_on=0x7f020165;
+        public static final int upomp_bypay_sub2_click=0x7f020166;
+        public static final int upomp_bypay_sub2_default=0x7f020167;
+        public static final int upomp_bypay_sub2_on=0x7f020168;
+        public static final int upomp_bypay_sub3_click=0x7f020169;
+        public static final int upomp_bypay_sub3_default=0x7f02016a;
+        public static final int upomp_bypay_sub3_on=0x7f02016b;
+        public static final int upomp_bypay_sub_bg=0x7f02016c;
+        public static final int upomp_bypay_tips3_bg=0x7f02016d;
+        public static final int upomp_bypay_tips3_bot=0x7f02016e;
+        public static final int upomp_bypay_tips3_top1=0x7f02016f;
+        public static final int upomp_bypay_tips3_top2=0x7f020170;
+        public static final int upomp_bypay_tips3_top3=0x7f020171;
+        public static final int upomp_bypay_tips_bg=0x7f020172;
+        public static final int upomp_bypay_tips_bot=0x7f020173;
+        public static final int upomp_bypay_tips_title=0x7f020174;
+        public static final int upomp_bypay_title_bg=0x7f020175;
+        public static final int upomp_bypay_title_logo=0x7f020176;
+        public static final int upomp_bypay_toast_bg=0x7f020177;
+        public static final int upomp_bypay_user_title_bg1=0x7f020178;
+        public static final int upomp_bypay_user_title_bg2=0x7f020179;
+        public static final int upomp_bypay_user_title_icon=0x7f02017a;
+        public static final int upomp_bypay_view_xy=0x7f02017b;
+        public static final int upomp_bypay_xieyi_select_1=0x7f02017c;
+        public static final int upomp_bypay_xieyi_select_2=0x7f02017d;
+        public static final int voice=0x7f02017e;
+        public static final int voice_down=0x7f02017f;
+        public static final int voice_up=0x7f020180;
+        public static final int weibosdk_bg_btn=0x7f020181;
+        public static final int weibosdk_bg_content=0x7f020182;
+        public static final int weibosdk_bg_delwords=0x7f020183;
+        public static final int weibosdk_bg_delwords_nor=0x7f020184;
+        public static final int weibosdk_bg_delwords_sel=0x7f020185;
+        public static final int weibosdk_bg_title=0x7f020186;
+        public static final int weibosdk_close_normal=0x7f020187;
+        public static final int weibosdk_close_press=0x7f020188;
+        public static final int weibosdk_close_selector=0x7f020189;
+        public static final int weibosdk_del_pic=0x7f02018a;
+        public static final int weibosdk_dialog_bg=0x7f02018b;
+        public static final int weibosdk_icon_delwords=0x7f02018c;
+        public static final int weibosdk_image_background=0x7f02018d;
+        public static final int weibosdk_title_logo=0x7f02018e;
+        public static final int welcome_bg=0x7f02018f;
     }
     public static final class id {
-        public static final int bottom_view=0x7f0b0002;
-        public static final int btn_acount=0x7f0b0014;
-        public static final int btn_gologin=0x7f0b0015;
-        public static final int btn_login=0x7f0b0012;
-        public static final int button1=0x7f0b001b;
-        public static final int center_image=0x7f0b002b;
-        public static final int effect_state_check=0x7f0b0028;
-        public static final int effect_state_layout=0x7f0b0027;
-        public static final int else_image=0x7f0b002e;
-        public static final int executeButton=0x7f0b001c;
-        public static final int frameLayout1=0x7f0b001e;
-        public static final int game_web=0x7f0b0009;
-        public static final int game_web_layout=0x7f0b0008;
-        public static final int go_acount=0x7f0b0013;
-        public static final int goback=0x7f0b002d;
-        public static final int home=0x7f0b002c;
-        public static final int image_title=0x7f0b002a;
-        public static final int item=0x7f0b001d;
-        public static final int itemWebView=0x7f0b001f;
-        public static final int lay_btn=0x7f0b001a;
-        public static final int layout=0x7f0b0000;
-        public static final int linearLayout1=0x7f0b0016;
-        public static final int linearlayout01=0x7f0b0017;
-        public static final int loading=0x7f0b000d;
-        public static final int loading_bg=0x7f0b000c;
-        public static final int loading_error=0x7f0b000a;
-        public static final int muisc_state_check=0x7f0b0026;
-        public static final int muisc_state_layout=0x7f0b0025;
-        public static final int mybg=0x7f0b000e;
-        public static final int mybgtop=0x7f0b000f;
-        public static final int notification_image=0x7f0b0020;
-        public static final int notification_text=0x7f0b0023;
-        public static final int notification_time=0x7f0b0022;
-        public static final int notification_title=0x7f0b0021;
-        public static final int password=0x7f0b0011;
-        public static final int progressBar1=0x7f0b0019;
-        public static final int retry=0x7f0b000b;
-        public static final int right_image=0x7f0b002f;
-        public static final int tab_call=0x7f0b0005;
-        public static final int tab_fight=0x7f0b0007;
-        public static final int tab_page=0x7f0b0004;
-        public static final int tab_story=0x7f0b0006;
-        public static final int tab_top=0x7f0b0003;
-        public static final int title=0x7f0b0029;
-        public static final int title_text=0x7f0b0030;
-        public static final int title_view=0x7f0b0001;
-        public static final int top_layout=0x7f0b0024;
-        public static final int username=0x7f0b0010;
-        public static final int webview1=0x7f0b0018;
-        public static final int weibosdk_btnClose=0x7f0b0032;
-        public static final int weibosdk_btnPhoto=0x7f0b0033;
-        public static final int weibosdk_btnSend=0x7f0b0034;
-        public static final int weibosdk_etEdit=0x7f0b003c;
-        public static final int weibosdk_flPic=0x7f0b0039;
-        public static final int weibosdk_ivDelPic=0x7f0b003b;
-        public static final int weibosdk_ivImage=0x7f0b003a;
-        public static final int weibosdk_llImage=0x7f0b0035;
-        public static final int weibosdk_ll_text_limit_unit=0x7f0b0037;
-        public static final int weibosdk_rlTitle=0x7f0b0031;
-        public static final int weibosdk_rlTotal=0x7f0b0036;
-        public static final int weibosdk_tv_text_limit=0x7f0b0038;
+        public static final int abs__action_bar=0x7f0c002a;
+        public static final int abs__action_bar_container=0x7f0c0029;
+        public static final int abs__action_bar_subtitle=0x7f0c001b;
+        public static final int abs__action_bar_title=0x7f0c001a;
+        public static final int abs__action_context_bar=0x7f0c002b;
+        public static final int abs__action_menu_divider=0x7f0c000c;
+        public static final int abs__action_menu_presenter=0x7f0c000d;
+        public static final int abs__action_mode_bar=0x7f0c002f;
+        public static final int abs__action_mode_bar_stub=0x7f0c002e;
+        public static final int abs__action_mode_close_button=0x7f0c001e;
+        public static final int abs__activity_chooser_view_content=0x7f0c001f;
+        public static final int abs__checkbox=0x7f0c0026;
+        public static final int abs__content=0x7f0c002c;
+        public static final int abs__default_activity_button=0x7f0c0022;
+        public static final int abs__expand_activities_button=0x7f0c0020;
+        public static final int abs__home=0x7f0c000a;
+        public static final int abs__icon=0x7f0c0024;
+        public static final int abs__image=0x7f0c0021;
+        public static final int abs__imageButton=0x7f0c001c;
+        public static final int abs__list_item=0x7f0c0023;
+        public static final int abs__progress_circular=0x7f0c000e;
+        public static final int abs__progress_horizontal=0x7f0c000f;
+        public static final int abs__radio=0x7f0c0027;
+        public static final int abs__search_badge=0x7f0c0032;
+        public static final int abs__search_bar=0x7f0c0031;
+        public static final int abs__search_button=0x7f0c0033;
+        public static final int abs__search_close_btn=0x7f0c0038;
+        public static final int abs__search_edit_frame=0x7f0c0034;
+        public static final int abs__search_go_btn=0x7f0c003a;
+        public static final int abs__search_mag_icon=0x7f0c0035;
+        public static final int abs__search_plate=0x7f0c0036;
+        public static final int abs__search_src_text=0x7f0c0037;
+        public static final int abs__search_voice_btn=0x7f0c003b;
+        public static final int abs__shortcut=0x7f0c0028;
+        public static final int abs__split_action_bar=0x7f0c002d;
+        public static final int abs__submit_area=0x7f0c0039;
+        public static final int abs__textButton=0x7f0c001d;
+        public static final int abs__title=0x7f0c0025;
+        public static final int abs__up=0x7f0c000b;
+        public static final int agree=0x7f0c007e;
+        /**  Messages IDs 
+         */
+        public static final int auto_focus=0x7f0c0010;
+        public static final int bank_name=0x7f0c006a;
+        public static final int bottom_view=0x7f0c003e;
+        public static final int btn_account=0x7f0c00f2;
+        public static final int btn_acount=0x7f0c0050;
+        public static final int btn_addcard=0x7f0c015e;
+        public static final int btn_addcard_add_card=0x7f0c00ee;
+        public static final int btn_addcard_auth_2=0x7f0c0369;
+        public static final int btn_backspace=0x7f0c0205;
+        public static final int btn_balance_card_info=0x7f0c0144;
+        public static final int btn_button_editinfo=0x7f0c0189;
+        public static final int btn_button_editpass=0x7f0c01b0;
+        public static final int btn_button_next_getpass=0x7f0c01cf;
+        public static final int btn_button_register=0x7f0c0419;
+        public static final int btn_cancel_bind=0x7f0c012a;
+        public static final int btn_card=0x7f0c00f3;
+        public static final int btn_card_info=0x7f0c0128;
+        public static final int btn_card_pass_balance=0x7f0c0100;
+        public static final int btn_card_pass_content_add_card=0x7f0c00d0;
+        public static final int btn_card_pass_content_pay_normal_2_1=0x7f0c0324;
+        public static final int btn_card_pass_content_vc_pay_valuecard=0x7f0c0393;
+        public static final int btn_check_cb=0x7f0c0104;
+        public static final int btn_choose_card_pay_auth_2=0x7f0c0373;
+        public static final int btn_confirm_newpass_getpass=0x7f0c01e4;
+        public static final int btn_continue_card_bank_result=0x7f0c0125;
+        public static final int btn_default_card_info=0x7f0c0140;
+        public static final int btn_del_card_info=0x7f0c0143;
+        public static final int btn_editinfo_account=0x7f0c00b7;
+        public static final int btn_editpass_account=0x7f0c00b6;
+        public static final int btn_enter=0x7f0c0265;
+        public static final int btn_enter_pay_auth_1=0x7f0c0364;
+        public static final int btn_enter_pay_auth_2=0x7f0c0380;
+        public static final int btn_enter_pay_normal_1=0x7f0c030f;
+        public static final int btn_enter_pay_normal_2_1=0x7f0c032d;
+        public static final int btn_enter_pay_normal_2_2=0x7f0c034a;
+        public static final int btn_enter_pay_valuecard=0x7f0c039c;
+        public static final int btn_esc_pay_valuecard=0x7f0c039d;
+        public static final int btn_exit=0x7f0c00f4;
+        public static final int btn_get_balance=0x7f0c012b;
+        public static final int btn_getpass=0x7f0c02d5;
+        public static final int btn_getpass_pay_auth_1=0x7f0c035b;
+        public static final int btn_gologin=0x7f0c0051;
+        public static final int btn_key0=0x7f0c0203;
+        public static final int btn_key1=0x7f0c01ef;
+        public static final int btn_key2=0x7f0c01f1;
+        public static final int btn_key3=0x7f0c01f3;
+        public static final int btn_key4=0x7f0c01f5;
+        public static final int btn_key5=0x7f0c01f8;
+        public static final int btn_key6=0x7f0c01fa;
+        public static final int btn_key7=0x7f0c01fc;
+        public static final int btn_key8=0x7f0c01fe;
+        public static final int btn_key9=0x7f0c0201;
+        public static final int btn_keyA=0x7f0c021e;
+        public static final int btn_keyB=0x7f0c023b;
+        public static final int btn_keyC=0x7f0c0237;
+        public static final int btn_keyD=0x7f0c0222;
+        public static final int btn_keyE=0x7f0c020d;
+        public static final int btn_keyF=0x7f0c0224;
+        public static final int btn_keyG=0x7f0c0226;
+        public static final int btn_keyH=0x7f0c0228;
+        public static final int btn_keyI=0x7f0c0217;
+        public static final int btn_keyJ=0x7f0c022a;
+        public static final int btn_keyK=0x7f0c022c;
+        public static final int btn_keyL=0x7f0c022e;
+        public static final int btn_keyM=0x7f0c023f;
+        public static final int btn_keyN=0x7f0c023d;
+        public static final int btn_keyO=0x7f0c0219;
+        public static final int btn_keyP=0x7f0c021b;
+        public static final int btn_keyQ=0x7f0c0209;
+        public static final int btn_keyR=0x7f0c020f;
+        public static final int btn_keyS=0x7f0c0220;
+        public static final int btn_keyT=0x7f0c0211;
+        public static final int btn_keyU=0x7f0c0215;
+        public static final int btn_keyV=0x7f0c0239;
+        public static final int btn_keyW=0x7f0c020b;
+        public static final int btn_keyX=0x7f0c0235;
+        public static final int btn_keyY=0x7f0c0213;
+        public static final int btn_keyZ=0x7f0c0233;
+        public static final int btn_letter=0x7f0c0261;
+        public static final int btn_letter_backspace=0x7f0c0241;
+        public static final int btn_letter_size=0x7f0c0231;
+        public static final int btn_loading_dialog=0x7f0c02c3;
+        public static final int btn_login=0x7f0c004e;
+        public static final int btn_login_getpass=0x7f0c01b4;
+        public static final int btn_login_login=0x7f0c02c8;
+        public static final int btn_login_register=0x7f0c03d7;
+        public static final int btn_mm_add_card=0x7f0c00d6;
+        public static final int btn_mm_pay_normal_2_2=0x7f0c033a;
+        public static final int btn_mobilevalidcode_add_card=0x7f0c00e9;
+        public static final int btn_mobilevalidcode_content_pay_auth_2=0x7f0c037e;
+        public static final int btn_mobilevalidcode_pay_normal_1=0x7f0c030d;
+        public static final int btn_newpass_getpass=0x7f0c01df;
+        public static final int btn_num=0x7f0c025f;
+        public static final int btn_pass_content_pay_auth_1=0x7f0c0359;
+        public static final int btn_pay=0x7f0c00f1;
+        public static final int btn_pay_auth=0x7f0c02e9;
+        public static final int btn_pay_normal=0x7f0c02e8;
+        public static final int btn_pay_value_card=0x7f0c02ea;
+        public static final int btn_register_getpass=0x7f0c01b5;
+        public static final int btn_register_login=0x7f0c02c9;
+        public static final int btn_register_pay_auth_1=0x7f0c0353;
+        public static final int btn_register_register=0x7f0c03d8;
+        public static final int btn_result_psw_getpass=0x7f0c01e6;
+        public static final int btn_return_add_card=0x7f0c00ef;
+        public static final int btn_return_auth_2=0x7f0c036a;
+        public static final int btn_return_card_balance_result=0x7f0c0110;
+        public static final int btn_return_card_bank_result=0x7f0c0124;
+        public static final int btn_return_card_info=0x7f0c0141;
+        public static final int btn_return_cb=0x7f0c0105;
+        public static final int btn_return_editinfo=0x7f0c018a;
+        public static final int btn_return_editpass=0x7f0c01b1;
+        public static final int btn_return_pay_auth_1=0x7f0c0365;
+        public static final int btn_return_pay_auth_2=0x7f0c0381;
+        public static final int btn_return_pay_normal_1=0x7f0c0310;
+        public static final int btn_return_pay_normal_2_1=0x7f0c032e;
+        public static final int btn_return_pay_normal_2_2=0x7f0c034b;
+        public static final int btn_see_agreement_register=0x7f0c0417;
+        public static final int btn_set_default=0x7f0c0129;
+        public static final int btn_submit=0x7f0c0063;
+        public static final int btn_symbol=0x7f0c0263;
+        public static final int btn_symbol_0=0x7f0c0259;
+        public static final int btn_symbol_1=0x7f0c0245;
+        public static final int btn_symbol_10=0x7f0c02b6;
+        public static final int btn_symbol_11=0x7f0c02b7;
+        public static final int btn_symbol_12=0x7f0c02b9;
+        public static final int btn_symbol_13=0x7f0c02ba;
+        public static final int btn_symbol_14=0x7f0c02bb;
+        public static final int btn_symbol_15=0x7f0c02bc;
+        public static final int btn_symbol_2=0x7f0c0247;
+        public static final int btn_symbol_3=0x7f0c0249;
+        public static final int btn_symbol_4=0x7f0c024b;
+        public static final int btn_symbol_5=0x7f0c024e;
+        public static final int btn_symbol_6=0x7f0c0250;
+        public static final int btn_symbol_7=0x7f0c0252;
+        public static final int btn_symbol_8=0x7f0c0254;
+        public static final int btn_symbol_9=0x7f0c0257;
+        public static final int btn_symbol_backspace=0x7f0c025b;
+        public static final int btn_symbol_change=0x7f0c02b8;
+        public static final int btn_userpass_new_editpass=0x7f0c019e;
+        public static final int btn_userpass_old_editpass=0x7f0c0199;
+        public static final int btn_userpass_re_editpass=0x7f0c01a3;
+        public static final int btn_validcode_editinfo=0x7f0c0187;
+        public static final int btn_validcode_editpass=0x7f0c01ae;
+        public static final int btn_validcode_getpass=0x7f0c01c6;
+        public static final int btn_validcode_register=0x7f0c03f3;
+        public static final int btn_yy_add_card=0x7f0c00d8;
+        public static final int btn_yy_pay_normal_2_2=0x7f0c033c;
+        public static final int button1=0x7f0c0057;
+        public static final int capture_bottom_hint=0x7f0c0060;
+        public static final int capture_button_cancel=0x7f0c005e;
+        public static final int capture_button_createcode=0x7f0c005f;
+        public static final int capture_flashlight=0x7f0c005b;
+        public static final int capture_frame=0x7f0c0058;
+        public static final int capture_preview_view=0x7f0c0059;
+        public static final int capture_scan_photo=0x7f0c005d;
+        public static final int capture_top_hint=0x7f0c005c;
+        public static final int capture_viewfinder_view=0x7f0c005a;
+        public static final int cardNumberEditText=0x7f0c0066;
+        public static final int card_no=0x7f0c006b;
+        public static final int card_no_area=0x7f0c0065;
+        public static final int card_password=0x7f0c0073;
+        public static final int cb_agreement_register=0x7f0c0415;
+        public static final int cb_type_1_add_card=0x7f0c00c5;
+        public static final int cb_type_1_pay_normal_2=0x7f0c0318;
+        public static final int cb_type_2_add_card=0x7f0c00c3;
+        public static final int cb_type_2_pay_normal_2=0x7f0c0316;
+        public static final int cb_use_default_add_card=0x7f0c00eb;
+        public static final int center_image=0x7f0c0096;
+        public static final int clear=0x7f0c0067;
+        public static final int close_protel=0x7f0c006d;
+        public static final int content_pay=0x7f0c0082;
+        public static final int cvv2_id=0x7f0c0071;
+        public static final int decode=0x7f0c0011;
+        public static final int decode_failed=0x7f0c0012;
+        public static final int decode_succeeded=0x7f0c0013;
+        public static final int disableHome=0x7f0c0009;
+        public static final int edit_query=0x7f0c0030;
+        public static final int effect_state_check=0x7f0c0093;
+        public static final int effect_state_layout=0x7f0c0092;
+        public static final int else_image=0x7f0c0099;
+        public static final int et_card_id_content_add_card=0x7f0c00ca;
+        public static final int et_card_id_content_pay_normal_2_1=0x7f0c031e;
+        public static final int et_card_id_content_pay_normal_2_2=0x7f0c0334;
+        public static final int et_card_id_content_vc_pay_valuecard=0x7f0c038d;
+        public static final int et_cvn2_content_add_card=0x7f0c00de;
+        public static final int et_cvn2_content_pay_normal_2_2=0x7f0c0341;
+        public static final int et_email_register=0x7f0c03f8;
+        public static final int et_mobilevalidcode_add_card=0x7f0c00e8;
+        public static final int et_mobilevalidcode_content_pay_auth_2=0x7f0c037d;
+        public static final int et_mobilevalidcode_pay_normal_1=0x7f0c030c;
+        public static final int et_psw_window=0x7f0c01e9;
+        public static final int et_question_register=0x7f0c0406;
+        public static final int et_question_result_getpass=0x7f0c01da;
+        public static final int et_result_register=0x7f0c040b;
+        public static final int et_telnum_content_pay_normal_1=0x7f0c0307;
+        public static final int et_telnum_getpass=0x7f0c01c0;
+        public static final int et_telnum_new_editinfo=0x7f0c0181;
+        public static final int et_telnum_old_editinfo=0x7f0c017c;
+        public static final int et_telnum_register=0x7f0c03ed;
+        public static final int et_username_content_pay_auth_1=0x7f0c0352;
+        public static final int et_username_getpass=0x7f0c01bb;
+        public static final int et_username_login=0x7f0c02ce;
+        public static final int et_username_register=0x7f0c03de;
+        public static final int et_userpass_editinfo=0x7f0c0173;
+        public static final int et_userpass_login=0x7f0c02cf;
+        public static final int et_userpass_re_register=0x7f0c03e8;
+        public static final int et_userpass_register=0x7f0c03e3;
+        public static final int et_validaty_content_add_card=0x7f0c00d9;
+        public static final int et_validcode_editinfo=0x7f0c0186;
+        public static final int et_validcode_editpass=0x7f0c01ad;
+        public static final int et_validcode_getpass=0x7f0c01c5;
+        public static final int et_validcode_register=0x7f0c03f2;
+        public static final int et_webvalidcode_content_pay_auth_1=0x7f0c0360;
+        public static final int et_webvalidcode_content_pay_normal_2_1=0x7f0c0329;
+        public static final int et_webvalidcode_content_pay_normal_2_2=0x7f0c0346;
+        public static final int et_webvalidcode_content_pay_valuecard=0x7f0c0398;
+        public static final int et_webvalidcode_getpass=0x7f0c01cb;
+        public static final int et_webvalidcode_login=0x7f0c02da;
+        public static final int et_webvalidcode_register=0x7f0c0410;
+        public static final int et_welcome_register=0x7f0c03fd;
+        public static final int executeButton=0x7f0c0087;
+        public static final int frameLayout1=0x7f0c0089;
+        public static final int game_web=0x7f0c0045;
+        public static final int game_web_layout=0x7f0c0044;
+        public static final int getSmsCodeButton=0x7f0c007c;
+        public static final int go_acount=0x7f0c004f;
+        public static final int goback=0x7f0c0098;
+        public static final int gp_card_holder_identify=0x7f0c0076;
+        public static final int gp_card_holder_name=0x7f0c0074;
+        public static final int gp_card_holder_phone=0x7f0c0078;
+        public static final int gp_card_holder_phone_valid=0x7f0c007a;
+        public static final int gp_card_password=0x7f0c0072;
+        public static final int gp_credit_card_info=0x7f0c006f;
+        public static final int header_image=0x7f0c02e3;
+        public static final int home=0x7f0c0097;
+        public static final int homeAsUp=0x7f0c0006;
+        public static final int identifyNumber=0x7f0c0077;
+        public static final int image_title=0x7f0c0095;
+        public static final int item=0x7f0c0088;
+        public static final int itemWebView=0x7f0c008a;
+        public static final int iv_hitbg_account=0x7f0c00a1;
+        public static final int iv_hitbg_editinfo=0x7f0c0167;
+        public static final int iv_hitbg_editpass=0x7f0c0193;
+        public static final int iv_hitbg_pay_auth=0x7f0c02f2;
+        public static final int iv_icon=0x7f0c014b;
+        public static final int iv_loading_dialog=0x7f0c02bf;
+        public static final int iv_status=0x7f0c0152;
+        public static final int iv_webvalidcode_content_pay_auth_1=0x7f0c0361;
+        public static final int iv_webvalidcode_content_pay_normal_2_1=0x7f0c032a;
+        public static final int iv_webvalidcode_content_pay_normal_2_2=0x7f0c0347;
+        public static final int iv_webvalidcode_content_pay_valuecard=0x7f0c0399;
+        public static final int iv_webvalidcode_getpass=0x7f0c01cc;
+        public static final int iv_webvalidcode_login=0x7f0c02db;
+        public static final int iv_webvalidcode_register=0x7f0c0411;
+        public static final int keyborad_view=0x7f0c02b3;
+        public static final int launch_product_query=0x7f0c0014;
+        public static final int lay_btn=0x7f0c0056;
+        public static final int layout=0x7f0c003c;
+        public static final int linearLayout1=0x7f0c0052;
+        public static final int linearlayout01=0x7f0c0053;
+        public static final int listMode=0x7f0c0002;
+        public static final int ll_card_dialog=0x7f0c0126;
+        public static final int ll_keyboard=0x7f0c02b5;
+        public static final int ll_login=0x7f0c02c4;
+        public static final int ll_pay_super=0x7f0c03c7;
+        public static final int ll_pay_type=0x7f0c02e7;
+        public static final int ll_user_getpass=0x7f0c01b3;
+        public static final int loading=0x7f0c0049;
+        public static final int loading_bg=0x7f0c0048;
+        public static final int loading_error=0x7f0c0046;
+        public static final int login_area=0x7f0c0083;
+        public static final int logo=0x7f0c0085;
+        public static final int lv_cardlist=0x7f0c015b;
+        public static final int main_bottom=0x7f0c00b8;
+        public static final int main_bottom_login=0x7f0c02e2;
+        public static final int mainbottom=0x7f0c00f0;
+        public static final int muisc_state_check=0x7f0c0091;
+        public static final int muisc_state_layout=0x7f0c0090;
+        public static final int mybg=0x7f0c004a;
+        public static final int mybgtop=0x7f0c004b;
+        public static final int nextStepButton=0x7f0c0068;
+        public static final int none_et=0x7f0c0080;
+        public static final int normal=0x7f0c0001;
+        public static final int notification_image=0x7f0c008b;
+        public static final int notification_text=0x7f0c008e;
+        public static final int notification_time=0x7f0c008d;
+        public static final int notification_title=0x7f0c008c;
+        public static final int ownerNameEditText=0x7f0c0075;
+        public static final int p_loading_dialog=0x7f0c02c1;
+        public static final int p_splash_progress=0x7f0c041b;
+        public static final int p_webvalidcode_content_pay_auth_1=0x7f0c0362;
+        public static final int p_webvalidcode_content_pay_normal_2_1=0x7f0c032b;
+        public static final int p_webvalidcode_content_pay_normal_2_2=0x7f0c0348;
+        public static final int p_webvalidcode_content_pay_valuecard=0x7f0c039a;
+        public static final int p_webvalidcode_getpass=0x7f0c01cd;
+        public static final int p_webvalidcode_login=0x7f0c02dc;
+        public static final int p_webvalidcode_register=0x7f0c0412;
+        public static final int password=0x7f0c004d;
+        public static final int payAmountTextView=0x7f0c0064;
+        public static final int payButton=0x7f0c007f;
+        public static final int pay_amount=0x7f0c0069;
+        public static final int phoneNumber=0x7f0c0079;
+        public static final int progressBar1=0x7f0c0055;
+        public static final int protocolCheckBox=0x7f0c007d;
+        public static final int quit=0x7f0c0015;
+        public static final int restart_preview=0x7f0c0016;
+        public static final int retry=0x7f0c0047;
+        public static final int return_scan_result=0x7f0c0017;
+        public static final int rg_card_type_add_card=0x7f0c00c4;
+        public static final int rg_card_type_pay_normal=0x7f0c0317;
+        public static final int right_image=0x7f0c009a;
+        public static final int rl_account_main=0x7f0c009c;
+        public static final int rl_addcard=0x7f0c015c;
+        public static final int rl_agree_agreement_register=0x7f0c0414;
+        public static final int rl_agreement_register=0x7f0c0413;
+        public static final int rl_backspace=0x7f0c0204;
+        public static final int rl_bank_content_vc_pay_valuecard=0x7f0c0387;
+        public static final int rl_bank_title_vc_pay_valuecard=0x7f0c0385;
+        public static final int rl_bank_vc_pay_valuecard=0x7f0c0384;
+        public static final int rl_bg=0x7f0c01ea;
+        public static final int rl_bg_keyboard=0x7f0c02b4;
+        public static final int rl_body=0x7f0c0153;
+        public static final int rl_body_account=0x7f0c009d;
+        public static final int rl_body_add_card=0x7f0c00be;
+        public static final int rl_body_editinfo=0x7f0c0169;
+        public static final int rl_body_editpass=0x7f0c0190;
+        public static final int rl_body_login=0x7f0c02c6;
+        public static final int rl_body_register=0x7f0c03d9;
+        public static final int rl_bot_card_balance=0x7f0c0101;
+        public static final int rl_bot_card_balance_result=0x7f0c010b;
+        public static final int rl_bot_card_info=0x7f0c013d;
+        public static final int rl_bot_pay_info=0x7f0c03d4;
+        public static final int rl_btn_1=0x7f0c013f;
+        public static final int rl_btn_2=0x7f0c0142;
+        public static final int rl_btn_card_balance_result=0x7f0c010f;
+        public static final int rl_btn_card_bank_result=0x7f0c0123;
+        public static final int rl_btn_card_info=0x7f0c013e;
+        public static final int rl_btn_mm_add_card=0x7f0c00d5;
+        public static final int rl_btn_mm_pay_normal_2_2=0x7f0c0339;
+        public static final int rl_btn_yy_add_card=0x7f0c00d7;
+        public static final int rl_btn_yy_pay_normal_2_2=0x7f0c033b;
+        public static final int rl_button_account=0x7f0c00b5;
+        public static final int rl_button_editinfo=0x7f0c0188;
+        public static final int rl_button_editpass=0x7f0c01af;
+        public static final int rl_button_login=0x7f0c02dd;
+        public static final int rl_button_next_getpass=0x7f0c01ce;
+        public static final int rl_button_register=0x7f0c0418;
+        public static final int rl_card_balance_result_failure=0x7f0c010c;
+        public static final int rl_card_balance_result_success=0x7f0c0108;
+        public static final int rl_card_bank_result_failure=0x7f0c0121;
+        public static final int rl_card_bank_result_success=0x7f0c0111;
+        public static final int rl_card_id=0x7f0c012e;
+        public static final int rl_card_id_add_card=0x7f0c00c6;
+        public static final int rl_card_id_cb=0x7f0c00f7;
+        public static final int rl_card_id_content=0x7f0c0131;
+        public static final int rl_card_id_content_add_card=0x7f0c00c9;
+        public static final int rl_card_id_content_cb=0x7f0c00fa;
+        public static final int rl_card_id_content_pay_normal_2_1=0x7f0c031d;
+        public static final int rl_card_id_content_pay_normal_2_2=0x7f0c0333;
+        public static final int rl_card_id_content_vc_pay_valuecard=0x7f0c038c;
+        public static final int rl_card_id_pay_normal_2_1=0x7f0c031a;
+        public static final int rl_card_id_pay_normal_2_2=0x7f0c0330;
+        public static final int rl_card_id_title=0x7f0c012f;
+        public static final int rl_card_id_title_add_card=0x7f0c00c7;
+        public static final int rl_card_id_title_cb=0x7f0c00f8;
+        public static final int rl_card_id_title_pay_normal_2_1=0x7f0c031b;
+        public static final int rl_card_id_title_pay_normal_2_2=0x7f0c0331;
+        public static final int rl_card_id_title_vc_pay_valuecard=0x7f0c038a;
+        public static final int rl_card_id_vc_pay_valuecard=0x7f0c0389;
+        public static final int rl_card_main=0x7f0c0106;
+        public static final int rl_card_num=0x7f0c0138;
+        public static final int rl_card_num_content=0x7f0c013b;
+        public static final int rl_card_num_title=0x7f0c0139;
+        public static final int rl_card_pass_add_card=0x7f0c00cc;
+        public static final int rl_card_pass_content_add_card=0x7f0c00cf;
+        public static final int rl_card_pass_content_cb=0x7f0c00ff;
+        public static final int rl_card_pass_content_pay_normal_2_1=0x7f0c0323;
+        public static final int rl_card_pass_content_vc_pay_valuecard=0x7f0c0392;
+        public static final int rl_card_pass_pay_normal_2_1=0x7f0c0320;
+        public static final int rl_card_pass_title_add_card=0x7f0c00cd;
+        public static final int rl_card_pass_title_cb=0x7f0c00fd;
+        public static final int rl_card_pass_title_pay_normal_2_1=0x7f0c0321;
+        public static final int rl_card_pass_title_vc_pay_valuecard=0x7f0c0390;
+        public static final int rl_card_pass_vc_pay_valuecard=0x7f0c038f;
+        public static final int rl_card_type=0x7f0c0133;
+        public static final int rl_card_type_content=0x7f0c0136;
+        public static final int rl_card_type_title=0x7f0c0134;
+        public static final int rl_card_valid_add_card=0x7f0c00cb;
+        public static final int rl_card_valid_cb=0x7f0c00fc;
+        public static final int rl_card_valid_pay_normal_2_1=0x7f0c031f;
+        public static final int rl_card_valid_vc_pay_valuecard=0x7f0c038e;
+        public static final int rl_cardid=0x7f0c014f;
+        public static final int rl_cardlist=0x7f0c0158;
+        public static final int rl_cardlist_content=0x7f0c015a;
+        public static final int rl_cardlist_hint=0x7f0c0159;
+        public static final int rl_cardname=0x7f0c014d;
+        public static final int rl_cardtype_add_card=0x7f0c00bf;
+        public static final int rl_cardtype_content_add_card=0x7f0c00c2;
+        public static final int rl_cardtype_content_pay_nomal=0x7f0c0315;
+        public static final int rl_cardtype_pay_normal_2=0x7f0c0312;
+        public static final int rl_cardtype_title_add_card=0x7f0c00c0;
+        public static final int rl_cardtype_title_pay_nomal=0x7f0c0313;
+        public static final int rl_check_button_cb=0x7f0c0102;
+        public static final int rl_check_cb=0x7f0c0103;
+        public static final int rl_choose_card_pay_auth_2=0x7f0c0370;
+        public static final int rl_confirm_newpass_getpass=0x7f0c01e0;
+        public static final int rl_confirm_newpass_getpass_content=0x7f0c01e3;
+        public static final int rl_confirm_newpass_getpass_title=0x7f0c01e1;
+        public static final int rl_content=0x7f0c014c;
+        public static final int rl_content_card_balance=0x7f0c00f6;
+        public static final int rl_content_card_info=0x7f0c012d;
+        public static final int rl_content_editinfo=0x7f0c018d;
+        public static final int rl_content_login=0x7f0c0160;
+        public static final int rl_content_pay_info=0x7f0c03c9;
+        public static final int rl_content_pay_it=0x7f0c02f7;
+        public static final int rl_content_pay_main=0x7f0c03c4;
+        public static final int rl_cvn2_add_card=0x7f0c00da;
+        public static final int rl_cvn2_content_add_card=0x7f0c00dd;
+        public static final int rl_cvn2_content_pay_normal_2_2=0x7f0c0340;
+        public static final int rl_cvn2_pay_normal_2_2=0x7f0c033d;
+        public static final int rl_cvn2_title_add_card=0x7f0c00db;
+        public static final int rl_cvn2_title_pay_normal_2_2=0x7f0c033e;
+        public static final int rl_details=0x7f0c03a0;
+        public static final int rl_edit_info=0x7f0c0164;
+        public static final int rl_edit_pass=0x7f0c018f;
+        public static final int rl_email_account=0x7f0c00af;
+        public static final int rl_email_account_content=0x7f0c00b2;
+        public static final int rl_email_account_title=0x7f0c00b0;
+        public static final int rl_email_register=0x7f0c03f4;
+        public static final int rl_email_register_content=0x7f0c03f7;
+        public static final int rl_email_register_title=0x7f0c03f5;
+        public static final int rl_enter_menu=0x7f0c0264;
+        public static final int rl_getrpass_login_content=0x7f0c02d4;
+        public static final int rl_header=0x7f0c009f;
+        public static final int rl_hint_editinfo=0x7f0c018b;
+        public static final int rl_hint_login=0x7f0c02de;
+        public static final int rl_image_dialog=0x7f0c02be;
+        public static final int rl_info_account=0x7f0c00a4;
+        public static final int rl_info_bot_account=0x7f0c00b4;
+        public static final int rl_info_bot_pay_main=0x7f0c03c1;
+        public static final int rl_info_getpass=0x7f0c01b6;
+        public static final int rl_info_pay_auth_1=0x7f0c034d;
+        public static final int rl_info_pay_auth_2=0x7f0c036b;
+        public static final int rl_info_pay_lose_auth_2=0x7f0c0366;
+        public static final int rl_info_pay_lose_btn_auth_2=0x7f0c0368;
+        public static final int rl_info_pay_lose_hint_auth_2=0x7f0c0367;
+        public static final int rl_info_pay_main=0x7f0c03a2;
+        public static final int rl_info_pay_normal_1=0x7f0c0302;
+        public static final int rl_info_pay_normal_2=0x7f0c0311;
+        public static final int rl_info_pay_normal_2_1=0x7f0c0319;
+        public static final int rl_info_pay_normal_2_2=0x7f0c032f;
+        public static final int rl_info_pay_valuecard_1=0x7f0c0383;
+        public static final int rl_info_title_pay_main=0x7f0c03a1;
+        public static final int rl_key0=0x7f0c0202;
+        public static final int rl_key0_toast=0x7f0c027c;
+        public static final int rl_key1=0x7f0c01ee;
+        public static final int rl_key1_toast=0x7f0c0268;
+        public static final int rl_key2=0x7f0c01f0;
+        public static final int rl_key2_toast=0x7f0c026a;
+        public static final int rl_key3=0x7f0c01f2;
+        public static final int rl_key3_toast=0x7f0c026c;
+        public static final int rl_key4=0x7f0c01f4;
+        public static final int rl_key4_toast=0x7f0c026e;
+        public static final int rl_key5=0x7f0c01f7;
+        public static final int rl_key5_toast=0x7f0c0271;
+        public static final int rl_key6=0x7f0c01f9;
+        public static final int rl_key6_toast=0x7f0c0273;
+        public static final int rl_key7=0x7f0c01fb;
+        public static final int rl_key7_toast=0x7f0c0275;
+        public static final int rl_key8=0x7f0c01fd;
+        public static final int rl_key8_toast=0x7f0c0277;
+        public static final int rl_key9=0x7f0c0200;
+        public static final int rl_key9_toast=0x7f0c027a;
+        public static final int rl_keyA=0x7f0c021d;
+        public static final int rl_keyA_toast=0x7f0c0293;
+        public static final int rl_keyB=0x7f0c023a;
+        public static final int rl_keyB_toast=0x7f0c02ad;
+        public static final int rl_keyC=0x7f0c0236;
+        public static final int rl_keyC_toast=0x7f0c02a9;
+        public static final int rl_keyD=0x7f0c0221;
+        public static final int rl_keyD_toast=0x7f0c0297;
+        public static final int rl_keyE=0x7f0c020c;
+        public static final int rl_keyE_toast=0x7f0c0283;
+        public static final int rl_keyF=0x7f0c0223;
+        public static final int rl_keyF_toast=0x7f0c0299;
+        public static final int rl_keyG=0x7f0c0225;
+        public static final int rl_keyG_toast=0x7f0c029b;
+        public static final int rl_keyH=0x7f0c0227;
+        public static final int rl_keyH_toast=0x7f0c029d;
+        public static final int rl_keyI=0x7f0c0216;
+        public static final int rl_keyI_toast=0x7f0c028d;
+        public static final int rl_keyJ=0x7f0c0229;
+        public static final int rl_keyJ_toast=0x7f0c029f;
+        public static final int rl_keyK=0x7f0c022b;
+        public static final int rl_keyK_toast=0x7f0c02a1;
+        public static final int rl_keyL=0x7f0c022d;
+        public static final int rl_keyL_toast=0x7f0c02a3;
+        public static final int rl_keyM=0x7f0c023e;
+        public static final int rl_keyM_toast=0x7f0c02b1;
+        public static final int rl_keyN=0x7f0c023c;
+        public static final int rl_keyN_toast=0x7f0c02af;
+        public static final int rl_keyO=0x7f0c0218;
+        public static final int rl_keyO_toast=0x7f0c028f;
+        public static final int rl_keyP=0x7f0c021a;
+        public static final int rl_keyP_toast=0x7f0c0291;
+        public static final int rl_keyQ=0x7f0c0208;
+        public static final int rl_keyQ_toast=0x7f0c027f;
+        public static final int rl_keyR=0x7f0c020e;
+        public static final int rl_keyR_toast=0x7f0c0285;
+        public static final int rl_keyS=0x7f0c021f;
+        public static final int rl_keyS_toast=0x7f0c0295;
+        public static final int rl_keyT=0x7f0c0210;
+        public static final int rl_keyT_toast=0x7f0c0287;
+        public static final int rl_keyU=0x7f0c0214;
+        public static final int rl_keyU_toast=0x7f0c028b;
+        public static final int rl_keyV=0x7f0c0238;
+        public static final int rl_keyV_toast=0x7f0c02ab;
+        public static final int rl_keyW=0x7f0c020a;
+        public static final int rl_keyW_toast=0x7f0c0281;
+        public static final int rl_keyX=0x7f0c0234;
+        public static final int rl_keyX_toast=0x7f0c02a7;
+        public static final int rl_keyY=0x7f0c0212;
+        public static final int rl_keyY_toast=0x7f0c0289;
+        public static final int rl_keyZ=0x7f0c0232;
+        public static final int rl_keyZ_toast=0x7f0c02a5;
+        public static final int rl_key_menu=0x7f0c025c;
+        public static final int rl_keyboard_background=0x7f0c01e7;
+        public static final int rl_letter=0x7f0c0206;
+        public static final int rl_letter_backspace=0x7f0c0240;
+        public static final int rl_letter_line1=0x7f0c0207;
+        public static final int rl_letter_line2=0x7f0c021c;
+        public static final int rl_letter_line3=0x7f0c022f;
+        public static final int rl_letter_menu=0x7f0c0260;
+        public static final int rl_letter_size=0x7f0c0230;
+        public static final int rl_letter_toast=0x7f0c027e;
+        public static final int rl_line1=0x7f0c01ed;
+        public static final int rl_line1_menu=0x7f0c025d;
+        public static final int rl_line1_toast=0x7f0c0267;
+        public static final int rl_line2=0x7f0c01f6;
+        public static final int rl_line2_toast=0x7f0c0270;
+        public static final int rl_line3=0x7f0c01ff;
+        public static final int rl_line3_toast=0x7f0c0279;
+        public static final int rl_loading_dialog=0x7f0c02bd;
+        public static final int rl_logo=0x7f0c014a;
+        public static final int rl_merchant_name=0x7f0c03a3;
+        public static final int rl_merchant_name_content=0x7f0c03a6;
+        public static final int rl_merchant_name_title=0x7f0c03a4;
+        public static final int rl_mobilevalidcode_add_card=0x7f0c00e4;
+        public static final int rl_mobilevalidcode_content_add_card=0x7f0c00e7;
+        public static final int rl_mobilevalidcode_content_pay_auth_2=0x7f0c037c;
+        public static final int rl_mobilevalidcode_content_pay_normal=0x7f0c030b;
+        public static final int rl_mobilevalidcode_pay_auth_2=0x7f0c0379;
+        public static final int rl_mobilevalidcode_pay_normal=0x7f0c0308;
+        public static final int rl_mobilevalidcode_title_add_card=0x7f0c00e5;
+        public static final int rl_mobilevalidcode_title_pay_auth_2=0x7f0c037a;
+        public static final int rl_mobilevalidcode_title_pay_normal=0x7f0c0309;
+        public static final int rl_newpass_getpass=0x7f0c01db;
+        public static final int rl_newpass_getpass_content=0x7f0c01de;
+        public static final int rl_newpass_getpass_title=0x7f0c01dc;
+        public static final int rl_next_getpass=0x7f0c01d0;
+        public static final int rl_next_pay_auth_1=0x7f0c0363;
+        public static final int rl_no_cardbank=0x7f0c0154;
+        public static final int rl_no_cardbank_content=0x7f0c0156;
+        public static final int rl_no_cardbank_hint=0x7f0c0155;
+        public static final int rl_number=0x7f0c01ec;
+        public static final int rl_number_menu=0x7f0c025e;
+        public static final int rl_number_toast=0x7f0c0266;
+        public static final int rl_order_id=0x7f0c03a8;
+        public static final int rl_order_id_content=0x7f0c03ab;
+        public static final int rl_order_id_title=0x7f0c03a9;
+        public static final int rl_order_time=0x7f0c03b2;
+        public static final int rl_order_time_content=0x7f0c03b5;
+        public static final int rl_order_time_title=0x7f0c03b3;
+        public static final int rl_pan_card_bank_result=0x7f0c0117;
+        public static final int rl_pan_card_bank_result_content=0x7f0c011a;
+        public static final int rl_pan_card_bank_result_title=0x7f0c0118;
+        public static final int rl_pass_content_pay_auth_1=0x7f0c0357;
+        public static final int rl_pass_pay_auth_1=0x7f0c0354;
+        public static final int rl_pass_title_pay_auth_1=0x7f0c0355;
+        public static final int rl_pay_add_card=0x7f0c00ed;
+        public static final int rl_pay_alert=0x7f0c015d;
+        public static final int rl_pay_alert_1_content=0x7f0c0161;
+        public static final int rl_pay_alert_2_content=0x7f0c0162;
+        public static final int rl_pay_alert_bot_card_info=0x7f0c0149;
+        public static final int rl_pay_alert_card_info=0x7f0c0145;
+        public static final int rl_pay_alert_content_card_info=0x7f0c0147;
+        public static final int rl_pay_alert_title=0x7f0c015f;
+        public static final int rl_pay_auth=0x7f0c034c;
+        public static final int rl_pay_button=0x7f0c03c2;
+        public static final int rl_pay_button_add_card=0x7f0c00ec;
+        public static final int rl_pay_card_id_content_pay_auth_2=0x7f0c036f;
+        public static final int rl_pay_card_id_pay_auth_2=0x7f0c036c;
+        public static final int rl_pay_card_id_title_pay_auth_2=0x7f0c036d;
+        public static final int rl_pay_it=0x7f0c02e6;
+        public static final int rl_pay_main_content=0x7f0c039e;
+        public static final int rl_pay_main_loading=0x7f0c041a;
+        public static final int rl_pay_normal=0x7f0c0301;
+        public static final int rl_pay_pay_auth_2=0x7f0c037f;
+        public static final int rl_pay_pay_normal=0x7f0c030e;
+        public static final int rl_pay_pay_normal_2_1=0x7f0c032c;
+        public static final int rl_pay_pay_normal_2_2=0x7f0c0349;
+        public static final int rl_pay_pay_valuecard=0x7f0c039b;
+        public static final int rl_pay_super=0x7f0c02e5;
+        public static final int rl_pay_valuecard=0x7f0c0382;
+        public static final int rl_payit_hint=0x7f0c02eb;
+        public static final int rl_payit_hint_bot=0x7f0c02ef;
+        public static final int rl_payit_hint_content=0x7f0c02ed;
+        public static final int rl_payit_hint_title=0x7f0c02ec;
+        public static final int rl_price=0x7f0c02fb;
+        public static final int rl_price_content=0x7f0c02ff;
+        public static final int rl_price_pay_it=0x7f0c02fc;
+        public static final int rl_price_title=0x7f0c02fd;
+        public static final int rl_progress_dialog=0x7f0c02c0;
+        public static final int rl_psw_window=0x7f0c01e8;
+        public static final int rl_question_Custem_register=0x7f0c0404;
+        public static final int rl_question_getpass=0x7f0c01d1;
+        public static final int rl_question_getpass_content=0x7f0c01d4;
+        public static final int rl_question_getpass_title=0x7f0c01d2;
+        public static final int rl_question_register=0x7f0c03fe;
+        public static final int rl_question_register_content=0x7f0c0401;
+        public static final int rl_question_register_title=0x7f0c03ff;
+        public static final int rl_question_result_getpass=0x7f0c01d6;
+        public static final int rl_question_result_getpass_content=0x7f0c01d9;
+        public static final int rl_question_result_getpass_title=0x7f0c01d7;
+        public static final int rl_question_title=0x7f0c0405;
+        public static final int rl_register=0x7f0c03d5;
+        public static final int rl_result=0x7f0c03ca;
+        public static final int rl_result_content=0x7f0c03cd;
+        public static final int rl_result_psw_getpass=0x7f0c01e5;
+        public static final int rl_result_register=0x7f0c0407;
+        public static final int rl_result_register_content=0x7f0c040a;
+        public static final int rl_result_register_title=0x7f0c0408;
+        public static final int rl_result_title=0x7f0c03cb;
+        public static final int rl_rl_getpass_pay_auth_1=0x7f0c035a;
+        public static final int rl_rl_pass_content_pay_auth_1=0x7f0c0358;
+        public static final int rl_rl_transaction_types_title=0x7f0c03bd;
+        public static final int rl_see_agreement_register=0x7f0c0416;
+        public static final int rl_set=0x7f0c01eb;
+        public static final int rl_spnr_question_register=0x7f0c0402;
+        public static final int rl_status=0x7f0c0151;
+        public static final int rl_summary_price=0x7f0c03ad;
+        public static final int rl_summary_price_content=0x7f0c03b0;
+        public static final int rl_summary_price_title=0x7f0c03ae;
+        public static final int rl_symbol=0x7f0c0242;
+        public static final int rl_symbol_0=0x7f0c0258;
+        public static final int rl_symbol_1=0x7f0c0244;
+        public static final int rl_symbol_2=0x7f0c0246;
+        public static final int rl_symbol_3=0x7f0c0248;
+        public static final int rl_symbol_4=0x7f0c024a;
+        public static final int rl_symbol_5=0x7f0c024d;
+        public static final int rl_symbol_6=0x7f0c024f;
+        public static final int rl_symbol_7=0x7f0c0251;
+        public static final int rl_symbol_8=0x7f0c0253;
+        public static final int rl_symbol_9=0x7f0c0256;
+        public static final int rl_symbol_backspace=0x7f0c025a;
+        public static final int rl_symbol_line1=0x7f0c0243;
+        public static final int rl_symbol_line2=0x7f0c024c;
+        public static final int rl_symbol_line3=0x7f0c0255;
+        public static final int rl_symbol_menu=0x7f0c0262;
+        public static final int rl_tel_card_bank_result=0x7f0c011c;
+        public static final int rl_tel_card_bank_result_content=0x7f0c011f;
+        public static final int rl_tel_card_bank_result_title=0x7f0c011d;
+        public static final int rl_tel_editpass=0x7f0c01a4;
+        public static final int rl_tel_editpass_content=0x7f0c01a7;
+        public static final int rl_tel_editpass_title=0x7f0c01a5;
+        public static final int rl_telnum_account=0x7f0c00aa;
+        public static final int rl_telnum_account_content=0x7f0c00ad;
+        public static final int rl_telnum_account_title=0x7f0c00ab;
+        public static final int rl_telnum_add_card=0x7f0c00df;
+        public static final int rl_telnum_content_add_card=0x7f0c00e2;
+        public static final int rl_telnum_content_pay_auth_2=0x7f0c0377;
+        public static final int rl_telnum_content_pay_normal=0x7f0c0306;
+        public static final int rl_telnum_editinfo=0x7f0c0174;
+        public static final int rl_telnum_editinfo_content=0x7f0c0176;
+        public static final int rl_telnum_editinfo_title=0x7f0c0175;
+        public static final int rl_telnum_getpass=0x7f0c01bc;
+        public static final int rl_telnum_getpass_content=0x7f0c01bf;
+        public static final int rl_telnum_getpass_title=0x7f0c01bd;
+        public static final int rl_telnum_new_editinfo=0x7f0c017d;
+        public static final int rl_telnum_new_editinfo_content=0x7f0c0180;
+        public static final int rl_telnum_new_editinfo_title=0x7f0c017e;
+        public static final int rl_telnum_old_editinfo=0x7f0c0178;
+        public static final int rl_telnum_old_editinfo_content=0x7f0c017b;
+        public static final int rl_telnum_old_editinfo_title=0x7f0c0179;
+        public static final int rl_telnum_pay_auth_2=0x7f0c0374;
+        public static final int rl_telnum_pay_normal=0x7f0c0303;
+        public static final int rl_telnum_register=0x7f0c03e9;
+        public static final int rl_telnum_register_content=0x7f0c03ec;
+        public static final int rl_telnum_register_title=0x7f0c03ea;
+        public static final int rl_telnum_title_add_card=0x7f0c00e0;
+        public static final int rl_telnum_title_pay_auth_2=0x7f0c0375;
+        public static final int rl_telnum_title_pay_normal=0x7f0c0304;
+        public static final int rl_tips=0x7f0c02f4;
+        public static final int rl_tips_pay_it=0x7f0c02f5;
+        public static final int rl_title_account=0x7f0c00a3;
+        public static final int rl_title_bot_editinfo=0x7f0c018e;
+        public static final int rl_title_bot_login=0x7f0c02e1;
+        public static final int rl_title_bot_pay_it=0x7f0c02fa;
+        public static final int rl_title_bot_pay_main=0x7f0c03c6;
+        public static final int rl_title_bot_title=0x7f0c0163;
+        public static final int rl_title_card_balance=0x7f0c00f5;
+        public static final int rl_title_card_balance_result=0x7f0c0107;
+        public static final int rl_title_card_info=0x7f0c012c;
+        public static final int rl_title_editinfo=0x7f0c018c;
+        public static final int rl_title_login=0x7f0c02df;
+        public static final int rl_title_pay_info=0x7f0c03c8;
+        public static final int rl_title_pay_main=0x7f0c03c3;
+        public static final int rl_trading_currency=0x7f0c03b7;
+        public static final int rl_trading_currency_content=0x7f0c03ba;
+        public static final int rl_trading_currency_title=0x7f0c03b8;
+        public static final int rl_transaction_types=0x7f0c03bc;
+        public static final int rl_transaction_types_content=0x7f0c03bf;
+        public static final int rl_type_card_bank_result=0x7f0c0112;
+        public static final int rl_type_card_bank_result_content=0x7f0c0115;
+        public static final int rl_type_card_bank_result_title=0x7f0c0113;
+        public static final int rl_uerinfo=0x7f0c0420;
+        public static final int rl_use_default_add_card=0x7f0c00ea;
+        public static final int rl_user_getpass=0x7f0c01b2;
+        public static final int rl_user_login=0x7f0c02c7;
+        public static final int rl_user_register=0x7f0c03d6;
+        public static final int rl_username_account=0x7f0c00a5;
+        public static final int rl_username_account_content=0x7f0c00a8;
+        public static final int rl_username_account_title=0x7f0c00a6;
+        public static final int rl_username_add_card=0x7f0c00b9;
+        public static final int rl_username_content_add_card=0x7f0c00bc;
+        public static final int rl_username_content_pay_auth_1=0x7f0c0351;
+        public static final int rl_username_editinfo=0x7f0c016a;
+        public static final int rl_username_editinfo_content=0x7f0c016d;
+        public static final int rl_username_editinfo_title=0x7f0c016b;
+        public static final int rl_username_getpass=0x7f0c01b7;
+        public static final int rl_username_getpass_content=0x7f0c01ba;
+        public static final int rl_username_getpass_title=0x7f0c01b8;
+        public static final int rl_username_login=0x7f0c02ca;
+        public static final int rl_username_login_content=0x7f0c02cd;
+        public static final int rl_username_login_title=0x7f0c02cb;
+        public static final int rl_username_pay_auth_1=0x7f0c034e;
+        public static final int rl_username_register=0x7f0c03da;
+        public static final int rl_username_register_content=0x7f0c03dd;
+        public static final int rl_username_register_title=0x7f0c03db;
+        public static final int rl_username_title_add_card=0x7f0c00ba;
+        public static final int rl_username_title_pay_auth_1=0x7f0c034f;
+        public static final int rl_userpass_editinfo=0x7f0c016f;
+        public static final int rl_userpass_editinfo_content=0x7f0c0172;
+        public static final int rl_userpass_editinfo_title=0x7f0c0170;
+        public static final int rl_userpass_login=0x7f0c02d0;
+        public static final int rl_userpass_login_content=0x7f0c02d3;
+        public static final int rl_userpass_login_title=0x7f0c02d1;
+        public static final int rl_userpass_new_editpass=0x7f0c019a;
+        public static final int rl_userpass_new_editpass_content=0x7f0c019d;
+        public static final int rl_userpass_new_editpass_title=0x7f0c019b;
+        public static final int rl_userpass_old_editpass=0x7f0c0195;
+        public static final int rl_userpass_old_editpass_content=0x7f0c0198;
+        public static final int rl_userpass_old_editpass_title=0x7f0c0196;
+        public static final int rl_userpass_re_editpass=0x7f0c019f;
+        public static final int rl_userpass_re_editpass_content=0x7f0c01a2;
+        public static final int rl_userpass_re_editpass_title=0x7f0c01a0;
+        public static final int rl_userpass_re_register=0x7f0c03e4;
+        public static final int rl_userpass_re_register_content=0x7f0c03e7;
+        public static final int rl_userpass_re_register_title=0x7f0c03e5;
+        public static final int rl_userpass_register=0x7f0c03df;
+        public static final int rl_userpass_register_content=0x7f0c03e2;
+        public static final int rl_userpass_register_title=0x7f0c03e0;
+        public static final int rl_validaty_add_card=0x7f0c00d1;
+        public static final int rl_validaty_content_add_card=0x7f0c00d4;
+        public static final int rl_validaty_content_pay_normal_2_2=0x7f0c0338;
+        public static final int rl_validaty_pay_normal_2_2=0x7f0c0335;
+        public static final int rl_validaty_title_add_card=0x7f0c00d2;
+        public static final int rl_validaty_title_pay_normal_2_2=0x7f0c0336;
+        public static final int rl_validcode_editinfo=0x7f0c0182;
+        public static final int rl_validcode_editinfo_content=0x7f0c0185;
+        public static final int rl_validcode_editinfo_title=0x7f0c0183;
+        public static final int rl_validcode_editpass=0x7f0c01a9;
+        public static final int rl_validcode_editpass_content=0x7f0c01ac;
+        public static final int rl_validcode_editpass_title=0x7f0c01aa;
+        public static final int rl_validcode_getpass=0x7f0c01c1;
+        public static final int rl_validcode_getpass_content=0x7f0c01c4;
+        public static final int rl_validcode_getpass_title=0x7f0c01c2;
+        public static final int rl_validcode_register=0x7f0c03ee;
+        public static final int rl_validcode_register_content=0x7f0c03f1;
+        public static final int rl_validcode_register_title=0x7f0c03ef;
+        public static final int rl_water=0x7f0c03cf;
+        public static final int rl_water_content=0x7f0c03d2;
+        public static final int rl_water_title=0x7f0c03d0;
+        public static final int rl_webvalidcode_content=0x7f0c02d9;
+        public static final int rl_webvalidcode_content_pay_auth_1=0x7f0c035f;
+        public static final int rl_webvalidcode_content_pay_normal_2_1=0x7f0c0328;
+        public static final int rl_webvalidcode_content_pay_normal_2_2=0x7f0c0345;
+        public static final int rl_webvalidcode_content_pay_valuecard=0x7f0c0397;
+        public static final int rl_webvalidcode_getpass=0x7f0c01c7;
+        public static final int rl_webvalidcode_getpass_content=0x7f0c01ca;
+        public static final int rl_webvalidcode_getpass_title=0x7f0c01c8;
+        public static final int rl_webvalidcode_login=0x7f0c02d6;
+        public static final int rl_webvalidcode_pay_auth_1=0x7f0c035c;
+        public static final int rl_webvalidcode_pay_normal_2_1=0x7f0c0325;
+        public static final int rl_webvalidcode_pay_normal_2_2=0x7f0c0342;
+        public static final int rl_webvalidcode_pay_valuecard=0x7f0c0394;
+        public static final int rl_webvalidcode_register=0x7f0c040c;
+        public static final int rl_webvalidcode_register_content=0x7f0c040f;
+        public static final int rl_webvalidcode_register_title=0x7f0c040d;
+        public static final int rl_webvalidcode_title=0x7f0c02d7;
+        public static final int rl_webvalidcode_title_pay_auth_1=0x7f0c035d;
+        public static final int rl_webvalidcode_title_pay_normal_2_1=0x7f0c0326;
+        public static final int rl_webvalidcode_title_pay_normal_2_2=0x7f0c0343;
+        public static final int rl_webvalidcode_title_pay_valuecard=0x7f0c0395;
+        public static final int rl_welcome_account=0x7f0c009e;
+        public static final int rl_welcome_editinfo=0x7f0c0165;
+        public static final int rl_welcome_editpass=0x7f0c0191;
+        public static final int rl_welcome_pay_auth=0x7f0c02f0;
+        public static final int rl_welcome_register=0x7f0c03f9;
+        public static final int rl_welcome_register_content=0x7f0c03fc;
+        public static final int rl_welcome_register_title=0x7f0c03fa;
+        public static final int scrollView1=0x7f0c0081;
+        public static final int search_book_contents_failed=0x7f0c0018;
+        public static final int search_book_contents_succeeded=0x7f0c0019;
+        public static final int sendsmsTip=0x7f0c0084;
+        public static final int showCustom=0x7f0c0008;
+        public static final int showHome=0x7f0c0005;
+        public static final int showTitle=0x7f0c0007;
+        public static final int smsCode=0x7f0c007b;
+        public static final int spnr_bank_vc_pay_valuecard=0x7f0c0388;
+        public static final int spnr_question_register=0x7f0c0403;
+        public static final int sv_login=0x7f0c02c5;
+        public static final int sv_pay_info=0x7f0c039f;
+        public static final int tabMode=0x7f0c0003;
+        public static final int tab_call=0x7f0c0041;
+        public static final int tab_fight=0x7f0c0043;
+        public static final int tab_page=0x7f0c0040;
+        public static final int tab_story=0x7f0c0042;
+        public static final int tab_top=0x7f0c003f;
+        public static final int text=0x7f0c0127;
+        public static final int title=0x7f0c0094;
+        public static final int title_pay=0x7f0c006c;
+        public static final int title_text=0x7f0c009b;
+        public static final int title_view=0x7f0c003d;
+        public static final int top_layout=0x7f0c008f;
+        public static final int tv_bank_title_vc_pay_valuecard=0x7f0c0386;
+        public static final int tv_card_balance_result_failure_content=0x7f0c010e;
+        public static final int tv_card_balance_result_failure_title=0x7f0c010d;
+        public static final int tv_card_balance_result_success_content=0x7f0c010a;
+        public static final int tv_card_balance_result_success_title=0x7f0c0109;
+        public static final int tv_card_bank_result_failure_content=0x7f0c0122;
+        public static final int tv_card_id_content=0x7f0c0132;
+        public static final int tv_card_id_content_cb=0x7f0c00fb;
+        public static final int tv_card_id_title=0x7f0c0130;
+        public static final int tv_card_id_title_add_card=0x7f0c00c8;
+        public static final int tv_card_id_title_cb=0x7f0c00f9;
+        public static final int tv_card_id_title_pay_normal_2_1=0x7f0c031c;
+        public static final int tv_card_id_title_pay_normal_2_2=0x7f0c0332;
+        public static final int tv_card_id_title_vc_pay_valuecard=0x7f0c038b;
+        public static final int tv_card_num_content=0x7f0c013c;
+        public static final int tv_card_num_title=0x7f0c013a;
+        public static final int tv_card_pass_title_add_card=0x7f0c00ce;
+        public static final int tv_card_pass_title_cb=0x7f0c00fe;
+        public static final int tv_card_pass_title_pay_normal_2_1=0x7f0c0322;
+        public static final int tv_card_pass_title_vc_pay_valuecard=0x7f0c0391;
+        public static final int tv_card_type_content=0x7f0c0137;
+        public static final int tv_card_type_title=0x7f0c0135;
+        public static final int tv_cardid=0x7f0c0150;
+        public static final int tv_cardname=0x7f0c014e;
+        public static final int tv_cardtype_title_add_card=0x7f0c00c1;
+        public static final int tv_cardtype_title_pay_nomal=0x7f0c0314;
+        public static final int tv_confirm_newpass_getpass=0x7f0c01e2;
+        public static final int tv_content_login=0x7f0c02e0;
+        public static final int tv_content_pay_main=0x7f0c03c5;
+        public static final int tv_cvn2_title_add_card=0x7f0c00dc;
+        public static final int tv_cvn2_title_pay_normal_2_2=0x7f0c033f;
+        public static final int tv_email_account=0x7f0c00b1;
+        public static final int tv_email_content_account=0x7f0c00b3;
+        public static final int tv_email_register=0x7f0c03f6;
+        public static final int tv_header=0x7f0c02e4;
+        public static final int tv_hint_pay_it=0x7f0c02f8;
+        public static final int tv_key0_toast=0x7f0c027d;
+        public static final int tv_key1_toast=0x7f0c0269;
+        public static final int tv_key2_toast=0x7f0c026b;
+        public static final int tv_key3_toast=0x7f0c026d;
+        public static final int tv_key4_toast=0x7f0c026f;
+        public static final int tv_key5_toast=0x7f0c0272;
+        public static final int tv_key6_toast=0x7f0c0274;
+        public static final int tv_key7_toast=0x7f0c0276;
+        public static final int tv_key8_toast=0x7f0c0278;
+        public static final int tv_key9_toast=0x7f0c027b;
+        public static final int tv_keyA_toast=0x7f0c0294;
+        public static final int tv_keyB_toast=0x7f0c02ae;
+        public static final int tv_keyC_toast=0x7f0c02aa;
+        public static final int tv_keyD_toast=0x7f0c0298;
+        public static final int tv_keyE_toast=0x7f0c0284;
+        public static final int tv_keyF_toast=0x7f0c029a;
+        public static final int tv_keyG_toast=0x7f0c029c;
+        public static final int tv_keyH_toast=0x7f0c029e;
+        public static final int tv_keyI_toast=0x7f0c028e;
+        public static final int tv_keyJ_toast=0x7f0c02a0;
+        public static final int tv_keyK_toast=0x7f0c02a2;
+        public static final int tv_keyL_toast=0x7f0c02a4;
+        public static final int tv_keyM_toast=0x7f0c02b2;
+        public static final int tv_keyN_toast=0x7f0c02b0;
+        public static final int tv_keyO_toast=0x7f0c0290;
+        public static final int tv_keyP_toast=0x7f0c0292;
+        public static final int tv_keyQ_toast=0x7f0c0280;
+        public static final int tv_keyR_toast=0x7f0c0286;
+        public static final int tv_keyS_toast=0x7f0c0296;
+        public static final int tv_keyT_toast=0x7f0c0288;
+        public static final int tv_keyU_toast=0x7f0c028c;
+        public static final int tv_keyV_toast=0x7f0c02ac;
+        public static final int tv_keyW_toast=0x7f0c0282;
+        public static final int tv_keyX_toast=0x7f0c02a8;
+        public static final int tv_keyY_toast=0x7f0c028a;
+        public static final int tv_keyZ_toast=0x7f0c02a6;
+        public static final int tv_loading_dialog=0x7f0c02c2;
+        public static final int tv_merchant_name_content=0x7f0c03a7;
+        public static final int tv_merchant_name_title=0x7f0c03a5;
+        public static final int tv_mobilevalidcode_title_add_card=0x7f0c00e6;
+        public static final int tv_mobilevalidcode_title_pay_auth_2=0x7f0c037b;
+        public static final int tv_mobilevalidcode_title_pay_normal=0x7f0c030a;
+        public static final int tv_newpass_getpass=0x7f0c01dd;
+        public static final int tv_no_cardbank=0x7f0c0157;
+        public static final int tv_order_id_content=0x7f0c03ac;
+        public static final int tv_order_id_title=0x7f0c03aa;
+        public static final int tv_order_time_content=0x7f0c03b6;
+        public static final int tv_order_time_title=0x7f0c03b4;
+        public static final int tv_pan_card_bank_result_content=0x7f0c011b;
+        public static final int tv_pan_card_bank_result_title=0x7f0c0119;
+        public static final int tv_pass_title_pay_auth_1=0x7f0c0356;
+        public static final int tv_pay_alert_content_card_info=0x7f0c0148;
+        public static final int tv_pay_alert_title_card_info=0x7f0c0146;
+        public static final int tv_pay_card_id_pan_pay_auth_2=0x7f0c0372;
+        public static final int tv_pay_card_id_panbank_pay_auth_2=0x7f0c0371;
+        public static final int tv_pay_card_id_title_pay_auth_2=0x7f0c036e;
+        public static final int tv_pay_main_inc=0x7f0c041e;
+        public static final int tv_pay_main_inc_2=0x7f0c041f;
+        public static final int tv_pay_main_loading=0x7f0c041c;
+        public static final int tv_pay_main_version=0x7f0c041d;
+        public static final int tv_payit_hint_content=0x7f0c02ee;
+        public static final int tv_price_content=0x7f0c0300;
+        public static final int tv_price_title=0x7f0c02fe;
+        public static final int tv_question_getpass=0x7f0c01d3;
+        public static final int tv_question_info_getpass=0x7f0c01d5;
+        public static final int tv_question_register=0x7f0c0400;
+        public static final int tv_question_result_getpass=0x7f0c01d8;
+        public static final int tv_result_content=0x7f0c03ce;
+        public static final int tv_result_pay_it=0x7f0c02f9;
+        public static final int tv_result_register=0x7f0c0409;
+        public static final int tv_result_title=0x7f0c03cc;
+        public static final int tv_summary_price_content=0x7f0c03b1;
+        public static final int tv_summary_price_title=0x7f0c03af;
+        public static final int tv_tel_card_bank_result_content=0x7f0c0120;
+        public static final int tv_tel_card_bank_result_title=0x7f0c011e;
+        public static final int tv_tel_content_editpass=0x7f0c01a8;
+        public static final int tv_tel_editpass=0x7f0c01a6;
+        public static final int tv_telnum_account=0x7f0c00ac;
+        public static final int tv_telnum_content_account=0x7f0c00ae;
+        public static final int tv_telnum_content_add_card=0x7f0c00e3;
+        public static final int tv_telnum_content_pay_auth_2=0x7f0c0378;
+        public static final int tv_telnum_getpass=0x7f0c01be;
+        public static final int tv_telnum_new_editinfo=0x7f0c017f;
+        public static final int tv_telnum_old_editinfo=0x7f0c017a;
+        public static final int tv_telnum_register=0x7f0c03eb;
+        public static final int tv_telnum_result_editinfo=0x7f0c0177;
+        public static final int tv_telnum_title_add_card=0x7f0c00e1;
+        public static final int tv_telnum_title_pay_auth_2=0x7f0c0376;
+        public static final int tv_telnum_title_pay_normal=0x7f0c0305;
+        public static final int tv_title_pay_it=0x7f0c02f6;
+        public static final int tv_trading_currency_content=0x7f0c03bb;
+        public static final int tv_trading_currency_title=0x7f0c03b9;
+        public static final int tv_transaction_types_content=0x7f0c03c0;
+        public static final int tv_transaction_types_title=0x7f0c03be;
+        public static final int tv_type_card_bank_result_content=0x7f0c0116;
+        public static final int tv_type_card_bank_result_title=0x7f0c0114;
+        public static final int tv_userinfo=0x7f0c0421;
+        public static final int tv_username_account=0x7f0c00a7;
+        public static final int tv_username_content_account=0x7f0c00a9;
+        public static final int tv_username_content_add_card=0x7f0c00bd;
+        public static final int tv_username_editinfo=0x7f0c016c;
+        public static final int tv_username_getpass=0x7f0c01b9;
+        public static final int tv_username_login=0x7f0c02cc;
+        public static final int tv_username_register=0x7f0c03dc;
+        public static final int tv_username_result_editinfo=0x7f0c016e;
+        public static final int tv_username_title_add_card=0x7f0c00bb;
+        public static final int tv_username_title_pay_auth_1=0x7f0c0350;
+        public static final int tv_userpass_editinfo=0x7f0c0171;
+        public static final int tv_userpass_login=0x7f0c02d2;
+        public static final int tv_userpass_new_editpass=0x7f0c019c;
+        public static final int tv_userpass_old_editpass=0x7f0c0197;
+        public static final int tv_userpass_re_editpass=0x7f0c01a1;
+        public static final int tv_userpass_re_register=0x7f0c03e6;
+        public static final int tv_userpass_register=0x7f0c03e1;
+        public static final int tv_validaty_title_add_card=0x7f0c00d3;
+        public static final int tv_validaty_title_pay_normal_2_2=0x7f0c0337;
+        public static final int tv_validcode_editinfo=0x7f0c0184;
+        public static final int tv_validcode_editpass=0x7f0c01ab;
+        public static final int tv_validcode_getpass=0x7f0c01c3;
+        public static final int tv_validcode_register=0x7f0c03f0;
+        public static final int tv_water_content=0x7f0c03d3;
+        public static final int tv_water_title=0x7f0c03d1;
+        public static final int tv_webvalidcode_getpass=0x7f0c01c9;
+        public static final int tv_webvalidcode_login=0x7f0c02d8;
+        public static final int tv_webvalidcode_register=0x7f0c040e;
+        public static final int tv_webvalidcode_title_pay_auth_1=0x7f0c035e;
+        public static final int tv_webvalidcode_title_pay_normal_2_1=0x7f0c0327;
+        public static final int tv_webvalidcode_title_pay_normal_2_2=0x7f0c0344;
+        public static final int tv_webvalidcode_title_pay_valuecard=0x7f0c0396;
+        public static final int tv_welcome_account=0x7f0c00a0;
+        public static final int tv_welcome_editinfo=0x7f0c0166;
+        public static final int tv_welcome_editpass=0x7f0c0192;
+        public static final int tv_welcome_hint_account=0x7f0c00a2;
+        public static final int tv_welcome_hint_editinfo=0x7f0c0168;
+        public static final int tv_welcome_hint_editpass=0x7f0c0194;
+        public static final int tv_welcome_hint_pay_auth=0x7f0c02f3;
+        public static final int tv_welcome_pay_auth=0x7f0c02f1;
+        public static final int tv_welcome_register=0x7f0c03fb;
+        public static final int useLogo=0x7f0c0004;
+        public static final int username=0x7f0c004c;
+        public static final int v_month=0x7f0c0061;
+        public static final int v_year=0x7f0c0062;
+        public static final int validateTextView=0x7f0c0070;
+        public static final int webview1=0x7f0c0054;
+        public static final int weibosdk_btnClose=0x7f0c0423;
+        public static final int weibosdk_btnPhoto=0x7f0c0424;
+        public static final int weibosdk_btnSend=0x7f0c0425;
+        public static final int weibosdk_etEdit=0x7f0c042d;
+        public static final int weibosdk_flPic=0x7f0c042a;
+        public static final int weibosdk_ivDelPic=0x7f0c042c;
+        public static final int weibosdk_ivImage=0x7f0c042b;
+        public static final int weibosdk_llImage=0x7f0c0426;
+        public static final int weibosdk_ll_text_limit_unit=0x7f0c0428;
+        public static final int weibosdk_rlTitle=0x7f0c0422;
+        public static final int weibosdk_rlTotal=0x7f0c0427;
+        public static final int weibosdk_tv_text_limit=0x7f0c0429;
+        public static final int welcome_page=0x7f0c0086;
+        public static final int wrap_content=0x7f0c0000;
+        public static final int wv=0x7f0c006e;
+    }
+    public static final class integer {
+        public static final int abs__max_action_buttons=0x7f0e0000;
     }
     public static final class layout {
-        public static final int activity_game=0x7f030000;
-        public static final int activity_login=0x7f030001;
-        public static final int activity_main=0x7f030002;
-        public static final int activity_weakaccount=0x7f030003;
-        public static final int ivitem=0x7f030004;
-        public static final int notification_item=0x7f030005;
-        public static final int notification_largeicon=0x7f030006;
-        public static final int notification_normal=0x7f030007;
-        public static final int set_mp_state=0x7f030008;
-        public static final int title_view=0x7f030009;
-        public static final int weibosdk_share_mblog_view=0x7f03000a;
+        public static final int abs__action_bar_home=0x7f030000;
+        public static final int abs__action_bar_tab=0x7f030001;
+        public static final int abs__action_bar_tab_bar_view=0x7f030002;
+        public static final int abs__action_bar_title_item=0x7f030003;
+        public static final int abs__action_menu_item_layout=0x7f030004;
+        public static final int abs__action_menu_layout=0x7f030005;
+        public static final int abs__action_mode_bar=0x7f030006;
+        public static final int abs__action_mode_close_item=0x7f030007;
+        public static final int abs__activity_chooser_view=0x7f030008;
+        public static final int abs__activity_chooser_view_list_item=0x7f030009;
+        public static final int abs__list_menu_item_checkbox=0x7f03000a;
+        public static final int abs__list_menu_item_icon=0x7f03000b;
+        public static final int abs__list_menu_item_radio=0x7f03000c;
+        public static final int abs__popup_menu_item_layout=0x7f03000d;
+        public static final int abs__screen_action_bar=0x7f03000e;
+        public static final int abs__screen_action_bar_overlay=0x7f03000f;
+        public static final int abs__screen_simple=0x7f030010;
+        public static final int abs__screen_simple_overlay_action_mode=0x7f030011;
+        public static final int abs__search_dropdown_item_icons_2line=0x7f030012;
+        public static final int abs__search_view=0x7f030013;
+        public static final int abs__simple_dropdown_hint=0x7f030014;
+        public static final int activity_game=0x7f030015;
+        public static final int activity_login=0x7f030016;
+        public static final int activity_main=0x7f030017;
+        public static final int activity_weakaccount=0x7f030018;
+        public static final int capture=0x7f030019;
+        public static final int iapppay_oneclickpay_layout_date_view=0x7f03001a;
+        public static final int iapppay_oneclickpay_layout_input_cardno=0x7f03001b;
+        public static final int iapppay_oneclickpay_layout_orderinfo=0x7f03001c;
+        public static final int iapppay_oneclickpay_layout_pay_agreement=0x7f03001d;
+        public static final int iapppay_oneclickpay_layout_pay_bind_card=0x7f03001e;
+        public static final int iapppay_oneclickpay_layout_pay_dialog=0x7f03001f;
+        public static final int iapppay_oneclickpay_layout_smscode_dialog=0x7f030020;
+        public static final int iapppay_oneclickpay_layout_title=0x7f030021;
+        public static final int iapppay_oneclickpay_layout_welcome=0x7f030022;
+        public static final int ivitem=0x7f030023;
+        public static final int notification_item=0x7f030024;
+        public static final int notification_largeicon=0x7f030025;
+        public static final int notification_normal=0x7f030026;
+        public static final int set_mp_state=0x7f030027;
+        public static final int sherlock_spinner_dropdown_item=0x7f030028;
+        public static final int sherlock_spinner_item=0x7f030029;
+        public static final int title_view=0x7f03002a;
+        public static final int upomp_bypay_account_main=0x7f03002b;
+        public static final int upomp_bypay_add_card=0x7f03002c;
+        public static final int upomp_bypay_bottom=0x7f03002d;
+        public static final int upomp_bypay_card_balance=0x7f03002e;
+        public static final int upomp_bypay_card_balance_result=0x7f03002f;
+        public static final int upomp_bypay_card_bank_result=0x7f030030;
+        public static final int upomp_bypay_card_dialog=0x7f030031;
+        public static final int upomp_bypay_card_info=0x7f030032;
+        public static final int upomp_bypay_card_list_item=0x7f030033;
+        public static final int upomp_bypay_card_main=0x7f030034;
+        public static final int upomp_bypay_edit_info=0x7f030035;
+        public static final int upomp_bypay_edit_pass=0x7f030036;
+        public static final int upomp_bypay_get_pass=0x7f030037;
+        public static final int upomp_bypay_keyboard=0x7f030038;
+        public static final int upomp_bypay_keyboard_dialog=0x7f030039;
+        public static final int upomp_bypay_keyboard_letter=0x7f03003a;
+        public static final int upomp_bypay_keyboard_num=0x7f03003b;
+        public static final int upomp_bypay_keyboard_symbol=0x7f03003c;
+        public static final int upomp_bypay_loading1_dialog=0x7f03003d;
+        public static final int upomp_bypay_loading_dialog=0x7f03003e;
+        public static final int upomp_bypay_login=0x7f03003f;
+        public static final int upomp_bypay_navigator=0x7f030040;
+        public static final int upomp_bypay_pay_it=0x7f030041;
+        public static final int upomp_bypay_pay_main=0x7f030042;
+        public static final int upomp_bypay_pay_result=0x7f030043;
+        public static final int upomp_bypay_register=0x7f030044;
+        public static final int upomp_bypay_splash=0x7f030045;
+        public static final int upomp_bypay_userinfo=0x7f030046;
+        public static final int upomp_bypay_userprotocal=0x7f030047;
+        public static final int weibosdk_share_mblog_view=0x7f030048;
     }
     public static final class raw {
-        public static final int test_data=0x7f060000;
+        public static final int beep=0x7f060000;
+        public static final int test_data=0x7f060001;
     }
     public static final class string {
-        public static final int acount_propmt_change=0x7f090003;
-        public static final int acount_propmt_input=0x7f090002;
-        public static final int and=0x7f090001;
-        public static final int app_name=0x7f090000;
-        public static final int buying=0x7f090004;
-        public static final int cancel_01=0x7f090006;
-        public static final int check_con_fail=0x7f090009;
-        public static final int check_done=0x7f09000d;
-        public static final int check_error=0x7f09000b;
-        public static final int check_exception=0x7f09000c;
-        public static final int check_fail=0x7f09000a;
-        public static final int check_network=0x7f090007;
-        public static final int click_retry=0x7f090008;
-        public static final int confirm=0x7f090005;
-        public static final int delete_done=0x7f09000e;
-        public static final int download_fail=0x7f09000f;
-        public static final int error_network=0x7f090010;
-        public static final int error_not_foundser=0x7f090012;
-        public static final int error_requst=0x7f090013;
-        public static final int error_ser=0x7f090011;
-        public static final int exit=0x7f090014;
-        public static final int exit_propmt=0x7f090015;
-        public static final int first_into=0x7f090016;
-        public static final int kown=0x7f090017;
-        public static final int later=0x7f090018;
-        public static final int link_fail=0x7f09001c;
-        public static final int login_error=0x7f09001a;
-        public static final int login_fail=0x7f09001b;
-        public static final int login_propmt_input=0x7f090019;
-        public static final int music_set=0x7f09001d;
-        public static final int no_propmt=0x7f09001e;
-        public static final int open_effect=0x7f090020;
-        public static final int open_music=0x7f09001f;
-        public static final int open_sound=0x7f090021;
-        public static final int password=0x7f090022;
-        public static final int password_pro=0x7f090023;
-        public static final int propmt_save=0x7f090025;
-        public static final int propmt_see=0x7f090024;
-        public static final int retry=0x7f090026;
-        public static final int ser_assert=0x7f090027;
-        public static final int share_end=0x7f090030;
-        public static final int share_getcard_head=0x7f09002e;
-        public static final int share_getcard_middle=0x7f09002f;
-        public static final int share_load_fail=0x7f090036;
-        public static final int share_mail=0x7f090028;
-        public static final int share_propmt=0x7f090031;
-        public static final int share_reward_card=0x7f090034;
-        public static final int share_reward_head=0x7f09002a;
-        public static final int share_reward_item=0x7f090035;
-        public static final int share_reward_pt_01=0x7f090032;
-        public static final int share_reward_pt_02=0x7f090033;
+        public static final int Cancel=0x7f0a0003;
+        public static final int Ensure=0x7f0a0002;
+        /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
+         */
+        public static final int abs__action_bar_home_description=0x7f0a0125;
+        /**  Content description for the action bar "up" affordance. [CHAR LIMIT=NONE] 
+         */
+        public static final int abs__action_bar_up_description=0x7f0a0126;
+        /**  Content description for the action menu overflow button. [CHAR LIMIT=NONE] 
+         */
+        public static final int abs__action_menu_overflow_description=0x7f0a0127;
+        /**  Label for the "Done" button on the far left of action mode toolbars. 
+         */
+        public static final int abs__action_mode_done=0x7f0a0128;
+        /**  Title for a button to expand the list of activities in ActivityChooserView [CHAR LIMIT=25] 
+         */
+        public static final int abs__activity_chooser_view_see_all=0x7f0a0129;
+        /**  Description of the shwoing of a popup window with activities to choose from. [CHAR LIMIT=NONE] 
+         */
+        public static final int abs__activitychooserview_choose_application=0x7f0a012a;
+        /**  SearchView accessibility description for clear button [CHAR LIMIT=NONE] 
+         */
+        public static final int abs__searchview_description_clear=0x7f0a012f;
+        /**  SearchView accessibility description for search text field [CHAR LIMIT=NONE] 
+         */
+        public static final int abs__searchview_description_query=0x7f0a012e;
+        /**  SearchView accessibility description for search button [CHAR LIMIT=NONE] 
+         */
+        public static final int abs__searchview_description_search=0x7f0a012d;
+        /**  SearchView accessibility description for submit button [CHAR LIMIT=NONE] 
+         */
+        public static final int abs__searchview_description_submit=0x7f0a0130;
+        /**  SearchView accessibility description for voice button [CHAR LIMIT=NONE] 
+         */
+        public static final int abs__searchview_description_voice=0x7f0a0131;
+        /**  Description of the choose target button in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
+         */
+        public static final int abs__shareactionprovider_share_with=0x7f0a012b;
+        /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
+         */
+        public static final int abs__shareactionprovider_share_with_application=0x7f0a012c;
+        public static final int acount_propmt_change=0x7f0a013f;
+        public static final int acount_propmt_input=0x7f0a013e;
+        public static final int and=0x7f0a013d;
+        public static final int app_name=0x7f0a0132;
+        public static final int app_title=0x7f0a0001;
+        public static final int bank_bind_phone=0x7f0a000f;
+        public static final int bank_card_psw=0x7f0a0006;
+        public static final int bank_name=0x7f0a0008;
+        public static final int bank_or_mobile_no_null=0x7f0a0005;
+        public static final int bottom_hint=0x7f0a0138;
+        public static final int button_ok=0x7f0a013c;
+        public static final int buying=0x7f0a0140;
+        public static final int cancel=0x7f0a013a;
+        public static final int cancel_01=0x7f0a0142;
+        public static final int card_end_dim=0x7f0a0011;
+        public static final int card_end_dim_slim=0x7f0a0012;
+        public static final int card_info=0x7f0a0007;
+        public static final int card_no=0x7f0a0009;
+        public static final int card_password=0x7f0a001e;
+        public static final int card_type=0x7f0a000a;
+        public static final int check_con_fail=0x7f0a0145;
+        public static final int check_done=0x7f0a0149;
+        public static final int check_error=0x7f0a0147;
+        public static final int check_exception=0x7f0a0148;
+        public static final int check_fail=0x7f0a0146;
+        public static final int check_network=0x7f0a0143;
+        public static final int click_retry=0x7f0a0144;
+        public static final int confirm=0x7f0a0141;
+        public static final int create=0x7f0a0136;
+        public static final int default_cardno=0x7f0a001b;
+        public static final int delete_done=0x7f0a014a;
+        public static final int download_fail=0x7f0a014b;
+        public static final int error_network=0x7f0a014c;
+        public static final int error_not_foundser=0x7f0a014e;
+        public static final int error_requst=0x7f0a014f;
+        public static final int error_ser=0x7f0a014d;
+        public static final int exit=0x7f0a0150;
+        public static final int exit_propmt=0x7f0a0151;
+        public static final int exit_success=0x7f0a0004;
+        public static final int first_into=0x7f0a0152;
+        public static final int get_sms_code=0x7f0a0016;
+        public static final int iapppay_cancel=0x7f0a0025;
+        public static final int iapppay_car_date=0x7f0a000e;
+        public static final int iapppay_confirm=0x7f0a0024;
+        public static final int iapppay_handling=0x7f0a001a;
+        public static final int iapppay_img=0x7f0a0023;
+        public static final int iapppay_month=0x7f0a0022;
+        public static final int iapppay_pay_amount=0x7f0a0020;
+        public static final int iapppay_sms_tip=0x7f0a001f;
+        public static final int iapppay_starting=0x7f0a0019;
+        public static final int iapppay_year=0x7f0a0021;
+        public static final int identity_no=0x7f0a0014;
+        public static final int img=0x7f0a0000;
+        public static final int input_card_no=0x7f0a000d;
+        public static final int input_sms_code=0x7f0a0015;
+        public static final int kown=0x7f0a0153;
+        public static final int later=0x7f0a0154;
+        public static final int link_fail=0x7f0a0158;
+        public static final int login_error=0x7f0a0156;
+        public static final int login_fail=0x7f0a0157;
+        public static final int login_propmt_input=0x7f0a0155;
+        public static final int msg_camera_framework_bug=0x7f0a013b;
+        public static final int music_set=0x7f0a0159;
+        public static final int nextstep=0x7f0a001c;
+        public static final int no_propmt=0x7f0a015a;
+        public static final int open_effect=0x7f0a015c;
+        public static final int open_music=0x7f0a015b;
+        public static final int open_sound=0x7f0a015d;
+        public static final int password=0x7f0a015e;
+        public static final int password_pro=0x7f0a015f;
+        public static final int pay=0x7f0a001d;
+        public static final int pay_amount=0x7f0a000c;
+        public static final int pay_amount_tip=0x7f0a000b;
+        /** Source for Scan the QR Code
+         */
+        public static final int placeHolder=0x7f0a0133;
+        public static final int propmt_save=0x7f0a0161;
+        public static final int propmt_see=0x7f0a0160;
+        public static final int protel=0x7f0a0017;
+        public static final int retry=0x7f0a0162;
+        public static final int scan_failed=0x7f0a0137;
+        public static final int seekbar_add=0x7f0a0134;
+        public static final int seekbar_minus=0x7f0a0135;
+        public static final int ser_assert=0x7f0a0163;
+        public static final int share_end=0x7f0a016c;
+        public static final int share_getcard_head=0x7f0a016a;
+        public static final int share_getcard_middle=0x7f0a016b;
+        public static final int share_load_fail=0x7f0a0172;
+        public static final int share_mail=0x7f0a0164;
+        public static final int share_propmt=0x7f0a016d;
+        public static final int share_reward_card=0x7f0a0170;
+        public static final int share_reward_head=0x7f0a0166;
+        public static final int share_reward_item=0x7f0a0171;
+        public static final int share_reward_pt_01=0x7f0a016e;
+        public static final int share_reward_pt_02=0x7f0a016f;
         /** <string name="share_title">修改该预览文本不会改变发送的内容 !\n您可以立即分享以下内容:\n</string>  
          */
-        public static final int share_title=0x7f090029;
-        public static final int share_up_head=0x7f09002b;
-        public static final int share_winbattle_head=0x7f09002c;
-        public static final int share_winboss_head=0x7f09002d;
-        public static final int username=0x7f090037;
-        public static final int username_pro=0x7f090038;
-        public static final int wait_buy=0x7f09003b;
-        public static final int wait_download=0x7f09003c;
-        public static final int wait_login=0x7f090039;
-        public static final int wait_share=0x7f09003d;
-        public static final int wait_sigin=0x7f09003a;
-        public static final int weibosdk_app_name=0x7f090042;
-        public static final int weibosdk_attention=0x7f09003e;
-        public static final int weibosdk_cancel=0x7f090041;
-        public static final int weibosdk_close=0x7f090045;
-        public static final int weibosdk_comment=0x7f09004b;
-        public static final int weibosdk_del_pic=0x7f09004a;
-        public static final int weibosdk_delete_all=0x7f09003f;
-        public static final int weibosdk_fav=0x7f09004d;
-        public static final int weibosdk_forward=0x7f09004c;
-        public static final int weibosdk_ok=0x7f090040;
-        public static final int weibosdk_photo=0x7f090044;
-        public static final int weibosdk_please_login=0x7f090047;
-        public static final int weibosdk_send=0x7f090043;
-        public static final int weibosdk_send_failed=0x7f090049;
-        public static final int weibosdk_send_sucess=0x7f090048;
-        public static final int weibosdk_share_dialog_title=0x7f090046;
+        public static final int share_title=0x7f0a0165;
+        public static final int share_up_head=0x7f0a0167;
+        public static final int share_winbattle_head=0x7f0a0168;
+        public static final int share_winboss_head=0x7f0a0169;
+        public static final int submit_pay=0x7f0a0018;
+        public static final int text1=0x7f0a011d;
+        public static final int text2=0x7f0a011e;
+        public static final int text3=0x7f0a011f;
+        public static final int text4=0x7f0a0120;
+        public static final int text5=0x7f0a0121;
+        public static final int text6=0x7f0a0122;
+        public static final int text7=0x7f0a0123;
+        public static final int text8=0x7f0a0124;
+        public static final int top_hint=0x7f0a0139;
+        public static final int true_name=0x7f0a0013;
+        public static final int upomp_bypay_accountmain_email=0x7f0a0068;
+        public static final int upomp_bypay_accountmain_myinfo=0x7f0a0066;
+        public static final int upomp_bypay_accountmain_username=0x7f0a0067;
+        public static final int upomp_bypay_accountmainactivity_header=0x7f0a0065;
+        public static final int upomp_bypay_addcard=0x7f0a0043;
+        public static final int upomp_bypay_addcard_binduser=0x7f0a0069;
+        public static final int upomp_bypay_addcard_cvn2=0x7f0a006a;
+        public static final int upomp_bypay_addcard_selectdefultcard=0x7f0a006b;
+        public static final int upomp_bypay_affirm=0x7f0a004b;
+        public static final int upomp_bypay_affirmchangedefultcard=0x7f0a0059;
+        public static final int upomp_bypay_affirmremovecard=0x7f0a0057;
+        public static final int upomp_bypay_backnum=0x7f0a004a;
+        public static final int upomp_bypay_balance=0x7f0a005e;
+        public static final int upomp_bypay_balanceresult_balance=0x7f0a006c;
+        public static final int upomp_bypay_balanceresult_balancefail=0x7f0a006e;
+        public static final int upomp_bypay_balanceresult_balancenumber=0x7f0a006f;
+        public static final int upomp_bypay_balanceresult_balancesucceed=0x7f0a006d;
+        public static final int upomp_bypay_balanceresult_yuan=0x7f0a0070;
+        public static final int upomp_bypay_bankrestlt_cardid=0x7f0a0073;
+        public static final int upomp_bypay_bankrestlt_continuebank=0x7f0a0074;
+        public static final int upomp_bypay_bankrestlt_fail=0x7f0a0072;
+        public static final int upomp_bypay_bankrestlt_succeed=0x7f0a0071;
+        public static final int upomp_bypay_cancel=0x7f0a0051;
+        public static final int upomp_bypay_carddialog_seecardinfo=0x7f0a00dd;
+        public static final int upomp_bypay_carddialog_select=0x7f0a00dc;
+        public static final int upomp_bypay_cardinfo=0x7f0a0078;
+        public static final int upomp_bypay_cardinfo_cardid=0x7f0a007a;
+        public static final int upomp_bypay_cardinfo_hint1=0x7f0a0075;
+        public static final int upomp_bypay_cardinfo_hint2=0x7f0a0076;
+        public static final int upomp_bypay_cardinfo_issuercard=0x7f0a0079;
+        public static final int upomp_bypay_cardinfo_removecardsucceed=0x7f0a0077;
+        public static final int upomp_bypay_cardmain_hint1=0x7f0a0084;
+        public static final int upomp_bypay_cardmain_hint2=0x7f0a0085;
+        public static final int upomp_bypay_cardmain_norelevancecard=0x7f0a0083;
+        public static final int upomp_bypay_cardmain_relevancecard=0x7f0a0082;
+        public static final int upomp_bypay_cardmainactivity_cancelbanksucced=0x7f0a007d;
+        public static final int upomp_bypay_cardmainactivity_cardid=0x7f0a0080;
+        public static final int upomp_bypay_cardmainactivity_cardtype=0x7f0a007f;
+        public static final int upomp_bypay_cardmainactivity_close=0x7f0a0081;
+        public static final int upomp_bypay_cardmainactivity_defultcard=0x7f0a007c;
+        public static final int upomp_bypay_cardmainactivity_firstlogin=0x7f0a007b;
+        public static final int upomp_bypay_cardmainactivity_issuedcard=0x7f0a007e;
+        public static final int upomp_bypay_cardmanage=0x7f0a004e;
+        public static final int upomp_bypay_cardtype=0x7f0a0053;
+        public static final int upomp_bypay_cardunknown=0x7f0a0055;
+        public static final int upomp_bypay_changedefultcard=0x7f0a0058;
+        public static final int upomp_bypay_changepswsucceed=0x7f0a005f;
+        public static final int upomp_bypay_checkcode=0x7f0a0048;
+        public static final int upomp_bypay_creditcard=0x7f0a002e;
+        public static final int upomp_bypay_date=0x7f0a0045;
+        public static final int upomp_bypay_debitcard=0x7f0a002d;
+        public static final int upomp_bypay_editinfo=0x7f0a0042;
+        public static final int upomp_bypay_editinfo_hint=0x7f0a0090;
+        public static final int upomp_bypay_editinfo_newtel=0x7f0a008e;
+        public static final int upomp_bypay_editinfo_newtelhint=0x7f0a008f;
+        public static final int upomp_bypay_editinfo_oldtel=0x7f0a008c;
+        public static final int upomp_bypay_editinfo_oldtelhint=0x7f0a008d;
+        public static final int upomp_bypay_editinfo_registertel=0x7f0a008b;
+        public static final int upomp_bypay_editinfoactivity_changetelfail=0x7f0a0089;
+        public static final int upomp_bypay_editinfoactivity_changetelsucceed=0x7f0a008a;
+        public static final int upomp_bypay_editinfoactivity_inputtelnum=0x7f0a0087;
+        public static final int upomp_bypay_editinfoactivity_inputtelnum1=0x7f0a0088;
+        public static final int upomp_bypay_editinfoactivity_nochange=0x7f0a0086;
+        public static final int upomp_bypay_editpass=0x7f0a0041;
+        public static final int upomp_bypay_editpass_oldpsw=0x7f0a0093;
+        public static final int upomp_bypay_editpass_oldpswhint=0x7f0a0094;
+        public static final int upomp_bypay_editpassactivity_inputoldpsw=0x7f0a0091;
+        public static final int upomp_bypay_editpassactivity_inputoldpsw_hint=0x7f0a0117;
+        public static final int upomp_bypay_editpassactivity_oldpswfail=0x7f0a0092;
+        public static final int upomp_bypay_enternewpsw=0x7f0a0061;
+        public static final int upomp_bypay_error=0x7f0a0027;
+        public static final int upomp_bypay_failcause=0x7f0a004d;
+        public static final int upomp_bypay_fileerror=0x7f0a0029;
+        public static final int upomp_bypay_firstcardid=0x7f0a003b;
+        public static final int upomp_bypay_firstcardpsw=0x7f0a003d;
+        public static final int upomp_bypay_firstmobilenum=0x7f0a0032;
+        public static final int upomp_bypay_firstshortmessagesecuritycode=0x7f0a0038;
+        public static final int upomp_bypay_gantan=0x7f0a004f;
+        public static final int upomp_bypay_get=0x7f0a002c;
+        public static final int upomp_bypay_getpass=0x7f0a0052;
+        public static final int upomp_bypay_getpassactivity_updatepsw=0x7f0a0095;
+        public static final int upomp_bypay_hint=0x7f0a0040;
+        public static final int upomp_bypay_keyboard_clear=0x7f0a00de;
+        public static final int upomp_bypay_keyboard_letter=0x7f0a00e0;
+        public static final int upomp_bypay_keyboard_number=0x7f0a00df;
+        public static final int upomp_bypay_keyboard_symbol=0x7f0a00e1;
+        public static final int upomp_bypay_linkerror=0x7f0a0028;
+        public static final int upomp_bypay_loading=0x7f0a0035;
+        public static final int upomp_bypay_loading1dialog_loading=0x7f0a00e2;
+        public static final int upomp_bypay_login_hint=0x7f0a009c;
+        public static final int upomp_bypay_login_psw=0x7f0a009a;
+        public static final int upomp_bypay_login_username=0x7f0a0099;
+        public static final int upomp_bypay_login_webvalidcode=0x7f0a009b;
+        public static final int upomp_bypay_loginactivity_loginfail=0x7f0a0098;
+        public static final int upomp_bypay_loginactivity_loginsucceed=0x7f0a0097;
+        public static final int upomp_bypay_loginactivity_userlogin=0x7f0a0096;
+        public static final int upomp_bypay_logined=0x7f0a0062;
+        public static final int upomp_bypay_newpsw=0x7f0a0060;
+        public static final int upomp_bypay_next=0x7f0a0050;
+        public static final int upomp_bypay_pay_it_approvepay=0x7f0a009e;
+        public static final int upomp_bypay_pay_it_bankmobilenum=0x7f0a00a2;
+        public static final int upomp_bypay_pay_it_cardid=0x7f0a00ad;
+        public static final int upomp_bypay_pay_it_cardpsw=0x7f0a00ae;
+        public static final int upomp_bypay_pay_it_changecard=0x7f0a00b5;
+        public static final int upomp_bypay_pay_it_choosevalueacrdtype=0x7f0a00a8;
+        public static final int upomp_bypay_pay_it_cvn2=0x7f0a00ac;
+        public static final int upomp_bypay_pay_it_defultcard=0x7f0a00b4;
+        public static final int upomp_bypay_pay_it_expresspay=0x7f0a009f;
+        public static final int upomp_bypay_pay_it_getlistfail=0x7f0a00b2;
+        public static final int upomp_bypay_pay_it_getmac=0x7f0a00b0;
+        public static final int upomp_bypay_pay_it_hint_auth=0x7f0a00ba;
+        public static final int upomp_bypay_pay_it_hint_normal=0x7f0a00b9;
+        public static final int upomp_bypay_pay_it_hint_valuecard=0x7f0a00bb;
+        public static final int upomp_bypay_pay_it_inputtel=0x7f0a00af;
+        public static final int upomp_bypay_pay_it_macfail=0x7f0a00b1;
+        public static final int upomp_bypay_pay_it_other=0x7f0a00a6;
+        public static final int upomp_bypay_pay_it_paycardnum=0x7f0a00a5;
+        public static final int upomp_bypay_pay_it_pleaseaddcard=0x7f0a00a4;
+        public static final int upomp_bypay_pay_it_preventfish=0x7f0a00a1;
+        public static final int upomp_bypay_pay_it_previewdifferent=0x7f0a009d;
+        public static final int upomp_bypay_pay_it_secondcheckcode=0x7f0a00ab;
+        public static final int upomp_bypay_pay_it_securitycode=0x7f0a00a3;
+        public static final int upomp_bypay_pay_it_selectcard=0x7f0a00b3;
+        public static final int upomp_bypay_pay_it_selectmm=0x7f0a00b7;
+        public static final int upomp_bypay_pay_it_selectyy=0x7f0a00b8;
+        public static final int upomp_bypay_pay_it_valueacrdcode=0x7f0a00aa;
+        public static final int upomp_bypay_pay_it_valueacrdnum=0x7f0a00a9;
+        public static final int upomp_bypay_pay_it_valueacrdtype=0x7f0a00a7;
+        public static final int upomp_bypay_pay_it_valuecardpay=0x7f0a00a0;
+        public static final int upomp_bypay_pay_it_yesornopay=0x7f0a00b6;
+        public static final int upomp_bypay_pay_main_cancelpay=0x7f0a00c4;
+        public static final int upomp_bypay_pay_main_checkinfocarefully=0x7f0a00c5;
+        public static final int upomp_bypay_pay_main_immediatelypay=0x7f0a00c3;
+        public static final int upomp_bypay_pay_main_merchantname=0x7f0a00bd;
+        public static final int upomp_bypay_pay_main_moneytype=0x7f0a00c1;
+        public static final int upomp_bypay_pay_main_secondexchangetime=0x7f0a00c0;
+        public static final int upomp_bypay_pay_main_secondindentnum=0x7f0a00be;
+        public static final int upomp_bypay_pay_main_secondpayamount=0x7f0a00bf;
+        public static final int upomp_bypay_pay_main_tradetype=0x7f0a00c2;
+        public static final int upomp_bypay_pay_main_tradeverify=0x7f0a00bc;
+        public static final int upomp_bypay_pay_result_exchangetime=0x7f0a00c8;
+        public static final int upomp_bypay_pay_result_failinfo=0x7f0a00cd;
+        public static final int upomp_bypay_pay_result_indentnum=0x7f0a00c7;
+        public static final int upomp_bypay_pay_result_paysucceed=0x7f0a00ca;
+        public static final int upomp_bypay_pay_result_returnmerchant=0x7f0a00cc;
+        public static final int upomp_bypay_pay_result_traderesult=0x7f0a00c6;
+        public static final int upomp_bypay_pay_result_traderesult_maohao=0x7f0a00c9;
+        public static final int upomp_bypay_pay_result_tradeturnover=0x7f0a00cb;
+        public static final int upomp_bypay_payamount=0x7f0a0049;
+        public static final int upomp_bypay_payfail=0x7f0a0063;
+        public static final int upomp_bypay_please=0x7f0a002a;
+        public static final int upomp_bypay_prompt=0x7f0a005a;
+        public static final int upomp_bypay_register=0x7f0a0036;
+        public static final int upomp_bypay_register_customquestion=0x7f0a00d4;
+        public static final int upomp_bypay_register_email=0x7f0a00d1;
+        public static final int upomp_bypay_register_emailhint=0x7f0a00d2;
+        public static final int upomp_bypay_register_iagreewithuserdeal=0x7f0a00d5;
+        public static final int upomp_bypay_register_makesurepassword=0x7f0a00d0;
+        public static final int upomp_bypay_register_password=0x7f0a00cf;
+        public static final int upomp_bypay_register_setsecuritypromptquestion=0x7f0a00d3;
+        public static final int upomp_bypay_registeractivity_register=0x7f0a00ce;
+        public static final int upomp_bypay_registeractivity_succeed=0x7f0a00d7;
+        public static final int upomp_bypay_registeractivity_usernamerepeat=0x7f0a00d8;
+        public static final int upomp_bypay_registeractivity_yes=0x7f0a00d6;
+        public static final int upomp_bypay_removecard=0x7f0a0056;
+        public static final int upomp_bypay_return=0x7f0a004c;
+        public static final int upomp_bypay_returnlist=0x7f0a0054;
+        public static final int upomp_bypay_secondcardid=0x7f0a003c;
+        public static final int upomp_bypay_secondcardpsw=0x7f0a003e;
+        public static final int upomp_bypay_secondmobilenum=0x7f0a0033;
+        public static final int upomp_bypay_secondshortmessagesecuritycode=0x7f0a0039;
+        public static final int upomp_bypay_securityissue=0x7f0a0046;
+        public static final int upomp_bypay_securityquestionanswer=0x7f0a0047;
+        public static final int upomp_bypay_selectcard=0x7f0a003a;
+        public static final int upomp_bypay_selectdate=0x7f0a0044;
+        public static final int upomp_bypay_selectfail=0x7f0a005c;
+        public static final int upomp_bypay_selectsucceed=0x7f0a005b;
+        public static final int upomp_bypay_sendMac=0x7f0a002b;
+        public static final int upomp_bypay_sessionhint=0x7f0a0026;
+        public static final int upomp_bypay_sixtotwelve=0x7f0a0030;
+        public static final int upomp_bypay_sixtotwenty=0x7f0a002f;
+        public static final int upomp_bypay_splash_info=0x7f0a00db;
+        public static final int upomp_bypay_splash_loading=0x7f0a00d9;
+        public static final int upomp_bypay_splash_version=0x7f0a00da;
+        public static final int upomp_bypay_splashactivity_custom=0x7f0a00e7;
+        public static final int upomp_bypay_splashactivity_initfail=0x7f0a00e3;
+        public static final int upomp_bypay_splashactivity_pay=0x7f0a00e6;
+        public static final int upomp_bypay_splashactivity_quit=0x7f0a00e4;
+        public static final int upomp_bypay_splashactivity_rmb=0x7f0a00e5;
+        public static final int upomp_bypay_thirdmobilenum=0x7f0a0034;
+        public static final int upomp_bypay_twotosixteen=0x7f0a0031;
+        public static final int upomp_bypay_updatelist=0x7f0a005d;
+        public static final int upomp_bypay_username=0x7f0a0037;
+        public static final int upomp_bypay_utils_cardid=0x7f0a010b;
+        public static final int upomp_bypay_utils_cardidfail=0x7f0a010c;
+        public static final int upomp_bypay_utils_cardpsw=0x7f0a010d;
+        public static final int upomp_bypay_utils_cardpsw_hint=0x7f0a0115;
+        public static final int upomp_bypay_utils_cardpswfail=0x7f0a010e;
+        public static final int upomp_bypay_utils_cvn2=0x7f0a0113;
+        public static final int upomp_bypay_utils_cvn2_hint=0x7f0a0116;
+        public static final int upomp_bypay_utils_cvn2fail=0x7f0a0114;
+        public static final int upomp_bypay_utils_enterquit=0x7f0a00ec;
+        public static final int upomp_bypay_utils_inputemail=0x7f0a0101;
+        public static final int upomp_bypay_utils_inputemailfail=0x7f0a0102;
+        public static final int upomp_bypay_utils_inputenternewpsw=0x7f0a00f8;
+        public static final int upomp_bypay_utils_inputenternewpsw_hint=0x7f0a0119;
+        public static final int upomp_bypay_utils_inputenterpsw=0x7f0a00f3;
+        public static final int upomp_bypay_utils_inputenterpsw_hint=0x7f0a011c;
+        public static final int upomp_bypay_utils_inputloginpsw=0x7f0a00f0;
+        public static final int upomp_bypay_utils_inputloginpswinfo=0x7f0a00f1;
+        public static final int upomp_bypay_utils_inputloginusername=0x7f0a00ed;
+        public static final int upomp_bypay_utils_inputloginusernamefail=0x7f0a00ee;
+        public static final int upomp_bypay_utils_inputmac=0x7f0a00fd;
+        public static final int upomp_bypay_utils_inputmacfail=0x7f0a00fe;
+        public static final int upomp_bypay_utils_inputnewpsw=0x7f0a00f6;
+        public static final int upomp_bypay_utils_inputnewpsw_hint=0x7f0a0118;
+        public static final int upomp_bypay_utils_inputnewpswfail=0x7f0a00f7;
+        public static final int upomp_bypay_utils_inputnewtel=0x7f0a00fb;
+        public static final int upomp_bypay_utils_inputnewtelfail=0x7f0a00fc;
+        public static final int upomp_bypay_utils_inputpsw=0x7f0a00ea;
+        public static final int upomp_bypay_utils_inputpsw_hint=0x7f0a011a;
+        public static final int upomp_bypay_utils_inputpswfail=0x7f0a00f2;
+        public static final int upomp_bypay_utils_inputpswinfo=0x7f0a00eb;
+        public static final int upomp_bypay_utils_inputtel=0x7f0a00f9;
+        public static final int upomp_bypay_utils_inputtelfail=0x7f0a00fa;
+        public static final int upomp_bypay_utils_inputusername=0x7f0a00e8;
+        public static final int upomp_bypay_utils_inputusernamefail=0x7f0a00e9;
+        public static final int upomp_bypay_utils_inputusernameinfo=0x7f0a00ef;
+        public static final int upomp_bypay_utils_inputwebvalidcode=0x7f0a00ff;
+        public static final int upomp_bypay_utils_inputwebvalidcodefail=0x7f0a0100;
+        public static final int upomp_bypay_utils_myquestion=0x7f0a0107;
+        public static final int upomp_bypay_utils_myquestionfail=0x7f0a0108;
+        public static final int upomp_bypay_utils_question=0x7f0a0105;
+        public static final int upomp_bypay_utils_questionfail=0x7f0a0106;
+        public static final int upomp_bypay_utils_questionresult=0x7f0a0109;
+        public static final int upomp_bypay_utils_questionresultfail=0x7f0a010a;
+        public static final int upomp_bypay_utils_twonewpswfail=0x7f0a00f5;
+        public static final int upomp_bypay_utils_twopswfail=0x7f0a00f4;
+        public static final int upomp_bypay_utils_valuecardid=0x7f0a010f;
+        public static final int upomp_bypay_utils_valuecardidfail=0x7f0a0110;
+        public static final int upomp_bypay_utils_valuecardpsw=0x7f0a0111;
+        public static final int upomp_bypay_utils_valuecardpsw_hint=0x7f0a011b;
+        public static final int upomp_bypay_utils_valuecardpswfail=0x7f0a0112;
+        public static final int upomp_bypay_utils_welcome=0x7f0a0103;
+        public static final int upomp_bypay_utils_welcomefail=0x7f0a0104;
+        public static final int upomp_bypay_welcome=0x7f0a003f;
+        public static final int upomp_bypay_yuan=0x7f0a0064;
+        public static final int username=0x7f0a0173;
+        public static final int username_pro=0x7f0a0174;
+        public static final int valid_date=0x7f0a0010;
+        public static final int wait_buy=0x7f0a0177;
+        public static final int wait_download=0x7f0a0178;
+        public static final int wait_login=0x7f0a0175;
+        public static final int wait_share=0x7f0a0179;
+        public static final int wait_sigin=0x7f0a0176;
+        public static final int weibosdk_app_name=0x7f0a017e;
+        public static final int weibosdk_attention=0x7f0a017a;
+        public static final int weibosdk_cancel=0x7f0a017d;
+        public static final int weibosdk_close=0x7f0a0181;
+        public static final int weibosdk_comment=0x7f0a0187;
+        public static final int weibosdk_del_pic=0x7f0a0186;
+        public static final int weibosdk_delete_all=0x7f0a017b;
+        public static final int weibosdk_fav=0x7f0a0189;
+        public static final int weibosdk_forward=0x7f0a0188;
+        public static final int weibosdk_ok=0x7f0a017c;
+        public static final int weibosdk_photo=0x7f0a0180;
+        public static final int weibosdk_please_login=0x7f0a0183;
+        public static final int weibosdk_send=0x7f0a017f;
+        public static final int weibosdk_send_failed=0x7f0a0185;
+        public static final int weibosdk_send_sucess=0x7f0a0184;
+        public static final int weibosdk_share_dialog_title=0x7f0a0182;
     }
     public static final class style {
-        public static final int AppTheme=0x7f0a0001;
-        public static final int MyCheckBox=0x7f0a0002;
-        public static final int Theme_Transparent=0x7f0a0000;
-        public static final int Transparent=0x7f0a0003;
+        /** 
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    
+
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        
+
+        Base application theme for API 11+. This theme completely replaces
+        AppBaseTheme from res/values/styles.xml on API 11+ devices.
+    
+ API 11 theme customizations can go here. 
+
+        Base application theme for API 14+. This theme completely replaces
+        AppBaseTheme from BOTH res/values/styles.xml and
+        res/values-v11/styles.xml on API 14+ devices.
+    
+ API 14 theme customizations can go here. 
+         */
+        public static final int AppBaseTheme=0x7f0b0001;
+        /**  Application theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+         */
+        public static final int AppTheme=0x7f0b0003;
+        public static final int DialogTheme=0x7f0b0002;
+        public static final int MyCheckBox=0x7f0b0067;
+        public static final int SapiTheme=0x7f0b0000;
+        public static final int Sherlock___TextAppearance_Small=0x7f0b0053;
+        public static final int Sherlock___Theme=0x7f0b005e;
+        public static final int Sherlock___Theme_DarkActionBar=0x7f0b0060;
+        public static final int Sherlock___Theme_Light=0x7f0b005f;
+        public static final int Sherlock___Widget_ActionBar=0x7f0b000e;
+        public static final int Sherlock___Widget_ActionMode=0x7f0b0023;
+        public static final int Sherlock___Widget_ActivityChooserView=0x7f0b002b;
+        public static final int Sherlock___Widget_Holo_DropDownItem=0x7f0b0036;
+        public static final int Sherlock___Widget_Holo_ListView=0x7f0b0033;
+        public static final int Sherlock___Widget_Holo_Spinner=0x7f0b0030;
+        public static final int Sherlock___Widget_SearchAutoCompleteTextView=0x7f0b0040;
+        public static final int TextAppearance_Sherlock=0x7f0b0057;
+        public static final int TextAppearance_Sherlock_Light_SearchResult=0x7f0b005b;
+        public static final int TextAppearance_Sherlock_Light_SearchResult_Subtitle=0x7f0b005d;
+        public static final int TextAppearance_Sherlock_Light_SearchResult_Title=0x7f0b005c;
+        public static final int TextAppearance_Sherlock_Light_Small=0x7f0b0055;
+        public static final int TextAppearance_Sherlock_Light_Widget_PopupMenu_Large=0x7f0b004e;
+        public static final int TextAppearance_Sherlock_Light_Widget_PopupMenu_Small=0x7f0b0050;
+        public static final int TextAppearance_Sherlock_SearchResult=0x7f0b0058;
+        public static final int TextAppearance_Sherlock_SearchResult_Subtitle=0x7f0b005a;
+        public static final int TextAppearance_Sherlock_SearchResult_Title=0x7f0b0059;
+        public static final int TextAppearance_Sherlock_Small=0x7f0b0054;
+        public static final int TextAppearance_Sherlock_Widget_ActionBar_Menu=0x7f0b0043;
+        public static final int TextAppearance_Sherlock_Widget_ActionBar_Subtitle=0x7f0b0046;
+        public static final int TextAppearance_Sherlock_Widget_ActionBar_Subtitle_Inverse=0x7f0b0047;
+        public static final int TextAppearance_Sherlock_Widget_ActionBar_Title=0x7f0b0044;
+        public static final int TextAppearance_Sherlock_Widget_ActionBar_Title_Inverse=0x7f0b0045;
+        public static final int TextAppearance_Sherlock_Widget_ActionMode_Subtitle=0x7f0b004a;
+        public static final int TextAppearance_Sherlock_Widget_ActionMode_Subtitle_Inverse=0x7f0b004b;
+        public static final int TextAppearance_Sherlock_Widget_ActionMode_Title=0x7f0b0048;
+        public static final int TextAppearance_Sherlock_Widget_ActionMode_Title_Inverse=0x7f0b0049;
+        public static final int TextAppearance_Sherlock_Widget_DropDownHint=0x7f0b0056;
+        public static final int TextAppearance_Sherlock_Widget_DropDownItem=0x7f0b0052;
+        public static final int TextAppearance_Sherlock_Widget_PopupMenu=0x7f0b004c;
+        public static final int TextAppearance_Sherlock_Widget_PopupMenu_Large=0x7f0b004d;
+        public static final int TextAppearance_Sherlock_Widget_PopupMenu_Small=0x7f0b004f;
+        public static final int TextAppearance_Sherlock_Widget_TextView_SpinnerItem=0x7f0b0051;
+        public static final int Theme_Sherlock=0x7f0b0061;
+        public static final int Theme_Sherlock_Light=0x7f0b0062;
+        public static final int Theme_Sherlock_Light_DarkActionBar=0x7f0b0063;
+        public static final int Theme_Sherlock_Light_NoActionBar=0x7f0b0065;
+        public static final int Theme_Sherlock_NoActionBar=0x7f0b0064;
+        public static final int Theme_Transparent=0x7f0b0066;
+        public static final int Transparent=0x7f0b0068;
+        public static final int Widget=0x7f0b000d;
+        public static final int Widget_Sherlock_ActionBar=0x7f0b000f;
+        public static final int Widget_Sherlock_ActionBar_Solid=0x7f0b0010;
+        public static final int Widget_Sherlock_ActionBar_TabBar=0x7f0b0017;
+        public static final int Widget_Sherlock_ActionBar_TabText=0x7f0b001a;
+        public static final int Widget_Sherlock_ActionBar_TabView=0x7f0b0014;
+        public static final int Widget_Sherlock_ActionButton=0x7f0b001d;
+        public static final int Widget_Sherlock_ActionButton_CloseMode=0x7f0b001f;
+        public static final int Widget_Sherlock_ActionButton_Overflow=0x7f0b0021;
+        public static final int Widget_Sherlock_ActionMode=0x7f0b0024;
+        public static final int Widget_Sherlock_ActivityChooserView=0x7f0b002c;
+        public static final int Widget_Sherlock_Button_Small=0x7f0b002e;
+        public static final int Widget_Sherlock_DropDownItem_Spinner=0x7f0b0037;
+        public static final int Widget_Sherlock_Light_ActionBar=0x7f0b0011;
+        public static final int Widget_Sherlock_Light_ActionBar_Solid=0x7f0b0012;
+        public static final int Widget_Sherlock_Light_ActionBar_Solid_Inverse=0x7f0b0013;
+        public static final int Widget_Sherlock_Light_ActionBar_TabBar=0x7f0b0018;
+        public static final int Widget_Sherlock_Light_ActionBar_TabBar_Inverse=0x7f0b0019;
+        public static final int Widget_Sherlock_Light_ActionBar_TabText=0x7f0b001b;
+        public static final int Widget_Sherlock_Light_ActionBar_TabText_Inverse=0x7f0b001c;
+        public static final int Widget_Sherlock_Light_ActionBar_TabView=0x7f0b0015;
+        public static final int Widget_Sherlock_Light_ActionBar_TabView_Inverse=0x7f0b0016;
+        public static final int Widget_Sherlock_Light_ActionButton=0x7f0b001e;
+        public static final int Widget_Sherlock_Light_ActionButton_CloseMode=0x7f0b0020;
+        public static final int Widget_Sherlock_Light_ActionButton_Overflow=0x7f0b0022;
+        public static final int Widget_Sherlock_Light_ActionMode=0x7f0b0025;
+        public static final int Widget_Sherlock_Light_ActionMode_Inverse=0x7f0b0026;
+        public static final int Widget_Sherlock_Light_ActivityChooserView=0x7f0b002d;
+        public static final int Widget_Sherlock_Light_Button_Small=0x7f0b002f;
+        public static final int Widget_Sherlock_Light_DropDownItem_Spinner=0x7f0b0038;
+        public static final int Widget_Sherlock_Light_ListPopupWindow=0x7f0b0028;
+        public static final int Widget_Sherlock_Light_ListView_DropDown=0x7f0b0035;
+        public static final int Widget_Sherlock_Light_PopupMenu=0x7f0b002a;
+        public static final int Widget_Sherlock_Light_PopupWindow_ActionMode=0x7f0b003a;
+        public static final int Widget_Sherlock_Light_ProgressBar=0x7f0b003c;
+        public static final int Widget_Sherlock_Light_ProgressBar_Horizontal=0x7f0b003e;
+        public static final int Widget_Sherlock_Light_SearchAutoCompleteTextView=0x7f0b0042;
+        public static final int Widget_Sherlock_Light_Spinner_DropDown_ActionBar=0x7f0b0032;
+        public static final int Widget_Sherlock_ListPopupWindow=0x7f0b0027;
+        public static final int Widget_Sherlock_ListView_DropDown=0x7f0b0034;
+        public static final int Widget_Sherlock_PopupMenu=0x7f0b0029;
+        public static final int Widget_Sherlock_PopupWindow_ActionMode=0x7f0b0039;
+        public static final int Widget_Sherlock_ProgressBar=0x7f0b003b;
+        public static final int Widget_Sherlock_ProgressBar_Horizontal=0x7f0b003d;
+        public static final int Widget_Sherlock_SearchAutoCompleteTextView=0x7f0b0041;
+        public static final int Widget_Sherlock_Spinner_DropDown_ActionBar=0x7f0b0031;
+        public static final int Widget_Sherlock_TextView_SpinnerItem=0x7f0b003f;
+        public static final int edit_common_style=0x7f0b0009;
+        public static final int hintTheme=0x7f0b0005;
+        public static final int iapppay_prompt_dialog=0x7f0b000b;
+        public static final int icon_common_style=0x7f0b0008;
+        public static final int line_common_style=0x7f0b000a;
+        public static final int order_price_style=0x7f0b0006;
+        public static final int prompt_dialog=0x7f0b0007;
+        public static final int translucent=0x7f0b0004;
+        /** 模糊
+         */
+        public static final int upomp_bypay_MyDialog=0x7f0b000c;
     }
     public static final class xml {
         public static final int alliance=0x7f050000;
         public static final int init=0x7f050001;
         public static final int market=0x7f050002;
     }
+    public static final class styleable {
+        /**  Attributes used to style the Action Bar. 
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SherlockActionBar_background com.jbl.browser:background}</code></td><td> Specifies a background drawable for the action bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_backgroundSplit com.jbl.browser:backgroundSplit}</code></td><td> Specifies a background drawable for the bottom component of a split action bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_backgroundStacked com.jbl.browser:backgroundStacked}</code></td><td> Specifies a background drawable for a second stacked row of the action bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_customNavigationLayout com.jbl.browser:customNavigationLayout}</code></td><td> Specifies a layout for custom navigation.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_displayOptions com.jbl.browser:displayOptions}</code></td><td> Options affecting how the action bar is displayed.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_divider com.jbl.browser:divider}</code></td><td> Specifies the drawable used for item dividers.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_height com.jbl.browser:height}</code></td><td> Specifies a fixed height.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_homeLayout com.jbl.browser:homeLayout}</code></td><td> Specifies a layout to use for the "home" section of the action bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_icon com.jbl.browser:icon}</code></td><td> Specifies the drawable used for the application icon.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_indeterminateProgressStyle com.jbl.browser:indeterminateProgressStyle}</code></td><td> Specifies a style resource to use for an indeterminate progress spinner.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_itemPadding com.jbl.browser:itemPadding}</code></td><td> Specifies padding that should be applied to the left and right sides of
+             system-provided items in the bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_logo com.jbl.browser:logo}</code></td><td> Specifies the drawable used for the application logo.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_navigationMode com.jbl.browser:navigationMode}</code></td><td> The type of navigation to use.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_progressBarPadding com.jbl.browser:progressBarPadding}</code></td><td> Specifies the horizontal padding on either end for an embedded progress bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_progressBarStyle com.jbl.browser:progressBarStyle}</code></td><td> Specifies a style resource to use for an embedded progress bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_subtitle com.jbl.browser:subtitle}</code></td><td> Specifies subtitle text used for navigationMode="normal" </td></tr>
+           <tr><td><code>{@link #SherlockActionBar_subtitleTextStyle com.jbl.browser:subtitleTextStyle}</code></td><td> Specifies a style to use for subtitle text.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_title com.jbl.browser:title}</code></td><td> Specifies title text used for navigationMode="normal" </td></tr>
+           <tr><td><code>{@link #SherlockActionBar_titleTextStyle com.jbl.browser:titleTextStyle}</code></td><td> Specifies a style to use for title text.</td></tr>
+           </table>
+           @see #SherlockActionBar_background
+           @see #SherlockActionBar_backgroundSplit
+           @see #SherlockActionBar_backgroundStacked
+           @see #SherlockActionBar_customNavigationLayout
+           @see #SherlockActionBar_displayOptions
+           @see #SherlockActionBar_divider
+           @see #SherlockActionBar_height
+           @see #SherlockActionBar_homeLayout
+           @see #SherlockActionBar_icon
+           @see #SherlockActionBar_indeterminateProgressStyle
+           @see #SherlockActionBar_itemPadding
+           @see #SherlockActionBar_logo
+           @see #SherlockActionBar_navigationMode
+           @see #SherlockActionBar_progressBarPadding
+           @see #SherlockActionBar_progressBarStyle
+           @see #SherlockActionBar_subtitle
+           @see #SherlockActionBar_subtitleTextStyle
+           @see #SherlockActionBar_title
+           @see #SherlockActionBar_titleTextStyle
+         */
+        public static final int[] SherlockActionBar = {
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
+            0x7f010004, 0x7f010005, 0x7f010049, 0x7f01004a,
+            0x7f01004b, 0x7f01004c, 0x7f01004d, 0x7f01004e,
+            0x7f01004f, 0x7f010050, 0x7f010051, 0x7f010052,
+            0x7f010053, 0x7f010054, 0x7f010055
+        };
+        /**
+          <p>
+          @attr description
+           Specifies a background drawable for the action bar. 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:background
+        */
+        public static final int SherlockActionBar_background = 2;
+        /**
+          <p>
+          @attr description
+           Specifies a background drawable for the bottom component of a split action bar. 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:backgroundSplit
+        */
+        public static final int SherlockActionBar_backgroundSplit = 3;
+        /**
+          <p>
+          @attr description
+           Specifies a background drawable for a second stacked row of the action bar. 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:backgroundStacked
+        */
+        public static final int SherlockActionBar_backgroundStacked = 12;
+        /**
+          <p>
+          @attr description
+           Specifies a layout for custom navigation. Overrides navigationMode. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:customNavigationLayout
+        */
+        public static final int SherlockActionBar_customNavigationLayout = 13;
+        /**
+          <p>
+          @attr description
+           Options affecting how the action bar is displayed. 
+
+
+          <p>Must be one or more (separated by '|') of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>useLogo</code></td><td>0x1</td><td></td></tr>
+<tr><td><code>showHome</code></td><td>0x2</td><td></td></tr>
+<tr><td><code>homeAsUp</code></td><td>0x4</td><td></td></tr>
+<tr><td><code>showTitle</code></td><td>0x8</td><td></td></tr>
+<tr><td><code>showCustom</code></td><td>0x10</td><td></td></tr>
+<tr><td><code>disableHome</code></td><td>0x20</td><td></td></tr>
+</table>
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:displayOptions
+        */
+        public static final int SherlockActionBar_displayOptions = 7;
+        /**
+          <p>
+          @attr description
+           Specifies the drawable used for item dividers. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:divider
+        */
+        public static final int SherlockActionBar_divider = 5;
+        /**
+          <p>
+          @attr description
+           Specifies a fixed height. 
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:height
+        */
+        public static final int SherlockActionBar_height = 4;
+        /**
+          <p>
+          @attr description
+           Specifies a layout to use for the "home" section of the action bar. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:homeLayout
+        */
+        public static final int SherlockActionBar_homeLayout = 14;
+        /**
+          <p>
+          @attr description
+           Specifies the drawable used for the application icon. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:icon
+        */
+        public static final int SherlockActionBar_icon = 10;
+        /**
+          <p>
+          @attr description
+           Specifies a style resource to use for an indeterminate progress spinner. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:indeterminateProgressStyle
+        */
+        public static final int SherlockActionBar_indeterminateProgressStyle = 16;
+        /**
+          <p>
+          @attr description
+           Specifies padding that should be applied to the left and right sides of
+             system-provided items in the bar. 
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:itemPadding
+        */
+        public static final int SherlockActionBar_itemPadding = 18;
+        /**
+          <p>
+          @attr description
+           Specifies the drawable used for the application logo. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:logo
+        */
+        public static final int SherlockActionBar_logo = 11;
+        /**
+          <p>
+          @attr description
+           The type of navigation to use. 
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>normal</code></td><td>0</td><td> Normal static title text </td></tr>
+<tr><td><code>listMode</code></td><td>1</td><td> The action bar will use a selection list for navigation. </td></tr>
+<tr><td><code>tabMode</code></td><td>2</td><td> The action bar will use a series of horizontal tabs for navigation. </td></tr>
+</table>
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:navigationMode
+        */
+        public static final int SherlockActionBar_navigationMode = 6;
+        /**
+          <p>
+          @attr description
+           Specifies the horizontal padding on either end for an embedded progress bar. 
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:progressBarPadding
+        */
+        public static final int SherlockActionBar_progressBarPadding = 17;
+        /**
+          <p>
+          @attr description
+           Specifies a style resource to use for an embedded progress bar. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:progressBarStyle
+        */
+        public static final int SherlockActionBar_progressBarStyle = 15;
+        /**
+          <p>
+          @attr description
+           Specifies subtitle text used for navigationMode="normal" 
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:subtitle
+        */
+        public static final int SherlockActionBar_subtitle = 9;
+        /**
+          <p>
+          @attr description
+           Specifies a style to use for subtitle text. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:subtitleTextStyle
+        */
+        public static final int SherlockActionBar_subtitleTextStyle = 1;
+        /**
+          <p>
+          @attr description
+           Specifies title text used for navigationMode="normal" 
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:title
+        */
+        public static final int SherlockActionBar_title = 8;
+        /**
+          <p>
+          @attr description
+           Specifies a style to use for title text. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:titleTextStyle
+        */
+        public static final int SherlockActionBar_titleTextStyle = 0;
+        /** Attributes that can be used with a SherlockActionMenuItemView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SherlockActionMenuItemView_android_minWidth android:minWidth}</code></td><td></td></tr>
+           </table>
+           @see #SherlockActionMenuItemView_android_minWidth
+         */
+        public static final int[] SherlockActionMenuItemView = {
+            0x0101013f
+        };
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#minWidth}
+          attribute's value can be found in the {@link #SherlockActionMenuItemView} array.
+          @attr name android:minWidth
+        */
+        public static final int SherlockActionMenuItemView_android_minWidth = 0;
+        /** Attributes that can be used with a SherlockActionMode.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SherlockActionMode_background com.jbl.browser:background}</code></td><td> Specifies a background for the action mode bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionMode_backgroundSplit com.jbl.browser:backgroundSplit}</code></td><td> Specifies a background for the split action mode bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionMode_height com.jbl.browser:height}</code></td><td> Specifies a fixed height for the action mode bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionMode_subtitleTextStyle com.jbl.browser:subtitleTextStyle}</code></td><td> Specifies a style to use for subtitle text.</td></tr>
+           <tr><td><code>{@link #SherlockActionMode_titleTextStyle com.jbl.browser:titleTextStyle}</code></td><td> Specifies a style to use for title text.</td></tr>
+           </table>
+           @see #SherlockActionMode_background
+           @see #SherlockActionMode_backgroundSplit
+           @see #SherlockActionMode_height
+           @see #SherlockActionMode_subtitleTextStyle
+           @see #SherlockActionMode_titleTextStyle
+         */
+        public static final int[] SherlockActionMode = {
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
+            0x7f010004
+        };
+        /**
+          <p>
+          @attr description
+           Specifies a background for the action mode bar. 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:background
+        */
+        public static final int SherlockActionMode_background = 2;
+        /**
+          <p>
+          @attr description
+           Specifies a background for the split action mode bar. 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:backgroundSplit
+        */
+        public static final int SherlockActionMode_backgroundSplit = 3;
+        /**
+          <p>
+          @attr description
+           Specifies a fixed height for the action mode bar. 
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:height
+        */
+        public static final int SherlockActionMode_height = 4;
+        /**
+          <p>
+          @attr description
+           Specifies a style to use for subtitle text. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:subtitleTextStyle
+        */
+        public static final int SherlockActionMode_subtitleTextStyle = 1;
+        /**
+          <p>
+          @attr description
+           Specifies a style to use for title text. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:titleTextStyle
+        */
+        public static final int SherlockActionMode_titleTextStyle = 0;
+        /** Attributes that can be used with a SherlockActivityChooserView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SherlockActivityChooserView_android_background android:background}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockActivityChooserView_expandActivityOverflowButtonDrawable com.jbl.browser:expandActivityOverflowButtonDrawable}</code></td><td> The drawable to show in the button for expanding the activities overflow popup.</td></tr>
+           <tr><td><code>{@link #SherlockActivityChooserView_initialActivityCount com.jbl.browser:initialActivityCount}</code></td><td> The maximal number of items initially shown in the activity list.</td></tr>
+           </table>
+           @see #SherlockActivityChooserView_android_background
+           @see #SherlockActivityChooserView_expandActivityOverflowButtonDrawable
+           @see #SherlockActivityChooserView_initialActivityCount
+         */
+        public static final int[] SherlockActivityChooserView = {
+            0x010100d4, 0x7f01005e, 0x7f01005f
+        };
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#background}
+          attribute's value can be found in the {@link #SherlockActivityChooserView} array.
+          @attr name android:background
+        */
+        public static final int SherlockActivityChooserView_android_background = 0;
+        /**
+          <p>
+          @attr description
+           The drawable to show in the button for expanding the activities overflow popup.
+             <strong>Note:</strong> Clients would like to set this drawable
+             as a clue about the action the chosen activity will perform. For
+             example, if share activity is to be chosen the drawable should
+             give a clue that sharing is to be performed.
+         
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:expandActivityOverflowButtonDrawable
+        */
+        public static final int SherlockActivityChooserView_expandActivityOverflowButtonDrawable = 2;
+        /**
+          <p>
+          @attr description
+           The maximal number of items initially shown in the activity list. 
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:initialActivityCount
+        */
+        public static final int SherlockActivityChooserView_initialActivityCount = 1;
+        /**  Base attributes that are available to all groups. 
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_checkableBehavior android:checkableBehavior}</code></td><td> Whether the items are capable of displaying a check mark.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_enabled android:enabled}</code></td><td> Whether the items are enabled.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_id android:id}</code></td><td> The ID of the group.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_menuCategory android:menuCategory}</code></td><td> The category applied to all items within this group.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_orderInCategory android:orderInCategory}</code></td><td> The order within the category applied to all items within this group.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_visible android:visible}</code></td><td> Whether the items are shown/visible.</td></tr>
+           </table>
+           @see #SherlockMenuGroup_android_checkableBehavior
+           @see #SherlockMenuGroup_android_enabled
+           @see #SherlockMenuGroup_android_id
+           @see #SherlockMenuGroup_android_menuCategory
+           @see #SherlockMenuGroup_android_orderInCategory
+           @see #SherlockMenuGroup_android_visible
+         */
+        public static final int[] SherlockMenuGroup = {
+            0x0101000e, 0x010100d0, 0x01010194, 0x010101de,
+            0x010101df, 0x010101e0
+        };
+        /**
+          <p>
+          @attr description
+           Whether the items are capable of displaying a check mark. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#checkableBehavior}.
+          @attr name android:checkableBehavior
+        */
+        public static final int SherlockMenuGroup_android_checkableBehavior = 5;
+        /**
+          <p>
+          @attr description
+           Whether the items are enabled. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#enabled}.
+          @attr name android:enabled
+        */
+        public static final int SherlockMenuGroup_android_enabled = 0;
+        /**
+          <p>
+          @attr description
+           The ID of the group. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#id}.
+          @attr name android:id
+        */
+        public static final int SherlockMenuGroup_android_id = 1;
+        /**
+          <p>
+          @attr description
+           The category applied to all items within this group.
+             (This will be or'ed with the orderInCategory attribute.) 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#menuCategory}.
+          @attr name android:menuCategory
+        */
+        public static final int SherlockMenuGroup_android_menuCategory = 3;
+        /**
+          <p>
+          @attr description
+           The order within the category applied to all items within this group.
+             (This will be or'ed with the category attribute.) 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#orderInCategory}.
+          @attr name android:orderInCategory
+        */
+        public static final int SherlockMenuGroup_android_orderInCategory = 4;
+        /**
+          <p>
+          @attr description
+           Whether the items are shown/visible. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#visible}.
+          @attr name android:visible
+        */
+        public static final int SherlockMenuGroup_android_visible = 2;
+        /**  Base attributes that are available to all Item objects. 
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_actionLayout android:actionLayout}</code></td><td> An optional layout to be used as an action view.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_actionProviderClass android:actionProviderClass}</code></td><td> The name of an optional ActionProvider class to instantiate an action view
+             and perform operations such as default action for that menu item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_actionViewClass android:actionViewClass}</code></td><td> The name of an optional View class to instantiate and use as an
+             action view.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_alphabeticShortcut android:alphabeticShortcut}</code></td><td> The alphabetic shortcut key.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_checkable android:checkable}</code></td><td> Whether the item is capable of displaying a check mark.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_checked android:checked}</code></td><td> Whether the item is checked.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_enabled android:enabled}</code></td><td> Whether the item is enabled.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_icon android:icon}</code></td><td> The icon associated with this item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_id android:id}</code></td><td> The ID of the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_menuCategory android:menuCategory}</code></td><td> The category applied to the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_numericShortcut android:numericShortcut}</code></td><td> The numeric shortcut key.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_onClick android:onClick}</code></td><td> Name of a method on the Context used to inflate the menu that will be
+             called when the item is clicked.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_orderInCategory android:orderInCategory}</code></td><td> The order within the category applied to the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_showAsAction android:showAsAction}</code></td><td> How this item should display in the Action Bar, if present.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_title android:title}</code></td><td> The title associated with the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_titleCondensed android:titleCondensed}</code></td><td> The condensed title associated with the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_visible android:visible}</code></td><td> Whether the item is shown/visible.</td></tr>
+           </table>
+           @see #SherlockMenuItem_android_actionLayout
+           @see #SherlockMenuItem_android_actionProviderClass
+           @see #SherlockMenuItem_android_actionViewClass
+           @see #SherlockMenuItem_android_alphabeticShortcut
+           @see #SherlockMenuItem_android_checkable
+           @see #SherlockMenuItem_android_checked
+           @see #SherlockMenuItem_android_enabled
+           @see #SherlockMenuItem_android_icon
+           @see #SherlockMenuItem_android_id
+           @see #SherlockMenuItem_android_menuCategory
+           @see #SherlockMenuItem_android_numericShortcut
+           @see #SherlockMenuItem_android_onClick
+           @see #SherlockMenuItem_android_orderInCategory
+           @see #SherlockMenuItem_android_showAsAction
+           @see #SherlockMenuItem_android_title
+           @see #SherlockMenuItem_android_titleCondensed
+           @see #SherlockMenuItem_android_visible
+         */
+        public static final int[] SherlockMenuItem = {
+            0x01010002, 0x0101000e, 0x010100d0, 0x01010106,
+            0x01010194, 0x010101de, 0x010101df, 0x010101e1,
+            0x010101e2, 0x010101e3, 0x010101e4, 0x010101e5,
+            0x0101026f, 0x010102d9, 0x010102fb, 0x010102fc,
+            0x01010389
+        };
+        /**
+          <p>
+          @attr description
+           An optional layout to be used as an action view.
+             See {@link android.view.MenuItem#setActionView(android.view.View)}
+             for more info. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#actionLayout}.
+          @attr name android:actionLayout
+        */
+        public static final int SherlockMenuItem_android_actionLayout = 14;
+        /**
+          <p>
+          @attr description
+           The name of an optional ActionProvider class to instantiate an action view
+             and perform operations such as default action for that menu item.
+             See {@link android.view.MenuItem#setActionProvider(android.view.ActionProvider)}
+             for more info. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#actionProviderClass}.
+          @attr name android:actionProviderClass
+        */
+        public static final int SherlockMenuItem_android_actionProviderClass = 16;
+        /**
+          <p>
+          @attr description
+           The name of an optional View class to instantiate and use as an
+             action view. See {@link android.view.MenuItem#setActionView(android.view.View)}
+             for more info. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#actionViewClass}.
+          @attr name android:actionViewClass
+        */
+        public static final int SherlockMenuItem_android_actionViewClass = 15;
+        /**
+          <p>
+          @attr description
+           The alphabetic shortcut key.  This is the shortcut when using a keyboard
+             with alphabetic keys. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#alphabeticShortcut}.
+          @attr name android:alphabeticShortcut
+        */
+        public static final int SherlockMenuItem_android_alphabeticShortcut = 9;
+        /**
+          <p>
+          @attr description
+           Whether the item is capable of displaying a check mark. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#checkable}.
+          @attr name android:checkable
+        */
+        public static final int SherlockMenuItem_android_checkable = 11;
+        /**
+          <p>
+          @attr description
+           Whether the item is checked.  Note that you must first have enabled checking with
+             the checkable attribute or else the check mark will not appear. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#checked}.
+          @attr name android:checked
+        */
+        public static final int SherlockMenuItem_android_checked = 3;
+        /**
+          <p>
+          @attr description
+           Whether the item is enabled. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#enabled}.
+          @attr name android:enabled
+        */
+        public static final int SherlockMenuItem_android_enabled = 1;
+        /**
+          <p>
+          @attr description
+           The icon associated with this item.  This icon will not always be shown, so
+             the title should be sufficient in describing this item. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#icon}.
+          @attr name android:icon
+        */
+        public static final int SherlockMenuItem_android_icon = 0;
+        /**
+          <p>
+          @attr description
+           The ID of the item. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#id}.
+          @attr name android:id
+        */
+        public static final int SherlockMenuItem_android_id = 2;
+        /**
+          <p>
+          @attr description
+           The category applied to the item.
+             (This will be or'ed with the orderInCategory attribute.) 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#menuCategory}.
+          @attr name android:menuCategory
+        */
+        public static final int SherlockMenuItem_android_menuCategory = 5;
+        /**
+          <p>
+          @attr description
+           The numeric shortcut key.  This is the shortcut when using a numeric (e.g., 12-key)
+             keyboard. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#numericShortcut}.
+          @attr name android:numericShortcut
+        */
+        public static final int SherlockMenuItem_android_numericShortcut = 10;
+        /**
+          <p>
+          @attr description
+           Name of a method on the Context used to inflate the menu that will be
+             called when the item is clicked. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#onClick}.
+          @attr name android:onClick
+        */
+        public static final int SherlockMenuItem_android_onClick = 12;
+        /**
+          <p>
+          @attr description
+           The order within the category applied to the item.
+             (This will be or'ed with the category attribute.) 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#orderInCategory}.
+          @attr name android:orderInCategory
+        */
+        public static final int SherlockMenuItem_android_orderInCategory = 6;
+        /**
+          <p>
+          @attr description
+           How this item should display in the Action Bar, if present. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#showAsAction}.
+          @attr name android:showAsAction
+        */
+        public static final int SherlockMenuItem_android_showAsAction = 13;
+        /**
+          <p>
+          @attr description
+           The title associated with the item. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#title}.
+          @attr name android:title
+        */
+        public static final int SherlockMenuItem_android_title = 7;
+        /**
+          <p>
+          @attr description
+           The condensed title associated with the item.  This is used in situations where the
+             normal title may be too long to be displayed. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#titleCondensed}.
+          @attr name android:titleCondensed
+        */
+        public static final int SherlockMenuItem_android_titleCondensed = 8;
+        /**
+          <p>
+          @attr description
+           Whether the item is shown/visible. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#visible}.
+          @attr name android:visible
+        */
+        public static final int SherlockMenuItem_android_visible = 4;
+        /** Attributes that can be used with a SherlockMenuView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SherlockMenuView_headerBackground com.jbl.browser:headerBackground}</code></td><td> Default background for the menu header.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_horizontalDivider com.jbl.browser:horizontalDivider}</code></td><td> Default horizontal divider between rows of menu items.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_itemBackground com.jbl.browser:itemBackground}</code></td><td> Default background for each menu item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_itemIconDisabledAlpha com.jbl.browser:itemIconDisabledAlpha}</code></td><td> Default disabled icon alpha for each menu item that shows an icon.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_itemTextAppearance com.jbl.browser:itemTextAppearance}</code></td><td> Default appearance of menu item text.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_preserveIconSpacing com.jbl.browser:preserveIconSpacing}</code></td><td> Whether space should be reserved in layout when an icon is missing.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_verticalDivider com.jbl.browser:verticalDivider}</code></td><td> Default vertical divider between menu items.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_windowAnimationStyle com.jbl.browser:windowAnimationStyle}</code></td><td> Default animations for the menu.</td></tr>
+           </table>
+           @see #SherlockMenuView_headerBackground
+           @see #SherlockMenuView_horizontalDivider
+           @see #SherlockMenuView_itemBackground
+           @see #SherlockMenuView_itemIconDisabledAlpha
+           @see #SherlockMenuView_itemTextAppearance
+           @see #SherlockMenuView_preserveIconSpacing
+           @see #SherlockMenuView_verticalDivider
+           @see #SherlockMenuView_windowAnimationStyle
+         */
+        public static final int[] SherlockMenuView = {
+            0x7f010056, 0x7f010057, 0x7f010058, 0x7f010059,
+            0x7f01005a, 0x7f01005b, 0x7f01005c, 0x7f01005d
+        };
+        /**
+          <p>
+          @attr description
+           Default background for the menu header. 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:headerBackground
+        */
+        public static final int SherlockMenuView_headerBackground = 3;
+        /**
+          <p>
+          @attr description
+           Default horizontal divider between rows of menu items. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:horizontalDivider
+        */
+        public static final int SherlockMenuView_horizontalDivider = 1;
+        /**
+          <p>
+          @attr description
+           Default background for each menu item. 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:itemBackground
+        */
+        public static final int SherlockMenuView_itemBackground = 4;
+        /**
+          <p>
+          @attr description
+           Default disabled icon alpha for each menu item that shows an icon. 
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:itemIconDisabledAlpha
+        */
+        public static final int SherlockMenuView_itemIconDisabledAlpha = 6;
+        /**
+          <p>
+          @attr description
+           Default appearance of menu item text. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:itemTextAppearance
+        */
+        public static final int SherlockMenuView_itemTextAppearance = 0;
+        /**
+          <p>
+          @attr description
+           Whether space should be reserved in layout when an icon is missing. 
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:preserveIconSpacing
+        */
+        public static final int SherlockMenuView_preserveIconSpacing = 7;
+        /**
+          <p>
+          @attr description
+           Default vertical divider between menu items. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:verticalDivider
+        */
+        public static final int SherlockMenuView_verticalDivider = 2;
+        /**
+          <p>
+          @attr description
+           Default animations for the menu. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:windowAnimationStyle
+        */
+        public static final int SherlockMenuView_windowAnimationStyle = 5;
+        /** Attributes that can be used with a SherlockSearchView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SherlockSearchView_android_imeOptions android:imeOptions}</code></td><td> The IME options to set on the query text field.</td></tr>
+           <tr><td><code>{@link #SherlockSearchView_android_inputType android:inputType}</code></td><td> The input type to set on the query text field.</td></tr>
+           <tr><td><code>{@link #SherlockSearchView_android_maxWidth android:maxWidth}</code></td><td> An optional maximum width of the SearchView.</td></tr>
+           <tr><td><code>{@link #SherlockSearchView_iconifiedByDefault com.jbl.browser:iconifiedByDefault}</code></td><td> The default state of the SearchView.</td></tr>
+           <tr><td><code>{@link #SherlockSearchView_queryHint com.jbl.browser:queryHint}</code></td><td> An optional query hint string to be displayed in the empty query field.</td></tr>
+           </table>
+           @see #SherlockSearchView_android_imeOptions
+           @see #SherlockSearchView_android_inputType
+           @see #SherlockSearchView_android_maxWidth
+           @see #SherlockSearchView_iconifiedByDefault
+           @see #SherlockSearchView_queryHint
+         */
+        public static final int[] SherlockSearchView = {
+            0x0101011f, 0x01010220, 0x01010264, 0x7f010060,
+            0x7f010061
+        };
+        /**
+          <p>
+          @attr description
+           The IME options to set on the query text field. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#imeOptions}.
+          @attr name android:imeOptions
+        */
+        public static final int SherlockSearchView_android_imeOptions = 2;
+        /**
+          <p>
+          @attr description
+           The input type to set on the query text field. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#inputType}.
+          @attr name android:inputType
+        */
+        public static final int SherlockSearchView_android_inputType = 1;
+        /**
+          <p>
+          @attr description
+           An optional maximum width of the SearchView. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#maxWidth}.
+          @attr name android:maxWidth
+        */
+        public static final int SherlockSearchView_android_maxWidth = 0;
+        /**
+          <p>
+          @attr description
+           The default state of the SearchView. If true, it will be iconified when not in
+             use and expanded when clicked. 
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:iconifiedByDefault
+        */
+        public static final int SherlockSearchView_iconifiedByDefault = 3;
+        /**
+          <p>
+          @attr description
+           An optional query hint string to be displayed in the empty query field. 
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:queryHint
+        */
+        public static final int SherlockSearchView_queryHint = 4;
+        /** Attributes that can be used with a SherlockSpinner.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_dropDownHorizontalOffset android:dropDownHorizontalOffset}</code></td><td> Horizontal offset from the spinner widget for positioning the dropdown
+             in spinnerMode="dropdown".</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_dropDownSelector android:dropDownSelector}</code></td><td> List selector to use for spinnerMode="dropdown" display.</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_dropDownVerticalOffset android:dropDownVerticalOffset}</code></td><td> Vertical offset from the spinner widget for positioning the dropdown in
+             spinnerMode="dropdown".</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_dropDownWidth android:dropDownWidth}</code></td><td> Width of the dropdown in spinnerMode="dropdown".</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_gravity android:gravity}</code></td><td> Gravity setting for positioning the currently selected item.</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_popupBackground android:popupBackground}</code></td><td> Background drawable to use for the dropdown in spinnerMode="dropdown".</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_popupPromptView android:popupPromptView}</code></td><td> Reference to a layout to use for displaying a prompt in the dropdown for
+             spinnerMode="dropdown".</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_prompt android:prompt}</code></td><td> The prompt to display when the spinner's dialog is shown.</td></tr>
+           </table>
+           @see #SherlockSpinner_android_dropDownHorizontalOffset
+           @see #SherlockSpinner_android_dropDownSelector
+           @see #SherlockSpinner_android_dropDownVerticalOffset
+           @see #SherlockSpinner_android_dropDownWidth
+           @see #SherlockSpinner_android_gravity
+           @see #SherlockSpinner_android_popupBackground
+           @see #SherlockSpinner_android_popupPromptView
+           @see #SherlockSpinner_android_prompt
+         */
+        public static final int[] SherlockSpinner = {
+            0x010100af, 0x01010175, 0x01010176, 0x0101017b,
+            0x01010262, 0x010102ac, 0x010102ad, 0x0101043a
+        };
+        /**
+          <p>
+          @attr description
+           Horizontal offset from the spinner widget for positioning the dropdown
+             in spinnerMode="dropdown". 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#dropDownHorizontalOffset}.
+          @attr name android:dropDownHorizontalOffset
+        */
+        public static final int SherlockSpinner_android_dropDownHorizontalOffset = 5;
+        /**
+          <p>
+          @attr description
+           List selector to use for spinnerMode="dropdown" display. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#dropDownSelector}.
+          @attr name android:dropDownSelector
+        */
+        public static final int SherlockSpinner_android_dropDownSelector = 1;
+        /**
+          <p>
+          @attr description
+           Vertical offset from the spinner widget for positioning the dropdown in
+             spinnerMode="dropdown". 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#dropDownVerticalOffset}.
+          @attr name android:dropDownVerticalOffset
+        */
+        public static final int SherlockSpinner_android_dropDownVerticalOffset = 6;
+        /**
+          <p>
+          @attr description
+           Width of the dropdown in spinnerMode="dropdown". 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#dropDownWidth}.
+          @attr name android:dropDownWidth
+        */
+        public static final int SherlockSpinner_android_dropDownWidth = 4;
+        /**
+          <p>
+          @attr description
+           Gravity setting for positioning the currently selected item. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#gravity}.
+          @attr name android:gravity
+        */
+        public static final int SherlockSpinner_android_gravity = 0;
+        /**
+          <p>
+          @attr description
+           Background drawable to use for the dropdown in spinnerMode="dropdown". 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#popupBackground}.
+          @attr name android:popupBackground
+        */
+        public static final int SherlockSpinner_android_popupBackground = 2;
+        /**
+          <p>
+          @attr description
+           Reference to a layout to use for displaying a prompt in the dropdown for
+             spinnerMode="dropdown". This layout must contain a TextView with the id
+             @android:id/text1 to be populated with the prompt text. 
+          <p>This is a private symbol.
+          @attr name android:popupPromptView
+        */
+        public static final int SherlockSpinner_android_popupPromptView = 7;
+        /**
+          <p>
+          @attr description
+           The prompt to display when the spinner's dialog is shown. 
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#prompt}.
+          @attr name android:prompt
+        */
+        public static final int SherlockSpinner_android_prompt = 3;
+        /** Attributes that can be used with a SherlockTheme.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarDivider com.jbl.browser:actionBarDivider}</code></td><td> Custom divider drawable to use for elements in the action bar.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarItemBackground com.jbl.browser:actionBarItemBackground}</code></td><td> Custom item state list drawable background for action bar items.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarSize com.jbl.browser:actionBarSize}</code></td><td> Size of the Action Bar, including the contextual
+             bar used to present Action Modes.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarSplitStyle com.jbl.browser:actionBarSplitStyle}</code></td><td> Reference to a style for the split Action Bar.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarStyle com.jbl.browser:actionBarStyle}</code></td><td> Reference to a style for the Action Bar </td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarTabBarStyle com.jbl.browser:actionBarTabBarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarTabStyle com.jbl.browser:actionBarTabStyle}</code></td><td> Default style for tabs within an action bar </td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarTabTextStyle com.jbl.browser:actionBarTabTextStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarWidgetTheme com.jbl.browser:actionBarWidgetTheme}</code></td><td> Reference to a theme that should be used to inflate widgets
+             and layouts destined for the action bar.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionButtonStyle com.jbl.browser:actionButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionDropDownStyle com.jbl.browser:actionDropDownStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionMenuTextAppearance com.jbl.browser:actionMenuTextAppearance}</code></td><td> TextAppearance style that will be applied to text that
+             appears within action menu items.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionMenuTextColor com.jbl.browser:actionMenuTextColor}</code></td><td> Color for text that appears within action menu items.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeBackground com.jbl.browser:actionModeBackground}</code></td><td> Background drawable to use for action mode UI </td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeCloseButtonStyle com.jbl.browser:actionModeCloseButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeCloseDrawable com.jbl.browser:actionModeCloseDrawable}</code></td><td> Drawable to use for the close action mode button </td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModePopupWindowStyle com.jbl.browser:actionModePopupWindowStyle}</code></td><td> PopupWindow style to use for action modes when showing as a window overlay.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeShareDrawable com.jbl.browser:actionModeShareDrawable}</code></td><td> Drawable to use for the Share action button in WebView selection action modes </td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeSplitBackground com.jbl.browser:actionModeSplitBackground}</code></td><td> Background drawable to use for action mode UI in the lower split bar </td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeStyle com.jbl.browser:actionModeStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionOverflowButtonStyle com.jbl.browser:actionOverflowButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionSpinnerItemStyle com.jbl.browser:actionSpinnerItemStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_activatedBackgroundIndicator com.jbl.browser:activatedBackgroundIndicator}</code></td><td> Drawable used as a background for activated items.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_activityChooserViewStyle com.jbl.browser:activityChooserViewStyle}</code></td><td> Default ActivityChooserView style.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_buttonStyleSmall com.jbl.browser:buttonStyleSmall}</code></td><td> Small Button style.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_dividerVertical com.jbl.browser:dividerVertical}</code></td><td> Drawable to use for generic vertical dividers.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_dropDownHintAppearance com.jbl.browser:dropDownHintAppearance}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_dropDownListViewStyle com.jbl.browser:dropDownListViewStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_dropdownListPreferredItemHeight com.jbl.browser:dropdownListPreferredItemHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_homeAsUpIndicator com.jbl.browser:homeAsUpIndicator}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_listPopupWindowStyle com.jbl.browser:listPopupWindowStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_listPreferredItemHeightSmall com.jbl.browser:listPreferredItemHeightSmall}</code></td><td> A smaller, sleeker list item height.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_listPreferredItemPaddingLeft com.jbl.browser:listPreferredItemPaddingLeft}</code></td><td> The preferred padding along the left edge of list items.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_listPreferredItemPaddingRight com.jbl.browser:listPreferredItemPaddingRight}</code></td><td> The preferred padding along the right edge of list items.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_popupMenuStyle com.jbl.browser:popupMenuStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_searchAutoCompleteTextView com.jbl.browser:searchAutoCompleteTextView}</code></td><td> SearchView AutoCompleteTextView style </td></tr>
+           <tr><td><code>{@link #SherlockTheme_searchDropdownBackground com.jbl.browser:searchDropdownBackground}</code></td><td> SearchView dropdown background </td></tr>
+           <tr><td><code>{@link #SherlockTheme_searchResultListItemHeight com.jbl.browser:searchResultListItemHeight}</code></td><td> The list item height for search results.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_searchViewCloseIcon com.jbl.browser:searchViewCloseIcon}</code></td><td> SearchView close button icon </td></tr>
+           <tr><td><code>{@link #SherlockTheme_searchViewEditQuery com.jbl.browser:searchViewEditQuery}</code></td><td> SearchView query refinement icon </td></tr>
+           <tr><td><code>{@link #SherlockTheme_searchViewEditQueryBackground com.jbl.browser:searchViewEditQueryBackground}</code></td><td> SearchView query refinement icon background </td></tr>
+           <tr><td><code>{@link #SherlockTheme_searchViewGoIcon com.jbl.browser:searchViewGoIcon}</code></td><td> SearchView Go button icon </td></tr>
+           <tr><td><code>{@link #SherlockTheme_searchViewSearchIcon com.jbl.browser:searchViewSearchIcon}</code></td><td> SearchView Search icon </td></tr>
+           <tr><td><code>{@link #SherlockTheme_searchViewTextField com.jbl.browser:searchViewTextField}</code></td><td> SearchView text field background for the left section </td></tr>
+           <tr><td><code>{@link #SherlockTheme_searchViewTextFieldRight com.jbl.browser:searchViewTextFieldRight}</code></td><td> SearchView text field background for the right section </td></tr>
+           <tr><td><code>{@link #SherlockTheme_searchViewVoiceIcon com.jbl.browser:searchViewVoiceIcon}</code></td><td> SearchView Voice button icon </td></tr>
+           <tr><td><code>{@link #SherlockTheme_selectableItemBackground com.jbl.browser:selectableItemBackground}</code></td><td> Background drawable for standalone items that need focus/pressed states.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_spinnerDropDownItemStyle com.jbl.browser:spinnerDropDownItemStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_spinnerItemStyle com.jbl.browser:spinnerItemStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_textAppearanceLargePopupMenu com.jbl.browser:textAppearanceLargePopupMenu}</code></td><td> Text color, typeface, size, and style for the text inside of a popup menu.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_textAppearanceListItemSmall com.jbl.browser:textAppearanceListItemSmall}</code></td><td> The preferred TextAppearance for the primary text of small list items.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_textAppearanceSearchResultSubtitle com.jbl.browser:textAppearanceSearchResultSubtitle}</code></td><td> Text color, typeface, size, and style for system search result subtitle.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_textAppearanceSearchResultTitle com.jbl.browser:textAppearanceSearchResultTitle}</code></td><td> Text color, typeface, size, and style for system search result title.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_textAppearanceSmall com.jbl.browser:textAppearanceSmall}</code></td><td> Text color, typeface, size, and style for "small" text.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_textAppearanceSmallPopupMenu com.jbl.browser:textAppearanceSmallPopupMenu}</code></td><td> Text color, typeface, size, and style for small text inside of a popup menu.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_textColorPrimary com.jbl.browser:textColorPrimary}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_textColorPrimaryDisableOnly com.jbl.browser:textColorPrimaryDisableOnly}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_textColorPrimaryInverse com.jbl.browser:textColorPrimaryInverse}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_textColorSearchUrl com.jbl.browser:textColorSearchUrl}</code></td><td> Text color for urls in search suggestions, used by things like global search and the browser.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowActionBar com.jbl.browser:windowActionBar}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowActionBarOverlay com.jbl.browser:windowActionBarOverlay}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowActionModeOverlay com.jbl.browser:windowActionModeOverlay}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowContentOverlay com.jbl.browser:windowContentOverlay}</code></td><td> This Drawable is overlaid over the foreground of the Window's content area, usually
+             to place a shadow below the title.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowMinWidthMajor com.jbl.browser:windowMinWidthMajor}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowMinWidthMinor com.jbl.browser:windowMinWidthMinor}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowNoTitle com.jbl.browser:windowNoTitle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowSplitActionBar com.jbl.browser:windowSplitActionBar}</code></td><td></td></tr>
+           </table>
+           @see #SherlockTheme_actionBarDivider
+           @see #SherlockTheme_actionBarItemBackground
+           @see #SherlockTheme_actionBarSize
+           @see #SherlockTheme_actionBarSplitStyle
+           @see #SherlockTheme_actionBarStyle
+           @see #SherlockTheme_actionBarTabBarStyle
+           @see #SherlockTheme_actionBarTabStyle
+           @see #SherlockTheme_actionBarTabTextStyle
+           @see #SherlockTheme_actionBarWidgetTheme
+           @see #SherlockTheme_actionButtonStyle
+           @see #SherlockTheme_actionDropDownStyle
+           @see #SherlockTheme_actionMenuTextAppearance
+           @see #SherlockTheme_actionMenuTextColor
+           @see #SherlockTheme_actionModeBackground
+           @see #SherlockTheme_actionModeCloseButtonStyle
+           @see #SherlockTheme_actionModeCloseDrawable
+           @see #SherlockTheme_actionModePopupWindowStyle
+           @see #SherlockTheme_actionModeShareDrawable
+           @see #SherlockTheme_actionModeSplitBackground
+           @see #SherlockTheme_actionModeStyle
+           @see #SherlockTheme_actionOverflowButtonStyle
+           @see #SherlockTheme_actionSpinnerItemStyle
+           @see #SherlockTheme_activatedBackgroundIndicator
+           @see #SherlockTheme_activityChooserViewStyle
+           @see #SherlockTheme_buttonStyleSmall
+           @see #SherlockTheme_dividerVertical
+           @see #SherlockTheme_dropDownHintAppearance
+           @see #SherlockTheme_dropDownListViewStyle
+           @see #SherlockTheme_dropdownListPreferredItemHeight
+           @see #SherlockTheme_homeAsUpIndicator
+           @see #SherlockTheme_listPopupWindowStyle
+           @see #SherlockTheme_listPreferredItemHeightSmall
+           @see #SherlockTheme_listPreferredItemPaddingLeft
+           @see #SherlockTheme_listPreferredItemPaddingRight
+           @see #SherlockTheme_popupMenuStyle
+           @see #SherlockTheme_searchAutoCompleteTextView
+           @see #SherlockTheme_searchDropdownBackground
+           @see #SherlockTheme_searchResultListItemHeight
+           @see #SherlockTheme_searchViewCloseIcon
+           @see #SherlockTheme_searchViewEditQuery
+           @see #SherlockTheme_searchViewEditQueryBackground
+           @see #SherlockTheme_searchViewGoIcon
+           @see #SherlockTheme_searchViewSearchIcon
+           @see #SherlockTheme_searchViewTextField
+           @see #SherlockTheme_searchViewTextFieldRight
+           @see #SherlockTheme_searchViewVoiceIcon
+           @see #SherlockTheme_selectableItemBackground
+           @see #SherlockTheme_spinnerDropDownItemStyle
+           @see #SherlockTheme_spinnerItemStyle
+           @see #SherlockTheme_textAppearanceLargePopupMenu
+           @see #SherlockTheme_textAppearanceListItemSmall
+           @see #SherlockTheme_textAppearanceSearchResultSubtitle
+           @see #SherlockTheme_textAppearanceSearchResultTitle
+           @see #SherlockTheme_textAppearanceSmall
+           @see #SherlockTheme_textAppearanceSmallPopupMenu
+           @see #SherlockTheme_textColorPrimary
+           @see #SherlockTheme_textColorPrimaryDisableOnly
+           @see #SherlockTheme_textColorPrimaryInverse
+           @see #SherlockTheme_textColorSearchUrl
+           @see #SherlockTheme_windowActionBar
+           @see #SherlockTheme_windowActionBarOverlay
+           @see #SherlockTheme_windowActionModeOverlay
+           @see #SherlockTheme_windowContentOverlay
+           @see #SherlockTheme_windowMinWidthMajor
+           @see #SherlockTheme_windowMinWidthMinor
+           @see #SherlockTheme_windowNoTitle
+           @see #SherlockTheme_windowSplitActionBar
+         */
+        public static final int[] SherlockTheme = {
+            0x7f010006, 0x7f010007, 0x7f010008, 0x7f010009,
+            0x7f01000a, 0x7f01000b, 0x7f01000c, 0x7f01000d,
+            0x7f01000e, 0x7f01000f, 0x7f010010, 0x7f010011,
+            0x7f010012, 0x7f010013, 0x7f010014, 0x7f010015,
+            0x7f010016, 0x7f010017, 0x7f010018, 0x7f010019,
+            0x7f01001a, 0x7f01001b, 0x7f01001c, 0x7f01001d,
+            0x7f01001e, 0x7f01001f, 0x7f010020, 0x7f010021,
+            0x7f010022, 0x7f010023, 0x7f010024, 0x7f010025,
+            0x7f010026, 0x7f010027, 0x7f010028, 0x7f010029,
+            0x7f01002a, 0x7f01002b, 0x7f01002c, 0x7f01002d,
+            0x7f01002e, 0x7f01002f, 0x7f010030, 0x7f010031,
+            0x7f010032, 0x7f010033, 0x7f010034, 0x7f010035,
+            0x7f010036, 0x7f010037, 0x7f010038, 0x7f010039,
+            0x7f01003a, 0x7f01003b, 0x7f01003c, 0x7f01003d,
+            0x7f01003e, 0x7f01003f, 0x7f010040, 0x7f010041,
+            0x7f010042, 0x7f010043, 0x7f010044, 0x7f010045,
+            0x7f010046, 0x7f010047, 0x7f010048
+        };
+        /**
+          <p>
+          @attr description
+           Custom divider drawable to use for elements in the action bar. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:actionBarDivider
+        */
+        public static final int SherlockTheme_actionBarDivider = 8;
+        /**
+          <p>
+          @attr description
+           Custom item state list drawable background for action bar items. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:actionBarItemBackground
+        */
+        public static final int SherlockTheme_actionBarItemBackground = 9;
+        /**
+          <p>
+          @attr description
+           Size of the Action Bar, including the contextual
+             bar used to present Action Modes. 
+
+
+          <p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+<p>May be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>wrap_content</code></td><td>0</td><td></td></tr>
+</table>
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:actionBarSize
+        */
+        public static final int SherlockTheme_actionBarSize = 7;
+        /**
+          <p>
+          @attr description
+           Reference to a style for the split Action Bar. This style
+             controls the split component that holds the menu/action
+             buttons. actionBarStyle is still used for the primary
+             bar. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:actionBarSplitStyle
+        */
+        public static final int SherlockTheme_actionBarSplitStyle = 5;
+        /**
+          <p>
+          @attr description
+           Reference to a style for the Action Bar 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:actionBarStyle
+        */
+        public static final int SherlockTheme_actionBarStyle = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#actionBarTabBarStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:actionBarTabBarStyle
+        */
+        public static final int SherlockTheme_actionBarTabBarStyle = 1;
+        /**
+          <p>
+          @attr description
+           Default style for tabs within an action bar 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:actionBarTabStyle
+        */
+        public static final int SherlockTheme_actionBarTabStyle = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#actionBarTabTextStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:actionBarTabTextStyle
+        */
+        public static final int SherlockTheme_actionBarTabTextStyle = 2;
+        /**
+          <p>
+          @attr description
+           Reference to a theme that should be used to inflate widgets
+             and layouts destined for the action bar. Most of the time
+             this will be a reference to the current theme, but when
+             the action bar has a significantly different contrast
+             profile than the rest of the activity the difference
+             can become important. If this is set to @null the current
+             theme will be used.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:actionBarWidgetTheme
+        */
+        public static final int SherlockTheme_actionBarWidgetTheme = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#actionButtonStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:actionButtonStyle
+        */
+        public static final int SherlockTheme_actionButtonStyle = 52;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#actionDropDownStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:actionDropDownStyle
+        */
+        public static final int SherlockTheme_actionDropDownStyle = 51;
+        /**
+          <p>
+          @attr description
+           TextAppearance style that will be applied to text that
+             appears within action menu items. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:actionMenuTextAppearance
+        */
+        public static final int SherlockTheme_actionMenuTextAppearance = 10;
+        /**
+          <p>
+          @attr description
+           Color for text that appears within action menu items. 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:actionMenuTextColor
+        */
+        public static final int SherlockTheme_actionMenuTextColor = 11;
+        /**
+          <p>
+          @attr description
+           Background drawable to use for action mode UI 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:actionModeBackground
+        */
+        public static final int SherlockTheme_actionModeBackground = 14;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#actionModeCloseButtonStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:actionModeCloseButtonStyle
+        */
+        public static final int SherlockTheme_actionModeCloseButtonStyle = 13;
+        /**
+          <p>
+          @attr description
+           Drawable to use for the close action mode button 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:actionModeCloseDrawable
+        */
+        public static final int SherlockTheme_actionModeCloseDrawable = 16;
+        /**
+          <p>
+          @attr description
+           PopupWindow style to use for action modes when showing as a window overlay. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:actionModePopupWindowStyle
+        */
+        public static final int SherlockTheme_actionModePopupWindowStyle = 18;
+        /**
+          <p>
+          @attr description
+           Drawable to use for the Share action button in WebView selection action modes 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:actionModeShareDrawable
+        */
+        public static final int SherlockTheme_actionModeShareDrawable = 17;
+        /**
+          <p>
+          @attr description
+           Background drawable to use for action mode UI in the lower split bar 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:actionModeSplitBackground
+        */
+        public static final int SherlockTheme_actionModeSplitBackground = 15;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#actionModeStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:actionModeStyle
+        */
+        public static final int SherlockTheme_actionModeStyle = 12;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#actionOverflowButtonStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:actionOverflowButtonStyle
+        */
+        public static final int SherlockTheme_actionOverflowButtonStyle = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#actionSpinnerItemStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:actionSpinnerItemStyle
+        */
+        public static final int SherlockTheme_actionSpinnerItemStyle = 57;
+        /**
+          <p>
+          @attr description
+           Drawable used as a background for activated items. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:activatedBackgroundIndicator
+        */
+        public static final int SherlockTheme_activatedBackgroundIndicator = 65;
+        /**
+          <p>
+          @attr description
+           Default ActivityChooserView style. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:activityChooserViewStyle
+        */
+        public static final int SherlockTheme_activityChooserViewStyle = 64;
+        /**
+          <p>
+          @attr description
+           Small Button style. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:buttonStyleSmall
+        */
+        public static final int SherlockTheme_buttonStyleSmall = 19;
+        /**
+          <p>
+          @attr description
+           Drawable to use for generic vertical dividers. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:dividerVertical
+        */
+        public static final int SherlockTheme_dividerVertical = 50;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#dropDownHintAppearance}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:dropDownHintAppearance
+        */
+        public static final int SherlockTheme_dropDownHintAppearance = 66;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#dropDownListViewStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:dropDownListViewStyle
+        */
+        public static final int SherlockTheme_dropDownListViewStyle = 54;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#dropdownListPreferredItemHeight}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.jbl.browser:dropdownListPreferredItemHeight
+        */
+        public static final int SherlockTheme_dropdownListPreferredItemHeight = 56;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#homeAsUpIndicator}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:homeAsUpIndicator
+        */
+        public static final int SherlockTheme_homeAsUpIndicator = 53;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#listPopupWindowStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:listPopupWindowStyle
+        */
+        public static final int SherlockTheme_listPopupWindowStyle = 63;
+        /**
+          <p>
+          @attr description
+           A smaller, sleeker list item height. 
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:listPreferredItemHeightSmall
+        */
+        public static final int SherlockTheme_listPreferredItemHeightSmall = 44;
+        /**
+          <p>
+          @attr description
+           The preferred padding along the left edge of list items. 
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:listPreferredItemPaddingLeft
+        */
+        public static final int SherlockTheme_listPreferredItemPaddingLeft = 45;
+        /**
+          <p>
+          @attr description
+           The preferred padding along the right edge of list items. 
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:listPreferredItemPaddingRight
+        */
+        public static final int SherlockTheme_listPreferredItemPaddingRight = 46;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#popupMenuStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:popupMenuStyle
+        */
+        public static final int SherlockTheme_popupMenuStyle = 55;
+        /**
+          <p>
+          @attr description
+           SearchView AutoCompleteTextView style 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:searchAutoCompleteTextView
+        */
+        public static final int SherlockTheme_searchAutoCompleteTextView = 30;
+        /**
+          <p>
+          @attr description
+           SearchView dropdown background 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:searchDropdownBackground
+        */
+        public static final int SherlockTheme_searchDropdownBackground = 31;
+        /**
+          <p>
+          @attr description
+           The list item height for search results. @hide 
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:searchResultListItemHeight
+        */
+        public static final int SherlockTheme_searchResultListItemHeight = 41;
+        /**
+          <p>
+          @attr description
+           SearchView close button icon 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:searchViewCloseIcon
+        */
+        public static final int SherlockTheme_searchViewCloseIcon = 32;
+        /**
+          <p>
+          @attr description
+           SearchView query refinement icon 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:searchViewEditQuery
+        */
+        public static final int SherlockTheme_searchViewEditQuery = 36;
+        /**
+          <p>
+          @attr description
+           SearchView query refinement icon background 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:searchViewEditQueryBackground
+        */
+        public static final int SherlockTheme_searchViewEditQueryBackground = 37;
+        /**
+          <p>
+          @attr description
+           SearchView Go button icon 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:searchViewGoIcon
+        */
+        public static final int SherlockTheme_searchViewGoIcon = 33;
+        /**
+          <p>
+          @attr description
+           SearchView Search icon 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:searchViewSearchIcon
+        */
+        public static final int SherlockTheme_searchViewSearchIcon = 34;
+        /**
+          <p>
+          @attr description
+           SearchView text field background for the left section 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:searchViewTextField
+        */
+        public static final int SherlockTheme_searchViewTextField = 38;
+        /**
+          <p>
+          @attr description
+           SearchView text field background for the right section 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:searchViewTextFieldRight
+        */
+        public static final int SherlockTheme_searchViewTextFieldRight = 39;
+        /**
+          <p>
+          @attr description
+           SearchView Voice button icon 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:searchViewVoiceIcon
+        */
+        public static final int SherlockTheme_searchViewVoiceIcon = 35;
+        /**
+          <p>
+          @attr description
+           Background drawable for standalone items that need focus/pressed states. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:selectableItemBackground
+        */
+        public static final int SherlockTheme_selectableItemBackground = 20;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#spinnerDropDownItemStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:spinnerDropDownItemStyle
+        */
+        public static final int SherlockTheme_spinnerDropDownItemStyle = 29;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#spinnerItemStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.jbl.browser:spinnerItemStyle
+        */
+        public static final int SherlockTheme_spinnerItemStyle = 28;
+        /**
+          <p>
+          @attr description
+           Text color, typeface, size, and style for the text inside of a popup menu. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:textAppearanceLargePopupMenu
+        */
+        public static final int SherlockTheme_textAppearanceLargePopupMenu = 22;
+        /**
+          <p>
+          @attr description
+           The preferred TextAppearance for the primary text of small list items. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:textAppearanceListItemSmall
+        */
+        public static final int SherlockTheme_textAppearanceListItemSmall = 47;
+        /**
+          <p>
+          @attr description
+           Text color, typeface, size, and style for system search result subtitle. Defaults to primary inverse text color. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:textAppearanceSearchResultSubtitle
+        */
+        public static final int SherlockTheme_textAppearanceSearchResultSubtitle = 43;
+        /**
+          <p>
+          @attr description
+           Text color, typeface, size, and style for system search result title. Defaults to primary inverse text color. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:textAppearanceSearchResultTitle
+        */
+        public static final int SherlockTheme_textAppearanceSearchResultTitle = 42;
+        /**
+          <p>
+          @attr description
+           Text color, typeface, size, and style for "small" text. Defaults to secondary text color. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:textAppearanceSmall
+        */
+        public static final int SherlockTheme_textAppearanceSmall = 24;
+        /**
+          <p>
+          @attr description
+           Text color, typeface, size, and style for small text inside of a popup menu. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:textAppearanceSmallPopupMenu
+        */
+        public static final int SherlockTheme_textAppearanceSmallPopupMenu = 23;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#textColorPrimary}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.jbl.browser:textColorPrimary
+        */
+        public static final int SherlockTheme_textColorPrimary = 25;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#textColorPrimaryDisableOnly}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.jbl.browser:textColorPrimaryDisableOnly
+        */
+        public static final int SherlockTheme_textColorPrimaryDisableOnly = 26;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#textColorPrimaryInverse}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.jbl.browser:textColorPrimaryInverse
+        */
+        public static final int SherlockTheme_textColorPrimaryInverse = 27;
+        /**
+          <p>
+          @attr description
+           Text color for urls in search suggestions, used by things like global search and the browser. @hide 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:textColorSearchUrl
+        */
+        public static final int SherlockTheme_textColorSearchUrl = 40;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#windowActionBar}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.jbl.browser:windowActionBar
+        */
+        public static final int SherlockTheme_windowActionBar = 59;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#windowActionBarOverlay}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.jbl.browser:windowActionBarOverlay
+        */
+        public static final int SherlockTheme_windowActionBarOverlay = 60;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#windowActionModeOverlay}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.jbl.browser:windowActionModeOverlay
+        */
+        public static final int SherlockTheme_windowActionModeOverlay = 61;
+        /**
+          <p>
+          @attr description
+           This Drawable is overlaid over the foreground of the Window's content area, usually
+             to place a shadow below the title.  
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.jbl.browser:windowContentOverlay
+        */
+        public static final int SherlockTheme_windowContentOverlay = 21;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#windowMinWidthMajor}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.jbl.browser:windowMinWidthMajor
+        */
+        public static final int SherlockTheme_windowMinWidthMajor = 48;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#windowMinWidthMinor}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.jbl.browser:windowMinWidthMinor
+        */
+        public static final int SherlockTheme_windowMinWidthMinor = 49;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#windowNoTitle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.jbl.browser:windowNoTitle
+        */
+        public static final int SherlockTheme_windowNoTitle = 58;
+        /**
+          <p>This symbol is the offset where the {@link com.jbl.browser.R.attr#windowSplitActionBar}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.jbl.browser:windowSplitActionBar
+        */
+        public static final int SherlockTheme_windowSplitActionBar = 62;
+        /** Attributes that can be used with a SherlockView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SherlockView_android_focusable android:focusable}</code></td><td></td></tr>
+           </table>
+           @see #SherlockView_android_focusable
+         */
+        public static final int[] SherlockView = {
+            0x010100da
+        };
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#focusable}
+          attribute's value can be found in the {@link #SherlockView} array.
+          @attr name android:focusable
+        */
+        public static final int SherlockView_android_focusable = 0;
+    };
 }
