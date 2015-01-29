@@ -103,7 +103,7 @@
             android:label="@string/title_activity_text_web_view" >
         </activity>
         <activity
-            android:name=".TextWebView"
+            android:name="com.jbl.browser.activity.TextWebView"
             android:label="@string/title_activity_text_web_view" >
         </activity>
     </application>
