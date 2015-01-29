@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jbl.browser"
     android:versionCode="1"
@@ -18,31 +19,27 @@
     </uses-permission>
     <uses-permission android:name="android.permission.RECEIVE_SMS" >
     </uses-permission>
-<!--     <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
- -->    
- <uses-permission android:name="android.permission.READ_LOGS" >
+    <!-- <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" /> -->
+    <uses-permission android:name="android.permission.READ_LOGS" >
     </uses-permission>
-    <uses-permission android:name="android.hardware.sensor.accelerometer"/>
+    <uses-permission android:name="android.hardware.sensor.accelerometer" />
     <!-- common -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!-- sms pay -->
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-    
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-	<supports-screens
-	android:anyDensity="true"
-	android:largeScreens="true"
-	android:normalScreens="true"
-	android:smallScreens="true" />
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
 
-    
     <application
         android:icon="@drawable/app_icon"
         android:label="@string/app_name"
@@ -56,7 +53,7 @@
             android:value="s_android" />
 
         <activity
-            android:name="com.jbl.browser.activity.GameActivity"
+            android:name=".activity.GameActivity"
             android:label="@string/app_name"
             android:launchMode="standard"
             android:screenOrientation="portrait" >
@@ -80,29 +77,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jbl.browser.activity.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
-            android:name="com.jbl.browser.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.jbl.browser.activity.SetMpStateAct"
+            android:name=".activity.SetMpStateAct"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.jbl.browser.activity.ShareActivity"
+            android:name=".activity.ShareActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Transparent" >
         </activity>
-        
-
+        <activity
+            android:name=".activity.TextWebView"
+            android:label="@string/title_activity_text_web_view" >
+        </activity>
+        <activity
+            android:name=".TextWebView"
+            android:label="@string/title_activity_text_web_view" >
+        </activity>
     </application>
 
 </manifest>
