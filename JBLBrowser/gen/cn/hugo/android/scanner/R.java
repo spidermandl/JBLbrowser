@@ -37,28 +37,28 @@ public final class R {
 		public static final int scan_photo_pressed = 0x7f0200d4;
 	}
 	public static final class id {
-		public static final int auto_focus = 0x7f0c0010;
-		public static final int capture_bottom_hint = 0x7f0c0060;
-		public static final int capture_button_cancel = 0x7f0c005e;
-		public static final int capture_button_createcode = 0x7f0c005f;
-		public static final int capture_flashlight = 0x7f0c005b;
-		public static final int capture_frame = 0x7f0c0058;
-		public static final int capture_preview_view = 0x7f0c0059;
-		public static final int capture_scan_photo = 0x7f0c005d;
-		public static final int capture_top_hint = 0x7f0c005c;
-		public static final int capture_viewfinder_view = 0x7f0c005a;
-		public static final int decode = 0x7f0c0011;
-		public static final int decode_failed = 0x7f0c0012;
-		public static final int decode_succeeded = 0x7f0c0013;
-		public static final int launch_product_query = 0x7f0c0014;
-		public static final int quit = 0x7f0c0015;
-		public static final int restart_preview = 0x7f0c0016;
-		public static final int return_scan_result = 0x7f0c0017;
-		public static final int search_book_contents_failed = 0x7f0c0018;
-		public static final int search_book_contents_succeeded = 0x7f0c0019;
+		public static final int auto_focus = 0x7f0e0006;
+		public static final int capture_bottom_hint = 0x7f0e006c;
+		public static final int capture_button_cancel = 0x7f0e006a;
+		public static final int capture_button_createcode = 0x7f0e006b;
+		public static final int capture_flashlight = 0x7f0e0067;
+		public static final int capture_frame = 0x7f0e0064;
+		public static final int capture_preview_view = 0x7f0e0065;
+		public static final int capture_scan_photo = 0x7f0e0069;
+		public static final int capture_top_hint = 0x7f0e0068;
+		public static final int capture_viewfinder_view = 0x7f0e0066;
+		public static final int decode = 0x7f0e0007;
+		public static final int decode_failed = 0x7f0e0008;
+		public static final int decode_succeeded = 0x7f0e0009;
+		public static final int launch_product_query = 0x7f0e000a;
+		public static final int quit = 0x7f0e000b;
+		public static final int restart_preview = 0x7f0e000c;
+		public static final int return_scan_result = 0x7f0e000d;
+		public static final int search_book_contents_failed = 0x7f0e000e;
+		public static final int search_book_contents_succeeded = 0x7f0e000f;
 	}
 	public static final class layout {
-		public static final int capture = 0x7f030019;
+		public static final int capture = 0x7f03001a;
 	}
 	public static final class raw {
 		public static final int beep = 0x7f060000;
