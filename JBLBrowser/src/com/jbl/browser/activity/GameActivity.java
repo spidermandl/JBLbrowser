@@ -4,6 +4,8 @@ import java.net.URLDecoder;
 
 
 
+import cn.hugo.android.scanner.CaptureActivity;
+
 import com.jbl.browser.R;
 import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.model.MusicModel;

@@ -106,6 +106,16 @@
             android:name=".TextWebView"
             android:label="@string/title_activity_text_web_view" >
         </activity>
+         <activity
+            android:name="cn.hugo.android.scanner.CaptureActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            
+            </activity> 
     </application>
 
 </manifest>

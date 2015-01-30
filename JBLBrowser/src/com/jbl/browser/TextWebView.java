@@ -1,6 +1,8 @@
 package com.jbl.browser;
 
+import cn.hugo.android.scanner.CaptureActivity;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -86,7 +88,9 @@ public class TextWebView extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+				Intent intent=new Intent();
+				intent.setClass(TextWebView.this, CaptureActivity.class);
+				startActivity(intent);
 			}
 		});
 		
