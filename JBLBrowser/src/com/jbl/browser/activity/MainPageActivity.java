@@ -3,8 +3,6 @@ package com.jbl.browser.activity;
 import com.jbl.browser.MyPagerAdapter;
 import com.jbl.browser.R;
 import com.jbl.browser.ViewPagerPresenter;
-import com.jbl.browser.R.id;
-import com.jbl.browser.R.layout;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,6 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+/**
+ * 主页页面
+ * @author desmond.duan
+ *
+ */
 public class MainPageActivity extends Activity {
 
 	/**
@@ -56,7 +59,7 @@ public class MainPageActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_text_web_view);
 		mImageViewSearch=(ImageView)findViewById(R.id.mImageViewSearch); //1.1  mImageViewSearch  搜索图标
 		mEditTextInput=(EditText)findViewById(R.id.mEditTextInput); //1.2 mEditTextInput   输入网址
 		mButtonCode=(Button)findViewById(R.id.mButtonCode);//1.3 mButtonCode       二维码搜索

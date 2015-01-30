@@ -15,7 +15,7 @@ import com.jbl.browser.utils.UrlUtils;
 import com.jbl.browser.view.TitleView;
 import com.jbl.browser.view.UserDefinedDialog;
 import com.jbl.browser.websocket.WebSocketFactory;
-//import com.umeng.analytics.MobclickAgent;
+import com.umeng.analytics.MobclickAgent;
 
 import android.R.integer;
 import android.annotation.SuppressLint;
@@ -136,7 +136,7 @@ public class GameActivity extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		//MobclickAgent.onError(this);
+		MobclickAgent.onError(this);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -354,7 +354,7 @@ public class GameActivity extends Activity{
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		//MobclickAgent.onResume(this);
+		MobclickAgent.onResume(this);
 		mSensorManager.registerListener(lsn, mSensor, SensorManager.SENSOR_DELAY_GAME);  
 		pause = false;
 		if(StringUtils.DEBUG){
@@ -366,7 +366,7 @@ public class GameActivity extends Activity{
 	public void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		//MobclickAgent.onPause(this);
+		MobclickAgent.onPause(this);
 		mSensorManager.unregisterListener(lsn);  
 		pause = true;
 		if(StringUtils.DEBUG){
