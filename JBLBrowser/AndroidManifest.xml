@@ -53,7 +53,7 @@
             android:value="s_android" />
 
         <activity
-            android:name=".activity.GameActivity"
+            android:name=".activity.TextWebView"
             android:label="@string/app_name"
             android:launchMode="standard"
             android:screenOrientation="portrait" >
@@ -98,10 +98,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/Transparent" >
         </activity>
-        <activity
+       <!--  <activity
             android:name=".activity.TextWebView"
             android:label="@string/title_activity_text_web_view" >
-        </activity>
+        </activity> -->
         <activity
             android:name=".TextWebView"
             android:label="@string/title_activity_text_web_view" >
