@@ -1,25 +1,20 @@
 package cn.hugo.android.scanner;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.Collection;
 import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
@@ -27,18 +22,16 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 import cn.hugo.android.scanner.camera.CameraManager;
 import cn.hugo.android.scanner.common.BitmapUtils;
-import cn.hugo.android.scanner.common.StringUtils;
 import cn.hugo.android.scanner.decode.BitmapDecoder;
 import cn.hugo.android.scanner.decode.CaptureActivityHandler;
-import cn.hugo.android.scanner.decode.ResultHandler;
 import cn.hugo.android.scanner.view.ViewfinderView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
-import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.ResultParser;
 
 /**
@@ -127,95 +120,38 @@ public final class CaptureActivity extends Activity implements
      * 图片的路径
      */
     private String photoPath;
-    ProgressDialog mProgress;
 
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new MyHandler(this);
 
-		@Override
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case PARSE_BARCODE_SUC:
-				//viewfinderView.setRun(false);
-				showDialog((String) msg.obj);
-				break;
-			case PARSE_BARCODE_FAIL:
-				//showDialog((String) msg.obj);
-				if (mProgress != null && mProgress.isShowing()) {
-					mProgress.dismiss();
-				}
-				new AlertDialog.Builder(CaptureActivity.this).setTitle("提示").setMessage("解析图片失败！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+    static class MyHandler extends Handler {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				}).show();
-				break;
-			}
-			super.handleMessage(msg);
-		}
+        private WeakReference<Activity> activityReference;
 
-	};
-	public void showDialog(final String msg) {
+        public MyHandler(Activity activity) {
+            activityReference = new WeakReference<Activity>(activity);
+        }
 
-		if (mProgress != null && mProgress.isShowing()) {
-			mProgress.dismiss();
-		}
-		if(msg.startsWith("http")){
-			new AlertDialog.Builder(CaptureActivity.this).setTitle(getString(R.string.memo)).
-			setMessage(String.format(getString(R.string.barcode_tow_dimen_success), msg)).
-			setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case PARSE_BARCODE_SUC: // 解析图片成功
+                    Toast.makeText(activityReference.get(),
+                            "解析成功，结果为：" + msg.obj, Toast.LENGTH_SHORT).show();
 
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
-					//	String testUrl = "http://www.on-con.com/oncon/pages/download.jsp";
-						Intent intent = new Intent();        
-						intent.setAction("android.intent.action.VIEW");    
-						Uri content_url = Uri.parse(msg);   
-						intent.setData(content_url);  
-						startActivity(intent);
-						finish();
-				}
-			}).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    break;
+                case PARSE_BARCODE_FAIL:// 解析图片失败
+                    Toast.makeText(activityReference.get(), "解析图片失败",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
 
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
-					if ((source == IntentSource.NONE || source == IntentSource.ZXING_LINK) && lastResult != null) {
-						restartPreviewAfterDelay(0L);
-					}
-				}
-			}).show();
-			}else{
-				new AlertDialog.Builder(CaptureActivity.this).setTitle(getString(R.string.memo)).
-				setMessage(String.format(getString(R.string.barcode_one_dimen_success), msg)).
-				setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+            super.handleMessage(msg);
+        }
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-						//获取剪贴板管理服务
-						ClipboardManager cm =(ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-						//将文本数据复制到剪贴板
-						cm.setText(msg);
-						//读取剪贴板数据
-						//cm.getText();
-							
-					}
-				}).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+    }
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-						if ((source == IntentSource.NONE || source == IntentSource.ZXING_LINK) && lastResult != null) {
-							restartPreviewAfterDelay(0L);
-						}
-					}
-				}).show();
-			}
-
-	}
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -319,9 +255,6 @@ public final class CaptureActivity extends Activity implements
     @Override
     protected void onDestroy() {
         inactivityTimer.shutdown();
-        if (mProgress!= null) {
-			mProgress.dismiss();
-		}
         super.onDestroy();
     }
 
@@ -353,16 +286,12 @@ public final class CaptureActivity extends Activity implements
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-    	android.util.Log.i("steven", "data.getData()" + intent);
-		if (intent != null) {
-			mProgress = new ProgressDialog(CaptureActivity.this);
-			mProgress.setMessage("正在扫描...");
-			mProgress.setCancelable(false);
-			mProgress.show();
-			final ContentResolver resolver = getContentResolver();
+
         if (resultCode == RESULT_OK) {
-            //final ProgressDialog progressDialog;
-            if (resultCode == RESULT_OK) {             
+            final ProgressDialog progressDialog;
+            switch (requestCode) {
+                case REQUEST_CODE:
+
                     // 获取选中图片的路径
                     Cursor cursor = getContentResolver().query(
                             intent.getData(), null, null, null, null);
@@ -372,16 +301,16 @@ public final class CaptureActivity extends Activity implements
                     }
                     cursor.close();
 
-                   /* progressDialog = new ProgressDialog(this);
+                    progressDialog = new ProgressDialog(this);
                     progressDialog.setMessage("正在扫描...");
                     progressDialog.setCancelable(false);
-                    progressDialog.show();*/
+                    progressDialog.show();
 
                     new Thread(new Runnable() {
 
                         @Override
                         public void run() {
-                        	Looper.prepare();
+
                             Bitmap img = BitmapUtils
                                     .getCompressedBitmap(photoPath);
 
@@ -400,15 +329,19 @@ public final class CaptureActivity extends Activity implements
                                 m.what = PARSE_BARCODE_FAIL;
                                 mHandler.sendMessage(m);
                             }
-                            Looper.loop();
-                           // progressDialog.dismiss();
+
+                            progressDialog.dismiss();
 
                         }
                     }).start();
+
+                    break;
+
             }
-        }}
+        }
 
     }
+
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -441,9 +374,7 @@ public final class CaptureActivity extends Activity implements
      * @param scaleFactor amount by which thumbnail was scaled
      * @param barcode     A greyscale bitmap of the camera data which was decoded.
      */
-    private static ParsedResult parseResult(Result rawResult) {
-		return ResultParser.parseResult(rawResult);
-	}
+   
     public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
 
         // 重新计时
@@ -455,21 +386,10 @@ public final class CaptureActivity extends Activity implements
         viewfinderView.drawResultBitmap(barcode);
 
         beepManager.playBeepSoundAndVibrate();
-        
-       ResultHandler resultHandler = new ResultHandler(parseResult(rawResult));
-        
-        boolean fromLiveScan = barcode != null;
-		if (barcode == null) {
-			android.util.Log.i("steven", "rawResult.getBarcodeFormat().toString():" + rawResult.getBarcodeFormat().toString());
-			android.util.Log.i("steven", "resultHandler.getType().toString():" + resultHandler.getType().toString());
-			android.util.Log.i("steven", "resultHandler.getDisplayContents():" + resultHandler.getDisplayContents());
-		} else {
-			showDialog(resultHandler.getDisplayContents().toString());
-		}
 
-        /*Toast.makeText(this,
+        Toast.makeText(this,
                 "识别结果:" + ResultParser.parseResult(rawResult).toString(),
-                Toast.LENGTH_SHORT).show();*/
+                Toast.LENGTH_SHORT).show();
 
     }
 
@@ -567,14 +487,13 @@ public final class CaptureActivity extends Activity implements
     public void onClick(View v) {
     	int id=v.getId();
         if(id==R.id.capture_scan_photo) {
-            /*// 图片识别
+            // 图片识别
                 // 打开手机中的相册
                 Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT); // "android.intent.action.GET_CONTENT"
                 innerIntent.setType("image/*");
                 Intent wrapperIntent = Intent.createChooser(innerIntent,
                         "选择二维码图片");
-                this.startActivityForResult(wrapperIntent, REQUEST_CODE);*/
-        	StringUtils.showPictures(CaptureActivity.this, REQUEST_CODE);
+                this.startActivityForResult(wrapperIntent, REQUEST_CODE);
          }else if(id==R.id.capture_flashlight){
   
                 if (isFlashlightOpen) {

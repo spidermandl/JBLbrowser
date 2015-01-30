@@ -88,7 +88,9 @@ public class MainPageActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+				Intent intent=new Intent();
+				//intent.setClass(MainPageActivity.this, CaptureActivity.class);
+				startActivity(intent);
 			}
 		});
 		
@@ -98,9 +100,7 @@ public class MainPageActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent=new Intent();
-				//intent.setClass(MainPageActivity.this, CaptureActivity.class);
-				startActivity(intent);
+				
 			}
 		});
 		
