@@ -38,15 +38,15 @@ public final class R {
 	}
 	public static final class id {
 		public static final int auto_focus = 0x7f0e0006;
-		public static final int capture_bottom_hint = 0x7f0e006c;
-		public static final int capture_button_cancel = 0x7f0e006a;
-		public static final int capture_button_createcode = 0x7f0e006b;
-		public static final int capture_flashlight = 0x7f0e0067;
-		public static final int capture_frame = 0x7f0e0064;
-		public static final int capture_preview_view = 0x7f0e0065;
-		public static final int capture_scan_photo = 0x7f0e0069;
-		public static final int capture_top_hint = 0x7f0e0068;
-		public static final int capture_viewfinder_view = 0x7f0e0066;
+		public static final int capture_bottom_hint = 0x7f0e0086;
+		public static final int capture_button_cancel = 0x7f0e0084;
+		public static final int capture_button_createcode = 0x7f0e0085;
+		public static final int capture_flashlight = 0x7f0e0081;
+		public static final int capture_frame = 0x7f0e007e;
+		public static final int capture_preview_view = 0x7f0e007f;
+		public static final int capture_scan_photo = 0x7f0e0083;
+		public static final int capture_top_hint = 0x7f0e0082;
+		public static final int capture_viewfinder_view = 0x7f0e0080;
 		public static final int decode = 0x7f0e0007;
 		public static final int decode_failed = 0x7f0e0008;
 		public static final int decode_succeeded = 0x7f0e0009;
@@ -58,7 +58,7 @@ public final class R {
 		public static final int search_book_contents_succeeded = 0x7f0e000f;
 	}
 	public static final class layout {
-		public static final int capture = 0x7f03001a;
+		public static final int capture = 0x7f03001c;
 	}
 	public static final class raw {
 		public static final int beep = 0x7f060000;

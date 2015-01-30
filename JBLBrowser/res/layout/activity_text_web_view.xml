@@ -10,7 +10,7 @@
         <ImageView android:id="@+id/mImageViewSearch" android:layout_weight="1" android:layout_width="0dp" 
             android:layout_height="match_parent" android:background="#90ee90"/>
         <EditText android:id="@+id/mEditTextInput" android:layout_weight="6" android:layout_width="0dp"
-            android:layout_height="match_parent" android:text="@string/InputandSearch" android:textSize="12sp"
+            android:layout_height="match_parent" android:hint="@string/input_and_search" android:textSize="12sp"
             android:layout_gravity="center"/>
         <Button android:id="@+id/mButtonCode" android:layout_weight="1" android:layout_height="match_parent" 
             android:layout_width="0dp" android:background="#90ee90"/>
