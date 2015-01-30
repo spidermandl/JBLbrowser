@@ -2,6 +2,7 @@ package com.jbl.browser;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridView;
@@ -17,10 +18,10 @@ public class ViewPagerPresenter
     private List<List<String>> mPageList;  
     private List<GridView> mGridViews;  
     private List<View> mViewPages;  
-    private TextWebView mView;  
+    private Context mContext;  
   
-    public ViewPagerPresenter(TextWebView view) {  
-        mView = view;  
+    public ViewPagerPresenter(Context context) {  
+    	mContext = context;  
         mPageList = new ArrayList<List<String>>();  
         mGridViews = new ArrayList<GridView>();  
         mAdapters = new ArrayList<MyListAdapter>();  
@@ -70,12 +71,12 @@ public class ViewPagerPresenter
     }  
     private void initViewAndAdapter()  
     {  
-        LayoutInflater inflater = mView.getLayoutInflater();  
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for (int i = 0; i < sTotalPages; ++i) {  
             View v = inflater.inflate(R.layout.viewpager_gridview, null);  
             GridView lv = (GridView) v.findViewById(R.id.viewpage_grid);  
             mGridViews.add(lv);  
-            MyListAdapter adapter = new MyListAdapter(mView, mPageList.get(i));  
+            MyListAdapter adapter = new MyListAdapter(mContext, mPageList.get(i));  
             mAdapters.add(adapter);  
             lv.setAdapter(adapter);  
             mViewPages.add(v);  

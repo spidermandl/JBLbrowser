@@ -1,29 +1,23 @@
-package com.jbl.browser;
+package com.jbl.browser.activity;
 
-<<<<<<< HEAD
-import cn.hugo.android.scanner.CaptureActivity;
-=======
+import com.jbl.browser.MyPagerAdapter;
+import com.jbl.browser.R;
+import com.jbl.browser.ViewPagerPresenter;
+import com.jbl.browser.R.id;
+import com.jbl.browser.R.layout;
 
-
-
->>>>>>> 65efac8b5438b12c9e018585236705c4e6a1f5c1
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-public class TextWebView extends Activity {
+public class MainPageActivity extends Activity {
 
 	/**
 	 * 1.title
@@ -105,7 +99,7 @@ public class TextWebView extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent=new Intent();
-				intent.setClass(TextWebView.this, CaptureActivity.class);
+				//intent.setClass(MainPageActivity.this, CaptureActivity.class);
 				startActivity(intent);
 			}
 		});
