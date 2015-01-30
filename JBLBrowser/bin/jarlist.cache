@@ -1,7 +1,21 @@
 # cache for current jar dependency. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
+<<<<<<< HEAD
 1422454690821 538457 5589d0e71fbbd91262d1aa6c8e153ff211ec9fe0 F:\JBLbrowser\JBLBrowser\libs\core-3.1.1-SNAPSHOT.jar
 1422454691055 538457 5589d0e71fbbd91262d1aa6c8e153ff211ec9fe0 F:\JBLbrowser\Scanner\libs\core-3.1.1-SNAPSHOT.jar
 1422588639106 271754 53307dc2bd2b69fd5533458ee11885f55807de4b F:\JBLbrowser\Scanner\libs\android-support-v4.jar
 1422454691461 271754 53307dc2bd2b69fd5533458ee11885f55807de4b F:\JBLbrowser\actionbarsherlock\libs\android-support-v4.jar
+=======
+<<<<<<< HEAD
+1422531895708 538457 5589d0e71fbbd91262d1aa6c8e153ff211ec9fe0 D:\JBLbrowser\JBLBrowser\libs\core-3.1.1-SNAPSHOT.jar
+1422531895867 538457 5589d0e71fbbd91262d1aa6c8e153ff211ec9fe0 D:\JBLbrowser\Scanner\libs\core-3.1.1-SNAPSHOT.jar
+1422531895859 271754 53307dc2bd2b69fd5533458ee11885f55807de4b D:\JBLbrowser\Scanner\libs\android-support-v4.jar
+1422531895963 271754 53307dc2bd2b69fd5533458ee11885f55807de4b D:\JBLbrowser\actionbarsherlock\libs\android-support-v4.jar
+=======
+1422518084394 538457 5589d0e71fbbd91262d1aa6c8e153ff211ec9fe0 D:\JBLbrowser\JBLBrowser\libs\core-3.1.1-SNAPSHOT.jar
+1422518085049 538457 5589d0e71fbbd91262d1aa6c8e153ff211ec9fe0 D:\JBLbrowser\Scanner\libs\core-3.1.1-SNAPSHOT.jar
+1422518085034 271754 53307dc2bd2b69fd5533458ee11885f55807de4b D:\JBLbrowser\Scanner\libs\android-support-v4.jar
+1422518085174 271754 53307dc2bd2b69fd5533458ee11885f55807de4b D:\JBLbrowser\actionbarsherlock\libs\android-support-v4.jar
+>>>>>>> 65efac8b5438b12c9e018585236705c4e6a1f5c1
+>>>>>>> a957ddcf5651d3ba85cc9905c2bdd0dd7d4cc17b
