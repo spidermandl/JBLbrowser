@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-     >
+    tools:context="com.example.textwebview.MainActivity" >
 
     <LinearLayout 
         android:layout_width="fill_parent" android:layout_height="30dp" android:weightSum="9" 
@@ -17,10 +17,18 @@
         <Button android:id="@+id/mButtonLand" android:layout_weight="1" android:layout_width="0dp" 
             android:layout_height="match_parent" android:background="#da70d6"/>
     </LinearLayout>
-    
-    <WebView android:id="@+id/mWebView" android:layout_width="match_parent" android:layout_height="match_parent" 
+     <LinearLayout 
+        android:layout_width="fill_parent" android:layout_height="wrap_content" android:visibility="visible" android:layout_marginTop="200dip" android:weightSum="9" 
+        android:orientation="horizontal" android:id="@+id/linear3" android:layout_below="@+id/linear1" >
+    <android.support.v4.view.ViewPager  
+        android:id="@+id/test_viewpager"   android:layout_width="wrap_content"  
+        android:layout_height="wrap_content" android:layout_gravity="center"
+        /> 
+        </LinearLayout>
+          
+    <!--  <WebView android:id="@+id/mWebView" android:layout_width="match_parent" android:layout_height="match_parent" 
         android:layout_below="@+id/linear1" android:layout_above="@+id/linear2"/>
-    
+    -->
     <LinearLayout android:layout_width="fill_parent" android:layout_height="40dp" android:id="@+id/linear2" 
         android:orientation="horizontal" android:layout_alignParentBottom="true" android:weightSum="5">
         <ImageView android:id="@+id/mImageViewBack" android:layout_width="0dp" android:layout_height="match_parent"
@@ -37,3 +45,4 @@
     </LinearLayout>
 
 </RelativeLayout>
+
