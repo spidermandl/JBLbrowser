@@ -29,6 +29,7 @@ public class MainPageFragment extends SherlockFragment{
 		super.onCreate(savedInstanceState);
 	}
 	
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);

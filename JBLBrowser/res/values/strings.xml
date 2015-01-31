@@ -86,5 +86,7 @@
     <string name="input_and_search">输入网址或搜索</string>
     <string name="title_activity_text_login">TextLoginActivity</string>
     <string name="title_activity_text_register">TextRegisterActivity</string>
+    <string name="title_activity_tool_bar_operate">ToolBarOperateActivity</string>
+    <string name="font_size">30sp</string>
 
 </resources>
