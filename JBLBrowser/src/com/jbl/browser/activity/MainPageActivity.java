@@ -1,7 +1,20 @@
-package com.jbl.browser;
+package com.jbl.browser.activity;
+
+import java.util.concurrent.ScheduledExecutorService;
+
+
+import com.jbl.browser.MyPagerAdapter;
+import com.jbl.browser.R;
+import com.jbl.browser.ViewPagerPresenter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -9,8 +22,14 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-public class TextWebView extends Activity {
+/**
+ * 主页页面
+ * @author desmond.duan
+ *
+ */
+public class MainPageActivity extends Activity {
 
 	/**
 	 * 1.title
@@ -41,21 +60,37 @@ public class TextWebView extends Activity {
 	private ImageView mImageViewHome;  // 3.3 mImageViewHome   Home
 	private ImageView mImageViewChange;// 3.4 mImageViewChange 切换多页模式
 	private ImageView mImageViewOption;// 3.5 mImageViewOption 选项菜单
+	 private static final String TAG = "ViewPagerTestActivity";  
+	 private ViewPager mViewPager;  //水平实现滑动效果
+	 private PagerAdapter mPageAdapter;  
+	 private ViewPagerPresenter mPresenter;  
+	private LinearLayout ll;//viewpager的线性布局
+	int count=0;//点击次数
+	// 记录当前选中位置
+	 private int currentIndex;
+	 private int oldPosition = 0;//记录上一次点的位置
+	 private int currentItem; //当前页面
+	 private ScheduledExecutorService scheduledExecutorService;
+	 //private ArrayList<View> dots;
+	 LinearLayout linear3,linear4;//线性布局3,4
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_text_web_view);
 		mImageViewSearch=(ImageView)findViewById(R.id.mImageViewSearch); //1.1  mImageViewSearch  搜索图标
 		mEditTextInput=(EditText)findViewById(R.id.mEditTextInput); //1.2 mEditTextInput   输入网址
 		mButtonCode=(Button)findViewById(R.id.mButtonCode);//1.3 mButtonCode       二维码搜索
 		mButtonLand=(Button)findViewById(R.id.mButtonLand); //1.4 mButtonLand       登陆注册
-		mWebView=(WebView)findViewById(R.id.mWebView); //webview
+		//mWebView=(WebView)findViewById(R.id.mWebView); //webview
 		mImageViewBack=(ImageView)findViewById(R.id.mImageViewBack);  // 3.1 mImageViewBack   后退
 		mImageViewInto=(ImageView)findViewById(R.id.mImageViewInto);  // 3.2 mImageViewInto   前进
 		mImageViewHome=(ImageView)findViewById(R.id.mImageViewHome);  // 3.3 mImageViewHome   Home
 		mImageViewChange=(ImageView)findViewById(R.id.mImageViewChange); // 3.4 mImageViewChange 切换多页模式
 		mImageViewOption=(ImageView)findViewById(R.id.mImageViewOption); // 3.5 mImageViewOption 选项菜单
+		mViewPager = (ViewPager) findViewById(R.id.test_viewpager);  
+		linear3=(LinearLayout)findViewById(R.id.linear3);
+		linear4=(LinearLayout)findViewById(R.id.linear4);
 		/*   设置title各个控件监听       */
 		/* 1.1 search */
 		mImageViewSearch.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +111,9 @@ public class TextWebView extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+				Intent intent=new Intent();
+				//intent.setClass(MainPageActivity.this, CaptureActivity.class);
+				startActivity(intent);
 			}
 		});
 		
@@ -92,11 +129,11 @@ public class TextWebView extends Activity {
 		
 		/* 2.0 WebView touch监听 */
 		mWebView.setOnTouchListener(new View.OnTouchListener() {
-			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				// TODO Auto-generated method stub
-				return false;
+				mViewPager.setVisibility(View.GONE);
+				linear4.setVisibility(View.GONE);
+				return true;
 			}
 		});
 		
@@ -145,7 +182,11 @@ public class TextWebView extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				count++;
+				//mWebView.setAlpha(200);
+				 init();
+				
+			
 				
 			}
 		});
@@ -153,22 +194,91 @@ public class TextWebView extends Activity {
 		/*  设置webview */
 		setWebStyle();
 	} 
+	/* 点击webview取消菜单栏展示*/
+	
+	 private void init()  
+	    {  
+		 	if(count%2!=0){
+	        mPresenter = new ViewPagerPresenter(this);  
+	        mPageAdapter = new MyPagerAdapter(mPresenter.getPageViews());
+	        mViewPager.setAdapter(mPageAdapter); 
+	        mViewPager.setVisibility(View.VISIBLE);
+	        linear3.setVisibility(View.VISIBLE);
+	        linear4.setVisibility(View.VISIBLE);}
+		 	else{
+		 		 mViewPager.setVisibility(View.GONE);
+		 		 linear3.setVisibility(View.GONE);
+			      linear4.setVisibility(View.GONE);
+		 	}
+	        mViewPager.setOnPageChangeListener(new OnPageChangeListener(){
 
-	private void setWebStyle() {
-		// TODO Auto-generated method stub
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.getSettings().setSupportZoom(true);
-		mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-		mWebView.requestFocus();
-		mWebView.loadUrl("http://www.hmudq.edu.cn/");  //链接到哈医大主页
-		mWebView.setWebViewClient(new MyWebViewClient());
-	}
-/*       webcilent         */
-	class MyWebViewClient extends WebViewClient{
-		@Override
-		public boolean shouldOverrideUrlLoading(WebView view,String url_){
-			view.loadUrl(url_);
-			return true;
+				@Override
+				public void onPageScrollStateChanged(int arg0) {
+					
+				}
+
+				@Override
+				public void onPageScrolled(int arg0, float arg1, int arg2) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onPageSelected(int arg0) {
+					/* dots.get(oldPosition).setBackgroundResource(R.drawable.dot_normal);
+		                dots.get(arg0).setBackgroundResource(R.drawable.dot_focused);
+		                oldPosition = arg0;
+		                currentItem = arg0;*/
+					
+				}
+	        	
+	        });
+	    }  
+	 private void setWebStyle() {
+			// TODO Auto-generated method stub
+			mWebView.getSettings().setJavaScriptEnabled(true);
+			mWebView.getSettings().setSupportZoom(true);
+			mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+			mWebView.requestFocus();
+			mWebView.loadUrl("http://www.baidu.com/");
+			mWebView.setWebViewClient(new MyWebViewClient());
 		}
-	}
+	/*       webcilent         */
+		class MyWebViewClient extends WebViewClient{
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view,String url_){
+				view.loadUrl(url_);
+				return true;
+			}
+		}
+		
+		/*private void initDots() {
+			
+			dots = new ImageView[ViewPagerPresenter.PAGE_SIZE];
+
+			// 循环取得小点图片
+			for (int i = 0; i < ViewPagerPresenter.PAGE_SIZE; i++) {
+				dots[i] = (ImageView) ll.getChildAt(i);
+				dots[i].setEnabled(true);// 都设为灰色
+			}
+
+			currentIndex = 0;
+			dots[currentIndex].setEnabled(false);// 设置为白色，即选中状态
+		}
+
+		private void setCurrentDot(int position) {
+			if (position < 0 || position > ViewPagerPresenter.PAGE_SIZE - 1
+					|| currentIndex == position) {
+				return;
+			}
+
+			dots[position].setEnabled(false);
+			dots[currentIndex].setEnabled(true);
+
+			currentIndex = position;
+		}*/
+
+
+	
+	
 }

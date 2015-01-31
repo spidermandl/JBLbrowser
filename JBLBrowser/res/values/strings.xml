@@ -83,6 +83,8 @@
     <string name="title_activity_text_web_view">TextWebView</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="InputandSearch">输入网址或搜索</string>
+    <string name="input_and_search">输入网址或搜索</string>
+    <string name="title_activity_text_login">TextLoginActivity</string>
+    <string name="title_activity_text_register">TextRegisterActivity</string>
 
 </resources>

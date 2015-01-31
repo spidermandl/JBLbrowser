@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    tools:context="com.example.textwebview.MainActivity" >
 
     <LinearLayout
         android:id="@+id/linear1"
@@ -24,7 +25,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="6"
-            android:text="@string/InputandSearch"
+            android:hint="@string/input_and_search"
             android:textSize="12sp" />
 
         <Button
@@ -48,6 +49,62 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/linear2"
         android:layout_below="@+id/linear1" />
+
+    <LinearLayout
+        android:id="@+id/linear3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linear4"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/test_viewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linear2"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <View
+            android:id="@+id/dot_0"
+            android:layout_width="5dip"
+            android:layout_height="5dip"
+            android:layout_gravity="center"
+            android:layout_marginLeft="130dip"
+            android:background="@drawable/dot_focused" />
+
+        <View
+            android:id="@+id/dot_1"
+            android:layout_width="5dip"
+            android:layout_height="5dip"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/dot_normal" />
+
+        <View
+            android:id="@+id/dot_2"
+            android:layout_width="5dip"
+            android:layout_height="5dip"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/dot_normal" />
+
+        <View
+            android:id="@+id/dot_3"
+            android:layout_width="5dip"
+            android:layout_height="5dip"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/dot_normal" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linear2"
