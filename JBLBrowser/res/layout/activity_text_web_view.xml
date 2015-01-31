@@ -4,64 +4,150 @@
     android:layout_height="match_parent"
     tools:context="com.example.textwebview.MainActivity" >
 
-    <LinearLayout 
-        android:layout_width="fill_parent" android:layout_height="30dp" android:weightSum="9" 
-        android:orientation="horizontal" android:id="@+id/linear1" android:layout_alignParentTop="true">
-        <ImageView android:id="@+id/mImageViewSearch" android:layout_weight="1" android:layout_width="0dp" 
-            android:layout_height="match_parent" android:background="#90ee90"/>
-        <EditText android:id="@+id/mEditTextInput" android:layout_weight="6" android:layout_width="0dp"
-            android:layout_height="match_parent" android:hint="@string/input_and_search" android:textSize="12sp"
-            android:layout_gravity="center"/>
-        <Button android:id="@+id/mButtonCode" android:layout_weight="1" android:layout_height="match_parent" 
-            android:layout_width="0dp" android:background="#90ee90"/>
-        <Button android:id="@+id/mButtonLand" android:layout_weight="1" android:layout_width="0dp" 
-            android:layout_height="match_parent" android:background="#da70d6"/>
-    </LinearLayout>
-    <WebView android:id="@+id/mWebView" android:layout_width="match_parent" android:layout_height="match_parent" 
-        android:layout_below="@+id/linear1" android:layout_above="@+id/linear2"/>
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:weightSum="9" >
 
-      <LinearLayout
-          android:id="@+id/linear3"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" android:visibility="gone"
-          android:layout_above="@+id/linear4" android:background="#ffffff"
-          android:orientation="horizontal">
-    <android.support.v4.view.ViewPager  
-        android:id="@+id/test_viewpager"   android:layout_width="fill_parent"  
-        android:layout_height="200dp"  android:layout_gravity="center"
-        /> 
-        </LinearLayout>  
-         <LinearLayout
-          android:id="@+id/linear4" android:layout_width="match_parent"
-          android:layout_height="wrap_content" android:visibility="gone" android:gravity="center_vertical"
-          android:layout_above="@+id/linear2" android:background="#ffffff" android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/mImageViewSearch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#90ee90" />
+
+        <EditText
+            android:id="@+id/mEditTextInput"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="6"
+            android:hint="@string/input_and_search"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/mButtonCode"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#90ee90" />
+
+        <Button
+            android:id="@+id/mButtonLand"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#da70d6" />
+    </LinearLayout>
+
+    <WebView
+        android:id="@+id/mWebView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linear2"
+        android:layout_below="@+id/linear1" />
+
+    <LinearLayout
+        android:id="@+id/linear3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linear4"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/test_viewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linear2"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
         <View
-           android:id="@+id/dot_0" android:layout_width="5dip" android:layout_height="5dip"
-           android:layout_marginLeft="130dip" android:layout_gravity="center" android:background="@drawable/dot_focused" />
+            android:id="@+id/dot_0"
+            android:layout_width="5dip"
+            android:layout_height="5dip"
+            android:layout_gravity="center"
+            android:layout_marginLeft="130dip"
+            android:background="@drawable/dot_focused" />
+
         <View
-           android:id="@+id/dot_1" android:layout_width="5dip" android:layout_height="5dip"
-           android:layout_marginLeft="5dip" android:background="@drawable/dot_normal" />
-         <View
-           android:id="@+id/dot_2" android:layout_width="5dip" android:layout_height="5dip"
-           android:layout_marginLeft="5dip" android:background="@drawable/dot_normal" />
+            android:id="@+id/dot_1"
+            android:layout_width="5dip"
+            android:layout_height="5dip"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/dot_normal" />
+
         <View
-           android:id="@+id/dot_3"  android:layout_width="5dip" android:layout_height="5dip"
-          android:layout_marginLeft="5dip" android:background="@drawable/dot_normal" />
-        </LinearLayout>  
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="40dp" android:id="@+id/linear2" 
-        android:orientation="horizontal" android:layout_alignParentBottom="true" android:weightSum="5">
-        <ImageView android:id="@+id/mImageViewBack" android:layout_width="0dp" android:layout_height="match_parent"
-            android:background="#fffacd" android:layout_weight="1"/>
-        <ImageView  android:id="@+id/mImageViewInto" android:layout_width="0dp" android:layout_height="match_parent" 
-            android:background="#ffdab9" android:layout_weight="1"/>
-        <ImageView  android:id="@+id/mImageViewHome" android:layout_width="0dp" android:layout_height="match_parent"
-            android:background="#deb887" android:layout_weight="1"/>
-        <ImageView  android:id="@+id/mImageViewChange" android:layout_weight="1" android:layout_width="0dp"
-            android:layout_height="match_parent" android:background="#da70d6"/>
-        <ImageView  android:id="@+id/mImageViewOption" android:layout_weight="1" android:layout_width="0dp" 
-            android:layout_height="match_parent" android:background="#fffacd"/>
-        
+            android:id="@+id/dot_2"
+            android:layout_width="5dip"
+            android:layout_height="5dip"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/dot_normal" />
+
+        <View
+            android:id="@+id/dot_3"
+            android:layout_width="5dip"
+            android:layout_height="5dip"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/dot_normal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="5" >
+
+        <ImageView
+            android:id="@+id/mImageViewBack"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#fffacd" />
+
+        <ImageView
+            android:id="@+id/mImageViewInto"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ffdab9" />
+
+        <ImageView
+            android:id="@+id/mImageViewHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#deb887" />
+
+        <ImageView
+            android:id="@+id/mImageViewChange"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#da70d6" />
+
+        <ImageView
+            android:id="@+id/mImageViewOption"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#fffacd" />
     </LinearLayout>
 
 </RelativeLayout>
-
