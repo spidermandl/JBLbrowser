@@ -17,18 +17,37 @@
         <Button android:id="@+id/mButtonLand" android:layout_weight="1" android:layout_width="0dp" 
             android:layout_height="match_parent" android:background="#da70d6"/>
     </LinearLayout>
-     <LinearLayout 
-        android:layout_width="fill_parent" android:layout_height="wrap_content" android:visibility="visible" android:layout_marginTop="200dip" android:weightSum="9" 
-        android:orientation="horizontal" android:id="@+id/linear3" android:layout_below="@+id/linear1" >
-    <android.support.v4.view.ViewPager  
-        android:id="@+id/test_viewpager"   android:layout_width="wrap_content"  
-        android:layout_height="wrap_content" android:layout_gravity="center"
-        /> 
-        </LinearLayout>
-          
-    <!--  <WebView android:id="@+id/mWebView" android:layout_width="match_parent" android:layout_height="match_parent" 
+    <WebView android:id="@+id/mWebView" android:layout_width="match_parent" android:layout_height="match_parent" 
         android:layout_below="@+id/linear1" android:layout_above="@+id/linear2"/>
-    -->
+
+      <LinearLayout
+          android:id="@+id/linear3"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" android:visibility="gone"
+          android:layout_above="@+id/linear4" android:background="#ffffff"
+          android:orientation="horizontal">
+    <android.support.v4.view.ViewPager  
+        android:id="@+id/test_viewpager"   android:layout_width="fill_parent"  
+        android:layout_height="200dp"  android:layout_gravity="center"
+        /> 
+        </LinearLayout>  
+         <LinearLayout
+          android:id="@+id/linear4" android:layout_width="match_parent"
+          android:layout_height="wrap_content" android:visibility="gone" android:gravity="center_vertical"
+          android:layout_above="@+id/linear2" android:background="#ffffff" android:orientation="horizontal">
+        <View
+           android:id="@+id/dot_0" android:layout_width="5dip" android:layout_height="5dip"
+           android:layout_marginLeft="130dip" android:layout_gravity="center" android:background="@drawable/dot_focused" />
+        <View
+           android:id="@+id/dot_1" android:layout_width="5dip" android:layout_height="5dip"
+           android:layout_marginLeft="5dip" android:background="@drawable/dot_normal" />
+         <View
+           android:id="@+id/dot_2" android:layout_width="5dip" android:layout_height="5dip"
+           android:layout_marginLeft="5dip" android:background="@drawable/dot_normal" />
+        <View
+           android:id="@+id/dot_3"  android:layout_width="5dip" android:layout_height="5dip"
+          android:layout_marginLeft="5dip" android:background="@drawable/dot_normal" />
+        </LinearLayout>  
     <LinearLayout android:layout_width="fill_parent" android:layout_height="40dp" android:id="@+id/linear2" 
         android:orientation="horizontal" android:layout_alignParentBottom="true" android:weightSum="5">
         <ImageView android:id="@+id/mImageViewBack" android:layout_width="0dp" android:layout_height="match_parent"

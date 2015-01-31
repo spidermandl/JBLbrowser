@@ -2,10 +2,6 @@ package com.jbl.browser.activity;
 
 import java.net.URLDecoder;
 
-
-
-import cn.hugo.android.scanner.CaptureActivity;
-
 import com.jbl.browser.R;
 import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.model.MusicModel;
@@ -20,6 +16,7 @@ import com.jbl.browser.view.TitleView;
 import com.jbl.browser.view.UserDefinedDialog;
 import com.jbl.browser.websocket.WebSocketFactory;
 import com.umeng.analytics.MobclickAgent;
+
 import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;

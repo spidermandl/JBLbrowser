@@ -16,6 +16,9 @@
 
 package cn.hugo.android.scanner.decode;
 
+import java.util.Collection;
+import java.util.Map;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -37,9 +40,6 @@ import cn.hugo.android.scanner.view.ViewfinderResultPointCallback;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
-
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * This class handles all the messaging which comprises the state machine for
@@ -142,7 +142,7 @@ public final class CaptureActivityHandler extends Handler {
 			Log.d(TAG, "Got return scan result message");
 			activity.setResult(Activity.RESULT_OK, (Intent) message.obj);
 			activity.finish();
-		}/*else if(msg_code==R.id.launch_product_query){
+		}else if(msg_code==R.id.launch_product_query){
 			Log.d(TAG, "Got product query message");
 			String url = (String) message.obj;
 
@@ -150,9 +150,9 @@ public final class CaptureActivityHandler extends Handler {
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 			intent.setData(Uri.parse(url));
 
-			*//**
+			/**
 			 * 这段代码是zxing项目组想要用chrome打开浏览器浏览url
-			 *//*
+			 */
 			ResolveInfo resolveInfo = activity.getPackageManager()
 					.resolveActivity(intent,
 							PackageManager.MATCH_DEFAULT_ONLY);
@@ -178,7 +178,7 @@ public final class CaptureActivityHandler extends Handler {
 				Log.w(TAG, "Can't find anything to handle VIEW of URI "
 						+ url);
 			}
-		}*/
+		}
 
 	}
 
