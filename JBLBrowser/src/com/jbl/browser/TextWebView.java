@@ -1,20 +1,12 @@
 package com.jbl.browser;
 
-<<<<<<< HEAD
-import cn.hugo.android.scanner.CaptureActivity;
-=======
 
-
-
->>>>>>> 65efac8b5438b12c9e018585236705c4e6a1f5c1
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -22,6 +14,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import cn.hugo.android.scanner.CaptureActivity;
 
 public class TextWebView extends Activity {
 
@@ -47,7 +40,7 @@ public class TextWebView extends Activity {
 	private Button mButtonCode;  //1.3 mButtonCode       二维码搜索
 	private Button mButtonLand;  //1.4 mButtonLand       登陆注册
 	/*  定义webview控件   */
-	//private WebView mWebView; //主控件  webview
+	private WebView mWebView; //主控件  webview
 	/*  定义操作栏控件   */
 	private ImageView mImageViewBack;  // 3.1 mImageViewBack   后退
 	private ImageView mImageViewInto;  // 3.2 mImageViewInto   前进
@@ -73,7 +66,7 @@ public class TextWebView extends Activity {
 		mImageViewHome=(ImageView)findViewById(R.id.mImageViewHome);  // 3.3 mImageViewHome   Home
 		mImageViewChange=(ImageView)findViewById(R.id.mImageViewChange); // 3.4 mImageViewChange 切换多页模式
 		mImageViewOption=(ImageView)findViewById(R.id.mImageViewOption); // 3.5 mImageViewOption 选项菜单
-		 init();//调用滑动方法
+		 
 		/*   设置title各个控件监听       */
 		/* 1.1 search */
 		mImageViewSearch.setOnClickListener(new View.OnClickListener() {
@@ -111,24 +104,24 @@ public class TextWebView extends Activity {
 		});
 		
 		/* 2.0 WebView touch监听 */
-		/*mWebView.setOnTouchListener(new View.OnTouchListener() {
+		mWebView.setOnTouchListener(new View.OnTouchListener() {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
 				return false;
 			}
-		});*/
+		});
 		
-		/*  3.1 返回监听  */
-		/*mImageViewBack.setOnClickListener(new View.OnClickListener() {
+		 /* 3.1 返回监听  */
+		mImageViewBack.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				mWebView.goBack();
 			}
-		});*/
+		});
 		
 		/*  3.2 前进监听   */
 		mImageViewInto.setOnClickListener(new View.OnClickListener() {
@@ -165,13 +158,12 @@ public class TextWebView extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-		    
-				
+			init();   //滑动方法	
 			}
 		});
 		
 		/*  设置webview */
-		//setWebStyle();
+		setWebStyle();
 	} 
 	//实现滑动方法
 	 private void init()  
@@ -201,7 +193,7 @@ public class TextWebView extends Activity {
 	        	
 	        });
 	    }  
-	/*private void setWebStyle() {
+	private void setWebStyle() {
 		// TODO Auto-generated method stub
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setSupportZoom(true);
@@ -209,17 +201,13 @@ public class TextWebView extends Activity {
 		mWebView.requestFocus();
 		mWebView.loadUrl("http://www.baidu.com/");
 		mWebView.setWebViewClient(new MyWebViewClient());
-	}*/
+	}
 /*       webcilent         */
-	/*class MyWebViewClient extends WebViewClient{
+	class MyWebViewClient extends WebViewClient{
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view,String url_){
 			view.loadUrl(url_);
 			return true;
 		}
-	}
-*/
-
-	
-	
+	}	
 }

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.jbl.browser.activity.TextLoginActivity" >
+    tools:context="com.jbl.browser.TextLoginActivity" >
 
    <LinearLayout android:layout_width="match_parent" android:layout_height="25dp" android:weightSum="9" 
        android:id="@+id/linear_top" android:layout_alignParentTop="true" android:layout_marginLeft="5dp">

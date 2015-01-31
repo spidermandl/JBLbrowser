@@ -107,11 +107,11 @@
             android:label="@string/title_activity_text_web_view" >
         </activity>
        <activity
-            android:name=".activity.TextLoginActivity"
+            android:name="com.jbl.browser.TextLoginActivity"
             android:label="@string/title_activity_text_login" >
         </activity>
         <activity
-            android:name="com.jbl.browser.activity.TextRegisterActivity"
+            android:name="com.jbl.browser.TextRegisterActivity"
             android:label="@string/title_activity_text_register" >
         </activity>
 
