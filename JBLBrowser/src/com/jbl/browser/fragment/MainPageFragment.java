@@ -127,7 +127,6 @@ public class MainPageFragment extends SherlockFragment{
         menu.add(0, 2, 0,"Land")
         .setIcon(R.drawable.actionbar_title_land)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-
 	}
 	
 	@Override
