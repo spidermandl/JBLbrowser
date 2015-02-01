@@ -11,7 +11,12 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 
-public class InputViewFragActivity extends SherlockFragment {
+/**
+ * 用户输入网址fragment
+ * @author Desmond
+ *
+ */
+public class UrlRedirectFragment extends SherlockFragment {
 
 	public final static String TAG="InputViewFragActivity";
 	@Override
