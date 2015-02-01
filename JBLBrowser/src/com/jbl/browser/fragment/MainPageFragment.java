@@ -14,8 +14,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebSettings.PluginState;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -311,10 +313,19 @@ public class MainPageFragment extends SherlockFragment{
 	    }  
 	 private void setWebStyle() {
 			// TODO Auto-generated method stub
+//			mWebView.getSettings().setJavaScriptEnabled(true);
+//			mWebView.getSettings().setSupportZoom(true);
+//			mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+//			mWebView.requestFocus();
+//			mWebView.setScrollBarStyle(View.GONE);
+		 
+//			webView.getSettings().setUseWideViewPort(true);
+//			webView.getSettings().setLoadWithOverviewMode(true);
 			mWebView.getSettings().setJavaScriptEnabled(true);
-			mWebView.getSettings().setSupportZoom(true);
-			mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-			mWebView.requestFocus();
+			mWebView.getSettings().setAppCacheMaxSize(8*1024*1024);
+			mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+			//webView.getSettings().setPluginsEnabled(true);
+			mWebView.getSettings().setPluginState(PluginState.ON);
 			mWebView.loadUrl("http://www.baidu.com/");
 			mWebView.setWebViewClient(new MyWebViewClient());
 		}
