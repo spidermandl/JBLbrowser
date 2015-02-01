@@ -1,4 +1,4 @@
-package com.jbl.browser;
+package com.jbl.browser.adapter;
 
 import java.util.List;
 

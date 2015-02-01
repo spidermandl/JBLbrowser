@@ -2,6 +2,8 @@ package com.jbl.browser;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jbl.browser.adapter.MyListAdapter;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

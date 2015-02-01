@@ -90,7 +90,14 @@
     <string name="title_activity_tool_bar_operate">ToolBarOperateActivity</string>
     <string name="font_size">30sp</string>
 
-    <string name="title_activity_input_view_frag">InputViewFragActivity</string>
+    <string name="title_activity_input_view_frag">InputViewFragActivity</string>
 
+    <string name="today">今天</string>
+
+
+    <string name="yesterday">昨天</string>
+
+
+    <string name="longtime">更早</string>
 
 </resources>

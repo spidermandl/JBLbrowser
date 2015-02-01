@@ -1,6 +1,10 @@
-package com.jbl.browser;
+package com.jbl.browser.adapter;
 
 import java.util.List;
+
+import com.jbl.browser.R;
+import com.jbl.browser.R.id;
+import com.jbl.browser.R.layout;
 
 import android.content.Context;
 import android.view.LayoutInflater;

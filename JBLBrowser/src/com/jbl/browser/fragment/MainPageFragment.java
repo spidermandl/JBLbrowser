@@ -2,6 +2,7 @@ package com.jbl.browser.fragment;
 
 import java.util.concurrent.ScheduledExecutorService;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -19,14 +20,17 @@ import android.webkit.WebSettings.PluginState;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import cn.hugo.android.scanner.CaptureActivity;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.jbl.browser.MyPagerAdapter;
 import com.jbl.browser.R;
 import com.jbl.browser.ViewPagerPresenter;
+import com.jbl.browser.activity.ToolBarOperateActivity;
+import com.jbl.browser.adapter.MyPagerAdapter;
 
 /**
  * 浏览器主页
@@ -76,7 +80,7 @@ public class MainPageFragment extends SherlockFragment{
 	 private int currentItem; //当前页面
 	 private ScheduledExecutorService scheduledExecutorService;
 	 //private ArrayList<View> dots;
-	 LinearLayout linear3,linear4;//线性布局3,4
+	 View settingPanel;//设置主界面
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -117,13 +121,16 @@ public class MainPageFragment extends SherlockFragment{
             item.setActionView(searchView);
         }
         /*  添加扫描二维码icon  对应ItemID 1 */
-        menu.add(0,1,1,"Code")
-        .setIcon(R.drawable.weibosdk_close_normal)
+
+        menu.add(0,1,0,"Code")
+        .setIcon(R.drawable.actionbar_title_caode)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         /*  添加注册登录icon  */
+
         menu.add(0, 2, 2,"Land")
         .setIcon(R.drawable.refresh_up)
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);      
+        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  
+
 	}
 	
 	@Override
@@ -137,6 +144,9 @@ public class MainPageFragment extends SherlockFragment{
 			break;
 			case 1:
 				//二维码
+				Intent intent=new Intent();
+				intent.setClass(getActivity(), CaptureActivity.class);
+				startActivity(intent);
 			break;
 			case 2:
 				//主册登录
@@ -151,7 +161,7 @@ public class MainPageFragment extends SherlockFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.activity_text_web_view, container, false);
+		View view = inflater.inflate(R.layout.fragment_main_page, container, false);
 		/*mImageViewSearch=(ImageView)view.findViewById(R.id.mImageViewSearch); //1.1  mImageViewSearch  搜索图标
 		mEditTextInput=(EditText)view.findViewById(R.id.mEditTextInput); //1.2 mEditTextInput   输入网址
 		mButtonCode=(Button)view.findViewById(R.id.mButtonCode);//1.3 mButtonCode       二维码搜索
@@ -163,8 +173,7 @@ public class MainPageFragment extends SherlockFragment{
 		mImageViewChange=(ImageView)view.findViewById(R.id.mImageViewChange); // 3.4 mImageViewChange 切换多页模式
 		mImageViewOption=(ImageView)view.findViewById(R.id.mImageViewOption); // 3.5 mImageViewOption 选项菜单
 		mViewPager = (ViewPager) view.findViewById(R.id.test_viewpager);  
-		linear3=(LinearLayout)view.findViewById(R.id.linear3);
-		linear4=(LinearLayout)view.findViewById(R.id.linear4);
+		settingPanel=view.findViewById(R.id.main_setting_panel);
 		/*   设置title各个控件监听       
 		 1.1 search 
 		mImageViewSearch.setOnClickListener(new View.OnClickListener() {
@@ -201,12 +210,15 @@ public class MainPageFragment extends SherlockFragment{
 			}
 		});
 		*/
-		/* 2.0 WebView touch监听 */
+		/* 2.0 WebView touch监听
+		 * 
+		 *  这里与webview冲突
+		 *  */
 		mWebView.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				mViewPager.setVisibility(View.GONE);
-				linear4.setVisibility(View.GONE);
+				settingPanel.setVisibility(View.GONE);
 				return true;
 			}
 		});
@@ -273,44 +285,44 @@ public class MainPageFragment extends SherlockFragment{
 	
 	/* 点击webview取消菜单栏展示*/
 	
-	 private void init()  
-	    {  
-		 	if(count%2!=0){
-	        mPresenter = new ViewPagerPresenter(this.getActivity());  
-	        mPageAdapter = new MyPagerAdapter(mPresenter.getPageViews());
-	        mViewPager.setAdapter(mPageAdapter); 
-	        mViewPager.setVisibility(View.VISIBLE);
-	        linear3.setVisibility(View.VISIBLE);
-	        linear4.setVisibility(View.VISIBLE);}
-		 	else{
-		 		 mViewPager.setVisibility(View.GONE);
-		 		 linear3.setVisibility(View.GONE);
-			      linear4.setVisibility(View.GONE);
-		 	}
-	        mViewPager.setOnPageChangeListener(new OnPageChangeListener(){
+	private void init() {
+		if (count % 2 != 0) {
+			mPresenter = new ViewPagerPresenter(this.getActivity());
+			mPageAdapter = new MyPagerAdapter(mPresenter.getPageViews());
+			mViewPager.setAdapter(mPageAdapter);
+			mViewPager.setVisibility(View.VISIBLE);
+			settingPanel.setVisibility(View.VISIBLE);
+		} else {
+			mViewPager.setVisibility(View.GONE);
+			settingPanel.setVisibility(View.GONE);
+		}
+		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 
-				@Override
-				public void onPageScrollStateChanged(int arg0) {
-					
-				}
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
 
-				@Override
-				public void onPageScrolled(int arg0, float arg1, int arg2) {
-					// TODO Auto-generated method stub
-					
-				}
+			}
 
-				@Override
-				public void onPageSelected(int arg0) {
-					/* dots.get(oldPosition).setBackgroundResource(R.drawable.dot_normal);
-		                dots.get(arg0).setBackgroundResource(R.drawable.dot_focused);
-		                oldPosition = arg0;
-		                currentItem = arg0;*/
-					
-				}
-	        	
-	        });
-	    }  
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onPageSelected(int arg0) {
+				/*
+				 * dots.get(oldPosition).setBackgroundResource(R.drawable.dot_normal
+				 * );
+				 * dots.get(arg0).setBackgroundResource(R.drawable.dot_focused);
+				 * oldPosition = arg0; currentItem = arg0;
+				 */
+
+			}
+
+		});
+	}
+
 	 private void setWebStyle() {
 			// TODO Auto-generated method stub
 //			mWebView.getSettings().setJavaScriptEnabled(true);

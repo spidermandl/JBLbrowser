@@ -9,45 +9,49 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.jbl.broswer.bean.BookMark;
+import com.jbl.broswer.bean.History;
 import com.jbl.browser.R;
 import com.jbl.browser.adapter.BookMarkAdapter;
+import com.jbl.browser.adapter.HistoryAdapter;
 
 /**
- * 书签fragment
+ * 历史记录fragment
  * @author Desmond
  *
  */
-public class BookMarkFragment extends SherlockFragment{
+public class HistoryFragment extends SherlockFragment{
 	public final static String TAG="BookMarkFragment";
-	//书签listView
+	//历史记录listView
 	ListView listview;
-	//书签数据
-	List<BookMark> list=new ArrayList<BookMark>();
-	BookMarkAdapter bookMarkAdapter=new BookMarkAdapter(BookMarkFragment.this, list);
+	//历史记录数据
+	List<History> list=new ArrayList<History>();
+	//历史记录时间段标示
+	TextView tv_history_time;
+	HistoryAdapter historyAdapter=new HistoryAdapter(HistoryFragment.this, list);
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		init();
-		listview.setAdapter(bookMarkAdapter);
+		listview.setAdapter(historyAdapter);
 		super.onCreate(savedInstanceState);
 	}
 	/**
 	 * 测试数据
 	 */
 	public void init(){
-		BookMark b1=new BookMark();
+		History b1=new History();
 		list.add(b1);
 	}
 	//从数据库中获得数据
-	public void getData(){
-		
-	}
+		public void getData(){
+			
+		}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -70,9 +74,9 @@ public class BookMarkFragment extends SherlockFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.bookmark_fragment, container, false);
-		listview=(ListView)view.findViewById(R.id.list_view_bookmark);
+		View view = inflater.inflate(R.layout.history_fragment, container, false);
+		listview=(ListView)view.findViewById(R.id.list_view_history_today);
+		
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
-	
 }

@@ -4,53 +4,20 @@
     android:layout_height="match_parent"
     tools:context="com.example.textwebview.MainActivity" >
 
-    <!-- <LinearLayout
-        android:id="@+id/linear1"
-        android:layout_width="fill_parent"
-        android:layout_height="30dp"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal"
-        android:weightSum="9" >
-
-        <ImageView
-            android:id="@+id/mImageViewSearch"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#90ee90" />
-
-        <EditText
-            android:id="@+id/mEditTextInput"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="6"
-            android:hint="@string/input_and_search"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/mButtonCode"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#90ee90" />
-
-        <Button
-            android:id="@+id/mButtonLand"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#da70d6" />
-    </LinearLayout> -->
-
     <WebView
         android:id="@+id/mWebView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linear2"
         android:layout_alignParentTop="true" />
-
-    <LinearLayout
+    
+	<include layout="@layout/main_setting_panel"
+    	 android:id="@+id/main_setting_panel"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:visibility="gone">
+         
+     </include>     
+     <!-- <LinearLayout
         android:id="@+id/linear3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,9 +31,9 @@
             android:layout_width="fill_parent"
             android:layout_height="200dp"
             android:layout_gravity="center" />
-    </LinearLayout>
+    </LinearLayout> 
 
-    <LinearLayout
+     <LinearLayout
         android:id="@+id/linear4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -104,10 +71,10 @@
             android:layout_height="5dip"
             android:layout_marginLeft="5dip"
             android:background="@drawable/dot_normal" />
-    </LinearLayout>
+    </LinearLayout>  -->
 
     <LinearLayout
-        android:id="@+id/linear2"
+        android:id="@+id/buttom_tool_bar"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
