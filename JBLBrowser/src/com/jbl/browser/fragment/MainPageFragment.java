@@ -124,9 +124,11 @@ public class MainPageFragment extends SherlockFragment{
         .setIcon(R.drawable.actionbar_title_caode)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         /*  添加注册登录icon  */
-        menu.add(0, 2, 0,"Land")
-        .setIcon(R.drawable.actionbar_title_land)
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+        menu.add(0, 2, 2,"Land")
+        .setIcon(R.drawable.refresh_up)
+        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  
+
 	}
 	
 	@Override
@@ -207,7 +209,10 @@ public class MainPageFragment extends SherlockFragment{
 			}
 		});
 		*/
-		/* 2.0 WebView touch监听 */
+		/* 2.0 WebView touch监听
+		 * 
+		 *  这里与webview冲突
+		 *  */
 		mWebView.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
