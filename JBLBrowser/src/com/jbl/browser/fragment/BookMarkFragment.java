@@ -11,6 +11,11 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.jbl.browser.R;
 
+/**
+ * 书签fragment
+ * @author Desmond
+ *
+ */
 public class BookMarkFragment extends SherlockFragment{
 	public final static String TAG="BookMarkFragment";
 	@Override
