@@ -21,13 +21,13 @@ public abstract class BaseFragActivity extends SherlockFragmentActivity {
      *            May be null
      * @author MAB
      */
-    //当前fragment与之前是否是通一个名字，如果不是,把bundle，加入当前的
+    //当前fragment与之前是否是同一个名字，如果不是,把bundle，加入当前的
     public void navigateTo(Class<?> fragmentClass, Bundle bundle, boolean addToBackstack, String fragmentTag) {
 
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         String curr_fragment_TAG = "";
         if (currentFragment != null) {
-        	                             //////
+        	                             
             curr_fragment_TAG = currentFragment.getClass().getSimpleName();
         }
 

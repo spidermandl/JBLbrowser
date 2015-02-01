@@ -13,6 +13,8 @@ public class ToolBarOperateActivity extends BaseFragActivity{
         setContentView(R.layout.activity_toolbar_operate);
 		super.onCreate(arg0);
 		Intent intent=getIntent();
+		String toolName=intent.getStringExtra("toolName");
+		
 		
 	}
 }

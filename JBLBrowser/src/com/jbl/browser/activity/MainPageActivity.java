@@ -1,20 +1,12 @@
-package com.jbl.browser.activity;
+﻿package com.jbl.browser.activity;
 
 import java.util.concurrent.ScheduledExecutorService;
 
-
-import com.jbl.browser.MyPagerAdapter;
-import com.jbl.browser.R;
-import com.jbl.browser.ViewPagerPresenter;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -24,13 +16,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.jbl.browser.MyPagerAdapter;
+import com.jbl.browser.R;
+import com.jbl.browser.ViewPagerPresenter;
+
+
 /**
  * 主页页面
  * @author desmond.duan
  *
  */
-public class MainPageActivity extends Activity {
+public class MainPageActivity extends SherlockActivity {
 
+	
 	/**
 	 * 1.title
 	 *   1.1 mImageViewSearch  搜索图标
@@ -46,7 +45,6 @@ public class MainPageActivity extends Activity {
 	 *   3.4 mImageViewChange 切换多页模式
 	 *   3.5 mImageViewOption 选项菜单 
 	 */
-	
 	/*  定义菜单控件  */
 	private ImageView mImageViewSearch; //1.1  mImageViewSearch  搜索图标
 	private EditText mEditTextInput;  //1.2 mEditTextInput   输入网址
@@ -73,21 +71,24 @@ public class MainPageActivity extends Activity {
 	 private ScheduledExecutorService scheduledExecutorService;
 	 //private ArrayList<View> dots;
 	 LinearLayout linear3,linear4;//线性布局3,4
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_text_web_view);
-		mImageViewSearch=(ImageView)findViewById(R.id.mImageViewSearch); //1.1  mImageViewSearch  搜索图标
+/*		mImageViewSearch=(ImageView)findViewById(R.id.mImageViewSearch); //1.1  mImageViewSearch  搜索图标
 		mEditTextInput=(EditText)findViewById(R.id.mEditTextInput); //1.2 mEditTextInput   输入网址
 		mButtonCode=(Button)findViewById(R.id.mButtonCode);//1.3 mButtonCode       二维码搜索
 		mButtonLand=(Button)findViewById(R.id.mButtonLand); //1.4 mButtonLand       登陆注册
+
 		mWebView=(WebView)findViewById(R.id.mWebView); //webview
+
 		mImageViewBack=(ImageView)findViewById(R.id.mImageViewBack);  // 3.1 mImageViewBack   后退
 		mImageViewInto=(ImageView)findViewById(R.id.mImageViewInto);  // 3.2 mImageViewInto   前进
 		mImageViewHome=(ImageView)findViewById(R.id.mImageViewHome);  // 3.3 mImageViewHome   Home
 		mImageViewChange=(ImageView)findViewById(R.id.mImageViewChange); // 3.4 mImageViewChange 切换多页模式
 		mImageViewOption=(ImageView)findViewById(R.id.mImageViewOption); // 3.5 mImageViewOption 选项菜单
+		
 		mViewPager = (ViewPager) findViewById(R.id.test_viewpager);  
 		linear3=(LinearLayout)findViewById(R.id.linear3);
 		linear4=(LinearLayout)findViewById(R.id.linear4);
@@ -129,6 +130,7 @@ public class MainPageActivity extends Activity {
 		
 		/* 2.0 WebView touch监听 */
 		mWebView.setOnTouchListener(new View.OnTouchListener() {
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				mViewPager.setVisibility(View.GONE);
@@ -137,7 +139,10 @@ public class MainPageActivity extends Activity {
 			}
 		});
 		
+		 /* 3.1 返回监听  */
+
 		/*  3.1 返回监听  */
+
 		mImageViewBack.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -182,12 +187,12 @@ public class MainPageActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+
+			init();   //滑动方法	
+
 				count++;
 				//mWebView.setAlpha(200);
 				 init();
-				
-			
-				
 			}
 		});
 		
@@ -234,23 +239,23 @@ public class MainPageActivity extends Activity {
 	        	
 	        });
 	    }  
-	 private void setWebStyle() {
-			// TODO Auto-generated method stub
-			mWebView.getSettings().setJavaScriptEnabled(true);
-			mWebView.getSettings().setSupportZoom(true);
-			mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-			mWebView.requestFocus();
-			mWebView.loadUrl("http://www.baidu.com/");
-			mWebView.setWebViewClient(new MyWebViewClient());
+	private void setWebStyle() {
+		// TODO Auto-generated method stub
+		mWebView.getSettings().setJavaScriptEnabled(true);
+		mWebView.getSettings().setSupportZoom(true);
+		mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+		mWebView.requestFocus();
+		mWebView.loadUrl("http://www.baidu.com/");
+		mWebView.setWebViewClient(new MyWebViewClient());
+	}
+/*       webcilent         */
+	class MyWebViewClient extends WebViewClient{
+		@Override
+		public boolean shouldOverrideUrlLoading(WebView view,String url_){
+			view.loadUrl(url_);
+			return true;
 		}
-	/*       webcilent         */
-		class MyWebViewClient extends WebViewClient{
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view,String url_){
-				view.loadUrl(url_);
-				return true;
-			}
-		}
+	}	
 		
 		/*private void initDots() {
 			
@@ -277,8 +282,4 @@ public class MainPageActivity extends Activity {
 
 			currentIndex = position;
 		}*/
-
-
-	
-	
 }

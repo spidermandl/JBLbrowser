@@ -54,12 +54,12 @@ public class MainPageFragment extends SherlockFragment{
 	 *   3.5 mImageViewOption 选项菜单 
 	 */
 	
-	/*  定义菜单控件  */
+	/*  定义菜单控件  
 	private ImageView mImageViewSearch; //1.1  mImageViewSearch  搜索图标
 	private EditText mEditTextInput;  //1.2 mEditTextInput   输入网址
 	private Button mButtonCode;  //1.3 mButtonCode       二维码搜索
 	private Button mButtonLand;  //1.4 mButtonLand       登陆注册
-	/*  定义webview控件   */
+*/	/*  定义webview控件   */
 	private WebView mWebView; //主控件  webview
 	/*  定义操作栏控件   */
 	private ImageView mImageViewBack;  // 3.1 mImageViewBack   后退
@@ -101,12 +101,12 @@ public class MainPageFragment extends SherlockFragment{
 	}
 	
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	public  void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         MenuItem item = menu.add("Search");
-        item.setIcon(android.R.drawable.ic_menu_search);
+        item.setIcon(android.R.drawable.ic_menu_search);      
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         View searchView = SearchViewCompat.newSearchView(getActivity());
-        if (searchView != null) {
+        if (searchView!=null) {
             SearchViewCompat.setOnQueryTextListener(searchView,
                     new OnQueryTextListenerCompat() {
                 @Override
@@ -118,17 +118,42 @@ public class MainPageFragment extends SherlockFragment{
             });
             item.setActionView(searchView);
         }
+        /*  添加扫描二维码icon  对应ItemID 1 */
+        menu.add(0,0,1,"Code")
+        .setIcon(R.drawable.actionbar_title_caode)
+        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        /*  添加注册登录icon  */
+        menu.add(0, 0, 2,"Land")
+        .setIcon(R.drawable.actionbar_title_land)
+        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		/*  二维码ID 1   主册登录ID 2  */
+		switch(item.getItemId()){
+			case 1:
+				System.exit(0);
+			break;
+			case 2:
+				//主册登录
+			break;
+			
+		
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.activity_text_web_view, container, false);
-		mImageViewSearch=(ImageView)view.findViewById(R.id.mImageViewSearch); //1.1  mImageViewSearch  搜索图标
+		/*mImageViewSearch=(ImageView)view.findViewById(R.id.mImageViewSearch); //1.1  mImageViewSearch  搜索图标
 		mEditTextInput=(EditText)view.findViewById(R.id.mEditTextInput); //1.2 mEditTextInput   输入网址
 		mButtonCode=(Button)view.findViewById(R.id.mButtonCode);//1.3 mButtonCode       二维码搜索
 		mButtonLand=(Button)view.findViewById(R.id.mButtonLand); //1.4 mButtonLand       登陆注册
-		mWebView=(WebView)view.findViewById(R.id.mWebView); //webview
+*/		mWebView=(WebView)view.findViewById(R.id.mWebView); //webview
 		mImageViewBack=(ImageView)view.findViewById(R.id.mImageViewBack);  // 3.1 mImageViewBack   后退
 		mImageViewInto=(ImageView)view.findViewById(R.id.mImageViewInto);  // 3.2 mImageViewInto   前进
 		mImageViewHome=(ImageView)view.findViewById(R.id.mImageViewHome);  // 3.3 mImageViewHome   Home
@@ -137,8 +162,8 @@ public class MainPageFragment extends SherlockFragment{
 		mViewPager = (ViewPager) view.findViewById(R.id.test_viewpager);  
 		linear3=(LinearLayout)view.findViewById(R.id.linear3);
 		linear4=(LinearLayout)view.findViewById(R.id.linear4);
-		/*   设置title各个控件监听       */
-		/* 1.1 search */
+		/*   设置title各个控件监听       
+		 1.1 search 
 		mImageViewSearch.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -148,10 +173,10 @@ public class MainPageFragment extends SherlockFragment{
 			}
 		});
 		
-		/*   1.2 输入网址 获取网址信息   url为获取到的输入网址  为1.1 search获得数据*/
+		   1.2 输入网址 获取网址信息   url为获取到的输入网址  为1.1 search获得数据
 		String url=mEditTextInput.getText().toString();
 		
-		/*   1.3 点击事件 启动二维码扫描  */
+		   1.3 点击事件 启动二维码扫描  
 		mButtonCode.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -163,7 +188,7 @@ public class MainPageFragment extends SherlockFragment{
 			}
 		});
 		
-		/*  1.4 设置监听事件  启动注册登陆 */
+		  1.4 设置监听事件  启动注册登陆 
 		mButtonLand.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -172,7 +197,7 @@ public class MainPageFragment extends SherlockFragment{
 				
 			}
 		});
-		
+		*/
 		/* 2.0 WebView touch监听 */
 		mWebView.setOnTouchListener(new View.OnTouchListener() {
 			@Override

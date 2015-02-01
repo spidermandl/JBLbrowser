@@ -1,6 +1,7 @@
-package com.jbl.browser.activity;
+package com.jbl.browser;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -10,12 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jbl.browser.R;
-import com.jbl.browser.activity.TextLoginActivity.MyWebViewClient;
 
-public class TextRegisterActivity extends Activity {
+public class TextLoginActivity extends Activity {
 
 	/*
-	 *            注册界面
+	 *            登陆界面
 	 * 
 	 *  1.title_top
 	 *   1.1 mImageView_top  安全图标
@@ -67,23 +67,23 @@ public class TextRegisterActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_text_register);
+		setContentView(R.layout.activity_text_login);
 		/*  1 title top*/
-		mImageView_top=(ImageView)findViewById(R.id.register_mImageView_top);
-		mTextView_top=(TextView)findViewById(R.id.register_mTextView_top);
-		mButton_top=(Button)findViewById(R.id.register_mButton_top);
+		mImageView_top=(ImageView)findViewById(R.id.login_mImageView_top);
+		mTextView_top=(TextView)findViewById(R.id.login_mTextView_top);
+		mButton_top=(Button)findViewById(R.id.login_mButton_top);
 		/*  2 tilte  */
-		mImageViewBack_t=(ImageView)findViewById(R.id.register_mImageViewBack_t);
-		mImageViewMain=(ImageView)findViewById(R.id.register_mImageViewMain);
-		mButton=(Button)findViewById(R.id.register_mButton);
+		mImageViewBack_t=(ImageView)findViewById(R.id.login_mImageViewBack_t);
+		mImageViewMain=(ImageView)findViewById(R.id.login_mImageViewMain);
+		mButton=(Button)findViewById(R.id.login_mButton);
 		/*  3 webview*/
-		mWebView=(WebView)findViewById(R.id.register_mWebView);
+		mWebView=(WebView)findViewById(R.id.login_mWebView);
 		/*  4 操作栏  */
-		mImageViewBack=(ImageView)findViewById(R.id.register_mImageViewBack);  // 4.1 mImageViewBack   后退
-		mImageViewInto=(ImageView)findViewById(R.id.register_mImageViewInto);  // 4.2 mImageViewInto   前进
-		mImageViewHome=(ImageView)findViewById(R.id.register_mImageViewHome);  // 4.3 mImageViewHome   Home
-		mImageViewChange=(ImageView)findViewById(R.id.register_mImageViewChange); // 4.4 mImageViewChange 切换多页模式
-		mImageViewOption=(ImageView)findViewById(R.id.register_mImageViewOption); // 4.5 mImageViewOption 选项菜单
+		mImageViewBack=(ImageView)findViewById(R.id.login_mImageViewBack);  // 4.1 mImageViewBack   后退
+		mImageViewInto=(ImageView)findViewById(R.id.login_mImageViewInto);  // 4.2 mImageViewInto   前进
+		mImageViewHome=(ImageView)findViewById(R.id.login_mImageViewHome);  // 4.3 mImageViewHome   Home
+		mImageViewChange=(ImageView)findViewById(R.id.login_mImageViewChange); // 4.4 mImageViewChange 切换多页模式
+		mImageViewOption=(ImageView)findViewById(R.id.login_mImageViewOption); // 4.5 mImageViewOption 选项菜单
 		
 		/*  对webview进行http请求  */
 		setWebStyle();
@@ -93,7 +93,9 @@ public class TextRegisterActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+				Intent in=new Intent();
+				in.setClass(TextLoginActivity.this, TextRegisterActivity.class);
+				startActivity(in);
 			}
 		});
 		/*  4.1 返回监听  */

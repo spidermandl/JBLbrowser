@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.textwebview.MainActivity" >
 
-    <LinearLayout
+    <!-- <LinearLayout
         android:id="@+id/linear1"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
@@ -41,14 +41,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#da70d6" />
-    </LinearLayout>
+    </LinearLayout> -->
 
     <WebView
         android:id="@+id/mWebView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/linear2"
-        android:layout_below="@+id/linear1" />
+        android:layout_alignParentTop="true" />
 
     <LinearLayout
         android:id="@+id/linear3"
