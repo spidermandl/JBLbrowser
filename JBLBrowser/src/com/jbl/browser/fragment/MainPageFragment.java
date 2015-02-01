@@ -3,6 +3,7 @@ package com.jbl.browser.fragment;
 import java.util.concurrent.ScheduledExecutorService;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -53,7 +54,6 @@ public class MainPageFragment extends SherlockFragment{
 	 *   3.4 mImageViewChange 切换多页模式
 	 *   3.5 mImageViewOption 选项菜单 
 	 */
-	
 	/*  定义菜单控件  
 	private ImageView mImageViewSearch; //1.1  mImageViewSearch  搜索图标
 	private EditText mEditTextInput;  //1.2 mEditTextInput   输入网址
@@ -67,8 +67,8 @@ public class MainPageFragment extends SherlockFragment{
 	private ImageView mImageViewHome;  // 3.3 mImageViewHome   Home
 	private ImageView mImageViewChange;// 3.4 mImageViewChange 切换多页模式
 	private ImageView mImageViewOption;// 3.5 mImageViewOption 选项菜单 
-	 private ViewPager mViewPager;  //水平实现滑动效果
-	 private PagerAdapter mPageAdapter;  
+	private ViewPager mViewPager;  //水平实现滑动效果
+	private PagerAdapter mPageAdapter;  
 	 private ViewPagerPresenter mPresenter;  
 	private LinearLayout ll;//viewpager的线性布局
 	int count=0;//点击次数
@@ -118,13 +118,13 @@ public class MainPageFragment extends SherlockFragment{
             item.setActionView(searchView);
         }
         /*  添加扫描二维码icon  对应ItemID 1 */
-        menu.add(0,0,1,"Code")
+        menu.add(0,1,1,"Code")
         .setIcon(R.drawable.actionbar_title_caode)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         /*  添加注册登录icon  */
-        menu.add(0, 0, 2,"Land")
+        menu.add(0, 2, 2,"Land")
         .setIcon(R.drawable.actionbar_title_land)
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);      
 	}
 	
 	@Override
@@ -133,10 +133,11 @@ public class MainPageFragment extends SherlockFragment{
 		/*  二维码ID 1   主册登录ID 2  */
 		switch(item.getItemId()){
 			case 1:
-				System.exit(0);
+				//二维码
 			break;
 			case 2:
 				//主册登录
+				mWebView.loadUrl("http://www.hmudq.edu.cn/");
 			break;
 			
 		
@@ -265,6 +266,8 @@ public class MainPageFragment extends SherlockFragment{
 		setWebStyle();
 		return view;
 	}
+	
+	
 	/* 点击webview取消菜单栏展示*/
 	
 	 private void init()  
