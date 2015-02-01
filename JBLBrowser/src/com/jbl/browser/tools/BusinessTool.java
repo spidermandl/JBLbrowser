@@ -15,13 +15,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import com.jbl.browser.model.ErrorInfo;
-import com.jbl.browser.model.MusicModel;
-import com.jbl.browser.model.ResponseModel;
-import com.jbl.browser.model.UserInfo;
-import com.jbl.browser.utils.StringUtils;
-import com.jbl.browser.utils.UrlUtils;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -38,6 +31,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
+
+import com.jbl.browser.model.ErrorInfo;
+import com.jbl.browser.model.MusicModel;
+import com.jbl.browser.model.ResponseModel;
+import com.jbl.browser.model.UserInfo;
+import com.jbl.browser.utils.StringUtils;
+import com.jbl.browser.utils.UrlUtils;
 
 public class BusinessTool {
 

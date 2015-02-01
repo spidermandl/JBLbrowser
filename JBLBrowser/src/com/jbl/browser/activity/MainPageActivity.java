@@ -130,12 +130,11 @@ public class MainPageActivity extends SherlockActivity {
 		
 		/* 2.0 WebView touch监听 */
 		mWebView.setOnTouchListener(new View.OnTouchListener() {
-
+			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				mViewPager.setVisibility(View.GONE);
-				linear4.setVisibility(View.GONE);
-				return true;
+				// TODO Auto-generated method stub
+				return false;
 			}
 		});
 		
@@ -188,11 +187,11 @@ public class MainPageActivity extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 
-			init();   //滑动方法	
+			//init();   //滑动方法	
 
-				count++;
+			//	count++;
 				//mWebView.setAlpha(200);
-				 init();
+			//	 init();
 			}
 		});
 		
@@ -201,7 +200,7 @@ public class MainPageActivity extends SherlockActivity {
 	} 
 	/* 点击webview取消菜单栏展示*/
 	
-	 private void init()  
+	/* private void init()  
 	    {  
 		 	if(count%2!=0){
 	        mPresenter = new ViewPagerPresenter(this);  
@@ -230,15 +229,15 @@ public class MainPageActivity extends SherlockActivity {
 
 				@Override
 				public void onPageSelected(int arg0) {
-					/* dots.get(oldPosition).setBackgroundResource(R.drawable.dot_normal);
+					 dots.get(oldPosition).setBackgroundResource(R.drawable.dot_normal);
 		                dots.get(arg0).setBackgroundResource(R.drawable.dot_focused);
 		                oldPosition = arg0;
-		                currentItem = arg0;*/
+		                currentItem = arg0;
 					
 				}
 	        	
 	        });
-	    }  
+	    }  */
 	private void setWebStyle() {
 		// TODO Auto-generated method stub
 		mWebView.getSettings().setJavaScriptEnabled(true);
@@ -257,29 +256,4 @@ public class MainPageActivity extends SherlockActivity {
 		}
 	}	
 		
-		/*private void initDots() {
-			
-			dots = new ImageView[ViewPagerPresenter.PAGE_SIZE];
-
-			// 循环取得小点图片
-			for (int i = 0; i < ViewPagerPresenter.PAGE_SIZE; i++) {
-				dots[i] = (ImageView) ll.getChildAt(i);
-				dots[i].setEnabled(true);// 都设为灰色
-			}
-
-			currentIndex = 0;
-			dots[currentIndex].setEnabled(false);// 设置为白色，即选中状态
-		}
-
-		private void setCurrentDot(int position) {
-			if (position < 0 || position > ViewPagerPresenter.PAGE_SIZE - 1
-					|| currentIndex == position) {
-				return;
-			}
-
-			dots[position].setEnabled(false);
-			dots[currentIndex].setEnabled(true);
-
-			currentIndex = position;
-		}*/
 }

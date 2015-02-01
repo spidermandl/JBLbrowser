@@ -50,7 +50,7 @@
         android:layout_above="@+id/linear2"
         android:layout_alignParentTop="true" />
 
-    <LinearLayout
+     <LinearLayout
         android:id="@+id/linear3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,9 +64,9 @@
             android:layout_width="fill_parent"
             android:layout_height="200dp"
             android:layout_gravity="center" />
-    </LinearLayout>
+    </LinearLayout> 
 
-    <LinearLayout
+     <LinearLayout
         android:id="@+id/linear4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
             android:layout_height="5dip"
             android:layout_marginLeft="5dip"
             android:background="@drawable/dot_normal" />
-    </LinearLayout>
+    </LinearLayout> -->
 
     <LinearLayout
         android:id="@+id/linear2"
