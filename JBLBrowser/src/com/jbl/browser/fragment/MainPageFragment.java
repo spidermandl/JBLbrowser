@@ -15,8 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -56,7 +54,6 @@ public class MainPageFragment extends SherlockFragment{
 	 *   3.4 mImageViewChange 切换多页模式
 	 *   3.5 mImageViewOption 选项菜单 
 	 */
-	
 	/*  定义菜单控件  
 	private ImageView mImageViewSearch; //1.1  mImageViewSearch  搜索图标
 	private EditText mEditTextInput;  //1.2 mEditTextInput   输入网址
@@ -70,8 +67,8 @@ public class MainPageFragment extends SherlockFragment{
 	private ImageView mImageViewHome;  // 3.3 mImageViewHome   Home
 	private ImageView mImageViewChange;// 3.4 mImageViewChange 切换多页模式
 	private ImageView mImageViewOption;// 3.5 mImageViewOption 选项菜单 
-	 private ViewPager mViewPager;  //水平实现滑动效果
-	 private PagerAdapter mPageAdapter;  
+	private ViewPager mViewPager;  //水平实现滑动效果
+	private PagerAdapter mPageAdapter;  
 	 private ViewPagerPresenter mPresenter;  
 	private LinearLayout ll;//viewpager的线性布局
 	int count=0;//点击次数
@@ -105,7 +102,7 @@ public class MainPageFragment extends SherlockFragment{
 	
 	@Override
 	public  void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        MenuItem item = menu.add("Search");
+        MenuItem item = menu.add(0,0,0,"Search");
         item.setIcon(android.R.drawable.ic_menu_search);      
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         View searchView = SearchViewCompat.newSearchView(getActivity());
@@ -122,6 +119,7 @@ public class MainPageFragment extends SherlockFragment{
             item.setActionView(searchView);
         }
         /*  添加扫描二维码icon  对应ItemID 1 */
+
         menu.add(0,1,0,"Code")
         .setIcon(R.drawable.actionbar_title_caode)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -129,6 +127,7 @@ public class MainPageFragment extends SherlockFragment{
         menu.add(0, 2, 0,"Land")
         .setIcon(R.drawable.actionbar_title_land)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
 	}
 	
 	@Override
@@ -136,13 +135,19 @@ public class MainPageFragment extends SherlockFragment{
 		// TODO Auto-generated method stub
 		/*  二维码ID 1   主册登录ID 2  */
 		switch(item.getItemId()){
+			case 0:
+				// 点击搜索。fragment跳转；
+				
+			break;
 			case 1:
+				//二维码
 				Intent intent=new Intent();
 				intent.setClass(getActivity(), CaptureActivity.class);
 				startActivity(intent);
 			break;
 			case 2:
 				//主册登录
+				mWebView.loadUrl("http://www.hmudq.edu.cn/");
 			break;
 			
 		
@@ -271,6 +276,8 @@ public class MainPageFragment extends SherlockFragment{
 		setWebStyle();
 		return view;
 	}
+	
+	
 	/* 点击webview取消菜单栏展示*/
 	
 	 private void init()  

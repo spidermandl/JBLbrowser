@@ -1,10 +1,9 @@
 package com.jbl.browser.activity;
 
+
+import android.os.Bundle;
 import com.jbl.browser.R;
 import com.jbl.browser.fragment.BookMarkFragment;
-
-import android.content.Intent;
-import android.os.Bundle;
 
 public class ToolBarOperateActivity extends BaseFragActivity{
 	@Override

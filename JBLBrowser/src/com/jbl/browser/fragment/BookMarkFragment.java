@@ -18,6 +18,11 @@ import com.jbl.browser.BookMarkAdapter;
 import com.jbl.browser.R;
 import com.jbl.browser.model.BookMarkBean;
 
+/**
+ * 书签fragment
+ * @author Desmond
+ *
+ */
 public class BookMarkFragment extends SherlockFragment{
 	public final static String TAG="BookMarkFragment";
 	//书签listView

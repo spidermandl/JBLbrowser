@@ -2,15 +2,6 @@ package com.jbl.browser.activity;
 
 import java.io.IOException;
 
-import com.jbl.browser.R;
-import com.jbl.browser.model.ErrorInfo;
-import com.jbl.browser.model.ResponseModel;
-import com.jbl.browser.model.UserInfo;
-import com.jbl.browser.tools.BusinessCallback;
-import com.jbl.browser.tools.BusinessTool;
-import com.jbl.browser.utils.StringUtils;
-import com.jbl.browser.view.UserDefinedDialog;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -27,6 +18,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.jbl.browser.R;
+import com.jbl.browser.model.ErrorInfo;
+import com.jbl.browser.model.ResponseModel;
+import com.jbl.browser.model.UserInfo;
+import com.jbl.browser.tools.BusinessCallback;
+import com.jbl.browser.tools.BusinessTool;
+import com.jbl.browser.utils.StringUtils;
+import com.jbl.browser.view.UserDefinedDialog;
 
 public class MainActivity extends Activity {
 
