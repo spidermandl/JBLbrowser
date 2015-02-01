@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import cn.hugo.android.scanner.CaptureActivity;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -28,6 +30,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.MyPagerAdapter;
 import com.jbl.browser.R;
 import com.jbl.browser.ViewPagerPresenter;
+import com.jbl.browser.activity.ToolBarOperateActivity;
 
 /**
  * 浏览器主页
@@ -119,11 +122,11 @@ public class MainPageFragment extends SherlockFragment{
             item.setActionView(searchView);
         }
         /*  添加扫描二维码icon  对应ItemID 1 */
-        menu.add(0,0,1,"Code")
+        menu.add(0,1,0,"Code")
         .setIcon(R.drawable.actionbar_title_caode)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         /*  添加注册登录icon  */
-        menu.add(0, 0, 2,"Land")
+        menu.add(0, 2, 0,"Land")
         .setIcon(R.drawable.actionbar_title_land)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
@@ -134,7 +137,9 @@ public class MainPageFragment extends SherlockFragment{
 		/*  二维码ID 1   主册登录ID 2  */
 		switch(item.getItemId()){
 			case 1:
-				System.exit(0);
+				Intent intent=new Intent();
+				intent.setClass(getActivity(), CaptureActivity.class);
+				startActivity(intent);
 			break;
 			case 2:
 				//主册登录
