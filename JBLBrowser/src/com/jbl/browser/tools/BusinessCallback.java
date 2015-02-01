@@ -1,8 +1,8 @@
 package com.jbl.browser.tools;
 
-import com.jbl.browser.model.ErrorInfo;
-
 import android.os.Bundle;
+
+import com.jbl.browser.model.ErrorInfo;
 
 public interface BusinessCallback {
 

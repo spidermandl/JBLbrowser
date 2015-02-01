@@ -1,9 +1,9 @@
 package com.jbl.browser.activity;
 
-import com.jbl.browser.R;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.jbl.browser.R;
 
 public class ToolBarOperateActivity extends BaseFragActivity{
 	@Override

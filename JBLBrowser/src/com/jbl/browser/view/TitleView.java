@@ -1,7 +1,5 @@
 package com.jbl.browser.view;
 
-import com.jbl.browser.R;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.jbl.browser.R;
 
 public class TitleView extends LinearLayout{
 

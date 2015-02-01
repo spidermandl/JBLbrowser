@@ -1,13 +1,13 @@
 package com.jbl.browser.view;
 
-import com.jbl.browser.R;
-
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
 import android.view.View;
+
+import com.jbl.browser.R;
 
 public class UserDefinedDialog {
 

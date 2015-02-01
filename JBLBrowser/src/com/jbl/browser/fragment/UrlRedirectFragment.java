@@ -1,6 +1,5 @@
 package com.jbl.browser.fragment;
 
-import com.jbl.browser.R;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.jbl.browser.R;
 
 /**
  * 用户输入网址fragment
