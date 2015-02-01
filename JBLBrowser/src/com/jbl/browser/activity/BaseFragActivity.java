@@ -8,6 +8,12 @@ import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.jbl.browser.R;
 
+/**
+ * fragment activity 基类
+ * 抽象fragment activity公共方法
+ * @author Desmond
+ *
+ */
 public abstract class BaseFragActivity extends SherlockFragmentActivity {
 
 	/**
