@@ -86,6 +86,7 @@ public class MainPageFragment extends SherlockFragment{
 		super.onCreate(savedInstanceState);
 	}
 	
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -182,7 +183,7 @@ public class MainPageFragment extends SherlockFragment{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent=new Intent();
-				//intent.setClass(MainPageActivity.this, CaptureActivity.class);
+				//intent.setClassName(MainPageFragment.class, CaptureActivity.class);
 				startActivity(intent);
 			}
 		});
