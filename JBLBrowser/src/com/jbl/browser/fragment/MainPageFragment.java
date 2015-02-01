@@ -2,15 +2,6 @@ package com.jbl.browser.fragment;
 
 import java.util.concurrent.ScheduledExecutorService;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.jbl.browser.MyPagerAdapter;
-import com.jbl.browser.R;
-import com.jbl.browser.ViewPagerPresenter;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -28,6 +19,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.jbl.browser.MyPagerAdapter;
+import com.jbl.browser.R;
+import com.jbl.browser.ViewPagerPresenter;
 
 /**
  * 浏览器主页
@@ -158,7 +158,7 @@ public class MainPageFragment extends SherlockFragment{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent=new Intent();
-				//intent.setClass(MainPageActivity.this, CaptureActivity.class);
+				//intent.setClassName(MainPageFragment.class, CaptureActivity.class);
 				startActivity(intent);
 			}
 		});
