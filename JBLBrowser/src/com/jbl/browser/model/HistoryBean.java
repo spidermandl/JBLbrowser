@@ -11,7 +11,15 @@ public class HistoryBean {
 	private String url;
 	//浏览网页时间
 	private int time;
-	private int isbookmark;
+	
+	public HistoryBean(String name, String url, int time) {
+		super();
+		this.name = name;
+		this.url = url;
+		this.time = time;
+
+	}
+
 	
 	public String getName() {
 		return name;
@@ -31,10 +39,5 @@ public class HistoryBean {
 	public void setTime(int time) {
 		this.time = time;
 	}
-	public int getIsbookmark() {
-		return isbookmark;
-	}
-	public void setIsbookmark(int isbookmark) {
-		this.isbookmark = isbookmark;
-	}
+
 }
