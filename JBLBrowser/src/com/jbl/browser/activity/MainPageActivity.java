@@ -76,11 +76,11 @@ public class MainPageActivity extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_text_web_view);
-		mImageViewSearch=(ImageView)findViewById(R.id.mImageViewSearch); //1.1  mImageViewSearch  搜索图标
+/*		mImageViewSearch=(ImageView)findViewById(R.id.mImageViewSearch); //1.1  mImageViewSearch  搜索图标
 		mEditTextInput=(EditText)findViewById(R.id.mEditTextInput); //1.2 mEditTextInput   输入网址
 		mButtonCode=(Button)findViewById(R.id.mButtonCode);//1.3 mButtonCode       二维码搜索
 		mButtonLand=(Button)findViewById(R.id.mButtonLand); //1.4 mButtonLand       登陆注册
-		mWebView=(WebView)findViewById(R.id.mWebView); //webview
+*/		mWebView=(WebView)findViewById(R.id.mWebView); //webview
 		mImageViewBack=(ImageView)findViewById(R.id.mImageViewBack);  // 3.1 mImageViewBack   后退
 		mImageViewInto=(ImageView)findViewById(R.id.mImageViewInto);  // 3.2 mImageViewInto   前进
 		mImageViewHome=(ImageView)findViewById(R.id.mImageViewHome);  // 3.3 mImageViewHome   Home
