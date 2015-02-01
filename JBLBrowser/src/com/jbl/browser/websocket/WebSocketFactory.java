@@ -29,10 +29,10 @@ package com.jbl.browser.websocket;
 import java.net.URI;
 import java.util.Random;
 
-import com.jbl.browser.utils.StringUtils;
-
 import android.util.Log;
 import android.webkit.WebView;
+
+import com.jbl.browser.utils.StringUtils;
 
 /**
  * The <tt>WebSocketFactory</tt> is like a helper class to instantiate new

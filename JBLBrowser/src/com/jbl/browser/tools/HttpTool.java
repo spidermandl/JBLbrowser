@@ -10,16 +10,14 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import com.jbl.browser.model.ErrorInfo;
-import com.jbl.browser.utils.StringUtils;
-import com.jbl.browser.utils.UrlUtils;
-
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+
+import com.jbl.browser.model.ErrorInfo;
+import com.jbl.browser.utils.StringUtils;
+import com.jbl.browser.utils.UrlUtils;
 
 /**
  * 处理http请求的工具类，该类的实例必须在主线程中获取

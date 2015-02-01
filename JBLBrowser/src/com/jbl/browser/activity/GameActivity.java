@@ -2,22 +2,6 @@ package com.jbl.browser.activity;
 
 import java.net.URLDecoder;
 
-import com.jbl.browser.R;
-import com.jbl.browser.model.ErrorInfo;
-import com.jbl.browser.model.MusicModel;
-import com.jbl.browser.model.ResponseModel;
-import com.jbl.browser.model.UserInfo;
-import com.jbl.browser.payment.IAppPaySDKConfig;
-import com.jbl.browser.tools.BusinessCallback;
-import com.jbl.browser.tools.BusinessTool;
-import com.jbl.browser.utils.StringUtils;
-import com.jbl.browser.utils.UrlUtils;
-import com.jbl.browser.view.TitleView;
-import com.jbl.browser.view.UserDefinedDialog;
-import com.jbl.browser.websocket.WebSocketFactory;
-import com.umeng.analytics.MobclickAgent;
-
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -27,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
@@ -42,7 +25,6 @@ import android.os.Message;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -54,12 +36,27 @@ import android.view.WindowManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebSettings.PluginState;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.jbl.browser.R;
+import com.jbl.browser.model.ErrorInfo;
+import com.jbl.browser.model.MusicModel;
+import com.jbl.browser.model.ResponseModel;
+import com.jbl.browser.model.UserInfo;
+import com.jbl.browser.payment.IAppPaySDKConfig;
+import com.jbl.browser.tools.BusinessCallback;
+import com.jbl.browser.tools.BusinessTool;
+import com.jbl.browser.utils.StringUtils;
+import com.jbl.browser.utils.UrlUtils;
+import com.jbl.browser.view.TitleView;
+import com.jbl.browser.view.UserDefinedDialog;
+import com.jbl.browser.websocket.WebSocketFactory;
+import com.umeng.analytics.MobclickAgent;
 
 public class GameActivity extends Activity{
 
