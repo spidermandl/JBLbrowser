@@ -1,6 +1,5 @@
 package com.jbl.browser.fragment;
 
-import com.jbl.browser.R;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,16 +9,15 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.jbl.browser.R;
 
-public class InputViewFragActivity extends SherlockFragment {
-
-	public final static String TAG="InputViewFragActivity";
+public class BookMarkFragment extends SherlockFragment{
+	public final static String TAG="BookMarkFragment";
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		super.onCreateOptionsMenu(menu, inflater);
+		super.onCreate(savedInstanceState);
 	}
-
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -30,15 +28,18 @@ public class InputViewFragActivity extends SherlockFragment {
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
 		ab.setDisplayShowHomeEnabled(false);
-		
+		setHasOptionsMenu(true);
 	}
-
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		// TODO Auto-generated method stub
+		
+		super.onCreateOptionsMenu(menu, inflater);
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		View view = inflater.inflate(R.layout.activity_input_view_frag, container, false);
-		return view;
+		View view = inflater.inflate(R.layout.bookmark_fragment, container, false);
+		return super.onCreateView(inflater, container, savedInstanceState);
 	}
-
 }
