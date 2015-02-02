@@ -18,7 +18,7 @@ import com.jbl.browser.R;
  */
 public class UrlRedirectFragment extends SherlockFragment {
 
-	public final static String TAG="InputViewFragActivity";
+	public final static String TAG="UrlRedirectFragment";
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		// TODO Auto-generated method stub

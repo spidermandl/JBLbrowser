@@ -14,12 +14,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
+import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebSettings.PluginState;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import cn.hugo.android.scanner.CaptureActivity;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -29,7 +28,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
 import com.jbl.browser.ViewPagerPresenter;
-import com.jbl.browser.activity.ToolBarOperateActivity;
+import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MyPagerAdapter;
 
 /**
@@ -140,7 +139,7 @@ public class MainPageFragment extends SherlockFragment{
 		switch(item.getItemId()){
 			case 0:
 				// 点击搜索。fragment跳转；
-				
+				((BaseFragActivity)this.getActivity()).navigateTo(MainPageFragment.class, null, true, UrlRedirectFragment.TAG);
 			break;
 			case 1:
 				//二维码
