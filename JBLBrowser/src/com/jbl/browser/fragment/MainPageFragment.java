@@ -5,6 +5,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import android.content.Intent;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -28,6 +29,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
 import com.jbl.browser.R;
 import com.jbl.browser.ViewPagerPresenter;
 import com.jbl.browser.activity.BaseFragActivity;
@@ -108,7 +110,7 @@ public class MainPageFragment extends SherlockFragment{
         MenuItem item = menu.add(0,0,0,"Search");
         item.setIcon(android.R.drawable.ic_menu_search);      
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        View searchView = SearchViewCompat.newSearchView(getActivity());
+        View searchView = SearchViewCompat.newSearchView(getActivity());        
         if (searchView!=null) {
             SearchViewCompat.setOnQueryTextListener(searchView,
                     new OnQueryTextListenerCompat() {
@@ -119,11 +121,11 @@ public class MainPageFragment extends SherlockFragment{
                     // is a simple array adapter, we can just have it do the filtering.
                     return true;
                 }
-            });           
-            item.setActionView(searchView);
+            });            
+            item.setActionView(searchView);   
         }
         /*  添加扫描二维码icon  对应ItemID 1 */
-
+  
         menu.add(0,1,0,"Code")
         .setIcon(R.drawable.actionbar_title_caode)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -142,6 +144,7 @@ public class MainPageFragment extends SherlockFragment{
 		switch(item.getItemId()){
 			case 0:
 				// 点击搜索。fragment跳转；
+       /*     这里监听不到searchview点击事件   无法跳转fragment  但是fragment方法可是使用     */ 
 				((BaseFragActivity)this.getActivity()).navigateTo
 				(UrlRedirectFragment.class, null, true, UrlRedirectFragment.TAG);
 			break;
@@ -153,13 +156,13 @@ public class MainPageFragment extends SherlockFragment{
 				
 			break;
 			case 2:
-				//主册登录
-
+				//主册登录	
 				mWebView.loadUrl("http://www.hmudq.edu.cn/");
 				//测试跳转到bookmarkfragment
 				((BaseFragActivity)this.getActivity()).navigateTo(BookMarkFragment.class,null,true,BookMarkFragment.TAG);
 
 			break;		
+
 
 		}
 		return super.onOptionsItemSelected(item);
@@ -169,11 +172,7 @@ public class MainPageFragment extends SherlockFragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_main_page, container, false);
-		/*mImageViewSearch=(ImageView)view.findViewById(R.id.mImageViewSearch); //1.1  mImageViewSearch  搜索图标
-		mEditTextInput=(EditText)view.findViewById(R.id.mEditTextInput); //1.2 mEditTextInput   输入网址
-		mButtonCode=(Button)view.findViewById(R.id.mButtonCode);//1.3 mButtonCode       二维码搜索
-		mButtonLand=(Button)view.findViewById(R.id.mButtonLand); //1.4 mButtonLand       登陆注册
-*/		mWebView=(WebView)view.findViewById(R.id.mWebView); //webview
+		mWebView=(WebView)view.findViewById(R.id.mWebView); //webview
 		mImageViewBack=(ImageView)view.findViewById(R.id.mImageViewBack);  // 3.1 mImageViewBack   后退
 		mImageViewInto=(ImageView)view.findViewById(R.id.mImageViewInto);  // 3.2 mImageViewInto   前进
 		mImageViewHome=(ImageView)view.findViewById(R.id.mImageViewHome);  // 3.3 mImageViewHome   Home
