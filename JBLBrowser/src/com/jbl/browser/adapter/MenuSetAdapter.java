@@ -3,6 +3,7 @@ package com.jbl.browser.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jbl.broswer.bean.BookMark;
+import com.jbl.broswer.bean.SetContent;
 import com.jbl.browser.R;
 import com.jbl.browser.adapter.BookMarkAdapter.ViewHolder;
 import com.jbl.browser.fragment.BookMarkFragment;
@@ -19,25 +21,24 @@ import com.jbl.browser.fragment.MenuSetFragment;
  * 菜单设置选项的适配器
  */
 public class MenuSetAdapter extends BaseAdapter{
-	List<String> list=new ArrayList<String>();
+	List<SetContent> list_set=new ArrayList<SetContent>();
 	 private LayoutInflater mInflater; 
-	 private MenuSetFragment fragment;
-	 private Context mContext;  
-	 public MenuSetAdapter(MenuSetFragment menuSetFragment, List<String> list) {  
-	        this.fragment=menuSetFragment;  
-	        mInflater = LayoutInflater.from(menuSetFragment.getActivity());  
-	        list=list;  
+	 private Activity activity;
+	 public MenuSetAdapter(Activity activity, List<SetContent> list) {  
+	        this.activity=activity;  
+	        mInflater = LayoutInflater.from(activity);  
+	        list_set=list;  
 	    } 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return list==null?0:list.size();
+		return list_set==null?0:list_set.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return list.get(position);
+		return list_set.get(position);
 	}
 
 	@Override
@@ -52,16 +53,21 @@ public class MenuSetAdapter extends BaseAdapter{
        if (convertView == null) {  
            convertView = mInflater.inflate(R.layout.menusetitem, null);  
            holder = new ViewHolder();  
-           holder.textcontent = (TextView) convertView.findViewById(R.id.setcontent);   
+           holder.line = (View) convertView.findViewById(R.id.line);  
+           holder.fontText = (TextView) convertView.findViewById(R.id.setcontent);  
+           holder.fongSize = (TextView) convertView.findViewById(R.id.size);  
            convertView.setTag(holder);  
        } else {  
            holder = (ViewHolder) convertView.getTag();
        }
-       holder.textcontent.setText(list.get(position));
+       holder.fontText.setText(list_set.get(position).getSetText());
+       holder.fongSize.setText(list_set.get(position).getTextSize());
 		return convertView;
 	}
 	public class ViewHolder  
    {  
-       public TextView textcontent;  
+       public View line; 
+       public TextView fontText,fongSize;  
+ 
    }  
 }

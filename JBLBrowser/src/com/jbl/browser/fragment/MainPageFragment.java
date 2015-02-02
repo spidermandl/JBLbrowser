@@ -3,6 +3,8 @@ package com.jbl.browser.fragment;
 import java.util.concurrent.ScheduledExecutorService;
 
 import android.content.Intent;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -148,6 +150,7 @@ public class MainPageFragment extends SherlockFragment{
 				Intent intent=new Intent();
 				intent.setClass(getActivity(), CaptureActivity.class);
 				startActivity(intent);
+				
 			break;
 			case 2:
 				//主册登录
@@ -272,7 +275,7 @@ public class MainPageFragment extends SherlockFragment{
 			
 			@Override
 			public void onClick(View v) {
-				mWebView.getBackground().setAlpha(100);
+				//mWebView.getBackground().setAlpha(100);
 				count++;
 				//mWebView.setAlpha(200);
 				 init();
@@ -347,5 +350,4 @@ public class MainPageFragment extends SherlockFragment{
 			}
 		}
 		
-	
 }
