@@ -141,6 +141,7 @@ public class MainPageFragment extends SherlockFragment{
 			case 0:
 				// 点击搜索。fragment跳转；
 				
+				
 			break;
 			case 1:
 				//二维码
