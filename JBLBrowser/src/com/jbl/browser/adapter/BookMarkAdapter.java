@@ -3,6 +3,8 @@ package com.jbl.browser.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.jbl.broswer.bean.BookMark;
 import com.jbl.browser.R;
 import com.jbl.browser.R.id;
@@ -10,6 +12,7 @@ import com.jbl.browser.R.layout;
 import com.jbl.browser.adapter.MyListAdapter.ViewHolder;
 import com.jbl.browser.fragment.BookMarkFragment;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -22,11 +25,10 @@ import android.widget.TextView;
 public class BookMarkAdapter extends BaseAdapter{
 	List<BookMark> list_bookmark=new ArrayList<BookMark>();
 	 private LayoutInflater mInflater; 
-	 private BookMarkFragment fragment;
-	 private Context mContext;  
-	 public BookMarkAdapter(BookMarkFragment bookMarkFragment, List<BookMark> list) {  
-	        this.fragment=bookMarkFragment;  
-	        mInflater = LayoutInflater.from(bookMarkFragment.getActivity());  
+	 private Activity activity;
+	 public BookMarkAdapter(Activity activity, List<BookMark> list) {  
+	        this.activity=activity;  
+	        mInflater = LayoutInflater.from(activity);  
 	        list_bookmark= list;  
 	    } 
 	@Override
@@ -62,7 +64,7 @@ public class BookMarkAdapter extends BaseAdapter{
         }
         holder.urlName.setText(list_bookmark.get(position).getWebName());
         holder.urlAddress.setText(list_bookmark.get(position).getWebAddress());
-		return null;
+		return convertView;
 	}
 	public class ViewHolder  
     {  
