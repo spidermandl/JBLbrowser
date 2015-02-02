@@ -32,7 +32,7 @@ import com.jbl.browser.R;
 import com.jbl.browser.ViewPagerPresenter;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MyPagerAdapter;
-
+import com.jbl.browser.activity.*;
 /**
  * 浏览器主页
  * @author desmond.duan
@@ -154,8 +154,18 @@ public class MainPageFragment extends SherlockFragment{
 			break;
 			case 2:
 				//主册登录
+<<<<<<< HEAD
 			mWebView.loadUrl("http://www.hmudq.edu.cn/");			
 			break;	
+=======
+
+				mWebView.loadUrl("http://www.hmudq.edu.cn/");
+				//测试跳转到bookmarkfragment
+				((BaseFragActivity)this.getActivity()).navigateTo(BookMarkFragment.class,null,true,BookMarkFragment.TAG);
+
+			break;		
+
+>>>>>>> ed8b7be93838f05c393a0e2178726193d3996c7f
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -266,6 +276,7 @@ public class MainPageFragment extends SherlockFragment{
 			
 			@Override
 			public void onClick(View v) {
+				mWebView.getBackground().setAlpha(100);
 				count++;
 				//mWebView.setAlpha(200);
 				 init();
@@ -295,26 +306,18 @@ public class MainPageFragment extends SherlockFragment{
 			settingPanel.setVisibility(View.GONE);
 		}
 		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
-
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
 
 			}
-
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
 				// TODO Auto-generated method stub
 
 			}
-
 			@Override
 			public void onPageSelected(int arg0) {
-				/*
-				 * dots.get(oldPosition).setBackgroundResource(R.drawable.dot_normal
-				 * );
-				 * dots.get(arg0).setBackgroundResource(R.drawable.dot_focused);
-				 * oldPosition = arg0; currentItem = arg0;
-				 */
+				
 
 			}
 
@@ -348,29 +351,5 @@ public class MainPageFragment extends SherlockFragment{
 			}
 		}
 		
-		/*private void initDots() {
-			
-			dots = new ImageView[ViewPagerPresenter.PAGE_SIZE];
-
-			// 循环取得小点图片
-			for (int i = 0; i < ViewPagerPresenter.PAGE_SIZE; i++) {
-				dots[i] = (ImageView) ll.getChildAt(i);
-				dots[i].setEnabled(true);// 都设为灰色
-			}
-
-			currentIndex = 0;
-			dots[currentIndex].setEnabled(false);// 设置为白色，即选中状态
-		}
-
-		private void setCurrentDot(int position) {
-			if (position < 0 || position > ViewPagerPresenter.PAGE_SIZE - 1
-					|| currentIndex == position) {
-				return;
-			}
-
-			dots[position].setEnabled(false);
-			dots[currentIndex].setEnabled(true);
-
-			currentIndex = position;
-		}*/
+	
 }
