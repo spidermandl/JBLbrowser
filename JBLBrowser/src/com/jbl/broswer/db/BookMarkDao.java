@@ -34,7 +34,7 @@ public class BookMarkDao {
 		bookmark.setWebName(webName);
 		bookmark.setWebAddress(webAddress);
 		try {
-			BookMarkDaoOpe.createIfNotExists(bookmark);
+			BookMarkDaoOpe.create(bookmark);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,7 +52,7 @@ public class BookMarkDao {
 		return 0;
 	}
 	public List<BookMark> queryAll(){
-		List<BookMark> bookmark;
+		List<BookMark> bookmark=null;
 		try {
 			bookmark = BookMarkDaoOpe.queryForAll();
 			return bookmark;

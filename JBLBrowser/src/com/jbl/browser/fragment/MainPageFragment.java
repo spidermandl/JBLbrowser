@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.SearchViewCompat;
 import android.support.v4.widget.SearchViewCompat.OnQueryTextListenerCompat;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -62,6 +63,7 @@ public class MainPageFragment extends SherlockFragment{
 	private Button mButtonLand;  //1.4 mButtonLand       登陆注册
 */	/*  定义webview控件   */
 	private WebView mWebView; //主控件  webview
+	public static String cur_url = "http://www.baidu.com";  //设置初始网址
 	/*  定义操作栏控件   */
 	private ImageView mImageViewBack;  // 3.1 mImageViewBack   后退
 	private ImageView mImageViewInto;  // 3.2 mImageViewInto   前进
@@ -152,7 +154,7 @@ public class MainPageFragment extends SherlockFragment{
 			case 2:
 				//主册登录
 
-				mWebView.loadUrl("http://www.hmudq.edu.cn/");
+				mWebView.loadUrl(cur_url);
 				//测试跳转到bookmarkfragment
 				((BaseFragActivity)this.getActivity()).navigateTo(BookMarkFragment.class,null,true,BookMarkFragment.TAG);
 
@@ -160,7 +162,6 @@ public class MainPageFragment extends SherlockFragment{
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -177,6 +178,18 @@ public class MainPageFragment extends SherlockFragment{
 		mImageViewOption=(ImageView)view.findViewById(R.id.mImageViewOption); // 3.5 mImageViewOption 选项菜单
 		mViewPager = (ViewPager) view.findViewById(R.id.test_viewpager);  
 		settingPanel=view.findViewById(R.id.main_setting_panel);
+		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
+		mWebView.requestFocus();
+		//mWebView.setDownloadListener(new myDownloaderListener());
+		mWebView.setWebViewClient(new WebViewClient() {
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				view.loadUrl(url);
+				cur_url = url;
+				return super.shouldOverrideUrlLoading(view, url);
+			}
+
+		});
 		/*   设置title各个控件监听       
 		 1.1 search 
 		mImageViewSearch.setOnClickListener(new View.OnClickListener() {
