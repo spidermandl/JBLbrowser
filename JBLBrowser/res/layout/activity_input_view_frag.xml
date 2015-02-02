@@ -4,6 +4,6 @@
     android:layout_height="match_parent"
     tools:context="com.jbl.browser.fragment.InputViewFragActivity" >
 
-    <WebView android:id="@+id/input_mwebview" android:layout_height="match_parent" android:layout_width="match_parent"/>
-
+   <TextView android:id="@+id/tv" android:layout_width="match_parent" android:layout_height="match_parent"
+       android:background="#ffffff" android:text="Input" android:textSize="50sp" android:gravity="center"/>
 </RelativeLayout>
