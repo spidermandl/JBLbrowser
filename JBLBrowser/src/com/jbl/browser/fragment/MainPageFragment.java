@@ -14,12 +14,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
+import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebSettings.PluginState;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import cn.hugo.android.scanner.CaptureActivity;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -29,7 +28,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
 import com.jbl.browser.ViewPagerPresenter;
-import com.jbl.browser.activity.ToolBarOperateActivity;
+import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MyPagerAdapter;
 
 /**
@@ -152,6 +151,8 @@ public class MainPageFragment extends SherlockFragment{
 			case 2:
 				//主册登录
 				mWebView.loadUrl("http://www.hmudq.edu.cn/");
+				//测试跳转到bookmarkfragment
+				//((BaseFragActivity)this.getActivity()).navigateTo(BookMarkFragment.class,null,true,BookMarkFragment.TAG);
 			break;
 			
 		

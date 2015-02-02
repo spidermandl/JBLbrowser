@@ -1,10 +1,13 @@
 package com.jbl.broswer.db;
 
 import java.sql.SQLException;
+import java.util.List;
+
 import orm.sqlite.db.DatabaseHelper;
 import android.content.Context;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.jbl.broswer.bean.BookMark;
 /*
  * 创建BookMark的Dao
@@ -26,4 +29,37 @@ public class BookMarkDao {
 			e.printStackTrace();
 		}
 	}
+	public void addBookMark(String webName,String webAddress){
+		BookMark bookmark=new BookMark();
+		bookmark.setWebName(webName);
+		bookmark.setWebAddress(webAddress);
+		try {
+			BookMarkDaoOpe.createIfNotExists(bookmark);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public int deleteBookMarkByWebAddress(String webAddress){
+		try {
+			DeleteBuilder<BookMark,Integer> deleteBuilder=BookMarkDaoOpe.deleteBuilder();
+			deleteBuilder.where().eq("WebAddress", webAddress);
+			return deleteBuilder.delete();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public List<BookMark> queryAll(){
+		List<BookMark> bookmark;
+		try {
+			bookmark = BookMarkDaoOpe.queryForAll();
+			return bookmark;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	} 
 }
