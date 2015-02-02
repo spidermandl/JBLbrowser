@@ -139,7 +139,12 @@ public class MainPageFragment extends SherlockFragment{
 		switch(item.getItemId()){
 			case 0:
 				// 点击搜索。fragment跳转；
+<<<<<<< HEAD
 				((BaseFragActivity)this.getActivity()).navigateTo(MainPageFragment.class, null, true, UrlRedirectFragment.TAG);
+=======
+				
+				
+>>>>>>> 6764c9e5d2827f410977f22974c1ae8ba6d04858
 			break;
 			case 1:
 				//二维码

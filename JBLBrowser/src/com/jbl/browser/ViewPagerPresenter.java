@@ -21,7 +21,11 @@ public class ViewPagerPresenter
     private List<GridView> mGridViews;  
     private List<View> mViewPages;  
     private Context mContext;  
-  
+    /** 菜单文字 **/
+    private String [] str=new String[]{"添加书签","书签","刷新","历史","夜间模式",
+ 		   "关闭无图","下载管理","退出","旋转屏幕","翻页按钮","无痕浏览","全屏浏览",
+ 		   "更换壁纸","省流加速","阅读模式","设置","关于","意见反馈","检查更新","页内查找","保存网页"};
+
     public ViewPagerPresenter(Context context) {  
     	mContext = context;  
         mPageList = new ArrayList<List<String>>();  
@@ -65,10 +69,11 @@ public class ViewPagerPresenter
     public List<String> getTestList()  
     {  
         List<String> strs = new ArrayList<String>();  
-        for (int i = 0; i < TEST_LIST_SIZE; ++i) {  
-            String s = "第 " + i + "个";  
+        for (int i = 0; i < str.length; ++i) {  
+            String s = str[i].toString();  
             strs.add(s);  
         }  
+
         return strs;  
     }  
     private void initViewAndAdapter()  
