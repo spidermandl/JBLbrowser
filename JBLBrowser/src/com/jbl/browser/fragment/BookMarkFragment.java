@@ -43,10 +43,6 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		/*init();
-		//list=getData();
-		bookMarkAdapter=new BookMarkAdapter(getActivity(), list);
-		listview.setAdapter(bookMarkAdapter);*/
 		super.onCreate(savedInstanceState);
 	}
 	/**
@@ -90,11 +86,10 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.bookmark_fragment, container, false);
-		TextView t=(TextView)view.findViewById(R.id.t);
 		listview=(ListView)view.findViewById(R.id.list_view_bookmark);
 		init();
 		//list=getData();
-		bookMarkAdapter=new BookMarkAdapter(view.getContext(), list);
+		bookMarkAdapter=new BookMarkAdapter(getActivity(), list);
 		listview.setAdapter(bookMarkAdapter);
 		listview.setOnItemLongClickListener(this);
 		return view;

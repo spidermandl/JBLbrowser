@@ -25,10 +25,10 @@ import android.widget.TextView;
 public class BookMarkAdapter extends BaseAdapter{
 	List<BookMark> list_bookmark=new ArrayList<BookMark>();
 	 private LayoutInflater mInflater; 
-	 private Context context;
-	 public BookMarkAdapter(Context context, List<BookMark> list) {  
-	        this.context=context;  
-	        mInflater = LayoutInflater.from(context);  
+	 private Activity activity;
+	 public BookMarkAdapter(Activity activity, List<BookMark> list) {  
+	        this.activity=activity;  
+	        mInflater = LayoutInflater.from(activity);  
 	        list_bookmark= list;  
 	    } 
 	@Override
@@ -64,7 +64,7 @@ public class BookMarkAdapter extends BaseAdapter{
         }
         holder.urlName.setText(list_bookmark.get(position).getWebName());
         holder.urlAddress.setText(list_bookmark.get(position).getWebAddress());
-		return null;
+		return convertView;
 	}
 	public class ViewHolder  
     {  
