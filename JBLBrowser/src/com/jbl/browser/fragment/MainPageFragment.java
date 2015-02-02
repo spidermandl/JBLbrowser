@@ -110,13 +110,14 @@ public class MainPageFragment extends SherlockFragment{
         if (searchView!=null) {
             SearchViewCompat.setOnQueryTextListener(searchView,
                     new OnQueryTextListenerCompat() {
+            	
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     // Called when the action bar search text has changed.  Since this
                     // is a simple array adapter, we can just have it do the filtering.
                     return true;
                 }
-            });
+            });           
             item.setActionView(searchView);
         }
         /*  添加扫描二维码icon  对应ItemID 1 */
@@ -139,12 +140,8 @@ public class MainPageFragment extends SherlockFragment{
 		switch(item.getItemId()){
 			case 0:
 				// 点击搜索。fragment跳转；
-<<<<<<< HEAD
-				((BaseFragActivity)this.getActivity()).navigateTo(MainPageFragment.class, null, true, UrlRedirectFragment.TAG);
-=======
-				
-				
->>>>>>> 6764c9e5d2827f410977f22974c1ae8ba6d04858
+				((BaseFragActivity)this.getActivity()).navigateTo
+				(UrlRedirectFragment.class, null, true, UrlRedirectFragment.TAG);
 			break;
 			case 1:
 				//二维码
@@ -154,7 +151,7 @@ public class MainPageFragment extends SherlockFragment{
 			break;
 			case 2:
 				//主册登录
-				mWebView.loadUrl("http://www.hmudq.edu.cn/");
+			mWebView.loadUrl("http://www.hmudq.edu.cn/");				
 			break;
 			
 		
