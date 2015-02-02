@@ -12,44 +12,54 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.jbl.broswer.bean.BookMark;
+import com.jbl.broswer.bean.SetContent;
+import com.jbl.broswer.db.BookMarkDao;
 import com.jbl.browser.R;
+import com.jbl.browser.adapter.BookMarkAdapter;
 import com.jbl.browser.adapter.MenuSetAdapter;
 /*
  * 菜单设置选项fragment
  */
 public class MenuSetFragment extends SherlockFragment implements OnClickListener{
-	public final static String TAG=" MenuSetFragment";
-	//菜单栏设置listView
+	public final static String TAG="MenuSetFragment";
+	//菜单设置选项内容
 	ListView listview;
-	//设置内容
-	List<String> list=new ArrayList<String>();
-	public AlertDialog dialog;
+	//设置数据
+	List<SetContent> list=new ArrayList<SetContent>();
 	MenuSetAdapter menuSetAdapter;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		init();
-		listview.setAdapter(menuSetAdapter);
 		super.onCreate(savedInstanceState);
 	}
 	/**
-	 * 测试数据
+	 *添加数据
 	 */
 	public void init(){
-		String name1="字体大小";
-		String name2="屏幕亮度";
-		String name3="屏幕翻转";
-		list.add(name1);
-		list.add(name2);
-		list.add(name3);
+	    SetContent s1=new SetContent();
+		s1.setSetText("字体大小");
+		s1.setTextSize("中");
+		list.add(s1);
+		SetContent s2=new SetContent();
+		s2.setSetText("屏幕亮度");
+		s2.setTextSize("适中");
+		list.add(s2);
+		SetContent s3=new SetContent();
+		s3.setSetText("旋转屏幕");
+		s3.setTextSize("跟随系统");
+		list.add(s3);
 	}
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -66,17 +76,22 @@ public class MenuSetFragment extends SherlockFragment implements OnClickListener
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		// TODO Auto-generated method stub
 		menu.add(0, 1, 0, "Back").setIcon(R.drawable.back_web).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.menuset_fragment, container, false);
-		menuSetAdapter=new MenuSetAdapter(MenuSetFragment.this, list);
 		listview=(ListView)view.findViewById(R.id.list_view_set);
-		listview.setOnClickListener(this);
+		init();
+		//list=getData();
+		menuSetAdapter=new MenuSetAdapter(getActivity(), list);
+		listview.setAdapter(menuSetAdapter);
+		listview.setOnClickListener(this);;
 		return view;
 	}
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -96,7 +111,6 @@ public class MenuSetFragment extends SherlockFragment implements OnClickListener
 			});
 			
 			builder1.create().show();
-			dialog.dismiss();
 			break;
 		case 1:
 			AlertDialog.Builder builder2=new Builder(getActivity());
@@ -113,7 +127,6 @@ public class MenuSetFragment extends SherlockFragment implements OnClickListener
 			});
 			
 			builder2.create().show();
-			dialog.dismiss();
 			break;
 		case 3:
 			AlertDialog.Builder builder3=new Builder(getActivity());
@@ -130,7 +143,6 @@ public class MenuSetFragment extends SherlockFragment implements OnClickListener
 				}
 			});
 			builder3.create().show();
-			dialog.dismiss();
 			break;
 		default:
 			break;

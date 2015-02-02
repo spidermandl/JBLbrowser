@@ -113,20 +113,7 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
-        <activity
-<<<<<<< HEAD
-            android:name="activity.ToolBarOperateActivity"
-            android:label="@string/app_name"
-            android:launchMode="standard"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".fragment.InputViewFragActivity"
-=======
-            android:name="com.jbl.browser.fragment.InputViewFragActivity"
->>>>>>> ed8b7be93838f05c393a0e2178726193d3996c7f
-            android:label="@string/title_activity_input_view_frag" >
-        </activity>
+
     </application>
 
 </manifest>

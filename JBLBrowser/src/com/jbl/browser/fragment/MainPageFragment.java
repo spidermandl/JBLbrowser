@@ -3,6 +3,8 @@ package com.jbl.browser.fragment;
 import java.util.concurrent.ScheduledExecutorService;
 
 import android.content.Intent;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -153,21 +155,21 @@ public class MainPageFragment extends SherlockFragment{
 				Intent intent=new Intent();
 				intent.setClass(getActivity(), CaptureActivity.class);
 				startActivity(intent);
+				
 			break;
 			case 2:
+
 				//主册登录
-<<<<<<< HEAD
+
 			mWebView.loadUrl("http://www.hmudq.edu.cn/");			
 			break;	
-=======
 
-				mWebView.loadUrl(cur_url);
-				//测试跳转到bookmarkfragment
+				/*//测试跳转到bookmarkfragment
 				((BaseFragActivity)this.getActivity()).navigateTo(BookMarkFragment.class,null,true,BookMarkFragment.TAG);
 
 			break;		
+*/
 
->>>>>>> ed8b7be93838f05c393a0e2178726193d3996c7f
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -289,7 +291,7 @@ public class MainPageFragment extends SherlockFragment{
 			
 			@Override
 			public void onClick(View v) {
-				mWebView.getBackground().setAlpha(100);
+				//mWebView.getBackground().setAlpha(100);
 				count++;
 				//mWebView.setAlpha(200);
 				 init();
@@ -364,5 +366,4 @@ public class MainPageFragment extends SherlockFragment{
 			}
 		}
 		
-	
 }
