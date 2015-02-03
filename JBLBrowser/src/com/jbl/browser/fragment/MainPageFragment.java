@@ -1,7 +1,10 @@
 package com.jbl.browser.fragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 
 import android.content.Context;
@@ -22,13 +25,22 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -36,6 +48,11 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
+import com.jbl.broswer.bean.BookMark;
+import com.jbl.broswer.bean.History;
+import com.jbl.broswer.db.BookMarkDao;
+import com.jbl.broswer.db.HistoryDao;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MyListAdapter;
@@ -71,7 +88,8 @@ public class MainPageFragment extends SherlockFragment{
 	private Button mButtonLand;  //1.4 mButtonLand       登陆注册
 */	/*  定义webview控件   */
 	private WebView mWebView; //主控件  webview
-	public static String cur_url = "http://www.baidu.com";  //设置初始网址
+	public  String cur_url = "http://www.baidu.com";  //设置初始网址
+	public  String webName="";//网页名
 	/*  定义操作栏控件   */
 	private ImageView mImageViewBack;  // 3.1 mImageViewBack   后退
 	private ImageView mImageViewInto;  // 3.2 mImageViewInto   前进
@@ -82,18 +100,28 @@ public class MainPageFragment extends SherlockFragment{
 	private PagerAdapter mPageAdapter;  
 	private ViewPagerPresenter mPresenter;  
 	private LinearLayout ll;//viewpager的线性布局
-	int count=0;//点击次数
-	// 记录当前选中位置
-	 private int currentIndex;
-	 private int oldPosition = 0;//记录上一次点的位置
-	 private int currentItem; //当前页面
 	 private ScheduledExecutorService scheduledExecutorService;
-	 //private ArrayList<View> dots;
 	 View settingPanel;//设置主界面
+	 int count;
+	 Animation animation1, animation2;//实现动画效果
+	 private ImageView[] mImageViews;//实现圆点效果
+	//该应用的主布局LinearLayout
+	 private ViewGroup mainViewGroup;
+		//主布局底部指示当前页面的小圆点视图，LinearLayout
+	 private ViewGroup indicatorViewGroup;
+	 private LinearLayout linear;
+	 GridView lv;//菜单栏信息
+	 BookMark bookMark;
+	 HistoryDao historydao;//历史记录操作
+	 BookMarkDao bookmarkdao;//书签操作
+
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		if(getArguments()!=null){
+			cur_url=getArguments().getString("webAddress");
+		}
 		super.onCreate(savedInstanceState);
 	}
 	
@@ -172,6 +200,8 @@ public class MainPageFragment extends SherlockFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		historydao=new HistoryDao(getActivity());
+		bookmarkdao=new BookMarkDao(getActivity());
 		View view = inflater.inflate(R.layout.fragment_main_page, container, false);
 		mWebView=(WebView)view.findViewById(R.id.mWebView); //webview
 		mImageViewBack=(ImageView)view.findViewById(R.id.mImageViewBack);  // 3.1 mImageViewBack   后退
@@ -183,7 +213,15 @@ public class MainPageFragment extends SherlockFragment{
 		settingPanel=view.findViewById(R.id.main_setting_panel);
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
+		//加载弹出菜单栏的动画效果
+		 animation1 = AnimationUtils.loadAnimation(getActivity(),  
+                R.anim.menu_bar_appear); 
+		 //退出菜单栏时的动画效果
+		 animation2 = AnimationUtils.loadAnimation(getActivity(),  
+	                R.anim.menu_bar_disappear);  
 		//mWebView.setDownloadListener(new myDownloaderListener());
+
+		 linear=(LinearLayout)view.findViewById(R.id.linear);
 		mWebView.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -193,6 +231,7 @@ public class MainPageFragment extends SherlockFragment{
 			}
 
 		});
+
 		/*   设置title各个控件监听       
 		 1.1 search 
 		mImageViewSearch.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +268,8 @@ public class MainPageFragment extends SherlockFragment{
 			}
 		});
 		*/
+		
+		
 		/* 2.0 WebView touch监听
 		 * 
 		 *  这里与webview冲突
@@ -297,24 +338,28 @@ public class MainPageFragment extends SherlockFragment{
 			}
 		});
 		
+		
 		/*  设置webview */
 		setWebStyle();
 		return view;
 	}
 	
-	
 	/* 点击webview取消菜单栏展示*/
 	
 	private void init() {
+	
 		if (count % 2 != 0) {
 			mPresenter = new ViewPagerPresenter(this.getActivity());
 			mPageAdapter = new MyPagerAdapter(mPresenter.getPageViews());
 			mViewPager.setAdapter(mPageAdapter);
 			mViewPager.setVisibility(View.VISIBLE);
 			settingPanel.setVisibility(View.VISIBLE);
+		    mViewPager.startAnimation(animation1);
 		} else {
 			mViewPager.setVisibility(View.GONE);
 			settingPanel.setVisibility(View.GONE);
+			mViewPager.startAnimation(animation2);
+			  
 		}
 		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			@Override
@@ -328,13 +373,29 @@ public class MainPageFragment extends SherlockFragment{
 			}
 			@Override
 			public void onPageSelected(int arg0) {
+				// TODO Auto-generated method stub
+			/*	for (int i = 0; i < mImageViews.length; i++) {
+					if(i == arg0) {
+						mImageViews[i].setBackgroundResource(R.drawable.page_indicator_focused);
+					} else {
+						mImageViews[i].setBackgroundResource(R.drawable.page_indicator);
+					}
+				}*/
 				
-
 			}
 
 		});
 	}
-
+	//添加书签
+	public void addNewBookMark(){
+		webName=mWebView.getTitle();
+		bookMark=new BookMark();
+		bookMark.setWebAddress(cur_url);
+		bookMark.setWebName(webName);
+		
+		bookmarkdao.addBookMark(bookMark);
+	    Toast.makeText(getActivity(), "添加书签成功", 100);
+	}
 	 private void setWebStyle() {
 			// TODO Auto-generated method stub
 //			mWebView.getSettings().setJavaScriptEnabled(true);
@@ -352,6 +413,14 @@ public class MainPageFragment extends SherlockFragment{
 			mWebView.getSettings().setPluginState(PluginState.ON);
 			mWebView.loadUrl("http://www.baidu.com/");
 			mWebView.setWebViewClient(new MyWebViewClient());
+			mWebView.setWebChromeClient(new WebChromeClient(){
+				@Override
+				public void onReceivedTitle(WebView view, String title) {
+					// TODO Auto-generated method stub
+					super.onReceivedTitle(view, title);
+					webName=title;
+				}
+			});
 		}
 	/*       webcilent         */
 		class MyWebViewClient extends WebViewClient{
@@ -360,7 +429,19 @@ public class MainPageFragment extends SherlockFragment{
 				view.loadUrl(url_);
 				return true;
 			}
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				// TODO Auto-generated method stub
+				String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA).format(new Date()).toString();
+				History history=new History();
+				history.setWebAddress(url);
+				history.setWebName(webName);
+				//加载完加入历史记录
+				historydao.addHistory(history);					
+				super.onPageFinished(view, url);
+			}
 		}
+		
 		/*
 		 * 内部类实现滑动分页
 		 */
@@ -373,9 +454,9 @@ public class MainPageFragment extends SherlockFragment{
 		    private int mCurrentPage;  
 		    private List<MyListAdapter> mAdapters;  
 		    private List<List<String>> mPageList;  
-		    private List<GridView> mGridViews;  
-		    private List<View> mViewPages;  
+		    private List<GridView> mGridViews;   
 		    private Context mContext;  
+		    private List<View> mViewPages; 
 		    /** 菜单文字 **/
 		    private String [] str=new String[]{"添加书签","书签","刷新","历史","夜间模式",
 		 		   "关闭无图","下载管理","退出","旋转屏幕","翻页按钮","无痕浏览","全屏浏览",
@@ -389,6 +470,7 @@ public class MainPageFragment extends SherlockFragment{
 		        mViewPages = new ArrayList<View>();  
 		        initPages(getTestList());  
 		        initViewAndAdapter();  
+		      
 		    }  
 		  
 		    /** 
@@ -414,7 +496,7 @@ public class MainPageFragment extends SherlockFragment{
 		        if (l.size() > 0) {  
 		            mPageList.add(l);  
 		        }  
-		        
+		        //mImageViews = new ImageView[mViewPages.size()];
 		    }  
 		    /** 
 		     * 模拟数据 
@@ -434,12 +516,35 @@ public class MainPageFragment extends SherlockFragment{
 		        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		        for (int i = 0; i < sTotalPages; ++i) {  
 		            View v = inflater.inflate(R.layout.viewpager_gridview, null);  
-		            GridView lv = (GridView) v.findViewById(R.id.viewpage_grid);  
+		            lv = (GridView) v.findViewById(R.id.viewpage_grid);  
 		            mGridViews.add(lv);  
 		            MyListAdapter adapter = new MyListAdapter(mContext, mPageList.get(i));  
 		            mAdapters.add(adapter);  
 		            lv.setAdapter(adapter);  
 		            mViewPages.add(v);  
+		           
+		          //菜单监听事件
+		        	lv.setOnItemClickListener(new OnItemClickListener() {
+
+		        		@Override
+		        		public void onItemClick(AdapterView<?> parent,
+		        				View view, int position, long id) {
+		        			// TODO Auto-generated method stub
+		        			switch (position) {
+		        			case 0:
+		        				addNewBookMark();
+		        				break;
+		        			case 1:
+		        				((BaseFragActivity)getActivity()).navigateTo(BookMarkFragment.class, null, true,BookMarkFragment.TAG);
+		        				break;
+		        			case 3:
+		        				((BaseFragActivity)getActivity()).navigateTo(HistoryFragment.class, null, true,HistoryFragment.TAG);
+		        				break;
+		        			default:
+		        				break;
+		        			}
+		        		}
+		        	});
 		        }  
 		    }  
 		    public List<View> getPageViews()  
@@ -448,4 +553,9 @@ public class MainPageFragment extends SherlockFragment{
 		    }  
 		
           }
+		@Override
+		public void onActivityResult(int requestCode, int resultCode, Intent data) {
+			// TODO Auto-generated method stub
+			super.onActivityResult(requestCode, resultCode, data);
+		}
 }
