@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +39,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	//书签数据
 	List<BookMark> list=new ArrayList<BookMark>();
 	//书签操作类
-	BookMarkDao bookmarkdao;
+	BookMarkDao bookmarkdao=new BookMarkDao(getActivity());
 	BookMarkAdapter bookMarkAdapter;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,15 +50,15 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	 * 测试数据
 	 */
 	public void init(){
-		BookMark b1=new BookMark();
+		/*BookMark b1=new BookMark();
 		b1.setWebName("百度");
-		b1.setWebAddress("http:baidu.com");
-		list.add(b1);
+		b1.setWebAddress("http:baidu.com");*/		
+		bookmarkdao.addBookMark("百度", "http:baidu.com");
 	}
 	//从数据库中获得数据
 	public List<BookMark> getData(){
-		bookmarkdao=new BookMarkDao(getActivity());
-		List<BookMark> list=bookmarkdao.queryAll();
+		List<BookMark> list=new ArrayList<BookMark>();
+		list=bookmarkdao.queryAll();
 		if(list==null){
 			Toast.makeText(getActivity(), "没有书签", 100).show();
 		}
@@ -78,7 +79,9 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		// TODO Auto-generated method stub
-		menu.add(0, 1, 0, "Back").setIcon(R.drawable.back_web).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.removeGroup(0);
+		//添加返回图标
+		menu.add(1, 1, 0, "Back").setIcon(R.drawable.back_web).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -88,7 +91,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		View view = inflater.inflate(R.layout.bookmark_fragment, container, false);
 		listview=(ListView)view.findViewById(R.id.list_view_bookmark);
 		init();
-		//list=getData();
+		list=getData();
 		bookMarkAdapter=new BookMarkAdapter(getActivity(), list);
 		listview.setAdapter(bookMarkAdapter);
 		listview.setOnItemLongClickListener(this);
@@ -111,6 +114,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 				int i=bookmarkdao.deleteBookMarkByWebAddress(webAddress);
 				if(i!=0){
 					Toast.makeText(getActivity(), "删除成功", 100).show();
+					((BaseAdapter)listview.getAdapter()).notifyDataSetChanged();				
 				}
 			}
 		});

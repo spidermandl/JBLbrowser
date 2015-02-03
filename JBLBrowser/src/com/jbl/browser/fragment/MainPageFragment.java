@@ -1,14 +1,23 @@
 package com.jbl.browser.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 
+import android.content.Context;
 import android.content.Intent;
+
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Color;
+
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.SearchViewCompat;
 import android.support.v4.widget.SearchViewCompat.OnQueryTextListenerCompat;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +26,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import cn.hugo.android.scanner.CaptureActivity;
@@ -27,8 +37,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
-import com.jbl.browser.ViewPagerPresenter;
 import com.jbl.browser.activity.BaseFragActivity;
+import com.jbl.browser.adapter.MyListAdapter;
 import com.jbl.browser.adapter.MyPagerAdapter;
 /**
  * 浏览器主页
@@ -61,6 +71,7 @@ public class MainPageFragment extends SherlockFragment{
 	private Button mButtonLand;  //1.4 mButtonLand       登陆注册
 */	/*  定义webview控件   */
 	private WebView mWebView; //主控件  webview
+	public static String cur_url = "http://www.baidu.com";  //设置初始网址
 	/*  定义操作栏控件   */
 	private ImageView mImageViewBack;  // 3.1 mImageViewBack   后退
 	private ImageView mImageViewInto;  // 3.2 mImageViewInto   前进
@@ -69,7 +80,7 @@ public class MainPageFragment extends SherlockFragment{
 	private ImageView mImageViewOption;// 3.5 mImageViewOption 选项菜单 
 	private ViewPager mViewPager;  //水平实现滑动效果
 	private PagerAdapter mPageAdapter;  
-	 private ViewPagerPresenter mPresenter;  
+	private ViewPagerPresenter mPresenter;  
 	private LinearLayout ll;//viewpager的线性布局
 	int count=0;//点击次数
 	// 记录当前选中位置
@@ -149,15 +160,15 @@ public class MainPageFragment extends SherlockFragment{
 				Intent intent=new Intent();
 				intent.setClass(getActivity(), CaptureActivity.class);
 				startActivity(intent);
+				
 			break;
 			case 2:
 				//主册登录
-			mWebView.loadUrl("http://www.hmudq.edu.cn/");			
-			break;			
+				mWebView.loadUrl("http://www.hmudq.edu.cn/");			
+			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -170,6 +181,18 @@ public class MainPageFragment extends SherlockFragment{
 		mImageViewOption=(ImageView)view.findViewById(R.id.mImageViewOption); // 3.5 mImageViewOption 选项菜单
 		mViewPager = (ViewPager) view.findViewById(R.id.test_viewpager);  
 		settingPanel=view.findViewById(R.id.main_setting_panel);
+		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
+		mWebView.requestFocus();
+		//mWebView.setDownloadListener(new myDownloaderListener());
+		mWebView.setWebViewClient(new WebViewClient() {
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				view.loadUrl(url);
+				cur_url = url;
+				return super.shouldOverrideUrlLoading(view, url);
+			}
+
+		});
 		/*   设置title各个控件监听       
 		 1.1 search 
 		mImageViewSearch.setOnClickListener(new View.OnClickListener() {
@@ -213,9 +236,9 @@ public class MainPageFragment extends SherlockFragment{
 		mWebView.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				mViewPager.setVisibility(View.GONE);
-				settingPanel.setVisibility(View.GONE);
-				return true;
+			/*	mViewPager.setVisibility(View.GONE);
+				settingPanel.setVisibility(View.GONE);*/
+				return false;
 			}
 		});
 		
@@ -264,7 +287,7 @@ public class MainPageFragment extends SherlockFragment{
 			
 			@Override
 			public void onClick(View v) {
-				mWebView.getBackground().setAlpha(100);
+				//mWebView.getBackground().setAlpha(100);
 				count++;
 				//mWebView.setAlpha(200);
 				 init();
@@ -338,6 +361,91 @@ public class MainPageFragment extends SherlockFragment{
 				return true;
 			}
 		}
+		/*
+		 * 内部类实现滑动分页
+		 */
+		public class ViewPagerPresenter  
+		{  
+		    private static final String TAG = "ViewPagerPresenter";  
+		    private static final int PAGE_SIZE = 8; // 每页显示的数据个数  
+		    private static final int TEST_LIST_SIZE = 43; // 数据总长度  
+		    int sTotalPages = 1;  
+		    private int mCurrentPage;  
+		    private List<MyListAdapter> mAdapters;  
+		    private List<List<String>> mPageList;  
+		    private List<GridView> mGridViews;  
+		    private List<View> mViewPages;  
+		    private Context mContext;  
+		    /** 菜单文字 **/
+		    private String [] str=new String[]{"添加书签","书签","刷新","历史","夜间模式",
+		 		   "关闭无图","下载管理","退出","旋转屏幕","翻页按钮","无痕浏览","全屏浏览",
+		 		   "更换壁纸","省流加速","阅读模式","设置","关于","意见反馈","检查更新","页内查找","保存网页"};
+
+		    public ViewPagerPresenter(Context context) {  
+		    	mContext = context;  
+		        mPageList = new ArrayList<List<String>>();  
+		        mGridViews = new ArrayList<GridView>();  
+		        mAdapters = new ArrayList<MyListAdapter>();  
+		        mViewPages = new ArrayList<View>();  
+		        initPages(getTestList());  
+		        initViewAndAdapter();  
+		    }  
+		  
+		    /** 
+		     * 将数据分页 
+		     * @param list 
+		     */  
+		    public void initPages(List<String> list)  
+		    {  
+		        if (list.size() % PAGE_SIZE == 0) {  
+		            sTotalPages = list.size() / PAGE_SIZE;  
+		        } else {  
+		            sTotalPages = list.size() / PAGE_SIZE + 1;  
+		        }  
+		        mCurrentPage = 0;  
+		        List<String> l = new ArrayList<String>();  
+		        for (int i = 0; i < list.size(); ++i) {  
+		            l.add(list.get(i));  
+		            if ((i + 1) % PAGE_SIZE == 0) {  
+		                mPageList.add(l);  
+		                l = new ArrayList<String>();  
+		            }  
+		        }  
+		        if (l.size() > 0) {  
+		            mPageList.add(l);  
+		        }  
+		        
+		    }  
+		    /** 
+		     * 模拟数据 
+		     * @return 
+		     */  
+		    public List<String> getTestList()  
+		    {  
+		        List<String> strs = new ArrayList<String>();  
+		        for (int i = 0; i < str.length; ++i) {  
+		            String s = str[i].toString();  
+		            strs.add(s);  
+		        }  
+		        return strs;  
+		    }  
+		    private void initViewAndAdapter()  
+		    {  
+		        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		        for (int i = 0; i < sTotalPages; ++i) {  
+		            View v = inflater.inflate(R.layout.viewpager_gridview, null);  
+		            GridView lv = (GridView) v.findViewById(R.id.viewpage_grid);  
+		            mGridViews.add(lv);  
+		            MyListAdapter adapter = new MyListAdapter(mContext, mPageList.get(i));  
+		            mAdapters.add(adapter);  
+		            lv.setAdapter(adapter);  
+		            mViewPages.add(v);  
+		        }  
+		    }  
+		    public List<View> getPageViews()  
+		    {  
+		        return mViewPages;  
+		    }  
 		
-	
+          }
 }

@@ -1,4 +1,4 @@
-package com.jbl.browser;
+/*package com.jbl.browser;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class ViewPagerPresenter
     private List<GridView> mGridViews;  
     private List<View> mViewPages;  
     private Context mContext;  
-    /** 菜单文字 **/
+    *//** 菜单文字 **//*
     private String [] str=new String[]{"添加书签","书签","刷新","历史","夜间模式",
  		   "关闭无图","下载管理","退出","旋转屏幕","翻页按钮","无痕浏览","全屏浏览",
  		   "更换壁纸","省流加速","阅读模式","设置","关于","意见反馈","检查更新","页内查找","保存网页"};
@@ -36,10 +36,10 @@ public class ViewPagerPresenter
         initViewAndAdapter();  
     }  
   
-    /** 
+    *//** 
      * 将数据分页 
      * @param list 
-     */  
+     *//*  
     public void initPages(List<String> list)  
     {  
         if (list.size() % PAGE_SIZE == 0) {  
@@ -62,10 +62,10 @@ public class ViewPagerPresenter
         
     }  
   
-    /** 
+    *//** 
      * 模拟数据 
      * @return 
-     */  
+     *//*  
     public List<String> getTestList()  
     {  
         List<String> strs = new ArrayList<String>();  
@@ -94,4 +94,4 @@ public class ViewPagerPresenter
         return mViewPages;  
     }  
   
-}  
+}  */
