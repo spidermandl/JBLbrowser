@@ -3,7 +3,6 @@ package com.jbl.browser.fragment;
 import java.util.concurrent.ScheduledExecutorService;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -27,12 +26,10 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
 import com.jbl.browser.R;
 import com.jbl.browser.ViewPagerPresenter;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MyPagerAdapter;
-import com.jbl.browser.activity.*;
 /**
  * 浏览器主页
  * @author desmond.duan
@@ -105,23 +102,23 @@ public class MainPageFragment extends SherlockFragment{
 	
 	@Override
 	public  void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        MenuItem item = menu.add(0,0,0,"Search");
-        item.setIcon(android.R.drawable.ic_menu_search);      
+        MenuItem item = menu.add(0,0,0,"Search")
+        .setIcon(android.R.drawable.ic_menu_search);
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        View searchView = SearchViewCompat.newSearchView(getActivity());        
+        View searchView = SearchViewCompat.newSearchView(getActivity());
+       
         if (searchView!=null) {
             SearchViewCompat.setOnQueryTextListener(searchView,
                     new OnQueryTextListenerCompat() {
+            	@Override
+            	public boolean onQueryTextSubmit(String query) {
+            		// TODO Auto-generated method stub
             	
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    // Called when the action bar search text has changed.  Since this
-                    // is a simple array adapter, we can just have it do the filtering.
-                    return true;
-                }
-            });            
-            item.setActionView(searchView);   
+            		return false;
+            	}            	
+            });               
         }
+        item.setActionView(searchView);        
         /*  添加扫描二维码icon  对应ItemID 1 */
   
         menu.add(0,1,0,"Code")
@@ -139,6 +136,7 @@ public class MainPageFragment extends SherlockFragment{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		/*  二维码ID 1   主册登录ID 2  */
+		
 		switch(item.getItemId()){
 			case 0:
 				// 点击搜索。fragment跳转；
@@ -154,18 +152,8 @@ public class MainPageFragment extends SherlockFragment{
 			break;
 			case 2:
 				//主册登录
-<<<<<<< HEAD
 			mWebView.loadUrl("http://www.hmudq.edu.cn/");			
-			break;	
-=======
-
-				mWebView.loadUrl("http://www.hmudq.edu.cn/");
-				//测试跳转到bookmarkfragment
-				((BaseFragActivity)this.getActivity()).navigateTo(BookMarkFragment.class,null,true,BookMarkFragment.TAG);
-
-			break;		
-
->>>>>>> ed8b7be93838f05c393a0e2178726193d3996c7f
+			break;			
 		}
 		return super.onOptionsItemSelected(item);
 	}
