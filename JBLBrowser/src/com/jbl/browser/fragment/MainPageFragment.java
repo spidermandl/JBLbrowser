@@ -104,7 +104,6 @@ public class MainPageFragment extends SherlockFragment{
 	 View settingPanel;//设置主界面
 	 int count;
 	 Animation animation1, animation2;//实现动画效果
-	 private ImageView[] mImageViews;//实现圆点效果
 	//该应用的主布局LinearLayout
 	 private ViewGroup mainViewGroup;
 		//主布局底部指示当前页面的小圆点视图，LinearLayout
@@ -114,8 +113,9 @@ public class MainPageFragment extends SherlockFragment{
 	 BookMark bookMark;
 	 HistoryDao historydao;//历史记录操作
 	 BookMarkDao bookmarkdao;//书签操作
-
-	
+	 /** 将小圆点的图片用数组表示 */
+	 private ImageView[] imageViews;
+	 private List<View> mViewPages; 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -124,14 +124,11 @@ public class MainPageFragment extends SherlockFragment{
 		}
 		super.onCreate(savedInstanceState);
 	}
-	
-	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		
 		final ActionBar ab = this.getSherlockActivity().getSupportActionBar();
-
 		// set defaults for logo & home up
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
@@ -333,8 +330,6 @@ public class MainPageFragment extends SherlockFragment{
 				//mWebView.setAlpha(200);
 				 init();
 				
-			
-				
 			}
 		});
 		
@@ -347,7 +342,6 @@ public class MainPageFragment extends SherlockFragment{
 	/* 点击webview取消菜单栏展示*/
 	
 	private void init() {
-	
 		if (count % 2 != 0) {
 			mPresenter = new ViewPagerPresenter(this.getActivity());
 			mPageAdapter = new MyPagerAdapter(mPresenter.getPageViews());
@@ -374,13 +368,13 @@ public class MainPageFragment extends SherlockFragment{
 			@Override
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
-			/*	for (int i = 0; i < mImageViews.length; i++) {
+				for (int i = 0; i < imageViews.length; i++) {
 					if(i == arg0) {
-						mImageViews[i].setBackgroundResource(R.drawable.page_indicator_focused);
+						imageViews[i].setBackgroundResource(R.drawable.page_indicator_focused);
 					} else {
-						mImageViews[i].setBackgroundResource(R.drawable.page_indicator);
+						imageViews[i].setBackgroundResource(R.drawable.page_indicator);
 					}
-				}*/
+				}
 				
 			}
 
@@ -456,7 +450,7 @@ public class MainPageFragment extends SherlockFragment{
 		    private List<List<String>> mPageList;  
 		    private List<GridView> mGridViews;   
 		    private Context mContext;  
-		    private List<View> mViewPages; 
+		   
 		    /** 菜单文字 **/
 		    private String [] str=new String[]{"添加书签","书签","刷新","历史","夜间模式",
 		 		   "关闭无图","下载管理","退出","旋转屏幕","翻页按钮","无痕浏览","全屏浏览",
@@ -496,7 +490,7 @@ public class MainPageFragment extends SherlockFragment{
 		        if (l.size() > 0) {  
 		            mPageList.add(l);  
 		        }  
-		        //mImageViews = new ImageView[mViewPages.size()];
+		        imageViews=new ImageView[mViewPages.size()];
 		    }  
 		    /** 
 		     * 模拟数据 
@@ -539,6 +533,15 @@ public class MainPageFragment extends SherlockFragment{
 		        				break;
 		        			case 3:
 		        				((BaseFragActivity)getActivity()).navigateTo(HistoryFragment.class, null, true,HistoryFragment.TAG);
+		        				break;
+		        			case 4:
+		        				break;
+		        			case 5:
+		        				break;
+		        			case 6:
+		        				break;
+		        			case 7:
+		        				((BaseFragActivity)getActivity()).navigateTo(MenuSetFragment.class, null, true,MenuSetFragment.TAG);
 		        				break;
 		        			default:
 		        				break;
