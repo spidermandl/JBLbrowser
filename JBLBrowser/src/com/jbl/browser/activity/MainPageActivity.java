@@ -18,8 +18,7 @@ import android.widget.LinearLayout;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.jbl.browser.R;
-import com.jbl.browser.ViewPagerPresenter;
-import com.jbl.browser.adapter.MyPagerAdapter;
+import com.jbl.browser.adapter.SettingPagerAdapter;
 
 
 /**
@@ -61,7 +60,6 @@ public class MainPageActivity extends SherlockActivity {
 	 private static final String TAG = "ViewPagerTestActivity";  
 	 private ViewPager mViewPager;  //水平实现滑动效果
 	 private PagerAdapter mPageAdapter;  
-	 private ViewPagerPresenter mPresenter;  
 	private LinearLayout ll;//viewpager的线性布局
 	int count=0;//点击次数
 	// 记录当前选中位置

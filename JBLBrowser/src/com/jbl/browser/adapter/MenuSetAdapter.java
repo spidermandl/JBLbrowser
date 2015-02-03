@@ -54,7 +54,7 @@ public class MenuSetAdapter extends BaseAdapter{
            convertView = mInflater.inflate(R.layout.menusetitem, null);  
            holder = new ViewHolder();  
            holder.line = (View) convertView.findViewById(R.id.line);  
-           holder.fontText = (TextView) convertView.findViewById(R.id.setcontent);  
+           holder.fontText = (TextView) convertView.findViewById(R.id.set_content);  
            holder.fongSize = (TextView) convertView.findViewById(R.id.size);  
            convertView.setTag(holder);  
        } else {  

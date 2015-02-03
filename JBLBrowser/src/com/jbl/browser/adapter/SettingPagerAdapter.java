@@ -2,17 +2,24 @@ package com.jbl.browser.adapter;
 
 import java.util.List;
 
+import com.viewpager.indicator.IconPagerAdapter;
+
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-public class MyPagerAdapter extends PagerAdapter  
+/**
+ * 设置界面滑动adapter
+ * @author Desmond
+ *
+ */
+public class SettingPagerAdapter extends PagerAdapter  implements IconPagerAdapter
 {  
-    private static final String TAG = "MyPagerAdapter";  
+    private static final String TAG = "SettingPagerAdapter";  
     private List<View> mViewPages;  
   
-    public MyPagerAdapter(List<View> viewPages) {  
+    public SettingPagerAdapter(List<View> viewPages) {  
         mViewPages = viewPages;  
     }  
   
@@ -75,6 +82,12 @@ public class MyPagerAdapter extends PagerAdapter
     public void startUpdate(View container)  
     {  
         // TODO Auto-generated method stub  
-    }  
+    }
+
+	@Override
+	public int getIconResId(int index) {
+		// TODO Auto-generated method stub
+		return 0;
+	}  
   
 }  

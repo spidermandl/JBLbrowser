@@ -3,59 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent" >
 
-    <!--
-    <LinearLayout
-        android:id="@+id/setting_index_dot"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#ffffff"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
-
-        <View
-            android:id="@+id/dot_0"
-            android:layout_width="5dip"
-            android:layout_height="5dip"
-            android:layout_gravity="center"
-            android:layout_marginLeft="130dip"
-            android:background="@drawable/dot_focused" />
-
-        <View
-            android:id="@+id/dot_1"
-            android:layout_width="5dip"
-            android:layout_height="5dip"
-            android:layout_marginLeft="5dip"
-            android:background="@drawable/dot_normal" />
-
-        <View
-            android:id="@+id/dot_2"
-            android:layout_width="5dip"
-            android:layout_height="5dip"
-            android:layout_marginLeft="5dip"
-            android:background="@drawable/dot_normal" />
-
-        <View
-            android:id="@+id/dot_3"
-            android:layout_width="5dip"
-            android:layout_height="5dip"
-            android:layout_marginLeft="5dip"
-            android:background="@drawable/dot_normal" />
-    </LinearLayout>
-    -->
-
     <View
         android:id="@+id/view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="#e0000000" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/test_viewpager"
+    <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:background="#ffffff" />
+        android:background="#ffffff"
+        android:orientation="vertical" >
+        
+        <android.support.v4.view.ViewPager
+            android:id="@+id/setting_viewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <com.viewpager.indicator.LinePageIndicator
+        	android:id="@+id/setting_indicator"
+        	android:padding="5dip"
+        	android:layout_height="wrap_content"
+        	android:layout_width="fill_parent"
+        />
+        
+    </LinearLayout>
 
 </RelativeLayout>

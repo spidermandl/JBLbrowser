@@ -113,7 +113,10 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
-
+        <activity
+            android:name=".RecommendMainActivity"
+            android:label="@string/title_activity_recommend_main" >
+        </activity>
     </application>
 
 </manifest>
