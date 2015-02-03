@@ -1,7 +1,10 @@
 package com.jbl.browser.fragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 
 import android.content.Context;
@@ -22,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
@@ -41,7 +45,9 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
 import com.jbl.broswer.bean.BookMark;
+import com.jbl.broswer.bean.History;
 import com.jbl.broswer.db.BookMarkDao;
+import com.jbl.broswer.db.HistoryDao;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MyListAdapter;
@@ -99,6 +105,8 @@ public class MainPageFragment extends SherlockFragment{
 	 View settingPanel;//设置主界面
 	 GridView lv;//菜单栏信息
 	 BookMark bookMark;
+	 HistoryDao historydao;//历史记录操作
+	 BookMarkDao bookmarkdao;//书签操作
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -184,6 +192,8 @@ public class MainPageFragment extends SherlockFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		historydao=new HistoryDao(getActivity());
+		bookmarkdao=new BookMarkDao(getActivity());
 		View view = inflater.inflate(R.layout.fragment_main_page, container, false);
 		mWebView=(WebView)view.findViewById(R.id.mWebView); //webview
 		mImageViewBack=(ImageView)view.findViewById(R.id.mImageViewBack);  // 3.1 mImageViewBack   后退
@@ -346,7 +356,7 @@ public class MainPageFragment extends SherlockFragment{
 		bookMark=new BookMark();
 		bookMark.setWebAddress(cur_url);
 		bookMark.setWebName(webName);
-		BookMarkDao bookmarkdao=new BookMarkDao(getActivity());
+		
 		bookmarkdao.addBookMark(bookMark);
 	    Toast.makeText(getActivity(), "添加书签成功", 100);
 	}
@@ -367,16 +377,35 @@ public class MainPageFragment extends SherlockFragment{
 			mWebView.getSettings().setPluginState(PluginState.ON);
 			mWebView.loadUrl("http://www.baidu.com/");
 			mWebView.setWebViewClient(new MyWebViewClient());
+			mWebView.setWebChromeClient(new WebChromeClient(){
+				@Override
+				public void onReceivedTitle(WebView view, String title) {
+					// TODO Auto-generated method stub
+					super.onReceivedTitle(view, title);
+					webName=title;
+				}
+			});
 		}
 	/*       webcilent         */
 		class MyWebViewClient extends WebViewClient{
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view,String url_){
 				view.loadUrl(url_);
-				cur_url=url_;
 				return true;
 			}
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				// TODO Auto-generated method stub
+				String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA).format(new Date()).toString();
+				History history=new History();
+				history.setWebAddress(url);
+				history.setWebName(webName);
+				//加载完加入历史记录
+				historydao.addHistory(history);					
+				super.onPageFinished(view, url);
+			}
 		}
+		
 		/*
 		 * 内部类实现滑动分页
 		 */
@@ -486,4 +515,9 @@ public class MainPageFragment extends SherlockFragment{
 		    }  
 		
           }
+		@Override
+		public void onActivityResult(int requestCode, int resultCode, Intent data) {
+			// TODO Auto-generated method stub
+			super.onActivityResult(requestCode, resultCode, data);
+		}
 }

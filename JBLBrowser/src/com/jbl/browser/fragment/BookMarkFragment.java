@@ -97,12 +97,19 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		View view = inflater.inflate(R.layout.bookmark_fragment, container, false);
 		listview=(ListView)view.findViewById(R.id.list_view_bookmark);
 		//init();
-		list=getData();
-		bookMarkAdapter=new BookMarkAdapter(getActivity(), list);
-		listview.setAdapter(bookMarkAdapter);
+		initDataFavorites();
 		listview.setOnItemClickListener(this);
 		listview.setOnItemLongClickListener(this);
 		return view;
+	}
+	/**
+	 * 初始化ListView中书签的数据
+	 * */
+	@SuppressWarnings("deprecation")
+	private void initDataFavorites() {
+		list=getData();
+		bookMarkAdapter=new BookMarkAdapter(getActivity(), list);
+		listview.setAdapter(bookMarkAdapter);
 	}
 	//长按显示删除确定对话框
 	@Override
@@ -115,13 +122,17 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		AlertDialog.Builder builder=new Builder(getActivity());
 		//2所有builder设置一些参数
 		builder.setTitle("删除书签");
-		builder.setMessage("是否删除");
+		builder.setMessage("是否要删除\""+webAddress+"\"这个书签?");
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				int i=bookmarkdao.deleteBookMarkByWebAddress(webAddress);
 				if(i!=0){
 					Toast.makeText(getActivity(), "删除成功", 100).show();
-					((BaseAdapter)listview.getAdapter()).notifyDataSetChanged();				
+					initDataFavorites();
+					listview.invalidate();
+				}
+				else{
+					Toast.makeText(getActivity(), "删除失败", 100);
 				}
 			}
 		});

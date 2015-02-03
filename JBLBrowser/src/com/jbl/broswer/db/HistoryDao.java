@@ -1,6 +1,7 @@
 package com.jbl.broswer.db;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import orm.sqlite.db.DatabaseHelper;
@@ -18,6 +19,7 @@ public class HistoryDao {
 	private Context context;
 	private Dao<History, Integer> HistoryDaoOpe;
 	private DatabaseHelper helper;
+	private Boolean flag=false;
 	
 	public HistoryDao(Context context){
 		this.context = context;
@@ -31,29 +33,38 @@ public class HistoryDao {
 		}
 	}
 	//添加历史记录
-	public void addHistory(String webName,String webAddress){
-		History history=new History();
-		history.setWebName(webName);
-		history.setWebAddress(webAddress);
+	public Boolean addHistory(History history){
+		flag=false;
 		try {
-			HistoryDaoOpe.create(history);
+			int temp=HistoryDaoOpe.create(history);
+			if(temp!=0)
+				flag=true;
+			else
+				flag=false;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return flag;
 	}
 	//清空所有
-	public void clearHistory(){
+	public Boolean clearHistory(){
+		flag=false;
 		try {
-			HistoryDaoOpe.delete(HistoryDaoOpe.queryForAll());
+			int temp=HistoryDaoOpe.delete(HistoryDaoOpe.queryForAll());
+			if(temp!=0)
+				flag=true;
+			else
+				flag=false;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return flag;
 	}
 	//查询所有
 	public List<History> queryAll(){
-		 List<History> history;
+		 List<History> history=new ArrayList<History>();
 		try {
 			history = HistoryDaoOpe.queryForAll();
 			return history;

@@ -30,13 +30,14 @@ public class BookMarkDao {
 			e.printStackTrace();
 		}
 	}
-	public void addBookMark(BookMark bookmark){
+	public int addBookMark(BookMark bookmark){
 		try {
-			BookMarkDaoOpe.create(bookmark);
+			return BookMarkDaoOpe.create(bookmark);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return 0;
 	}
 	public int deleteBookMarkByWebAddress(String webAddress){
 		try {
