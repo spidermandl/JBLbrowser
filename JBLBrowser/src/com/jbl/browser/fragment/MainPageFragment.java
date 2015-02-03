@@ -24,9 +24,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -35,6 +38,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
+import com.jbl.broswer.bean.BookMark;
+import com.jbl.broswer.db.BookMarkDao;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MyListAdapter;
@@ -71,7 +76,8 @@ public class MainPageFragment extends SherlockFragment{
 	private Button mButtonLand;  //1.4 mButtonLand       登陆注册
 */	/*  定义webview控件   */
 	private WebView mWebView; //主控件  webview
-	public static String cur_url = "http://www.baidu.com";  //设置初始网址
+	public  String cur_url = "http://www.baidu.com";  //设置初始网址
+	public  String webName="";//网页名
 	/*  定义操作栏控件   */
 	private ImageView mImageViewBack;  // 3.1 mImageViewBack   后退
 	private ImageView mImageViewInto;  // 3.2 mImageViewInto   前进
@@ -90,10 +96,15 @@ public class MainPageFragment extends SherlockFragment{
 	 private ScheduledExecutorService scheduledExecutorService;
 	 //private ArrayList<View> dots;
 	 View settingPanel;//设置主界面
+	 GridView lv;//菜单栏信息
+	 BookMark bookMark;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		if(getArguments()!=null){
+			cur_url=getArguments().getString("webAddress");
+		}
 		super.onCreate(savedInstanceState);
 	}
 	
@@ -185,15 +196,7 @@ public class MainPageFragment extends SherlockFragment{
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
 		//mWebView.setDownloadListener(new myDownloaderListener());
-		mWebView.setWebViewClient(new WebViewClient() {
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				view.loadUrl(url);
-				cur_url = url;
-				return super.shouldOverrideUrlLoading(view, url);
-			}
-
-		});
+		
 		/*   设置title各个控件监听       
 		 1.1 search 
 		mImageViewSearch.setOnClickListener(new View.OnClickListener() {
@@ -230,6 +233,8 @@ public class MainPageFragment extends SherlockFragment{
 			}
 		});
 		*/
+		
+		
 		/* 2.0 WebView touch监听
 		 * 
 		 *  这里与webview冲突
@@ -298,11 +303,11 @@ public class MainPageFragment extends SherlockFragment{
 			}
 		});
 		
+		
 		/*  设置webview */
 		setWebStyle();
 		return view;
 	}
-	
 	
 	/* 点击webview取消菜单栏展示*/
 	
@@ -335,7 +340,16 @@ public class MainPageFragment extends SherlockFragment{
 
 		});
 	}
-
+	//添加书签
+	public void addNewBookMark(){
+		webName=mWebView.getTitle();
+		bookMark=new BookMark();
+		bookMark.setWebAddress(cur_url);
+		bookMark.setWebName(webName);
+		BookMarkDao bookmarkdao=new BookMarkDao(getActivity());
+		bookmarkdao.addBookMark(bookMark);
+	    Toast.makeText(getActivity(), "添加书签成功", 100);
+	}
 	 private void setWebStyle() {
 			// TODO Auto-generated method stub
 //			mWebView.getSettings().setJavaScriptEnabled(true);
@@ -359,6 +373,7 @@ public class MainPageFragment extends SherlockFragment{
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view,String url_){
 				view.loadUrl(url_);
+				cur_url=url_;
 				return true;
 			}
 		}
@@ -435,12 +450,34 @@ public class MainPageFragment extends SherlockFragment{
 		        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		        for (int i = 0; i < sTotalPages; ++i) {  
 		            View v = inflater.inflate(R.layout.viewpager_gridview, null);  
-		            GridView lv = (GridView) v.findViewById(R.id.viewpage_grid);  
+		            lv = (GridView) v.findViewById(R.id.viewpage_grid);  
 		            mGridViews.add(lv);  
 		            MyListAdapter adapter = new MyListAdapter(mContext, mPageList.get(i));  
 		            mAdapters.add(adapter);  
 		            lv.setAdapter(adapter);  
-		            mViewPages.add(v);  
+		            mViewPages.add(v);
+		          //菜单监听事件
+		        	lv.setOnItemClickListener(new OnItemClickListener() {
+
+		        		@Override
+		        		public void onItemClick(AdapterView<?> parent,
+		        				View view, int position, long id) {
+		        			// TODO Auto-generated method stub
+		        			switch (position) {
+		        			case 0:
+		        				addNewBookMark();
+		        				break;
+		        			case 1:
+		        				((BaseFragActivity)getActivity()).navigateTo(BookMarkFragment.class, null, true,BookMarkFragment.TAG);
+		        				break;
+		        			case 3:
+		        				((BaseFragActivity)getActivity()).navigateTo(HistoryFragment.class, null, true,HistoryFragment.TAG);
+		        				break;
+		        			default:
+		        				break;
+		        			}
+		        		}
+		        	});
 		        }  
 		    }  
 		    public List<View> getPageViews()  

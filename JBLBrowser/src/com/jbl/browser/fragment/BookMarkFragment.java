@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -25,6 +26,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.jbl.broswer.bean.BookMark;
 import com.jbl.broswer.db.BookMarkDao;
 import com.jbl.browser.R;
+import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.BookMarkAdapter;
 
 /**
@@ -32,7 +34,7 @@ import com.jbl.browser.adapter.BookMarkAdapter;
  * @author Desmond
  *
  */
-public class BookMarkFragment extends SherlockFragment implements OnItemLongClickListener{
+public class BookMarkFragment extends SherlockFragment implements OnItemLongClickListener, OnItemClickListener{
 	public final static String TAG="BookMarkFragment";
 	//书签listView
 	ListView listview;
@@ -40,6 +42,10 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	List<BookMark> list=new ArrayList<BookMark>();
 	//书签操作类
 	BookMarkDao bookmarkdao=new BookMarkDao(getActivity());
+	//网址
+	String webAddress="";
+	//网名
+	String webName="";
 	BookMarkAdapter bookMarkAdapter;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -50,10 +56,10 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	 * 测试数据
 	 */
 	public void init(){
-		/*BookMark b1=new BookMark();
+		BookMark b1=new BookMark();
 		b1.setWebName("百度");
-		b1.setWebAddress("http:baidu.com");*/		
-		bookmarkdao.addBookMark("百度", "http:baidu.com");
+		b1.setWebAddress("http:baidu.com");		
+		bookmarkdao.addBookMark(b1);
 	}
 	//从数据库中获得数据
 	public List<BookMark> getData(){
@@ -90,10 +96,11 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.bookmark_fragment, container, false);
 		listview=(ListView)view.findViewById(R.id.list_view_bookmark);
-		init();
+		//init();
 		list=getData();
 		bookMarkAdapter=new BookMarkAdapter(getActivity(), list);
 		listview.setAdapter(bookMarkAdapter);
+		listview.setOnItemClickListener(this);
 		listview.setOnItemLongClickListener(this);
 		return view;
 	}
@@ -126,6 +133,17 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		
 		builder.create().show();
 		return false;
+	}
+	//单击跳转到网页
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
+		Bundle bundle=new Bundle();
+		bundle.putString("webAddress", webAddress);
+		setArguments(bundle);
+		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, bundle, true,MainPageFragment.TAG);
 	}
 	
 }

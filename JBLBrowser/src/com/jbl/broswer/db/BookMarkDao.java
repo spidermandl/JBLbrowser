@@ -1,6 +1,7 @@
 package com.jbl.broswer.db;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import orm.sqlite.db.DatabaseHelper;
@@ -29,10 +30,7 @@ public class BookMarkDao {
 			e.printStackTrace();
 		}
 	}
-	public void addBookMark(String webName,String webAddress){
-		BookMark bookmark=new BookMark();
-		bookmark.setWebName(webName);
-		bookmark.setWebAddress(webAddress);
+	public void addBookMark(BookMark bookmark){
 		try {
 			BookMarkDaoOpe.create(bookmark);
 		} catch (SQLException e) {
@@ -52,7 +50,7 @@ public class BookMarkDao {
 		return 0;
 	}
 	public List<BookMark> queryAll(){
-		List<BookMark> bookmark=null;
+		List<BookMark> bookmark=new ArrayList<BookMark>();
 		try {
 			bookmark = BookMarkDaoOpe.queryForAll();
 			return bookmark;
