@@ -11,16 +11,16 @@ import android.widget.Toast;
 
 import com.jbl.browser.R;
 
-public class RecommendMainFragment extends Fragment{
+public class RecommendCollectFragment extends Fragment{
 
 	TextView textView;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View recommendMain= inflater.inflate(R.layout.fragment_recomment_main, container,false);
-		 textView=(TextView) recommendMain.findViewById(R.id.textView1);
+		View recommendCollect= inflater.inflate(R.layout.fragment_recomment_main, container,false);
+		 textView=(TextView) recommendCollect.findViewById(R.id.textView1);
 		 textView.setOnClickListener(new MyOnClickListener());
-		return recommendMain;
+		return recommendCollect;
 		
 	}
 	
@@ -39,5 +39,4 @@ public class RecommendMainFragment extends Fragment{
 		}
 		
 	}
-	
 }

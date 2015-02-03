@@ -90,8 +90,10 @@
     <string name="title_activity_tool_bar_operate">ToolBarOperateActivity</string>
     <string name="font_size">30sp</string>
 
-    <string name="title_activity_input_view_frag">InputViewFragActivity</string>
-
+    <string name="title_activity_input_view_frag">InputViewFragActivity</string>	<string name="title_activity_recommend_main">RecommendMainActivity</string>
+    <string name="recommend">推荐</string>
+    <string name="collect">收藏</string>
+    <string name="custom">自定义</string>
     <string name="today">今天</string>
 
 

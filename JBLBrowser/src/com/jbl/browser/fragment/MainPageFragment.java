@@ -25,6 +25,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
@@ -95,18 +100,21 @@ public class MainPageFragment extends SherlockFragment{
 	private PagerAdapter mPageAdapter;  
 	private ViewPagerPresenter mPresenter;  
 	private LinearLayout ll;//viewpager的线性布局
-	int count=0;//点击次数
-	// 记录当前选中位置
-	 private int currentIndex;
-	 private int oldPosition = 0;//记录上一次点的位置
-	 private int currentItem; //当前页面
 	 private ScheduledExecutorService scheduledExecutorService;
-	 //private ArrayList<View> dots;
 	 View settingPanel;//设置主界面
+	 int count;
+	 Animation animation1, animation2;//实现动画效果
+	 private ImageView[] mImageViews;//实现圆点效果
+	//该应用的主布局LinearLayout
+	 private ViewGroup mainViewGroup;
+		//主布局底部指示当前页面的小圆点视图，LinearLayout
+	 private ViewGroup indicatorViewGroup;
+	 private LinearLayout linear;
 	 GridView lv;//菜单栏信息
 	 BookMark bookMark;
 	 HistoryDao historydao;//历史记录操作
 	 BookMarkDao bookmarkdao;//书签操作
+
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -205,8 +213,25 @@ public class MainPageFragment extends SherlockFragment{
 		settingPanel=view.findViewById(R.id.main_setting_panel);
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
+		//加载弹出菜单栏的动画效果
+		 animation1 = AnimationUtils.loadAnimation(getActivity(),  
+                R.anim.menu_bar_appear); 
+		 //退出菜单栏时的动画效果
+		 animation2 = AnimationUtils.loadAnimation(getActivity(),  
+	                R.anim.menu_bar_disappear);  
 		//mWebView.setDownloadListener(new myDownloaderListener());
-		
+
+		 linear=(LinearLayout)view.findViewById(R.id.linear);
+		mWebView.setWebViewClient(new WebViewClient() {
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				view.loadUrl(url);
+				cur_url = url;
+				return super.shouldOverrideUrlLoading(view, url);
+			}
+
+		});
+
 		/*   设置title各个控件监听       
 		 1.1 search 
 		mImageViewSearch.setOnClickListener(new View.OnClickListener() {
@@ -319,15 +344,19 @@ public class MainPageFragment extends SherlockFragment{
 	/* 点击webview取消菜单栏展示*/
 	
 	private void init() {
+	
 		if (count % 2 != 0) {
 			mPresenter = new ViewPagerPresenter(this.getActivity());
 			mPageAdapter = new MyPagerAdapter(mPresenter.getPageViews());
 			mViewPager.setAdapter(mPageAdapter);
 			mViewPager.setVisibility(View.VISIBLE);
 			settingPanel.setVisibility(View.VISIBLE);
+		    mViewPager.startAnimation(animation1);
 		} else {
 			mViewPager.setVisibility(View.GONE);
 			settingPanel.setVisibility(View.GONE);
+			mViewPager.startAnimation(animation2);
+			  
 		}
 		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			@Override
@@ -341,8 +370,15 @@ public class MainPageFragment extends SherlockFragment{
 			}
 			@Override
 			public void onPageSelected(int arg0) {
+				// TODO Auto-generated method stub
+			/*	for (int i = 0; i < mImageViews.length; i++) {
+					if(i == arg0) {
+						mImageViews[i].setBackgroundResource(R.drawable.page_indicator_focused);
+					} else {
+						mImageViews[i].setBackgroundResource(R.drawable.page_indicator);
+					}
+				}*/
 				
-
 			}
 
 		});
@@ -417,9 +453,9 @@ public class MainPageFragment extends SherlockFragment{
 		    private int mCurrentPage;  
 		    private List<MyListAdapter> mAdapters;  
 		    private List<List<String>> mPageList;  
-		    private List<GridView> mGridViews;  
-		    private List<View> mViewPages;  
+		    private List<GridView> mGridViews;   
 		    private Context mContext;  
+		    private List<View> mViewPages; 
 		    /** 菜单文字 **/
 		    private String [] str=new String[]{"添加书签","书签","刷新","历史","夜间模式",
 		 		   "关闭无图","下载管理","退出","旋转屏幕","翻页按钮","无痕浏览","全屏浏览",
@@ -433,6 +469,7 @@ public class MainPageFragment extends SherlockFragment{
 		        mViewPages = new ArrayList<View>();  
 		        initPages(getTestList());  
 		        initViewAndAdapter();  
+		      
 		    }  
 		  
 		    /** 
@@ -458,7 +495,7 @@ public class MainPageFragment extends SherlockFragment{
 		        if (l.size() > 0) {  
 		            mPageList.add(l);  
 		        }  
-		        
+		        //mImageViews = new ImageView[mViewPages.size()];
 		    }  
 		    /** 
 		     * 模拟数据 
@@ -520,7 +557,7 @@ public class MainPageFragment extends SherlockFragment{
 			        	});
 		            }
 		        } 
-		      
+
 		    }  
 		    public List<View> getPageViews()  
 		    {  
