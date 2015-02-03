@@ -77,7 +77,6 @@ public class MainPageFragment extends SherlockFragment{
 	private ViewPager mViewPager;  //水平实现滑动效果
 	private PagerAdapter mPageAdapter;  
 	 private ViewPagerPresenter mPresenter;  
-	private LinearLayout ll;//viewpager的线性布局
 	int count=0;//点击次数
 	// 记录当前选中位置
 	 private int currentIndex;

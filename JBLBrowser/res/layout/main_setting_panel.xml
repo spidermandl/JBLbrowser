@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent">
-	<!-- <LinearLayout
+    android:layout_height="fill_parent" >
+
+    <!--
+    <LinearLayout
         android:id="@+id/setting_index_dot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,17 +41,21 @@
             android:layout_height="5dip"
             android:layout_marginLeft="5dip"
             android:background="@drawable/dot_normal" />
-    </LinearLayout>  -->
-<View 
-    android:id="@+id/view"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" 
-    android:background="#e0000000" />  
+    </LinearLayout>
+    -->
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#e0000000" />
+
     <android.support.v4.view.ViewPager
-            android:id="@+id/test_viewpager"
-            android:layout_width="fill_parent"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:background="#ffffff"
-            android:layout_alignParentBottom="true" />
+        android:id="@+id/test_viewpager"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:background="#ffffff" />
+
 </RelativeLayout>
