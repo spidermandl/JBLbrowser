@@ -50,6 +50,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		historydao=new HistoryDao(getActivity());
 		super.onCreate(savedInstanceState);
 	}
 	//从数据库中获得数据
@@ -80,7 +81,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		historydao=new HistoryDao(getActivity());
+		
 		View view = inflater.inflate(R.layout.history_fragment, container, false);
 		listview=(ListView)view.findViewById(R.id.list_view_history_today);
 		initDataHistory();
