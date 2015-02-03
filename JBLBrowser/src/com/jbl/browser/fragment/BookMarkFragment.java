@@ -41,7 +41,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	//书签数据
 	List<BookMark> list=new ArrayList<BookMark>();
 	//书签操作类
-	BookMarkDao bookmarkdao=new BookMarkDao(getActivity());
+	BookMarkDao bookmarkdao;
 	//网址
 	String webAddress="";
 	//网名
@@ -50,6 +50,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		bookmarkdao=new BookMarkDao(getActivity());
 		super.onCreate(savedInstanceState);
 	}
 	/**
@@ -94,6 +95,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
 		View view = inflater.inflate(R.layout.bookmark_fragment, container, false);
 		listview=(ListView)view.findViewById(R.id.list_view_bookmark);
 		//init();

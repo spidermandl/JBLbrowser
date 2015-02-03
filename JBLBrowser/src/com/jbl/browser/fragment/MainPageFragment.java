@@ -111,6 +111,8 @@ public class MainPageFragment extends SherlockFragment{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		historydao=new HistoryDao(getActivity());
+		bookmarkdao=new BookMarkDao(getActivity());
 		if(getArguments()!=null){
 			cur_url=getArguments().getString("webAddress");
 		}
@@ -192,8 +194,6 @@ public class MainPageFragment extends SherlockFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		historydao=new HistoryDao(getActivity());
-		bookmarkdao=new BookMarkDao(getActivity());
 		View view = inflater.inflate(R.layout.fragment_main_page, container, false);
 		mWebView=(WebView)view.findViewById(R.id.mWebView); //webview
 		mImageViewBack=(ImageView)view.findViewById(R.id.mImageViewBack);  // 3.1 mImageViewBack   后退
@@ -306,10 +306,7 @@ public class MainPageFragment extends SherlockFragment{
 				//mWebView.getBackground().setAlpha(100);
 				count++;
 				//mWebView.setAlpha(200);
-				 init();
-				
-			
-				
+				 init();							
 			}
 		});
 		
@@ -335,7 +332,7 @@ public class MainPageFragment extends SherlockFragment{
 		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
-
+				
 			}
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
@@ -352,13 +349,15 @@ public class MainPageFragment extends SherlockFragment{
 	}
 	//添加书签
 	public void addNewBookMark(){
-		webName=mWebView.getTitle();
 		bookMark=new BookMark();
 		bookMark.setWebAddress(cur_url);
 		bookMark.setWebName(webName);
 		
-		bookmarkdao.addBookMark(bookMark);
-	    Toast.makeText(getActivity(), "添加书签成功", 100);
+		int temp=bookmarkdao.addBookMark(bookMark);
+		if(temp!=0)
+			Toast.makeText(getActivity(), "添加书签成功", 100);
+		else
+			Toast.makeText(getActivity(), "添加书签失败", 100);
 	}
 	 private void setWebStyle() {
 			// TODO Auto-generated method stub
@@ -485,29 +484,43 @@ public class MainPageFragment extends SherlockFragment{
 		            mAdapters.add(adapter);  
 		            lv.setAdapter(adapter);  
 		            mViewPages.add(v);
-		          //菜单监听事件
-		        	lv.setOnItemClickListener(new OnItemClickListener() {
-
-		        		@Override
-		        		public void onItemClick(AdapterView<?> parent,
-		        				View view, int position, long id) {
-		        			// TODO Auto-generated method stub
-		        			switch (position) {
-		        			case 0:
-		        				addNewBookMark();
-		        				break;
-		        			case 1:
-		        				((BaseFragActivity)getActivity()).navigateTo(BookMarkFragment.class, null, true,BookMarkFragment.TAG);
-		        				break;
-		        			case 3:
-		        				((BaseFragActivity)getActivity()).navigateTo(HistoryFragment.class, null, true,HistoryFragment.TAG);
-		        				break;
-		        			default:
-		        				break;
-		        			}
-		        		}
-		        	});
-		        }  
+		            if(i==0){
+		            	 //菜单监听事件
+			        	lv.setOnItemClickListener(new OnItemClickListener() {
+			        		@Override
+			        		public void onItemClick(AdapterView<?> parent,
+			        				View view, int position, long id) {
+			        			// TODO Auto-generated method stub
+			        			switch (position) {
+			        			case 0:            //添加书签
+			        				mViewPager.setVisibility(View.GONE);
+			        				settingPanel.setVisibility(View.GONE);
+			        				addNewBookMark();
+			        				break;
+			        			case 1:           //跳转到书签界面
+			        				((BaseFragActivity)getActivity()).navigateTo(BookMarkFragment.class, null, true,BookMarkFragment.TAG);
+			        				break;
+			        			case 2:
+			        				break;	
+			        			case 3:          //跳转到历史记录界面
+			        				((BaseFragActivity)getActivity()).navigateTo(HistoryFragment.class, null, true,HistoryFragment.TAG);
+			        				break;
+			        			case 4:
+			        				break;
+			        			case 5:
+			        				break;
+			        			case 6:
+			        				break;
+			        			case 7:
+			        				break;
+			        			default:
+			        				break;
+			        			}
+			        		}
+			        	});
+		            }
+		        } 
+		      
 		    }  
 		    public List<View> getPageViews()  
 		    {  
@@ -515,9 +528,4 @@ public class MainPageFragment extends SherlockFragment{
 		    }  
 		
           }
-		@Override
-		public void onActivityResult(int requestCode, int resultCode, Intent data) {
-			// TODO Auto-generated method stub
-			super.onActivityResult(requestCode, resultCode, data);
-		}
 }

@@ -36,7 +36,8 @@ public class HistoryDao {
 	public Boolean addHistory(History history){
 		flag=false;
 		try {
-			int temp=HistoryDaoOpe.create(history);
+			int temp=0;
+			temp=HistoryDaoOpe.create(history);
 			if(temp!=0)
 				flag=true;
 			else
