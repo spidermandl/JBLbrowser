@@ -6,9 +6,11 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import android.content.Context;
 import android.content.Intent;
+
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Color;
+
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -44,7 +46,6 @@ import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MyListAdapter;
 import com.jbl.browser.adapter.MyPagerAdapter;
-import com.jbl.browser.activity.*;
 /**
  * 浏览器主页
  * @author desmond.duan
@@ -124,23 +125,23 @@ public class MainPageFragment extends SherlockFragment{
 	
 	@Override
 	public  void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        MenuItem item = menu.add(0,0,0,"Search");
-        item.setIcon(android.R.drawable.ic_menu_search);      
+        MenuItem item = menu.add(0,0,0,"Search")
+        .setIcon(android.R.drawable.ic_menu_search);
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        View searchView = SearchViewCompat.newSearchView(getActivity());        
+        View searchView = SearchViewCompat.newSearchView(getActivity());
+       
         if (searchView!=null) {
             SearchViewCompat.setOnQueryTextListener(searchView,
                     new OnQueryTextListenerCompat() {
+            	@Override
+            	public boolean onQueryTextSubmit(String query) {
+            		// TODO Auto-generated method stub
             	
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    // Called when the action bar search text has changed.  Since this
-                    // is a simple array adapter, we can just have it do the filtering.
-                    return true;
-                }
-            });            
-            item.setActionView(searchView);   
+            		return false;
+            	}            	
+            });               
         }
+        item.setActionView(searchView);        
         /*  添加扫描二维码icon  对应ItemID 1 */
   
         menu.add(0,1,0,"Code")
@@ -158,6 +159,7 @@ public class MainPageFragment extends SherlockFragment{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		/*  二维码ID 1   主册登录ID 2  */
+		
 		switch(item.getItemId()){
 			case 0:
 				// 点击搜索。fragment跳转；
@@ -173,11 +175,9 @@ public class MainPageFragment extends SherlockFragment{
 				
 			break;
 			case 2:
-
 				//主册登录
 				mWebView.loadUrl("http://www.hmudq.edu.cn/");			
 			break;
-
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -242,9 +242,9 @@ public class MainPageFragment extends SherlockFragment{
 		mWebView.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				mViewPager.setVisibility(View.GONE);
-				settingPanel.setVisibility(View.GONE);
-				return true;
+			/*	mViewPager.setVisibility(View.GONE);
+				settingPanel.setVisibility(View.GONE);*/
+				return false;
 			}
 		});
 		
