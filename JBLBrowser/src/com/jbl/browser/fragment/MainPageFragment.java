@@ -160,15 +160,8 @@ public class MainPageFragment extends SherlockFragment{
 			case 2:
 
 				//主册登录
-
-			mWebView.loadUrl("http://www.hmudq.edu.cn/");			
-			break;	
-
-				/*//测试跳转到bookmarkfragment
-				((BaseFragActivity)this.getActivity()).navigateTo(BookMarkFragment.class,null,true,BookMarkFragment.TAG);
-
-			break;		
-*/
+				mWebView.loadUrl("http://www.hmudq.edu.cn/");			
+			break;
 
 		}
 		return super.onOptionsItemSelected(item);

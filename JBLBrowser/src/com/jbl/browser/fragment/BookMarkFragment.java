@@ -39,7 +39,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	//书签数据
 	List<BookMark> list=new ArrayList<BookMark>();
 	//书签操作类
-	BookMarkDao bookmarkdao;
+	BookMarkDao bookmarkdao=new BookMarkDao(getActivity());
 	BookMarkAdapter bookMarkAdapter;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,13 +52,11 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	public void init(){
 		/*BookMark b1=new BookMark();
 		b1.setWebName("百度");
-		b1.setWebAddress("http:baidu.com");*/	
-		bookmarkdao=new BookMarkDao(getActivity());
+		b1.setWebAddress("http:baidu.com");*/		
 		bookmarkdao.addBookMark("百度", "http:baidu.com");
 	}
 	//从数据库中获得数据
 	public List<BookMark> getData(){
-		bookmarkdao=new BookMarkDao(getActivity());
 		List<BookMark> list=new ArrayList<BookMark>();
 		list=bookmarkdao.queryAll();
 		if(list==null){
@@ -81,8 +79,9 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		// TODO Auto-generated method stub
-		menu.clear();
-		menu.add(0, 1, 0, "Back").setIcon(R.drawable.back_web).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.removeGroup(0);
+		//添加返回图标
+		menu.add(1, 1, 0, "Back").setIcon(R.drawable.back_web).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		
 		super.onCreateOptionsMenu(menu, inflater);
 	}
