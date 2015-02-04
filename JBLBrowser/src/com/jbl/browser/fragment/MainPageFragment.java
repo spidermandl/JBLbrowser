@@ -387,6 +387,11 @@ public class MainPageFragment extends SherlockFragment {
 		else
 			Toast.makeText(getActivity(), "添加书签失败", 100);
 	}
+	
+	//设置网页是否无图模式
+	public void setBlockPicture(boolean flag) {
+		mWebView.getSettings().setBlockNetworkImage(flag);
+	}
 
 	private void setWebStyle() {
 		// TODO Auto-generated method stub
@@ -440,7 +445,7 @@ public class MainPageFragment extends SherlockFragment {
 	/*
 	 * 内部类实现滑动分页
 	 */
-	public class ViewPagerPresenter {
+	class ViewPagerPresenter {
 		private static final String TAG = "ViewPagerPresenter";
 		private static final int PAGE_SIZE = 8; // 每页显示的数据个数
 		private static final int TEST_LIST_SIZE = 43; // 数据总长度
@@ -450,10 +455,10 @@ public class MainPageFragment extends SherlockFragment {
 		private List<List<String>> mPageList;
 		private List<GridView> mGridViews;
 		private Context mContext;
-
+        private Boolean flag=false;    //标识是否是无图模式：false是无图，true是有图
 		/** 菜单文字 **/
 		private String[] str = new String[] { "添加书签", "书签", "刷新", "历史", "夜间模式",
-				"关闭无图", "下载管理", "退出", "旋转屏幕", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
+				"无图模式", "下载管理", "退出", "旋转屏幕", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
 				"省流加速", "阅读模式", "设置", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
 
 		public ViewPagerPresenter(Context context) {
@@ -530,7 +535,7 @@ public class MainPageFragment extends SherlockFragment {
 							case 0: // 添加书签
 								mViewPager.setVisibility(View.GONE);
 								settingPanel.setVisibility(View.GONE);
-								addNewBookMark();
+								MainPageFragment.this.addNewBookMark();
 								break;
 							case 1: // 跳转到书签界面
 								((BaseFragActivity) getActivity()).navigateTo(
@@ -546,7 +551,20 @@ public class MainPageFragment extends SherlockFragment {
 								break;
 							case 4:
 								break;
-							case 5:
+							case 5:  //设置无图模式
+								mViewPager.setVisibility(View.GONE);
+								settingPanel.setVisibility(View.GONE);
+								if(str[5].equals("无图模式")){
+									str[5]="有图模式";
+									flag=false;
+									Toast.makeText(getActivity(), "开启无图模式", 100);
+								}
+								else{
+									str[5]="无图模式";
+									flag=true;
+									Toast.makeText(getActivity(), "开启有图模式", 100);
+								}
+								MainPageFragment.this.setBlockPicture(flag);														
 								break;
 							case 6:
 								break;
