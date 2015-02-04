@@ -119,4 +119,9 @@
 
 
     <string name="intruduce">使用JBL Broswer让你更好的使用互联网</string>
+
+
+
+
+    <string name="auto_brightness_setting">自动调节亮度</string>
 </resources>

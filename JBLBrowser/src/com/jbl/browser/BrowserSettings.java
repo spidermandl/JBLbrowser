@@ -35,7 +35,7 @@ import android.webkit.WebSettings;
  * To remove an observer:
  * s.deleteObserver(webView.getSettings());
  */
-class BrowserSettings extends Observable {
+public class BrowserSettings extends Observable {
 
     // Private variables for settings
     // NOTE: these defaults need to be kept in sync with the XML
@@ -210,7 +210,7 @@ class BrowserSettings extends Observable {
      * Package level method for obtaining a single app instance of the
      * BrowserSettings.
      */
-    /*package*/ static BrowserSettings getInstance() {
+    /*package*/ public static BrowserSettings getInstance() {
         if (sSingleton == null ) {
             sSingleton = new BrowserSettings();
         }

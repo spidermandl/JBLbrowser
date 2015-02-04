@@ -72,7 +72,8 @@ public class MainPageFragment extends SherlockFragment {
 	 * mButtonCode; //1.3 mButtonCode 二维码搜索 private Button mButtonLand; //1.4
 	 * mButtonLand 登陆注册
 	 *//* 定义webview控件 */
-	private WebView mWebView; // 主控件 webview
+	public  WebView mWebView; // 主控件 webview
+	public  WebSettings settings;
 	public String cur_url = "http://www.baidu.com"; // 设置初始网址
 	public String webName = "";// 网页名
 	/* 定义操作栏控件 */
@@ -133,8 +134,7 @@ public class MainPageFragment extends SherlockFragment {
 							return false;
 						}
 					});
-		}
-		item.setActionView(searchView);
+		} 
 		/* 添加扫描二维码icon 对应ItemID 1 */
 
 		menu.add(0, 1, 0, "Code").setIcon(R.drawable.actionbar_title_caode)
@@ -208,7 +208,8 @@ public class MainPageFragment extends SherlockFragment {
 		animation2 = AnimationUtils.loadAnimation(getActivity(),
 				R.anim.menu_bar_disappear);
 		// mWebView.setDownloadListener(new myDownloaderListener());
-
+		mWebView.getSettings().setJavaScriptEnabled(true);
+		mWebView.getSettings().setSupportZoom(true);
 		/*
 		 * 设置title各个控件监听 1.1 search mImageViewSearch.setOnClickListener(new
 		 * View.OnClickListener() {
