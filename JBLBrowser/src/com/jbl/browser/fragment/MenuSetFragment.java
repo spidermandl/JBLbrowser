@@ -14,23 +14,20 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
+import android.widget.AdapterView.OnItemClickListener;
+import android.view.Window;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.jbl.broswer.bean.BookMark;
 import com.jbl.broswer.bean.SetContent;
-import com.jbl.broswer.db.BookMarkDao;
 import com.jbl.browser.R;
-import com.jbl.browser.adapter.BookMarkAdapter;
 import com.jbl.browser.adapter.MenuSetAdapter;
 /*
  * 菜单设置选项fragment
  */
-public class MenuSetFragment extends SherlockFragment implements OnClickListener{
+public class MenuSetFragment extends SherlockFragment implements OnItemClickListener{
 	public final static String TAG="MenuSetFragment";
 	//菜单设置选项内容
 	ListView listview;
@@ -58,6 +55,9 @@ public class MenuSetFragment extends SherlockFragment implements OnClickListener
 		s3.setSetText("旋转屏幕");
 		s3.setTextSize("跟随系统");
 		list.add(s3);
+		SetContent s4=new SetContent();
+		s4.setSetText("关于");
+		list.add(s4);
 	}
 	
 	@Override
@@ -88,13 +88,14 @@ public class MenuSetFragment extends SherlockFragment implements OnClickListener
 		//list=getData();
 		menuSetAdapter=new MenuSetAdapter(getActivity(), list);
 		listview.setAdapter(menuSetAdapter);
-		listview.setOnClickListener(this);;
+		listview.setOnItemClickListener(this);;
 		return view;
 	}
-	
 	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		switch (position) {
 		case 0:
 			AlertDialog.Builder builder1=new Builder(getActivity());
 			builder1.setTitle("字体大小");
@@ -128,7 +129,7 @@ public class MenuSetFragment extends SherlockFragment implements OnClickListener
 			
 			builder2.create().show();
 			break;
-		case 3:
+		case 2:
 			AlertDialog.Builder builder3=new Builder(getActivity());
 			builder3.setTitle("旋转屏幕");
 			final String[] items1=new String[]{"跟随系统","锁定竖屏","锁定横屏"};
@@ -144,9 +145,14 @@ public class MenuSetFragment extends SherlockFragment implements OnClickListener
 			});
 			builder3.create().show();
 			break;
+		case 3:
+			AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
+			dialog.show();
+			Window window = dialog.getWindow();
+			window.setContentView(R.layout.activity_about);
+			break;
 		default:
 			break;
 		}
-		
 	}
 }

@@ -93,9 +93,6 @@ public class MainPageFragment extends SherlockFragment {
 	int count;
 	Animation animation1, animation2;// 实现动画效果
 	GridView lv;// 菜单栏信息
-	BookMark bookMark;
-	HistoryDao historydao;// 历史记录操作
-	BookMarkDao bookmarkdao;// 书签操作
 	/** 将小圆点的图片用数组表示 */
 	private ImageView[] imageViews;
 	private List<View> mViewPages;
@@ -103,8 +100,6 @@ public class MainPageFragment extends SherlockFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		historydao = new HistoryDao(getActivity());
-		bookmarkdao = new BookMarkDao(getActivity());
 		if (getArguments() != null) {
 			cur_url = getArguments().getString("webAddress");
 		}
@@ -375,15 +370,15 @@ public class MainPageFragment extends SherlockFragment {
 
 	// 添加书签
 	public void addNewBookMark() {
-		bookMark = new BookMark();
-		bookMark.setWebAddress(cur_url);
+		BookMark bookMark = new BookMark();
 		bookMark.setWebName(webName);
-
-		int temp = bookmarkdao.addBookMark(bookMark);
+		bookMark.setWebAddress(cur_url);
+		int temp = 0;
+		temp=new BookMarkDao(getActivity()).addBookMark(bookMark);
 		if (temp != 0)
-			Toast.makeText(getActivity(), "添加书签成功", 100);
+			Toast.makeText(getActivity(), "添加书签成功", 100).show();
 		else
-			Toast.makeText(getActivity(), "添加书签失败", 100);
+			Toast.makeText(getActivity(), "添加书签失败", 100).show();
 	}
 	
 	//设置网页是否无图模式
@@ -435,7 +430,7 @@ public class MainPageFragment extends SherlockFragment {
 			history.setWebAddress(url);
 			history.setWebName(webName);
 			// 加载完加入历史记录
-			historydao.addHistory(history);
+			new HistoryDao(getActivity()).addHistory(history);
 			super.onPageFinished(view, url);
 		}
 	}
@@ -455,9 +450,9 @@ public class MainPageFragment extends SherlockFragment {
 		private Context mContext;
         private Boolean flag=false;    //标识是否是无图模式：false是无图，true是有图
 		/** 菜单文字 **/
-		private String[] str = new String[] { "添加书签", "书签", "刷新", "历史", "夜间模式",
+		private String[] str = new String[] { "添加书签", "书签", "设置", "历史", "夜间模式",
 				"无图模式", "下载管理", "退出", "旋转屏幕", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
-				"省流加速", "阅读模式", "设置", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
+				"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
 
 		public ViewPagerPresenter(Context context) {
 			mContext = context;
@@ -530,10 +525,10 @@ public class MainPageFragment extends SherlockFragment {
 								View view, int position, long id) {
 							// TODO Auto-generated method stub
 							switch (position) {
-							case 0: // 添加书签
+							case 0: // 添加书签								
+								MainPageFragment.this.addNewBookMark();
 								mViewPager.setVisibility(View.GONE);
 								settingPanel.setVisibility(View.GONE);
-								MainPageFragment.this.addNewBookMark();
 								break;
 							case 1: // 跳转到书签界面
 								((BaseFragActivity) getActivity()).navigateTo(
@@ -541,6 +536,9 @@ public class MainPageFragment extends SherlockFragment {
 										BookMarkFragment.TAG);
 								break;
 							case 2:
+								((BaseFragActivity) getActivity()).navigateTo(
+										MenuSetFragment.class, null, true,
+										MenuSetFragment.TAG);
 								break;
 							case 3: // 跳转到历史记录界面
 								((BaseFragActivity) getActivity()).navigateTo(
@@ -549,9 +547,7 @@ public class MainPageFragment extends SherlockFragment {
 								break;
 							case 4:
 								break;
-							case 5:  //设置无图模式
-								mViewPager.setVisibility(View.GONE);
-								settingPanel.setVisibility(View.GONE);
+							case 5:  //设置无图模式								
 								if(str[5].equals("无图模式")){
 									str[5]="有图模式";
 									flag=false;
@@ -562,7 +558,9 @@ public class MainPageFragment extends SherlockFragment {
 									flag=true;
 									Toast.makeText(getActivity(), "开启有图模式", 100);
 								}
-								MainPageFragment.this.setBlockPicture(flag);														
+								MainPageFragment.this.setBlockPicture(flag);
+								mViewPager.setVisibility(View.GONE);
+								settingPanel.setVisibility(View.GONE);
 								break;
 							case 6:
 								break;
@@ -571,27 +569,6 @@ public class MainPageFragment extends SherlockFragment {
 							default:
 								break;
 							}
-						}
-					});
-				}
-				if(i == 3){
-					lv.setOnItemClickListener(new OnItemClickListener() {
-
-						@Override
-						public void onItemClick(AdapterView<?> parent,
-								View view, int position, long id) {
-							switch (position) {
-							case 0:
-								AlertDialog dialog = new AlertDialog.Builder(getActivity().getParent()).create();
-		        				dialog.show();
-		        				Window window = dialog.getWindow();
-		        				window.setContentView(R.layout.activity_about);
-								break;
-
-							default:
-								break;
-							}
-							
 						}
 					});
 				}

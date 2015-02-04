@@ -51,13 +51,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase sqliteDatabase, ConnectionSource connectionSource, int oldVersion,
 			int newVersion) {
-//		try {
-//			TableUtils.dropTable(connectionSource, BookMark.class, true);
-//			TableUtils.dropTable(connectionSource, History.class, true);			
-//			TableUtils.dropTable(connectionSource, UserInfo.class, true);			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			TableUtils.dropTable(connectionSource, BookMark.class, true);
+			TableUtils.dropTable(connectionSource, History.class, true);			
+			TableUtils.dropTable(connectionSource, UserInfo.class, true);			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private static DatabaseHelper instance;

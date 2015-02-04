@@ -19,6 +19,7 @@ public class BookMarkDao {
 	private Dao<BookMark, Integer> BookMarkDaoOpe;
 	private DatabaseHelper helper;
 	
+	@SuppressWarnings("unchecked")
 	public BookMarkDao(Context context){
 		this.context = context;
 		try
