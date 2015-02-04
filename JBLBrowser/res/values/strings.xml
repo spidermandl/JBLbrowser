@@ -102,4 +102,21 @@
 
     <string name="longtime">更早</string>
 
+
+
+    <string name="about">关于</string>
+
+
+
+    <string name="broswer">JBL Broswer</string>
+
+
+
+
+    <string name="version">Version:1.0.0(01)</string>
+
+
+
+
+    <string name="intruduce">使用JBL Broswer让你更好的使用互联网</string>
 </resources>
