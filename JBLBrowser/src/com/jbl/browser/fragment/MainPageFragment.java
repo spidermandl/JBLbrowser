@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 
+import orm.sqlite.bean.Article;
+import orm.sqlite.bean.User;
+import orm.sqlite.db.ArticleDao;
+import orm.sqlite.db.UserDao;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -377,6 +382,7 @@ public class MainPageFragment extends SherlockFragment {
 		bookMark.setWebAddress(cur_url);
 		int temp = 0;
 		temp=new BookMarkDao(getActivity()).addBookMark(bookMark);
+		System.out.println(new BookMarkDao(getActivity()).get(1).getWebName());
 		if (temp != 0)
 			Toast.makeText(getActivity(), "添加书签成功", 100).show();
 		else
@@ -557,12 +563,12 @@ public class MainPageFragment extends SherlockFragment {
 								if(str[5].equals("无图模式")){
 									str[5]="有图模式";
 									flag=false;
-									Toast.makeText(getActivity(), "开启无图模式", 100);
+									Toast.makeText(getActivity(), "开启无图模式", 100).show();
 								}
 								else{
 									str[5]="无图模式";
 									flag=true;
-									Toast.makeText(getActivity(), "开启有图模式", 100);
+									Toast.makeText(getActivity(), "开启有图模式", 100).show();
 								}
 								MainPageFragment.this.setBlockPicture(flag);
 								mViewPager.setVisibility(View.GONE);
@@ -571,6 +577,13 @@ public class MainPageFragment extends SherlockFragment {
 							case 6:
 								break;
 							case 7:
+								User u = new User();
+								u.setName("张鸿洋");
+								new UserDao(getActivity()).add(u);
+								Article article = new Article();
+								article.setTitle("ORMLite的使用");
+								article.setUser(u);
+								new ArticleDao(getActivity()).add(article);
 								break;
 							default:
 								break;

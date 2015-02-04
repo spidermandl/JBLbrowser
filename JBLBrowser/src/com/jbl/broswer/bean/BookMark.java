@@ -16,9 +16,9 @@ public class BookMark {
 	private String webName;
 	@DatabaseField(columnName="webAddress")
 	private String webAddress;
-	@DatabaseField(columnName="created_time")
+	@DatabaseField(columnName="created_time",canBeNull = true)
 	private Date created_time;
-	@DatabaseField(columnName="update_time")
+	@DatabaseField(columnName="update_time",canBeNull = true)
 	private Date update_time;
 	
 	public Date getCreated_time() {

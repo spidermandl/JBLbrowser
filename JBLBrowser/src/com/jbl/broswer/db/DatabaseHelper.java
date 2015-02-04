@@ -1,13 +1,13 @@
 package com.jbl.broswer.db;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
-
+import android.os.Environment;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -27,14 +27,28 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private Map<String, Dao> daos = new HashMap<String, Dao>();
 	
 	public DatabaseHelper(Context context){
-		super(context, DATABASE_NAME, null,DATABASE_VERSION);
+		super(context, getMyDatabaseName(context), null,DATABASE_VERSION);
 	}
-	public DatabaseHelper(Context context, String databaseName,
-			CursorFactory factory, int databaseVersion) {
-		super(context, databaseName, factory, databaseVersion);
-		
-	}
-
+	 private static String getMyDatabaseName(Context context){
+	        String databasename = DATABASE_NAME;
+	        boolean isSdcardEnable = false;
+	        String state = Environment.getExternalStorageState();
+	        if(Environment.MEDIA_MOUNTED.equals(state)){//SDCard是否插入
+	            isSdcardEnable = true;
+	        }
+	        String dbPath = null;
+	        if(isSdcardEnable){
+	            dbPath = Environment.getExternalStorageDirectory().getPath() + "/database/";
+	        }else{//未插入SDCard，建在内存中
+	            dbPath = context.getFilesDir().getPath() + "/database/";
+	        }
+	        File dbp = new File(dbPath);
+	        if(!dbp.exists()){
+	            dbp.mkdirs();
+	        }
+	        databasename = dbPath + DATABASE_NAME;
+	        return databasename;
+	    }
 	@Override
 	public void onCreate(SQLiteDatabase sqliteDatabase, ConnectionSource connectionSource) {
 		try {
