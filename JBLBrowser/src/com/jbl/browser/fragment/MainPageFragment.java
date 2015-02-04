@@ -7,10 +7,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-
-
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -21,10 +20,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
@@ -54,8 +52,8 @@ import com.jbl.browser.activity.MainPageActivity;
 import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.adapter.MyListAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
-import com.viewpager.indicator.PageIndicator;
 import com.viewpager.indicator.LinePageIndicator;
+import com.viewpager.indicator.PageIndicator;
 
 /**
  * 浏览器主页
@@ -558,6 +556,27 @@ public class MainPageFragment extends SherlockFragment {
 							default:
 								break;
 							}
+						}
+					});
+				}
+				if(i == 3){
+					lv.setOnItemClickListener(new OnItemClickListener() {
+
+						@Override
+						public void onItemClick(AdapterView<?> parent,
+								View view, int position, long id) {
+							switch (position) {
+							case 0:
+								AlertDialog dialog = new AlertDialog.Builder(getActivity().getParent()).create();
+		        				dialog.show();
+		        				Window window = dialog.getWindow();
+		        				window.setContentView(R.layout.activity_about);
+								break;
+
+							default:
+								break;
+							}
+							
 						}
 					});
 				}
