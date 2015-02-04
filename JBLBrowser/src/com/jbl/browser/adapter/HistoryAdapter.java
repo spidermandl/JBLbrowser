@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 
 import com.jbl.broswer.bean.History;
 import com.jbl.browser.R;
-import com.jbl.browser.fragment.HistoryFragment;
 
 public class HistoryAdapter extends BaseAdapter{
 	List<History> list_history=new ArrayList<History>();

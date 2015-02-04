@@ -7,9 +7,7 @@ import java.util.List;
 import orm.sqlite.db.DatabaseHelper;
 import android.content.Context;
 
-import com.ccit.mmwlan.a.h;
 import com.j256.ormlite.dao.Dao;
-import com.jbl.broswer.bean.BookMark;
 import com.jbl.broswer.bean.History;
 /*
  * 创建History的Dao

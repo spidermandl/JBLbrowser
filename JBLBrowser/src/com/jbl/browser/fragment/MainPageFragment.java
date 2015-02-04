@@ -9,8 +9,6 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import android.content.Context;
 import android.content.Intent;
-
-
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -21,10 +19,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
@@ -51,8 +47,8 @@ import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MyListAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
-import com.viewpager.indicator.PageIndicator;
 import com.viewpager.indicator.LinePageIndicator;
+import com.viewpager.indicator.PageIndicator;
 
 /**
  * 浏览器主页
@@ -98,10 +94,7 @@ public class MainPageFragment extends SherlockFragment {
 	BookMark bookMark;
 	HistoryDao historydao;// 历史记录操作
 	BookMarkDao bookmarkdao;// 书签操作
-	/** 将小圆点的图片用数组表示 */
-	private ImageView[] imageViews;
 	private List<View> mViewPages;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -452,9 +445,9 @@ public class MainPageFragment extends SherlockFragment {
 		private Context mContext;
 
 		/** 菜单文字 **/
-		private String[] str = new String[] { "添加书签", "书签", "刷新", "历史", "夜间模式",
+		private String[] str = new String[] { "添加书签", "书签", "设置", "历史", "夜间模式",
 				"关闭无图", "下载管理", "退出", "旋转屏幕", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
-				"省流加速", "阅读模式", "设置", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
+				"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
 
 		public ViewPagerPresenter(Context context) {
 			mContext = context;
@@ -490,7 +483,7 @@ public class MainPageFragment extends SherlockFragment {
 			if (l.size() > 0) {
 				mPageList.add(l);
 			}
-			imageViews = new ImageView[mViewPages.size()];
+			
 		}
 
 		/**
@@ -537,7 +530,10 @@ public class MainPageFragment extends SherlockFragment {
 										BookMarkFragment.class, null, true,
 										BookMarkFragment.TAG);
 								break;
-							case 2:
+							case 2://跳转到设置界面
+								((BaseFragActivity) getActivity()).navigateTo(
+										MenuSetFragment.class, null, true,
+										MenuSetFragment.TAG);
 								break;
 							case 3: // 跳转到历史记录界面
 								((BaseFragActivity) getActivity()).navigateTo(
