@@ -3,10 +3,7 @@ package com.jbl.broswer.db;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import orm.sqlite.db.DatabaseHelper;
 import android.content.Context;
-
 import com.j256.ormlite.dao.Dao;
 import com.jbl.broswer.bean.History;
 /*
@@ -19,6 +16,7 @@ public class HistoryDao {
 	private DatabaseHelper helper;
 	private Boolean flag=false;
 	
+	@SuppressWarnings("unchecked")
 	public HistoryDao(Context context){
 		this.context = context;
 		try
@@ -63,7 +61,7 @@ public class HistoryDao {
 	}
 	//查询所有
 	public List<History> queryAll(){
-		 List<History> history=new ArrayList<History>();
+		 List<History> history=null;
 		try {
 			history = HistoryDaoOpe.queryForAll();
 			return history;

@@ -7,12 +7,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 
-import orm.sqlite.bean.Article;
-import orm.sqlite.bean.User;
-import orm.sqlite.db.ArticleDao;
-import orm.sqlite.db.UserDao;
-
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebChromeClient;
@@ -52,9 +45,6 @@ import com.jbl.broswer.db.BookMarkDao;
 import com.jbl.broswer.db.HistoryDao;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
-import com.jbl.browser.activity.MainFragActivity;
-import com.jbl.browser.activity.MainPageActivity;
-import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.adapter.MyListAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.viewpager.indicator.LinePageIndicator;
@@ -109,6 +99,7 @@ public class MainPageFragment extends SherlockFragment {
 		// TODO Auto-generated method stub
 		if (getArguments() != null) {
 			cur_url = getArguments().getString("webAddress");
+			//mWebView.loadUrl(cur_url);
 		}
 		super.onCreate(savedInstanceState);
 	}
@@ -217,16 +208,6 @@ public class MainPageFragment extends SherlockFragment {
 		animation2 = AnimationUtils.loadAnimation(getActivity(),
 				R.anim.menu_bar_disappear);
 		// mWebView.setDownloadListener(new myDownloaderListener());
-
-		mWebView.setWebViewClient(new WebViewClient() {
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				view.loadUrl(url);
-				cur_url = url;
-				return super.shouldOverrideUrlLoading(view, url);
-			}
-
-		});
 
 		/*
 		 * 设置title各个控件监听 1.1 search mImageViewSearch.setOnClickListener(new
@@ -382,7 +363,6 @@ public class MainPageFragment extends SherlockFragment {
 		bookMark.setWebAddress(cur_url);
 		int temp = 0;
 		temp=new BookMarkDao(getActivity()).addBookMark(bookMark);
-		System.out.println(new BookMarkDao(getActivity()).get(1).getWebName());
 		if (temp != 0)
 			Toast.makeText(getActivity(), "添加书签成功", 100).show();
 		else
@@ -409,7 +389,7 @@ public class MainPageFragment extends SherlockFragment {
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 		// webView.getSettings().setPluginsEnabled(true);
 		mWebView.getSettings().setPluginState(PluginState.ON);
-		mWebView.loadUrl("http://www.baidu.com/");
+		mWebView.loadUrl(cur_url);
 		mWebView.setWebViewClient(new MyWebViewClient());
 		mWebView.setWebChromeClient(new WebChromeClient() {
 			@Override
@@ -424,8 +404,9 @@ public class MainPageFragment extends SherlockFragment {
 	/* webcilent */
 	class MyWebViewClient extends WebViewClient {
 		@Override
-		public boolean shouldOverrideUrlLoading(WebView view, String url_) {
-			view.loadUrl(url_);
+		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+			cur_url=url;
+			view.loadUrl(cur_url);
 			return true;
 		}
 
@@ -577,13 +558,6 @@ public class MainPageFragment extends SherlockFragment {
 							case 6:
 								break;
 							case 7:
-								User u = new User();
-								u.setName("张鸿洋");
-								new UserDao(getActivity()).add(u);
-								Article article = new Article();
-								article.setTitle("ORMLite的使用");
-								article.setUser(u);
-								new ArticleDao(getActivity()).add(article);
 								break;
 							default:
 								break;

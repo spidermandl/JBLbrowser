@@ -25,6 +25,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.jbl.broswer.bean.History;
 import com.jbl.broswer.db.HistoryDao;
 import com.jbl.browser.R;
+import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.HistoryAdapter;
 
 /**
@@ -42,18 +43,15 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	TextView tv_history_time;*/
 	//历史记录适配器
 	HistoryAdapter historyAdapter;
-	//历史记录操作类
-	HistoryDao historydao;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		historydao=new HistoryDao(getActivity());
 		super.onCreate(savedInstanceState);
 	}
 	//从数据库中获得数据
 	public List<History> getData(){
 		List<History> history=new ArrayList<History>();
-		history=historydao.queryAll();
+		history=new HistoryDao(getActivity()).queryAll();
 		return history;
 	}
 	@Override
@@ -99,7 +97,10 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
-		
+		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
+		Bundle bundle=new Bundle();
+		bundle.putString("webAddress", webAddress);
+		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, bundle, true,MainPageFragment.TAG);
 	}
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
@@ -114,14 +115,14 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 		builder.setMessage("是否清空");
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				Boolean flag=historydao.clearHistory();
+				Boolean flag=new HistoryDao(getActivity()).clearHistory();
 				if(flag){
 					Toast.makeText(getActivity(), "清空成功", 100).show();
 					initDataHistory();	
 					listview.invalidate();
 				}
 				else{
-					Toast.makeText(getActivity(), "清空失败", 100);
+					Toast.makeText(getActivity(), "清空失败", 100).show();
 				}
 			}
 		});

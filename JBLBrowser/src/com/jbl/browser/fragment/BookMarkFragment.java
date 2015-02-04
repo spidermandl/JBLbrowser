@@ -154,7 +154,6 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
 		Bundle bundle=new Bundle();
 		bundle.putString("webAddress", webAddress);
-		setArguments(bundle);
 		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, bundle, true,MainPageFragment.TAG);
 	}
 	
