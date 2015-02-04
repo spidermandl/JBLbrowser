@@ -57,7 +57,7 @@ public class HistoryAdapter extends BaseAdapter{
         }
         holder.urlName.setText(list_history.get(position).getWebName());
         holder.urlAddress.setText(list_history.get(position).getWebAddress());
-		return null;
+		return convertView;
 	}
 	public class ViewHolder  
     {  
