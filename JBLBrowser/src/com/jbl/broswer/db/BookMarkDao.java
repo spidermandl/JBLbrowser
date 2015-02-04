@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import orm.sqlite.bean.Article;
 import orm.sqlite.db.DatabaseHelper;
 import android.content.Context;
 
@@ -19,6 +20,7 @@ public class BookMarkDao {
 	private Dao<BookMark, Integer> BookMarkDaoOpe;
 	private DatabaseHelper helper;
 	
+	@SuppressWarnings("unchecked")
 	public BookMarkDao(Context context){
 		this.context = context;
 		try
@@ -50,8 +52,21 @@ public class BookMarkDao {
 		}
 		return 0;
 	}
+	public BookMark get(int id)
+	{
+		BookMark bookmark = null;
+		try
+		{
+			bookmark = BookMarkDaoOpe.queryForId(id);
+
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return bookmark;
+	}
 	public List<BookMark> queryAll(){
-		List<BookMark> bookmark=new ArrayList<BookMark>();
+		List<BookMark> bookmark=null;
 		try {
 			bookmark = BookMarkDaoOpe.queryForAll();
 			return bookmark;
