@@ -1,8 +1,10 @@
 package com.jbl.broswer.db;
 
 import java.sql.SQLException;
+
 import orm.sqlite.db.DatabaseHelper;
 import android.content.Context;
+
 import com.j256.ormlite.dao.Dao;
 import com.jbl.broswer.bean.UserInfo;
 /*

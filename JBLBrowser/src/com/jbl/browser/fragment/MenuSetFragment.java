@@ -12,20 +12,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.jbl.broswer.bean.BookMark;
 import com.jbl.broswer.bean.SetContent;
-import com.jbl.broswer.db.BookMarkDao;
 import com.jbl.browser.R;
-import com.jbl.browser.adapter.BookMarkAdapter;
 import com.jbl.browser.adapter.MenuSetAdapter;
 /*
  * 菜单设置选项fragment
