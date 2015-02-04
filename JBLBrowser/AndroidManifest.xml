@@ -114,7 +114,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
-            android:name=".RecommendMainActivity"
+            android:name=".activity.RecommendMainActivity"
             android:label="@string/title_activity_recommend_main" >
         </activity>
     </application>

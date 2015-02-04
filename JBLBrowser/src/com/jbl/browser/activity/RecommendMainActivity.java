@@ -2,11 +2,11 @@ package com.jbl.browser.activity;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.ActionMode;
 
@@ -17,7 +17,7 @@ import com.jbl.browser.fragment.RecommendCustomFragment;
 import com.jbl.browser.fragment.RecommendMainFragment;
 
 @SuppressLint("NewApi")
-public class RecommendMainActivity extends Activity{
+public class RecommendMainActivity extends FragmentActivity{
 
 	private static final String TAG="RecommendMainActivity";
 	private static final String INSTANCESTATE_TAB = "tab";
