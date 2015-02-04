@@ -47,6 +47,9 @@ import com.jbl.broswer.db.BookMarkDao;
 import com.jbl.broswer.db.HistoryDao;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
+import com.jbl.browser.activity.MainFragActivity;
+import com.jbl.browser.activity.MainPageActivity;
+import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.adapter.MyListAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.viewpager.indicator.LinePageIndicator;
@@ -96,7 +99,6 @@ public class MainPageFragment extends SherlockFragment {
 	/** 将小圆点的图片用数组表示 */
 	private ImageView[] imageViews;
 	private List<View> mViewPages;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -451,7 +453,9 @@ public class MainPageFragment extends SherlockFragment {
         private Boolean flag=false;    //标识是否是无图模式：false是无图，true是有图
 		/** 菜单文字 **/
 		private String[] str = new String[] { "添加书签", "书签", "设置", "历史", "夜间模式",
+
 				"无图模式", "下载管理", "退出", "旋转屏幕", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
+
 				"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
 
 		public ViewPagerPresenter(Context context) {
@@ -488,7 +492,7 @@ public class MainPageFragment extends SherlockFragment {
 			if (l.size() > 0) {
 				mPageList.add(l);
 			}
-			imageViews = new ImageView[mViewPages.size()];
+			
 		}
 
 		/**
@@ -535,7 +539,9 @@ public class MainPageFragment extends SherlockFragment {
 										BookMarkFragment.class, null, true,
 										BookMarkFragment.TAG);
 								break;
-							case 2:
+
+							case 2://跳转到设置界面
+
 								((BaseFragActivity) getActivity()).navigateTo(
 										MenuSetFragment.class, null, true,
 										MenuSetFragment.TAG);

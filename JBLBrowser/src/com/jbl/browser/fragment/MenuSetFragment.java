@@ -10,13 +10,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import android.view.Window;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -34,6 +34,7 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 	//设置数据
 	List<SetContent> list=new ArrayList<SetContent>();
 	MenuSetAdapter menuSetAdapter;
+	   SetContent s1,s2,s3;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -43,23 +44,22 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 	 *添加数据
 	 */
 	public void init(){
-	    SetContent s1=new SetContent();
+		s1=new SetContent();
 		s1.setSetText("字体大小");
 		s1.setTextSize("中");
 		list.add(s1);
-		SetContent s2=new SetContent();
+	    s2=new SetContent();
 		s2.setSetText("屏幕亮度");
 		s2.setTextSize("适中");
 		list.add(s2);
-		SetContent s3=new SetContent();
+	    s3=new SetContent();
 		s3.setSetText("旋转屏幕");
-		s3.setTextSize("跟随系统");
+		s3.setTextSize("锁定竖屏");
 		list.add(s3);
 		SetContent s4=new SetContent();
 		s4.setSetText("关于");
 		list.add(s4);
 	}
-	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -88,13 +88,14 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 		//list=getData();
 		menuSetAdapter=new MenuSetAdapter(getActivity(), list);
 		listview.setAdapter(menuSetAdapter);
+
 		listview.setOnItemClickListener(this);;
 		return view;
-	}
+	}	
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		// TODO Auto-generated method stub
+
 		switch (position) {
 		case 0:
 			AlertDialog.Builder builder1=new Builder(getActivity());
@@ -102,7 +103,16 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 			final String[] items=new String[]{"小","中","大"};
 			builder1.setSingleChoiceItems(items, 1, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-					Toast.makeText(getActivity(), items[which], 1).show();
+					Toast.makeText(getActivity(), "您选择的字体为:"+items[which], 1).show();
+					s1.setTextSize(items[which]);
+					switch (which) {
+					case 0:
+						//BrowserSettings.textSize = WebSettings.TextSize.SMALLEST;
+						break;
+
+					default:
+						break;
+					}
 				}
 			});
 			builder1.setPositiveButton("取消",new DialogInterface.OnClickListener() {
@@ -135,9 +145,12 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 			final String[] items1=new String[]{"跟随系统","锁定竖屏","锁定横屏"};
 			builder3.setSingleChoiceItems(items1, 1, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-					Toast.makeText(getActivity(), items1[which], 1).show();
+					s3.setTextSize(items1[which]);
+					Toast.makeText(getActivity(), "您选择了:"+items1[which], 1).show();
+				
 				}
 			});
+			
 			builder3.setPositiveButton("取消",new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					
@@ -145,7 +158,7 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 			});
 			builder3.create().show();
 			break;
-		case 3:
+		case 3:  //关于浏览器信息
 			AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
 			dialog.show();
 			Window window = dialog.getWindow();
@@ -154,5 +167,6 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 		default:
 			break;
 		}
+
 	}
 }

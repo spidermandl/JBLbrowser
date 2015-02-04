@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,10 +23,8 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.jbl.broswer.bean.History;
-import com.jbl.broswer.db.BookMarkDao;
 import com.jbl.broswer.db.HistoryDao;
 import com.jbl.browser.R;
-import com.jbl.browser.adapter.BookMarkAdapter;
 import com.jbl.browser.adapter.HistoryAdapter;
 
 /**

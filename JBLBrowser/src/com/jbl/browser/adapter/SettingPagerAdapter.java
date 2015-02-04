@@ -2,12 +2,12 @@ package com.jbl.browser.adapter;
 
 import java.util.List;
 
-import com.viewpager.indicator.IconPagerAdapter;
-
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+
+import com.viewpager.indicator.IconPagerAdapter;
 
 /**
  * 设置界面滑动adapter
