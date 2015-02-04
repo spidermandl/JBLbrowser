@@ -217,7 +217,7 @@ public class BrowserSettings extends Observable {
         return sSingleton;
     }
 
-    /*package*/ void update() {
+    /*package*/ public void update() {
         setChanged();
         notifyObservers();
     }
