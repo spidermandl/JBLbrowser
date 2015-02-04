@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 
+import orm.sqlite.bean.Article;
+import orm.sqlite.bean.User;
+import orm.sqlite.db.ArticleDao;
+import orm.sqlite.db.UserDao;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -48,9 +53,6 @@ import com.jbl.broswer.db.HistoryDao;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
-import com.jbl.browser.activity.MainFragActivity;
-import com.jbl.browser.activity.MainPageActivity;
-import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.adapter.MyListAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.viewpager.indicator.LinePageIndicator;
@@ -98,15 +100,12 @@ public class MainPageFragment extends SherlockFragment {
 	int count;
 	Animation animation1, animation2;// 实现动画效果
 	GridView lv;// 菜单栏信息
-	BookMark bookMark;
-	HistoryDao historydao;// 历史记录操作
-	BookMarkDao bookmarkdao;// 书签操作
+	/** 将小圆点的图片用数组表示 */
+	private ImageView[] imageViews;
 	private List<View> mViewPages;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		historydao = new HistoryDao(getActivity());
-		bookmarkdao = new BookMarkDao(getActivity());
 		if (getArguments() != null) {
 			cur_url = getArguments().getString("webAddress");
 		}
@@ -378,15 +377,21 @@ public class MainPageFragment extends SherlockFragment {
 
 	// 添加书签
 	public void addNewBookMark() {
-		bookMark = new BookMark();
-		bookMark.setWebAddress(cur_url);
+		BookMark bookMark = new BookMark();
 		bookMark.setWebName(webName);
-
-		int temp = bookmarkdao.addBookMark(bookMark);
+		bookMark.setWebAddress(cur_url);
+		int temp = 0;
+		temp=new BookMarkDao(getActivity()).addBookMark(bookMark);
+		System.out.println(new BookMarkDao(getActivity()).get(1).getWebName());
 		if (temp != 0)
-			Toast.makeText(getActivity(), "添加书签成功", 100);
+			Toast.makeText(getActivity(), "添加书签成功", 100).show();
 		else
-			Toast.makeText(getActivity(), "添加书签失败", 100);
+			Toast.makeText(getActivity(), "添加书签失败", 100).show();
+	}
+	
+	//设置网页是否无图模式
+	public void setBlockPicture(boolean flag) {
+		mWebView.getSettings().setBlockNetworkImage(flag);
 	}
 
 	private void setWebStyle() {
@@ -433,7 +438,7 @@ public class MainPageFragment extends SherlockFragment {
 			history.setWebAddress(url);
 			history.setWebName(webName);
 			// 加载完加入历史记录
-			historydao.addHistory(history);
+			new HistoryDao(getActivity()).addHistory(history);
 			super.onPageFinished(view, url);
 		}
 	}
@@ -441,7 +446,7 @@ public class MainPageFragment extends SherlockFragment {
 	/*
 	 * 内部类实现滑动分页
 	 */
-	public class ViewPagerPresenter {
+	class ViewPagerPresenter {
 		private static final String TAG = "ViewPagerPresenter";
 		private static final int PAGE_SIZE = 8; // 每页显示的数据个数
 		private static final int TEST_LIST_SIZE = 43; // 数据总长度
@@ -451,10 +456,12 @@ public class MainPageFragment extends SherlockFragment {
 		private List<List<String>> mPageList;
 		private List<GridView> mGridViews;
 		private Context mContext;
-
+        private Boolean flag=false;    //标识是否是无图模式：false是无图，true是有图
 		/** 菜单文字 **/
 		private String[] str = new String[] { "添加书签", "书签", "设置", "历史", "夜间模式",
-				"关闭无图", "下载管理", "退出", "旋转屏幕", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
+
+				"无图模式", "下载管理", "退出", "旋转屏幕", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
+
 				"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
 
 		public ViewPagerPresenter(Context context) {
@@ -528,17 +535,19 @@ public class MainPageFragment extends SherlockFragment {
 								View view, int position, long id) {
 							// TODO Auto-generated method stub
 							switch (position) {
-							case 0: // 添加书签
+							case 0: // 添加书签								
+								MainPageFragment.this.addNewBookMark();
 								mViewPager.setVisibility(View.GONE);
 								settingPanel.setVisibility(View.GONE);
-								addNewBookMark();
 								break;
 							case 1: // 跳转到书签界面
 								((BaseFragActivity) getActivity()).navigateTo(
 										BookMarkFragment.class, null, true,
 										BookMarkFragment.TAG);
 								break;
+
 							case 2://跳转到设置界面
+
 								((BaseFragActivity) getActivity()).navigateTo(
 										MenuSetFragment.class, null, true,
 										MenuSetFragment.TAG);
@@ -550,36 +559,35 @@ public class MainPageFragment extends SherlockFragment {
 								break;
 							case 4:
 								break;
-							case 5:
+							case 5:  //设置无图模式								
+								if(str[5].equals("无图模式")){
+									str[5]="有图模式";
+									flag=false;
+									Toast.makeText(getActivity(), "开启无图模式", 100).show();
+								}
+								else{
+									str[5]="无图模式";
+									flag=true;
+									Toast.makeText(getActivity(), "开启有图模式", 100).show();
+								}
+								MainPageFragment.this.setBlockPicture(flag);
+								mViewPager.setVisibility(View.GONE);
+								settingPanel.setVisibility(View.GONE);
 								break;
 							case 6:
 								break;
 							case 7:
+								User u = new User();
+								u.setName("张鸿洋");
+								new UserDao(getActivity()).add(u);
+								Article article = new Article();
+								article.setTitle("ORMLite的使用");
+								article.setUser(u);
+								new ArticleDao(getActivity()).add(article);
 								break;
 							default:
 								break;
 							}
-						}
-					});
-				}
-				if(i == 3){
-					lv.setOnItemClickListener(new OnItemClickListener() {
-
-						@Override
-						public void onItemClick(AdapterView<?> parent,
-								View view, int position, long id) {
-							switch (position) {
-							case 0:
-								AlertDialog dialog = new AlertDialog.Builder(getActivity().getParent()).create();
-		        				dialog.show();
-		        				Window window = dialog.getWindow();
-		        				window.setContentView(R.layout.activity_about);
-								break;
-
-							default:
-								break;
-							}
-							
 						}
 					});
 				}

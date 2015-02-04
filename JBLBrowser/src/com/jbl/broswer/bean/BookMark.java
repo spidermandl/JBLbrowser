@@ -5,10 +5,10 @@ import java.sql.Date;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 /*
- * 创建一张表(bookMark)
+ * 创建一张表(tb_bookMark)
  * 包含的字段有(id,webName,webAddress,created_time,update_time)
  */
-@DatabaseTable(tableName="bookMark")
+@DatabaseTable(tableName="tb_bookMark")
 public class BookMark {
 	@DatabaseField(generatedId=true)
 	private int id;
@@ -16,9 +16,9 @@ public class BookMark {
 	private String webName;
 	@DatabaseField(columnName="webAddress")
 	private String webAddress;
-	@DatabaseField(columnName="created_time")
+	@DatabaseField(columnName="created_time",canBeNull = true)
 	private Date created_time;
-	@DatabaseField(columnName="update_time")
+	@DatabaseField(columnName="update_time",canBeNull = true)
 	private Date update_time;
 	
 	public Date getCreated_time() {

@@ -2,7 +2,6 @@ package com.jbl.browser.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -18,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
@@ -28,7 +28,6 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -71,6 +70,9 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 		s3.setSetText("旋转屏幕");
 		s3.setTextSize("锁定竖屏");
 		list.add(s3);
+		SetContent s4=new SetContent();
+		s4.setSetText("关于");
+		list.add(s4);
 	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -102,9 +104,11 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 		init();
 		return view;
 	}
+
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
+
 		switch (position) {
 		case 0:
 			AlertDialog.Builder builder1=new Builder(getActivity());
@@ -159,10 +163,15 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 			});
 			builder3.create().show();
 			break;
+		case 3:  //关于浏览器信息
+			AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
+			dialog.show();
+			Window window = dialog.getWindow();
+			window.setContentView(R.layout.activity_about);
+			break;
 		default:
 			break;
 		}
-		
-		
+
 	}
 }
