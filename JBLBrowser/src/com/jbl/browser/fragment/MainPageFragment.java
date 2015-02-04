@@ -15,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.SearchViewCompat;
 import android.support.v4.widget.SearchViewCompat.OnQueryTextListenerCompat;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -98,6 +99,14 @@ public class MainPageFragment extends SherlockFragment {
 	private ImageView[] imageViews;
 	private List<View> mViewPages;
 	public String fontSize="";
+	
+	/** 菜单文字 **/
+	private String[] str = new String[] { "添加书签", "书签", "设置", "历史", "夜间模式",
+
+			"无图模式", "下载管理", "退出", "旋转屏幕", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
+
+			"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -180,7 +189,14 @@ public class MainPageFragment extends SherlockFragment {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
+	//覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法  
+    public boolean onKeyDown(int keyCode, KeyEvent event) {  
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {  
+        	mWebView.goBack(); //goBack()表示返回WebView的上一页面  
+            return true;  
+        }  
+        return false; 
+    }
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -372,15 +388,15 @@ public class MainPageFragment extends SherlockFragment {
 	}
 	// 添加书签
 	public void addNewBookMark() {
-		BookMark bookMark = new BookMark();
+		boolean flag=false;
+		BookMark bookMark =new BookMark();
 		bookMark.setWebName(webName);
 		bookMark.setWebAddress(cur_url);
-		int temp = 0;
-		temp=new BookMarkDao(getActivity()).addBookMark(bookMark);
-		if (temp != 0)
-			Toast.makeText(getActivity(), "添加书签成功", 100).show();
+		flag=new BookMarkDao(getActivity()).addBookMark(bookMark);
+		if (flag)
+			Toast.makeText(getActivity(), R.string.add_bookmark_succeed, 80).show();
 		else
-			Toast.makeText(getActivity(), "添加书签失败", 100).show();
+			Toast.makeText(getActivity(), R.string.add_bookmark_fail, 80).show();
 	}
 	
 	//设置网页是否无图模式
@@ -451,13 +467,6 @@ public class MainPageFragment extends SherlockFragment {
 		private List<GridView> mGridViews;
 		private Context mContext;
         private Boolean flag=false;    //标识是否是无图模式：false是无图，true是有图
-		/** 菜单文字 **/
-		private String[] str = new String[] { "添加书签", "书签", "设置", "历史", "夜间模式",
-
-				"无图模式", "下载管理", "退出", "旋转屏幕", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
-
-				"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
-
 		public ViewPagerPresenter(Context context) {
 			mContext = context;
 			mPageList = new ArrayList<List<String>>();

@@ -50,7 +50,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	}
 	//从数据库中获得数据
 	public List<History> getData(){
-		List<History> history=new ArrayList<History>();
+		List<History> history=null;
 		history=new HistoryDao(getActivity()).queryAll();
 		return history;
 	}

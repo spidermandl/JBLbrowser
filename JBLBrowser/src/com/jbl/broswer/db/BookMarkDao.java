@@ -27,14 +27,25 @@ public class BookMarkDao {
 			e.printStackTrace();
 		}
 	}
-	public int addBookMark(BookMark bookmark){
+	public boolean addBookMark(BookMark bookmark){
+		boolean flag=false;
 		try {
-			return BookMarkDaoOpe.create(bookmark);
+			BookMark bookmark1=null;
+			bookmark1=BookMarkDaoOpe.queryForSameId(bookmark);
+			if(bookmark1!=null){
+				flag=false;				
+			}else{
+				int temp=BookMarkDaoOpe.create(bookmark);
+				if(temp!=0)
+					flag=true;
+				else
+					flag=false;
+			}		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return 0;
+		return flag;
 	}
 	public int deleteBookMarkByWebAddress(String webAddress){
 		try {
