@@ -35,6 +35,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
 
+import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.StringUtils;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -110,8 +112,10 @@ public class MainPageFragment extends SherlockFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		if (getArguments() != null) {
-			cur_url = getArguments().getString("webAddress");
+		String webAddress="";
+		webAddress=JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY);
+		if (webAddress!=null) {
+			cur_url =webAddress;
 			//mWebView.loadUrl(cur_url);
 		}
 		if (getArguments() != null) {
@@ -472,7 +476,7 @@ public class MainPageFragment extends SherlockFragment {
 		private List<MyListAdapter> mAdapters;
 		private List<List<String>> mPageList;
 		private List<GridView> mGridViews;
-		private Context mContext;
+		private Context mContext;            
 		public ViewPagerPresenter(Context context) {
 			mContext = context;
 			mPageList = new ArrayList<List<String>>();
@@ -569,15 +573,15 @@ public class MainPageFragment extends SherlockFragment {
 							case 4:
 								break;
 							case 5:  //设置无图模式								
-								if(str[5].equals("无图模式")){
-									str[5]="有图模式";
+								if(str[5].equals(StringUtils.NO_PICTURE)){
+									str[5]=StringUtils.YES_PICTURE;
 									flag=false;
-									Toast.makeText(getActivity(), "开启无图模式", 100).show();
+									Toast.makeText(getActivity(), StringUtils.OPEN_NO_PICTURE, 100).show();
 								}
 								else{
-									str[5]="无图模式";
+									str[5]=StringUtils.NO_PICTURE;
 									flag=true;
-									Toast.makeText(getActivity(), "开启有图模式", 100).show();
+									Toast.makeText(getActivity(), StringUtils.OPEN_YES_PICTURE, 100).show();
 								}
 								MainPageFragment.this.setBlockPicture(flag);
 								mViewPager.setVisibility(View.GONE);

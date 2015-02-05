@@ -100,6 +100,13 @@
     
     <string name="add_bookmark_succeed">添加书签成功</string>
     <string name="add_bookmark_fail">书签已存在，添加书签失败</string>
+    <string name="delete_bookmark_succeed">删除书签成功</string>
+    <string name="delete_bookmark_fail">删除书签失败</string>
+    <string name="delete_bookmark">删除书签</string>
+
+    
+    
+    
     
     <string name="about">关于</string>    
     <string name="broswer">JBL Broswer</string>
