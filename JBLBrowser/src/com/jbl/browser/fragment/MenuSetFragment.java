@@ -42,6 +42,8 @@ import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.SetContent;
 import com.jbl.browser.db.BookMarkDao;
 import com.jbl.browser.utils.BrightnessSettings;
+import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.StringUtils;
 /*
  * 菜单设置选项fragment
  */
@@ -64,7 +66,7 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 	public void init(){
 		SetContent s1=new SetContent();
 		s1.setSetText("字体大小");
-		s1.setTextSize("中");
+		s1.setTextSize(JBLPreference.getInstance(getActivity()).readString(StringUtils.FONT_MAX));
 		list.add(s1);
 		SetContent s2=new SetContent();
 		s2.setSetText("屏幕亮度");
@@ -120,21 +122,18 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 					switch (which) {
 					case 0:
 						String fontSize1="小";
-						Bundle bundle1=new Bundle();
-						bundle1.putString("fontsize",fontSize1);
-						((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, bundle1, false,MainPageFragment.TAG);
+						JBLPreference.getInstance(getActivity()).writeString(StringUtils.FONT_MAX, fontSize1);
+						((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, null, false,MainPageFragment.TAG);
 						break;
 					case 1:
 						String fontSize2="中";
-						Bundle bundle2=new Bundle();
-						bundle2.putString("fontsize",fontSize2);
-						((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, bundle2, false,MainPageFragment.TAG);
+						JBLPreference.getInstance(getActivity()).writeString(StringUtils.FONT_MAX, fontSize2);
+						((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, null, false,MainPageFragment.TAG);
 						break;
 					case 2:	
 						String fontSize3="大";
-						Bundle bundle3=new Bundle();
-						bundle3.putString("fontsize",fontSize3);
-						((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, bundle3, false,MainPageFragment.TAG);
+						JBLPreference.getInstance(getActivity()).writeString(StringUtils.FONT_MAX, fontSize3);
+						((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, null, false,MainPageFragment.TAG);
 						break;
 					default:
 						break;
