@@ -12,7 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jbl.browser.R;
-
+/*
+ * 推荐页面适配器
+ * 
+ * */
 public class RecommendAdapter extends BaseAdapter{
 
 	private LayoutInflater layoutInflater=null;

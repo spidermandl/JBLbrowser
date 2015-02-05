@@ -26,36 +26,45 @@ import com.jbl.browser.adapter.RecommendAdapter;
 import com.jbl.browser.utils.RecommendData;
 import com.jbl.browser.utils.StringUtils;
 
+
+/*  
+ * 自定义界面
+ *  
+ * 还差一个添加自定义网址操作
+ * 
+ * */
 @SuppressLint("NewApi")
 public class RecommendCustomFragment extends Fragment implements OnItemLongClickListener,OnItemClickListener{
 	ListView lv;
 	RecommendAdapter tabAdapter;
-	List<Integer> image=new ArrayList<Integer>();
-	List<String> urlName=new ArrayList<String>();
-	List<String> urlAddress=new ArrayList<String>();
+	List<Integer> image=new ArrayList<Integer>(); //加载网站图标
+	List<String> urlName=new ArrayList<String>();//网站名称
+	List<String> urlAddress=new ArrayList<String>(); //网站网址
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState){
 		View tab1= inflater.inflate(R.layout.fragment_recommend_custom, container,false);
 		lv=(ListView)tab1.findViewById(R.id.lv);
-		initData();
+		initData();  //加载数据
 		lv.setOnItemClickListener(this);
 		lv.setOnItemLongClickListener(this);
 		return tab1;	
 	}
+	/*  加载适配器  */
 	private void initData() {
 		// TODO Auto-generated method stub
 		getData();
 		tabAdapter=new RecommendAdapter(getActivity(), image, urlName, urlAddress);
 		lv.setAdapter(tabAdapter);
 	}
-
+/*  获取数据源  */
 	private void getData() {
 		// TODO Auto-generated method stub
 		image=RecommendData.image;
 		urlAddress=RecommendData.urlAddress;
 		urlName=RecommendData.urlName;
 	}
+	/* 删除操作 */
 	public void delete(int i){
 		RecommendData.image.remove(i);
 		RecommendData.urlName.remove(i);
