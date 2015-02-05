@@ -40,16 +40,15 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.jbl.broswer.bean.BookMark;
-import com.jbl.broswer.bean.History;
-import com.jbl.broswer.db.BookMarkDao;
-import com.jbl.broswer.db.HistoryDao;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MyListAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
-import com.jbl.broswer.*;
+import com.jbl.browser.bean.BookMark;
+import com.jbl.browser.bean.History;
+import com.jbl.browser.db.BookMarkDao;
+import com.jbl.browser.db.HistoryDao;
 import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
 
@@ -338,6 +337,7 @@ public class MainPageFragment extends SherlockFragment {
 				count++;
 				// mWebView.setAlpha(200);
 				init();
+				getActivity().findViewById(R.id.buttom_tool_bar).setVisibility(View.GONE);
 			}
 		});
 
@@ -362,27 +362,33 @@ public class MainPageFragment extends SherlockFragment {
 			settingPanel.setVisibility(View.GONE);
 			mViewPager.startAnimation(animation2);
 		}
-		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-			}
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-			}
-			@Override
-			public void onPageSelected(int arg0) {
-				// TODO Auto-generated method stub
-				// for (int i = 0; i < imageViews.length; i++) {
-				// if(i == arg0) {
-				// imageViews[i].setBackgroundResource(R.drawable.page_indicator_focused);
-				// } else {
-				// imageViews[i].setBackgroundResource(R.drawable.page_indicator);
-				// }
-				// }
+//		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
+//			@Override
+//			public void onPageScrollStateChanged(int arg0) {
+//
+//			}
+//
+//			@Override
+//			public void onPageScrolled(int arg0, float arg1, int arg2) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//
+//			@Override
+//			public void onPageSelected(int arg0) {
+//				// TODO Auto-generated method stub
+//				// for (int i = 0; i < imageViews.length; i++) {
+//				// if(i == arg0) {
+//				// imageViews[i].setBackgroundResource(R.drawable.page_indicator_focused);
+//				// } else {
+//				// imageViews[i].setBackgroundResource(R.drawable.page_indicator);
+//				// }
+//				// }
+//
+//			}
+//
+//		});
 
-			}
-
-		});
 	}
 	// 添加书签
 	public void addNewBookMark() {

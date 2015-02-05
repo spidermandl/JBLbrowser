@@ -22,11 +22,11 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.jbl.broswer.bean.BookMark;
-import com.jbl.broswer.db.BookMarkDao;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.BookMarkAdapter;
+import com.jbl.browser.bean.BookMark;
+import com.jbl.browser.db.BookMarkDao;
 
 /**
  * 书签fragment

@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.jbl.broswer.bean.SetContent;
 import com.jbl.browser.R;
+import com.jbl.browser.bean.SetContent;
 /*
  * 菜单设置选项的适配器
  */

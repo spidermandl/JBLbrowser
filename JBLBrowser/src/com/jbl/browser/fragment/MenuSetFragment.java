@@ -34,13 +34,14 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.jbl.broswer.bean.SetContent;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MenuSetAdapter;
+import com.jbl.browser.bean.BookMark;
+import com.jbl.browser.bean.SetContent;
+import com.jbl.browser.db.BookMarkDao;
 import com.jbl.browser.utils.BrightnessSettings;
-import com.jbl.broswer.*;
 /*
  * 菜单设置选项fragment
  */
