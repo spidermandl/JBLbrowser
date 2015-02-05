@@ -35,6 +35,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
 
+import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.StringUtils;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -76,7 +78,7 @@ public class MainPageFragment extends SherlockFragment {
 	 *//* 定义webview控件 */
 	public  WebView mWebView; // 主控件 webview
 	public  WebSettings settings;
-	public String cur_url = "http://www.baidu.com"; // 设置初始网址
+	public String cur_url =StringUtils.CUR_URL; // 设置初始网址
 	public String webName = "";// 网页名
 	/* 定义操作栏控件 */
 	private ImageView mImageViewBack; // 3.1 mImageViewBack 后退
@@ -94,33 +96,29 @@ public class MainPageFragment extends SherlockFragment {
 	int count;
 	Animation animation1, animation2;// 实现动画效果
 	GridView lv;// 菜单栏信息
-	/** 将小圆点的图片用数组表示 */
-	private ImageView[] imageViews;
 	private List<View> mViewPages;
 	public String fontSize="";
-	
 	/** 菜单文字 **/
 	private String[] str = new String[] { "添加书签", "书签", "设置", "历史", "夜间模式",
 
-			"无图模式", "下载管理", "退出", "旋转屏幕", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
+			"无图模式", "下载管理", "退出", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
 
 			"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
 	private boolean flag=false;    //标识是否是无图模式：true是无图，false是有图
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		if (getArguments() != null) {
-			cur_url = getArguments().getString("webAddress");
-			//mWebView.loadUrl(cur_url);
+
+		if (JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY)!="") {
+			cur_url =JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY);
 		}
-		if (getArguments() != null) {
-			fontSize = getArguments().getString("fontsize");
-			//mWebView.loadUrl(cur_url);
+		if(JBLPreference.getInstance(getActivity()).readString(StringUtils.FONT_MAX)!=""){
+			fontSize=JBLPreference.getInstance(getActivity()).readString(StringUtils.FONT_MAX);
 		}
+		
+
 		super.onCreate(savedInstanceState);
 	}
-
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -238,13 +236,13 @@ public class MainPageFragment extends SherlockFragment {
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setSupportZoom(true);
 		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
-		if(fontSize.equals("小")){
+		if(fontSize.equals(StringUtils.FONT_MIN)){
 			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
 		}
-		if(fontSize.equals("中")){
+		if(fontSize.equals(StringUtils.FONT_MEDIUM)){
 			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
 		}
-		if(fontSize.equals("大")){
+		if(fontSize.equals(StringUtils.FONT_MAX)){
 			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
 		}
 		BrowserSettings.getInstance().update();
@@ -309,7 +307,6 @@ public class MainPageFragment extends SherlockFragment {
 			@Override
 			public void onClick(View v) {
 				
-
 			}
 		});
 
@@ -365,32 +362,6 @@ public class MainPageFragment extends SherlockFragment {
 			settingPanel.setVisibility(View.GONE);
 			mViewPager.startAnimation(animation2);
 		}
-//		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
-//			@Override
-//			public void onPageScrollStateChanged(int arg0) {
-//
-//			}
-//
-//			@Override
-//			public void onPageScrolled(int arg0, float arg1, int arg2) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//
-//			@Override
-//			public void onPageSelected(int arg0) {
-//				// TODO Auto-generated method stub
-//				// for (int i = 0; i < imageViews.length; i++) {
-//				// if(i == arg0) {
-//				// imageViews[i].setBackgroundResource(R.drawable.page_indicator_focused);
-//				// } else {
-//				// imageViews[i].setBackgroundResource(R.drawable.page_indicator);
-//				// }
-//				// }
-//
-//			}
-//
-//		});
 
 	}
 	// 添加书签
@@ -426,6 +397,10 @@ public class MainPageFragment extends SherlockFragment {
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 		// webView.getSettings().setPluginsEnabled(true);
 		mWebView.getSettings().setPluginState(PluginState.ON);
+		//取得书签和历史记录界面传过来的值
+		if (JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY)!="") {
+			cur_url =JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY);
+		}
 		mWebView.loadUrl(cur_url);
 		mWebView.setWebViewClient(new MyWebViewClient());
 		mWebView.setWebChromeClient(new WebChromeClient() {
@@ -445,21 +420,22 @@ public class MainPageFragment extends SherlockFragment {
 			view.loadUrl(cur_url);
 			return true;
 		}
-
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			// TODO Auto-generated method stub
 			String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA)
 					.format(new Date()).toString();
-			History history = new History();
-			history.setWebAddress(url);
-			history.setWebName(webName);
-			// 加载完加入历史记录
-			new HistoryDao(getActivity()).addHistory(history);
+			String temp=StringUtils.CUR_URL.substring(0, StringUtils.CUR_URL.length());
+			if(!url.equals(temp)){      //当加载默认网址时不加入历史记录
+				History history = new History();
+				history.setWebAddress(url);
+				history.setWebName(webName);
+				// 加载完加入历史记录
+				new HistoryDao(getActivity()).addHistory(history);
+			}
 			super.onPageFinished(view, url);
 		}
 	}
-
 	/*
 	 * 内部类实现滑动分页
 	 */
@@ -483,7 +459,6 @@ public class MainPageFragment extends SherlockFragment {
 			initViewAndAdapter();
 
 		}
-
 		/**
 		 * 将数据分页
 		 * 
@@ -509,7 +484,6 @@ public class MainPageFragment extends SherlockFragment {
 			}
 			
 		}
-
 		/**
 		 * 模拟数据
 		 * 
@@ -569,15 +543,17 @@ public class MainPageFragment extends SherlockFragment {
 							case 4:
 								break;
 							case 5:  //设置无图模式								
-								if(str[5].equals("无图模式")){
-									str[5]="有图模式";
-									flag=false;
-									Toast.makeText(getActivity(), "开启无图模式", 100).show();
+
+								if(str[5].equals(StringUtils.NO_PICTURE)){
+									str[5]=StringUtils.YES_PICTURE;
+									flag=true;
+									Toast.makeText(getActivity(), StringUtils.OPEN_NO_PICTURE, 100).show();
 								}
 								else{
-									str[5]="无图模式";
-									flag=true;
-									Toast.makeText(getActivity(), "开启有图模式", 100).show();
+									str[5]=StringUtils.NO_PICTURE;
+									flag=false;
+									Toast.makeText(getActivity(), StringUtils.OPEN_YES_PICTURE, 100).show();
+
 								}
 								MainPageFragment.this.setBlockPicture(flag);
 								mViewPager.setVisibility(View.GONE);
@@ -595,7 +571,6 @@ public class MainPageFragment extends SherlockFragment {
 				}
 			}
 		}
-
 		public List<View> getPageViews() {
 			return mViewPages;
 		}

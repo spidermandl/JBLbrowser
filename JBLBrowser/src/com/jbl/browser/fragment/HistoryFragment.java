@@ -27,6 +27,8 @@ import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.HistoryAdapter;
 import com.jbl.browser.db.HistoryDao;
+import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.StringUtils;
 
 /**
  * 历史记录fragment
@@ -98,9 +100,8 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 			long id) {
 		// TODO Auto-generated method stub
 		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
-		Bundle bundle=new Bundle();
-		bundle.putString("webAddress", webAddress);
-		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, bundle, true,MainPageFragment.TAG);
+		JBLPreference.getInstance(getActivity()).writeString(StringUtils.BOOKMARK_HISTORY_KEY, webAddress);
+		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, null, false,MainPageFragment.TAG);
 	}
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
