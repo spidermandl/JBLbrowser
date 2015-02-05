@@ -98,7 +98,6 @@ public class MainPageFragment extends SherlockFragment {
 	GridView lv;// 菜单栏信息
 	private List<View> mViewPages;
 	public String fontSize="";
-	private boolean flag=false;    //标识是否是无图模式：false是有图，true是无图
 	/** 菜单文字 **/
 	private String[] str = new String[] { "添加书签", "书签", "设置", "历史", "夜间模式",
 
@@ -474,12 +473,7 @@ public class MainPageFragment extends SherlockFragment {
 		private List<MyListAdapter> mAdapters;
 		private List<List<String>> mPageList;
 		private List<GridView> mGridViews;
-<<<<<<< HEAD
 		private Context mContext;
-       
-=======
-		private Context mContext;            
->>>>>>> 6525cf6e065acaac83e2181c17e3a14981711486
 		public ViewPagerPresenter(Context context) {
 			mContext = context;
 			mPageList = new ArrayList<List<String>>();
@@ -576,17 +570,7 @@ public class MainPageFragment extends SherlockFragment {
 							case 4:
 								break;
 							case 5:  //设置无图模式								
-<<<<<<< HEAD
-								if(str[5].equals("无图模式")){
-									str[5]="有图模式";
-									flag=true;
-									Toast.makeText(getActivity(), "开启无图模式", 100).show();
-								}
-								else{
-									str[5]="无图模式";
-									flag=false;
-									Toast.makeText(getActivity(), "开启有图模式", 100).show();
-=======
+
 								if(str[5].equals(StringUtils.NO_PICTURE)){
 									str[5]=StringUtils.YES_PICTURE;
 									flag=false;
@@ -596,7 +580,7 @@ public class MainPageFragment extends SherlockFragment {
 									str[5]=StringUtils.NO_PICTURE;
 									flag=true;
 									Toast.makeText(getActivity(), StringUtils.OPEN_YES_PICTURE, 100).show();
->>>>>>> 6525cf6e065acaac83e2181c17e3a14981711486
+
 								}
 								MainPageFragment.this.setBlockPicture(flag);
 								BrowserSettings.getInstance().update();
