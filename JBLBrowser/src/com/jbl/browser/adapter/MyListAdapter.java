@@ -48,7 +48,7 @@ public class MyListAdapter extends BaseAdapter
             holder.text = (TextView) convertView.findViewById(R.id.viewpage_test_text);  
             convertView.setTag(holder);  
         } else {  
-            holder = (ViewHolder) convertView.getTag();// ȡ��ViewHolder����  
+            holder = (ViewHolder) convertView.getTag();
         }  
         holder.text.setText(mList.get(position));  
         return convertView;  

@@ -339,7 +339,7 @@ public class MainPageFragment extends SherlockFragment {
 				count++;
 				// mWebView.setAlpha(200);
 				init();
-				getActivity().findViewById(R.id.buttom_tool_bar).setVisibility(View.GONE);
+				//getActivity().findViewById(R.id.buttom_tool_bar).setVisibility(View.GONE);
 			}
 		});
 
@@ -515,14 +515,13 @@ public class MainPageFragment extends SherlockFragment {
 			LayoutInflater inflater = (LayoutInflater) mContext
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			for (int i = 0; i < sTotalPages; ++i) {
-				View v = inflater.inflate(R.layout.viewpager_gridview, null);
-				lv = (GridView) v.findViewById(R.id.viewpage_grid);
+				GridView lv = (GridView)inflater.inflate(R.layout.viewpager_gridview, null);
 				mGridViews.add(lv);
 				MyListAdapter adapter = new MyListAdapter(mContext,
 						mPageList.get(i));
 				mAdapters.add(adapter);
 				lv.setAdapter(adapter);
-				mViewPages.add(v);
+				mViewPages.add(lv);
 				if (i == 0) {
 					// 菜单监听事件
 					lv.setOnItemClickListener(new OnItemClickListener() {
