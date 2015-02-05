@@ -12,8 +12,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.jbl.broswer.bean.History;
 import com.jbl.browser.R;
+import com.jbl.browser.bean.History;
+import com.jbl.browser.fragment.HistoryFragment;
 
 public class HistoryAdapter extends BaseAdapter{
 	List<History> list_history=new ArrayList<History>();

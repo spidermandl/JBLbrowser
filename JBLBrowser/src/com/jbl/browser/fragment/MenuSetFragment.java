@@ -2,6 +2,7 @@ package com.jbl.browser.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -28,16 +29,19 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.jbl.broswer.bean.SetContent;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
+import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MenuSetAdapter;
+import com.jbl.browser.bean.BookMark;
+import com.jbl.browser.bean.SetContent;
+import com.jbl.browser.db.BookMarkDao;
 import com.jbl.browser.utils.BrightnessSettings;
-import com.jbl.broswer.*;
 /*
  * 菜单设置选项fragment
  */
@@ -49,6 +53,7 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 	List<SetContent> list=new ArrayList<SetContent>();
 	MenuSetAdapter menuSetAdapter;
 	SetContent s1,s2,s3;
+	AlertDialog dialog;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -79,7 +84,6 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		final ActionBar ab = this.getSherlockActivity().getSupportActionBar();
-
 		// set defaults for logo & home up
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
@@ -90,7 +94,6 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		// TODO Auto-generated method stub
 		menu.add(0, 1, 0, "Back").setIcon(R.drawable.back_web).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 	@Override
@@ -98,17 +101,15 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.menuset_fragment, container, false);
 		listview=(ListView)view.findViewById(R.id.list_view_set);
+		init();
 		menuSetAdapter=new MenuSetAdapter(getActivity(), list);
 		listview.setAdapter(menuSetAdapter);
 		listview.setOnItemClickListener(this);
-		init();
 		return view;
 	}
-
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-
 		switch (position) {
 		case 0:
 			AlertDialog.Builder builder1=new Builder(getActivity());
@@ -117,16 +118,24 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 			builder1.setSingleChoiceItems(items, 1, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					Toast.makeText(getActivity(), "您选择的字体为:"+items[which], 1).show();
-					s1.setTextSize(items[which]);
 					switch (which) {
 					case 0:
-						BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
+						String fontSize1="小";
+						Bundle bundle1=new Bundle();
+						bundle1.putString("fontsize",fontSize1);
+						((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, bundle1, true,MainPageFragment.TAG);
 						break;
 					case 1:
-						BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
+						String fontSize2="中";
+						Bundle bundle2=new Bundle();
+						bundle2.putString("fontsize",fontSize2);
+						((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, bundle2, true,MainPageFragment.TAG);
 						break;
-					case 2:
-						BrowserSettings.textSize = WebSettings.TextSize.LARGER;
+					case 2:	
+						String fontSize3="大";
+						Bundle bundle3=new Bundle();
+						bundle3.putString("fontsize",fontSize3);
+						((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, bundle3, true,MainPageFragment.TAG);
 						break;
 					default:
 						break;
@@ -138,7 +147,6 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 					
 				}
 			});
-			
 			builder1.create().show();
 			break;
 		case 1 :
@@ -152,8 +160,6 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 			builder3.setSingleChoiceItems(items1, 1, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					Toast.makeText(getActivity(), "您选择了:"+items1[which], 1).show();
-					s3.setTextSize(items1[which]);
-					list.add(s3);
 				}
 			});
 			builder3.setPositiveButton("取消",new DialogInterface.OnClickListener() {
