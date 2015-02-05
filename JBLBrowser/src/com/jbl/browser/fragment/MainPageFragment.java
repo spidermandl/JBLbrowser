@@ -108,20 +108,15 @@ public class MainPageFragment extends SherlockFragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		String webAddress="";
-		webAddress=JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY);
-		if (webAddress!=null) {
-			cur_url =webAddress;
-			//mWebView.loadUrl(cur_url);
+		if (JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY)!="") {
+			cur_url =JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY);
 		}
-		if (getArguments() != null) {
-			fontSize = getArguments().getString("fontsize");
-			//mWebView.loadUrl(cur_url);
+		if(JBLPreference.getInstance(getActivity()).readString(StringUtils.FONT_MAX)!=""){
+			fontSize=JBLPreference.getInstance(getActivity()).readString(StringUtils.FONT_MAX);
 		}
+		
 		super.onCreate(savedInstanceState);
 	}
-
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -239,13 +234,13 @@ public class MainPageFragment extends SherlockFragment {
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setSupportZoom(true);
 		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
-		if(fontSize.equals("小")){
+		if(fontSize.equals(StringUtils.FONT_MIN)){
 			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
 		}
-		if(fontSize.equals("中")){
+		if(fontSize.equals(StringUtils.FONT_MEDIUM)){
 			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
 		}
-		if(fontSize.equals("大")){
+		if(fontSize.equals(StringUtils.FONT_MAX)){
 			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
 		}
 		BrowserSettings.getInstance().update();
@@ -310,7 +305,6 @@ public class MainPageFragment extends SherlockFragment {
 			@Override
 			public void onClick(View v) {
 				
-
 			}
 		});
 
@@ -366,32 +360,6 @@ public class MainPageFragment extends SherlockFragment {
 			settingPanel.setVisibility(View.GONE);
 			mViewPager.startAnimation(animation2);
 		}
-//		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
-//			@Override
-//			public void onPageScrollStateChanged(int arg0) {
-//
-//			}
-//
-//			@Override
-//			public void onPageScrolled(int arg0, float arg1, int arg2) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//
-//			@Override
-//			public void onPageSelected(int arg0) {
-//				// TODO Auto-generated method stub
-//				// for (int i = 0; i < imageViews.length; i++) {
-//				// if(i == arg0) {
-//				// imageViews[i].setBackgroundResource(R.drawable.page_indicator_focused);
-//				// } else {
-//				// imageViews[i].setBackgroundResource(R.drawable.page_indicator);
-//				// }
-//				// }
-//
-//			}
-//
-//		});
 
 	}
 	// 添加书签
@@ -446,7 +414,6 @@ public class MainPageFragment extends SherlockFragment {
 			view.loadUrl(cur_url);
 			return true;
 		}
-
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			// TODO Auto-generated method stub
@@ -460,7 +427,6 @@ public class MainPageFragment extends SherlockFragment {
 			super.onPageFinished(view, url);
 		}
 	}
-
 	/*
 	 * 内部类实现滑动分页
 	 */
@@ -484,7 +450,6 @@ public class MainPageFragment extends SherlockFragment {
 			initViewAndAdapter();
 
 		}
-
 		/**
 		 * 将数据分页
 		 * 
@@ -510,7 +475,6 @@ public class MainPageFragment extends SherlockFragment {
 			}
 			
 		}
-
 		/**
 		 * 模拟数据
 		 * 
@@ -599,7 +563,6 @@ public class MainPageFragment extends SherlockFragment {
 				}
 			}
 		}
-
 		public List<View> getPageViews() {
 			return mViewPages;
 		}

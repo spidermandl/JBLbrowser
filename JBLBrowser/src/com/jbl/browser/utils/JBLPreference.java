@@ -57,6 +57,7 @@ public class JBLPreference {
 		// 写入数据
 		editor.putString(key, value);
 		editor.commit();// 提交写入的数据
+		
 	}
 
 	/**
@@ -80,6 +81,7 @@ public class JBLPreference {
 	 */
 	public String readString(String key) {
 		return sp.getString(key, "");
+		
 	}
 
 	/**
