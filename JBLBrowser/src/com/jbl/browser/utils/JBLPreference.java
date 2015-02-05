@@ -14,15 +14,10 @@ public class JBLPreference {
 	private static JBLPreference myPrefs;// 私有化
 	private SharedPreferences sp;
 	private static Context globleContext;// 全局context
-
 	private final static String JBLBROWSER_PREFERENCE = "JBLBROWSER_PREFERENCE";
-
-
-
 	// 提供私有的构造方法
 	private JBLPreference() {
 	}
-
 	/**
 	 * 对外提供的初始化方法
 	 * 

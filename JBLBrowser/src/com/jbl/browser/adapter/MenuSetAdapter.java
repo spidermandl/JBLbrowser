@@ -29,19 +29,16 @@ public class MenuSetAdapter extends BaseAdapter{
 		// TODO Auto-generated method stub
 		return list_set==null?0:list_set.size();
 	}
-
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
 		return list_set.get(position);
 	}
-
 	@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
 		return position;
 	}
-
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;  
