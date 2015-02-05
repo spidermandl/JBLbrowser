@@ -95,15 +95,13 @@ public class MainPageFragment extends SherlockFragment {
 	int count;
 	Animation animation1, animation2;// 实现动画效果
 	GridView lv;// 菜单栏信息
-	/** 将小圆点的图片用数组表示 */
-	private ImageView[] imageViews;
 	private List<View> mViewPages;
 	public String fontSize="";
-	
+	private boolean flag=false;    //标识是否是无图模式：false是有图，true是无图
 	/** 菜单文字 **/
 	private String[] str = new String[] { "添加书签", "书签", "设置", "历史", "夜间模式",
 
-			"无图模式", "下载管理", "退出", "旋转屏幕", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
+			"无图模式", "下载管理", "退出", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
 
 			"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
 
@@ -466,7 +464,7 @@ public class MainPageFragment extends SherlockFragment {
 		private List<List<String>> mPageList;
 		private List<GridView> mGridViews;
 		private Context mContext;
-        private Boolean flag=false;    //标识是否是无图模式：false是无图，true是有图
+       
 		public ViewPagerPresenter(Context context) {
 			mContext = context;
 			mPageList = new ArrayList<List<String>>();
@@ -565,15 +563,16 @@ public class MainPageFragment extends SherlockFragment {
 							case 5:  //设置无图模式								
 								if(str[5].equals("无图模式")){
 									str[5]="有图模式";
-									flag=false;
+									flag=true;
 									Toast.makeText(getActivity(), "开启无图模式", 100).show();
 								}
 								else{
 									str[5]="无图模式";
-									flag=true;
+									flag=false;
 									Toast.makeText(getActivity(), "开启有图模式", 100).show();
 								}
 								MainPageFragment.this.setBlockPicture(flag);
+								BrowserSettings.getInstance().update();
 								mViewPager.setVisibility(View.GONE);
 								settingPanel.setVisibility(View.GONE);
 								break;
