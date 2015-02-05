@@ -22,11 +22,13 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.BookMarkAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.db.BookMarkDao;
+import com.jbl.browser.utils.JBLPreference;
 
 /**
  * 书签fragment
@@ -112,18 +114,18 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		//1获取一个对话框的创建器
 		AlertDialog.Builder builder=new Builder(getActivity());
 		//2所有builder设置一些参数
-		builder.setTitle("删除书签");
+		builder.setTitle(R.string.delete_bookmark);
 		builder.setMessage("是否要删除\""+webName+"\"这个书签?");
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				int i=new BookMarkDao(getActivity()).deleteBookMarkByWebAddress(webAddress);
 				if(i!=0){
-					Toast.makeText(getActivity(), "删除成功", 100).show();
+					Toast.makeText(getActivity(), R.string.delete_bookmark_succeed, 100).show();
 					initDataFavorites();
 					listview.invalidate();
 				}
 				else{
-					Toast.makeText(getActivity(), "删除失败", 100);
+					Toast.makeText(getActivity(),R.string.delete_bookmark_fail, 100);
 				}
 			}
 		});
@@ -142,9 +144,8 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 			long id) {
 		// TODO Auto-generated method stub
 		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
-		Bundle bundle=new Bundle();
-		bundle.putString("webAddress", webAddress);
-		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, bundle, true,MainPageFragment.TAG);
+		JBLPreference.getInstance(getActivity()).writeString(StringUtils.BOOKMARK_HISTORY_KEY, webAddress);
+		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, null, false,MainPageFragment.TAG);
 	}
 	
 }

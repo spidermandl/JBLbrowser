@@ -35,6 +35,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
 
+import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.StringUtils;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -103,12 +105,15 @@ public class MainPageFragment extends SherlockFragment {
 			"无图模式", "下载管理", "退出", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
 
 			"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
+	private boolean flag=false;    //标识是否是无图模式：true是无图，false是有图
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		if (getArguments() != null) {
-			cur_url = getArguments().getString("webAddress");
+		String webAddress="";
+		webAddress=JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY);
+		if (webAddress!=null) {
+			cur_url =webAddress;
 			//mWebView.loadUrl(cur_url);
 		}
 		if (getArguments() != null) {
@@ -469,8 +474,12 @@ public class MainPageFragment extends SherlockFragment {
 		private List<MyListAdapter> mAdapters;
 		private List<List<String>> mPageList;
 		private List<GridView> mGridViews;
+<<<<<<< HEAD
 		private Context mContext;
        
+=======
+		private Context mContext;            
+>>>>>>> 6525cf6e065acaac83e2181c17e3a14981711486
 		public ViewPagerPresenter(Context context) {
 			mContext = context;
 			mPageList = new ArrayList<List<String>>();
@@ -567,6 +576,7 @@ public class MainPageFragment extends SherlockFragment {
 							case 4:
 								break;
 							case 5:  //设置无图模式								
+<<<<<<< HEAD
 								if(str[5].equals("无图模式")){
 									str[5]="有图模式";
 									flag=true;
@@ -576,6 +586,17 @@ public class MainPageFragment extends SherlockFragment {
 									str[5]="无图模式";
 									flag=false;
 									Toast.makeText(getActivity(), "开启有图模式", 100).show();
+=======
+								if(str[5].equals(StringUtils.NO_PICTURE)){
+									str[5]=StringUtils.YES_PICTURE;
+									flag=false;
+									Toast.makeText(getActivity(), StringUtils.OPEN_NO_PICTURE, 100).show();
+								}
+								else{
+									str[5]=StringUtils.NO_PICTURE;
+									flag=true;
+									Toast.makeText(getActivity(), StringUtils.OPEN_YES_PICTURE, 100).show();
+>>>>>>> 6525cf6e065acaac83e2181c17e3a14981711486
 								}
 								MainPageFragment.this.setBlockPicture(flag);
 								BrowserSettings.getInstance().update();

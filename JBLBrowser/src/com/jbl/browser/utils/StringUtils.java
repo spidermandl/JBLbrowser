@@ -46,4 +46,12 @@ public class StringUtils {
 	/**音乐、音效的目录*/
 	public static final String MUSIC_PATH = "music/soundzy/";
 	
+	public static final String NO_PICTURE="无图模式";
+	public static final String YES_PICTURE="有图模式";
+	public static final String OPEN_NO_PICTURE="开启无图模式";
+	public static final String OPEN_YES_PICTURE="开启有图模式";
+	//书签和历史记录传网址到主页fragment关键字
+	public static final String BOOKMARK_HISTORY_KEY="webAddress";
+	
+	
 }
