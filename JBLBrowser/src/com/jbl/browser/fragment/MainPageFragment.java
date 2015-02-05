@@ -9,10 +9,10 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.SearchViewCompat;
 import android.support.v4.widget.SearchViewCompat.OnQueryTextListenerCompat;
 import android.view.KeyEvent;
@@ -35,8 +35,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
 
-import com.jbl.browser.utils.JBLPreference;
-import com.jbl.browser.utils.StringUtils;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -45,12 +43,15 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
+import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.adapter.MyListAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.db.BookMarkDao;
 import com.jbl.browser.db.HistoryDao;
+import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.StringUtils;
 import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
 
@@ -200,7 +201,8 @@ public class MainPageFragment extends SherlockFragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_main_page, container,
 				false);
-		mWebView = (WebView) view.findViewById(R.id.mWebView); // webview
+		mWebView = (WebView) view.findViewById(R.id.mWebView);// webview
+		//Intent intent = getActivity().getIntent();  //监听webview跳转，实现activity跳转到推荐页面
 		mImageViewBack = (ImageView) view.findViewById(R.id.mImageViewBack); // 3.1
 																				// mImageViewBack
 																				// 后退
@@ -401,7 +403,7 @@ public class MainPageFragment extends SherlockFragment {
 		if (JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY)!="") {
 			cur_url =JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY);
 		}
-		mWebView.loadUrl(cur_url);
+		mWebView.loadUrl(cur_url);		
 		mWebView.setWebViewClient(new MyWebViewClient());
 		mWebView.setWebChromeClient(new WebChromeClient() {
 			@Override
@@ -434,6 +436,17 @@ public class MainPageFragment extends SherlockFragment {
 				new HistoryDao(getActivity()).addHistory(history);
 			}
 			super.onPageFinished(view, url);
+		}
+		@Override
+		public void onPageStarted(WebView view, String url, Bitmap favicon) {
+			// TODO Auto-generated method stub
+			/* 如果匹配到当前网址，跳转到推荐页面  */
+			if(cur_url.equalsIgnoreCase("http://www.baidu.com")){
+				Intent in=new Intent();
+				in.setClass(getActivity(),RecommendMainActivity.class);
+				startActivity(in);
+			}
+			super.onPageStarted(view, url, favicon);
 		}
 	}
 	/*
