@@ -40,14 +40,27 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+<<<<<<< HEAD
+=======
+import com.jbl.broswer.bean.BookMark;
+import com.jbl.broswer.bean.History;
+import com.jbl.broswer.db.BookMarkDao;
+import com.jbl.broswer.db.HistoryDao;
+import com.jbl.browser.BrowserSettings;
+>>>>>>> 1c3243c0dddf0ddb563780f9682ca760377e9338
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MyListAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
+<<<<<<< HEAD
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.db.BookMarkDao;
 import com.jbl.browser.db.HistoryDao;
+=======
+import com.jbl.broswer.*;
+import com.viewpager.indicator.LinePageIndicator;
+>>>>>>> 1c3243c0dddf0ddb563780f9682ca760377e9338
 import com.viewpager.indicator.PageIndicator;
 import com.viewpager.indicator.LinePageIndicator;
 
@@ -96,17 +109,24 @@ public class MainPageFragment extends SherlockFragment {
 	/** 将小圆点的图片用数组表示 */
 	private ImageView[] imageViews;
 	private List<View> mViewPages;
+	public String fontSize="";
+	
 	/** 菜单文字 **/
 	private String[] str = new String[] { "添加书签", "书签", "设置", "历史", "夜间模式",
 
 			"无图模式", "下载管理", "退出", "旋转屏幕", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
 
 			"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		if (getArguments() != null) {
 			cur_url = getArguments().getString("webAddress");
+			//mWebView.loadUrl(cur_url);
+		}
+		if (getArguments() != null) {
+			fontSize = getArguments().getString("fontsize");
 			//mWebView.loadUrl(cur_url);
 		}
 		super.onCreate(savedInstanceState);
@@ -222,8 +242,23 @@ public class MainPageFragment extends SherlockFragment {
 		animation2 = AnimationUtils.loadAnimation(getActivity(),
 				R.anim.menu_bar_disappear);
 		// mWebView.setDownloadListener(new myDownloaderListener());
+		
+		/*
+		 * 设置webview字体大小
+		 */
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setSupportZoom(true);
+		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
+		if(fontSize.equals("小")){
+			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
+		}
+		if(fontSize.equals("中")){
+			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
+		}
+		if(fontSize.equals("大")){
+			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
+		}
+		BrowserSettings.getInstance().update();
 		/*
 		 * 设置title各个控件监听 1.1 search mImageViewSearch.setOnClickListener(new
 		 * View.OnClickListener() {
@@ -284,7 +319,7 @@ public class MainPageFragment extends SherlockFragment {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -294,18 +329,16 @@ public class MainPageFragment extends SherlockFragment {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
 
 		/* 3.4 切换多页模式 */
 		mImageViewChange.setOnClickListener(new View.OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 
@@ -342,7 +375,6 @@ public class MainPageFragment extends SherlockFragment {
 			mViewPager.setVisibility(View.GONE);
 			settingPanel.setVisibility(View.GONE);
 			mViewPager.startAnimation(animation2);
-
 		}
 //		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 //			@Override
@@ -370,8 +402,8 @@ public class MainPageFragment extends SherlockFragment {
 //			}
 //
 //		});
-	}
 
+	}
 	// 添加书签
 	public void addNewBookMark() {
 		boolean flag=false;
@@ -416,7 +448,6 @@ public class MainPageFragment extends SherlockFragment {
 			}
 		});
 	}
-
 	/* webcilent */
 	class MyWebViewClient extends WebViewClient {
 		@Override
@@ -454,8 +485,6 @@ public class MainPageFragment extends SherlockFragment {
 		private List<GridView> mGridViews;
 		private Context mContext;
         private Boolean flag=false;    //标识是否是无图模式：false是无图，true是有图
-		
-
 		public ViewPagerPresenter(Context context) {
 			mContext = context;
 			mPageList = new ArrayList<List<String>>();
