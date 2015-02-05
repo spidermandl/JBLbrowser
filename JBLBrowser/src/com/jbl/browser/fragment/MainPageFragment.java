@@ -102,6 +102,7 @@ public class MainPageFragment extends SherlockFragment {
 			"无图模式", "下载管理", "退出", "旋转屏幕", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
 
 			"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
+	private boolean flag=false;    //标识是否是无图模式：true是无图，false是有图
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -452,7 +453,6 @@ public class MainPageFragment extends SherlockFragment {
 		private List<List<String>> mPageList;
 		private List<GridView> mGridViews;
 		private Context mContext;
-        private Boolean flag=false;    //标识是否是无图模式：false是无图，true是有图
 		
 
 		public ViewPagerPresenter(Context context) {
