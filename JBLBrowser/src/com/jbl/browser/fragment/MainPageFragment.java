@@ -546,17 +546,16 @@ public class MainPageFragment extends SherlockFragment {
 
 								if(str[5].equals(StringUtils.NO_PICTURE)){
 									str[5]=StringUtils.YES_PICTURE;
-									flag=false;
+									flag=true;
 									Toast.makeText(getActivity(), StringUtils.OPEN_NO_PICTURE, 100).show();
 								}
 								else{
 									str[5]=StringUtils.NO_PICTURE;
-									flag=true;
+									flag=false;
 									Toast.makeText(getActivity(), StringUtils.OPEN_YES_PICTURE, 100).show();
 
 								}
 								MainPageFragment.this.setBlockPicture(flag);
-								BrowserSettings.getInstance().update();
 								mViewPager.setVisibility(View.GONE);
 								settingPanel.setVisibility(View.GONE);
 								break;
