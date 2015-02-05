@@ -36,8 +36,9 @@ public class BookMarkDao {
 				flag=false;				
 			}else{
 				int temp=BookMarkDaoOpe.create(bookmark);
-				if(temp!=0)
+				if(temp!=0){
 					flag=true;
+				}
 				else
 					flag=false;
 			}		

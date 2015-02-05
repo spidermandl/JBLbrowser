@@ -78,7 +78,7 @@ public class MainPageFragment extends SherlockFragment {
 	 *//* 定义webview控件 */
 	public  WebView mWebView; // 主控件 webview
 	public  WebSettings settings;
-	public String cur_url = "http://www.baidu.com"; // 设置初始网址
+	public String cur_url =StringUtils.CUR_URL; // 设置初始网址
 	public String webName = "";// 网页名
 	/* 定义操作栏控件 */
 	private ImageView mImageViewBack; // 3.1 mImageViewBack 后退
@@ -109,16 +109,6 @@ public class MainPageFragment extends SherlockFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		String webAddress="";
-		webAddress=JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY);
-		if (webAddress!=null) {
-			cur_url =webAddress;
-			//mWebView.loadUrl(cur_url);
-		}
-		if (getArguments() != null) {
-			fontSize = getArguments().getString("fontsize");
-			//mWebView.loadUrl(cur_url);
-		}
 		super.onCreate(savedInstanceState);
 	}
 
@@ -427,6 +417,10 @@ public class MainPageFragment extends SherlockFragment {
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 		// webView.getSettings().setPluginsEnabled(true);
 		mWebView.getSettings().setPluginState(PluginState.ON);
+		//取得书签和历史记录界面传过来的值
+		if (JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY)!="") {
+			cur_url =JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY);
+		}
 		mWebView.loadUrl(cur_url);
 		mWebView.setWebViewClient(new MyWebViewClient());
 		mWebView.setWebChromeClient(new WebChromeClient() {
@@ -452,11 +446,14 @@ public class MainPageFragment extends SherlockFragment {
 			// TODO Auto-generated method stub
 			String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA)
 					.format(new Date()).toString();
-			History history = new History();
-			history.setWebAddress(url);
-			history.setWebName(webName);
-			// 加载完加入历史记录
-			new HistoryDao(getActivity()).addHistory(history);
+			String temp=StringUtils.CUR_URL.substring(0, StringUtils.CUR_URL.length());
+			if(!url.equals(temp)){      //当加载默认网址时不加入历史记录
+				History history = new History();
+				history.setWebAddress(url);
+				history.setWebName(webName);
+				// 加载完加入历史记录
+				new HistoryDao(getActivity()).addHistory(history);
+			}
 			super.onPageFinished(view, url);
 		}
 	}

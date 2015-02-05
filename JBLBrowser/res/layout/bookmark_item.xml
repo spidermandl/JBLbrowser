@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
     <TextView android:id="@+id/url_name" android:layout_width="fill_parent" android:layout_height="wrap_content" android:lines="1"
-       android:textStyle="bold" android:textSize="18dp"  android:gravity="center_vertical" android:layout_marginLeft="10dp" android:textColor="#000000"></TextView>
-    <TextView android:id="@+id/url_address" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="12dp" 
+       android:textStyle="bold" android:textSize="@dimen/font_size_item_max"  android:gravity="center_vertical" android:layout_marginLeft="10dp" android:textColor="#000000"></TextView>
+    <TextView android:id="@+id/url_address" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="@dimen/font_size_item_min" 
           android:layout_marginLeft="10dp" android:gravity="center_vertical" android:lines="1"/>
     <View android:id="@+id/line" android:layout_width="fill_parent" android:layout_height="1dp" android:background="#5c5c5c"/>"
 

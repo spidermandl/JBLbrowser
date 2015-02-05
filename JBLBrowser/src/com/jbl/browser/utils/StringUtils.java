@@ -46,6 +46,8 @@ public class StringUtils {
 	/**音乐、音效的目录*/
 	public static final String MUSIC_PATH = "music/soundzy/";
 	
+	public static final String CUR_URL="http://www.baidu.com/";
+	
 	public static final String NO_PICTURE="无图模式";
 	public static final String YES_PICTURE="有图模式";
 	public static final String OPEN_NO_PICTURE="开启无图模式";
