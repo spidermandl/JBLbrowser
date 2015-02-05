@@ -40,29 +40,17 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-<<<<<<< HEAD
-=======
-import com.jbl.broswer.bean.BookMark;
-import com.jbl.broswer.bean.History;
-import com.jbl.broswer.db.BookMarkDao;
-import com.jbl.broswer.db.HistoryDao;
 import com.jbl.browser.BrowserSettings;
->>>>>>> 1c3243c0dddf0ddb563780f9682ca760377e9338
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MyListAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
-<<<<<<< HEAD
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.db.BookMarkDao;
 import com.jbl.browser.db.HistoryDao;
-=======
-import com.jbl.broswer.*;
 import com.viewpager.indicator.LinePageIndicator;
->>>>>>> 1c3243c0dddf0ddb563780f9682ca760377e9338
 import com.viewpager.indicator.PageIndicator;
-import com.viewpager.indicator.LinePageIndicator;
 
 /**
  * 浏览器主页
