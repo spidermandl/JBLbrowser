@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.jbl.broswer.bean.BookMark;
 import com.jbl.browser.R;
 import com.jbl.browser.R.id;
 import com.jbl.browser.R.layout;
 import com.jbl.browser.adapter.MyListAdapter.ViewHolder;
+import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.fragment.BookMarkFragment;
 
 import android.app.Activity;

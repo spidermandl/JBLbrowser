@@ -23,12 +23,12 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.jbl.broswer.bean.History;
-import com.jbl.broswer.db.BookMarkDao;
-import com.jbl.broswer.db.HistoryDao;
 import com.jbl.browser.R;
 import com.jbl.browser.adapter.BookMarkAdapter;
 import com.jbl.browser.adapter.HistoryAdapter;
+import com.jbl.browser.bean.History;
+import com.jbl.browser.db.BookMarkDao;
+import com.jbl.browser.db.HistoryDao;
 
 /**
  * 历史记录fragment

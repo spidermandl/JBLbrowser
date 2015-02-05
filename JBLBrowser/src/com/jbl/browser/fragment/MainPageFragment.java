@@ -43,14 +43,14 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.jbl.broswer.bean.BookMark;
-import com.jbl.broswer.bean.History;
-import com.jbl.broswer.db.BookMarkDao;
-import com.jbl.broswer.db.HistoryDao;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MyListAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
+import com.jbl.browser.bean.BookMark;
+import com.jbl.browser.bean.History;
+import com.jbl.browser.db.BookMarkDao;
+import com.jbl.browser.db.HistoryDao;
 import com.viewpager.indicator.PageIndicator;
 import com.viewpager.indicator.LinePageIndicator;
 
