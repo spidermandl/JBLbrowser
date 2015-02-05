@@ -57,5 +57,8 @@ public class StringUtils {
 	public static final String 	FONT_MIN="小";
 	public static final String  FONT_MEDIUM="中";
 	public static final String FONT_MAX="大";
+	public static final String DELETE_RECOMMEND="删除推荐";
+	public static final String SUCCESS_DELETE="删除成功";
+	
 	
 }

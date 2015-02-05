@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.jbl.browser.R;
 import com.jbl.browser.adapter.RecommendAdapter;
 import com.jbl.browser.utils.RecommendData;
-
+import com.jbl.browser.utils.StringUtils;
 @SuppressLint("NewApi")
 public class RecommendCollectFragment extends Fragment implements OnItemLongClickListener,OnItemClickListener{
 	ListView lv;
@@ -70,12 +70,12 @@ public class RecommendCollectFragment extends Fragment implements OnItemLongClic
 		final String urlName1;
 		urlName1=((TextView)view.findViewById(R.id.tv1)).getText().toString();
 		AlertDialog.Builder builder=new Builder(getActivity());
-		builder.setTitle("删除推荐");
+		builder.setTitle(StringUtils.DELETE_RECOMMEND);
 		builder.setMessage("是否要删除\""+urlName1+"\"这个推荐?");
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {		
 						delete(position);					
-				Toast.makeText(getActivity(), "删除成功", 100).show();
+				Toast.makeText(getActivity(), StringUtils.SUCCESS_DELETE, 100).show();
 				initData();
 				lv.invalidate();
 				
