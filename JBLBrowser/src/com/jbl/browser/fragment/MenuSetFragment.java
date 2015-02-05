@@ -2,41 +2,54 @@ package com.jbl.browser.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.SeekBar;
 import android.widget.Toast;
-
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
-import com.jbl.browser.adapter.BookMarkAdapter;
 import com.jbl.browser.adapter.MenuSetAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.SetContent;
 import com.jbl.browser.db.BookMarkDao;
+import com.jbl.browser.utils.BrightnessSettings;
 /*
  * 菜单设置选项fragment
  */
-public class MenuSetFragment extends SherlockFragment implements OnClickListener{
+public class MenuSetFragment extends SherlockFragment implements OnItemClickListener{
 	public final static String TAG="MenuSetFragment";
 	//菜单设置选项内容
 	ListView listview;
 	//设置数据
 	List<SetContent> list=new ArrayList<SetContent>();
 	MenuSetAdapter menuSetAdapter;
+	SetContent s1,s2,s3;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -46,20 +59,22 @@ public class MenuSetFragment extends SherlockFragment implements OnClickListener
 	 *添加数据
 	 */
 	public void init(){
-	    SetContent s1=new SetContent();
+		s1=new SetContent();
 		s1.setSetText("字体大小");
 		s1.setTextSize("中");
 		list.add(s1);
-		SetContent s2=new SetContent();
+	    s2=new SetContent();
 		s2.setSetText("屏幕亮度");
 		s2.setTextSize("适中");
 		list.add(s2);
-		SetContent s3=new SetContent();
+	    s3=new SetContent();
 		s3.setSetText("旋转屏幕");
-		s3.setTextSize("跟随系统");
+		s3.setTextSize("锁定竖屏");
 		list.add(s3);
+		SetContent s4=new SetContent();
+		s4.setSetText("关于");
+		list.add(s4);
 	}
-	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -84,24 +99,39 @@ public class MenuSetFragment extends SherlockFragment implements OnClickListener
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.menuset_fragment, container, false);
 		listview=(ListView)view.findViewById(R.id.list_view_set);
-		init();
-		//list=getData();
 		menuSetAdapter=new MenuSetAdapter(getActivity(), list);
 		listview.setAdapter(menuSetAdapter);
-		listview.setOnClickListener(this);;
+		listview.setOnItemClickListener(this);
+		init();
 		return view;
 	}
-	
+
 	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+
+		switch (position) {
 		case 0:
 			AlertDialog.Builder builder1=new Builder(getActivity());
 			builder1.setTitle("字体大小");
 			final String[] items=new String[]{"小","中","大"};
 			builder1.setSingleChoiceItems(items, 1, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-					Toast.makeText(getActivity(), items[which], 1).show();
+					Toast.makeText(getActivity(), "您选择的字体为:"+items[which], 1).show();
+					s1.setTextSize(items[which]);
+					switch (which) {
+					case 0:
+						BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
+						break;
+					case 1:
+						BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
+						break;
+					case 2:
+						BrowserSettings.textSize = WebSettings.TextSize.LARGER;
+						break;
+					default:
+						break;
+					}
 				}
 			});
 			builder1.setPositiveButton("取消",new DialogInterface.OnClickListener() {
@@ -112,29 +142,19 @@ public class MenuSetFragment extends SherlockFragment implements OnClickListener
 			
 			builder1.create().show();
 			break;
-		case 1:
-			AlertDialog.Builder builder2=new Builder(getActivity());
-			builder2.setTitle("屏幕亮度");
-			builder2.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					
-				}
-			});
-			builder2.setNeutralButton("取消",new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					
-				}
-			});
-			
-			builder2.create().show();
+		case 1 :
+			BrightnessSettings bs=new BrightnessSettings();
+			bs.showBrightnessSettingsDialog(getActivity());
 			break;
-		case 3:
+		case 2:
 			AlertDialog.Builder builder3=new Builder(getActivity());
 			builder3.setTitle("旋转屏幕");
 			final String[] items1=new String[]{"跟随系统","锁定竖屏","锁定横屏"};
 			builder3.setSingleChoiceItems(items1, 1, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-					Toast.makeText(getActivity(), items1[which], 1).show();
+					Toast.makeText(getActivity(), "您选择了:"+items1[which], 1).show();
+					s3.setTextSize(items1[which]);
+					list.add(s3);
 				}
 			});
 			builder3.setPositiveButton("取消",new DialogInterface.OnClickListener() {
@@ -144,9 +164,15 @@ public class MenuSetFragment extends SherlockFragment implements OnClickListener
 			});
 			builder3.create().show();
 			break;
+		case 3:  //关于浏览器信息
+			AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
+			dialog.show();
+			Window window = dialog.getWindow();
+			window.setContentView(R.layout.activity_about);
+			break;
 		default:
 			break;
 		}
-		
+
 	}
 }

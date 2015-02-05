@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,8 +39,6 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	ListView listview;
 	//书签数据
 	List<BookMark> list=new ArrayList<BookMark>();
-	//书签操作类
-	BookMarkDao bookmarkdao;
 	//网址
 	String webAddress="";
 	//网名
@@ -50,22 +47,12 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		bookmarkdao=new BookMarkDao(getActivity());
 		super.onCreate(savedInstanceState);
-	}
-	/**
-	 * 测试数据
-	 */
-	public void init(){
-		BookMark b1=new BookMark();
-		b1.setWebName("百度");
-		b1.setWebAddress("http:baidu.com");		
-		bookmarkdao.addBookMark(b1);
 	}
 	//从数据库中获得数据
 	public List<BookMark> getData(){
 		List<BookMark> list=new ArrayList<BookMark>();
-		list=bookmarkdao.queryAll();
+		list=new BookMarkDao(getActivity()).queryAll();
 		if(list==null){
 			Toast.makeText(getActivity(), "没有书签", 100).show();
 		}
@@ -119,15 +106,17 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 			int position, long id) {
 		// TODO Auto-generated method stub		
 		final String webAddress;
+		final String webName;
+		webName=((TextView)view.findViewById(R.id.url_name)).getText().toString();
 		webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
 		//1获取一个对话框的创建器
 		AlertDialog.Builder builder=new Builder(getActivity());
 		//2所有builder设置一些参数
 		builder.setTitle("删除书签");
-		builder.setMessage("是否要删除\""+webAddress+"\"这个书签?");
+		builder.setMessage("是否要删除\""+webName+"\"这个书签?");
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				int i=bookmarkdao.deleteBookMarkByWebAddress(webAddress);
+				int i=new BookMarkDao(getActivity()).deleteBookMarkByWebAddress(webAddress);
 				if(i!=0){
 					Toast.makeText(getActivity(), "删除成功", 100).show();
 					initDataFavorites();
@@ -155,7 +144,6 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
 		Bundle bundle=new Bundle();
 		bundle.putString("webAddress", webAddress);
-		setArguments(bundle);
 		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, bundle, true,MainPageFragment.TAG);
 	}
 	

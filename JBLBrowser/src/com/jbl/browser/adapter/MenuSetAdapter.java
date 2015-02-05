@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jbl.browser.R;
-import com.jbl.browser.adapter.BookMarkAdapter.ViewHolder;
-import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.SetContent;
-import com.jbl.browser.fragment.BookMarkFragment;
-import com.jbl.browser.fragment.MenuSetFragment;
 /*
  * 菜单设置选项的适配器
  */

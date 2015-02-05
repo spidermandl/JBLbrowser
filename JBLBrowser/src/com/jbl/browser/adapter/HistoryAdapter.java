@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +58,7 @@ public class HistoryAdapter extends BaseAdapter{
         }
         holder.urlName.setText(list_history.get(position).getWebName());
         holder.urlAddress.setText(list_history.get(position).getWebAddress());
-		return null;
+		return convertView;
 	}
 	public class ViewHolder  
     {  
