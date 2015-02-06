@@ -54,6 +54,7 @@ public class StringUtils {
 	public static final String OPEN_YES_PICTURE="开启有图模式";
 	//书签和历史记录传网址到主页fragment关键字
 	public static final String BOOKMARK_HISTORY_KEY="webAddress";
+	public static final String RECOMMEND_KEY="urlAddress";
 	public static final String 	FONT_MIN="小";
 	public static final String  FONT_MEDIUM="中";
 	public static final String FONT_MAX="大";

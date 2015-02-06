@@ -1,7 +1,6 @@
 package com.jbl.browser.fragment;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -22,7 +21,7 @@ import android.widget.Toast;
 
 import com.jbl.browser.R;
 import com.jbl.browser.adapter.RecommendAdapter;
-import com.jbl.browser.utils.RecommendData;
+import com.jbl.browser.utils.RecommendCollectData;
 import com.jbl.browser.utils.StringUtils;
 
 
@@ -57,15 +56,15 @@ public class RecommendCollectFragment extends Fragment implements OnItemLongClic
  /* 获取数据资源 */
 	private void getData() {
 		// TODO Auto-generated method stub
-		image=RecommendData.image;
-		urlAddress=RecommendData.urlAddress;
-		urlName=RecommendData.urlName;
+		image=RecommendCollectData.image;
+		urlAddress=RecommendCollectData.urlAddress;
+		urlName=RecommendCollectData.urlName;
 	}
 	/* 删除相应数据 */
 	public void delete(int i){
-		RecommendData.image.remove(i);
-		RecommendData.urlName.remove(i);
-		RecommendData.urlAddress.remove(i);
+		RecommendCollectData.image.remove(i);
+		RecommendCollectData.urlName.remove(i);
+		RecommendCollectData.urlAddress.remove(i);
 	}
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,

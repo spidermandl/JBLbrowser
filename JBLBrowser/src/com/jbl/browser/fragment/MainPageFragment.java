@@ -403,7 +403,17 @@ public class MainPageFragment extends SherlockFragment {
 		if (JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY)!="") {
 			cur_url =JBLPreference.getInstance(getActivity()).readString(StringUtils.BOOKMARK_HISTORY_KEY);
 		}
-		mWebView.loadUrl(cur_url);		
+		//取得推荐页面的网址
+		if (JBLPreference.getInstance(getActivity()).readString(StringUtils.RECOMMEND_KEY)!="") {
+			cur_url =JBLPreference.getInstance(getActivity()).readString(StringUtils.RECOMMEND_KEY);
+		}
+		mWebView.loadUrl(cur_url);
+		/* 这里是推荐监听页面     暂时先注释  因为我监听的事主页百度*/
+		/*if(cur_url.equals("http://www.baidu.com/?tn=95406117_hao_pg")){
+			Intent in=new Intent();
+			in.setClass(getActivity(),RecommendMainActivity.class);
+			startActivity(in);
+		}*/
 		mWebView.setWebViewClient(new MyWebViewClient());
 		mWebView.setWebChromeClient(new WebChromeClient() {
 			@Override
@@ -436,17 +446,6 @@ public class MainPageFragment extends SherlockFragment {
 				new HistoryDao(getActivity()).addHistory(history);
 			}
 			super.onPageFinished(view, url);
-		}
-		@Override
-		public void onPageStarted(WebView view, String url, Bitmap favicon) {
-			// TODO Auto-generated method stub
-			/* 如果匹配到当前网址，跳转到推荐页面  */
-			if(cur_url.equalsIgnoreCase("http://www.baidu.com")){
-				Intent in=new Intent();
-				in.setClass(getActivity(),RecommendMainActivity.class);
-				startActivity(in);
-			}
-			super.onPageStarted(view, url, favicon);
 		}
 	}
 	/*

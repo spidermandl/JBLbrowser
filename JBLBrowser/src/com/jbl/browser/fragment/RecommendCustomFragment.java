@@ -1,29 +1,27 @@
 package com.jbl.browser.fragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.AlertDialog.Builder;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.jbl.browser.R;
 import com.jbl.browser.adapter.RecommendAdapter;
-import com.jbl.browser.utils.RecommendData;
+import com.jbl.browser.utils.RecommendCustomData;
 import com.jbl.browser.utils.StringUtils;
 
 
@@ -60,15 +58,15 @@ public class RecommendCustomFragment extends Fragment implements OnItemLongClick
 /*  获取数据源  */
 	private void getData() {
 		// TODO Auto-generated method stub
-		image=RecommendData.image;
-		urlAddress=RecommendData.urlAddress;
-		urlName=RecommendData.urlName;
+		image=RecommendCustomData.image;
+		urlAddress=RecommendCustomData.urlAddress;
+		urlName=RecommendCustomData.urlName;
 	}
 	/* 删除操作 */
 	public void delete(int i){
-		RecommendData.image.remove(i);
-		RecommendData.urlName.remove(i);
-		RecommendData.urlAddress.remove(i);
+		RecommendCustomData.image.remove(i);
+		RecommendCustomData.urlName.remove(i);
+		RecommendCustomData.urlAddress.remove(i);
 	}
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,

@@ -20,8 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jbl.browser.R;
+import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.RecommendAdapter;
-import com.jbl.browser.utils.RecommendData;
+import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.RecommendMainData;
 import com.jbl.browser.utils.StringUtils;
 
 
@@ -56,20 +58,23 @@ public class RecommendMainFragment extends Fragment implements OnItemLongClickLi
 	/* 获取数据源  */
 	private void getData() {
 		// TODO Auto-generated method stub
-		image=RecommendData.image;
-		urlAddress=RecommendData.urlAddress;
-		urlName=RecommendData.urlName;
+		image=RecommendMainData.image;
+		urlAddress=RecommendMainData.urlAddress;
+		urlName=RecommendMainData.urlName;
 	}
 	/*  删除操作 */	
 	public void delete(int i){
-		RecommendData.image.remove(i);
-		RecommendData.urlName.remove(i);
-		RecommendData.urlAddress.remove(i);
+		RecommendMainData.image.remove(i);
+		RecommendMainData.urlName.remove(i);
+		RecommendMainData.urlAddress.remove(i);
 	}
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
+		String webAddress=((TextView)view.findViewById(R.id.tv2)).getText().toString();
+		JBLPreference.getInstance(getActivity()).writeString(StringUtils.RECOMMEND_KEY, webAddress);
+		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, null, false,MainPageFragment.TAG);
 	}
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,

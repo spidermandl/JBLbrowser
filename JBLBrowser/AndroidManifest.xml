@@ -4,7 +4,7 @@
     android:versionCode="1"
     android:versionName="1.0.0" >
 
-    <uses-sdk android:minSdkVersion="8" />
+    <uses-sdk android:minSdkVersion="11" />
 
     <uses-permission android:name="android.permission.CAMERA" >
     </uses-permission>
@@ -115,6 +115,7 @@
         </activity>
         <activity
             android:name=".activity.RecommendMainActivity"
+            android:theme="@android:style/Theme.Holo.Light"
             android:label="@string/title_activity_recommend_main"
              >
              

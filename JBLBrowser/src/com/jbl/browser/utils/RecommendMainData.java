@@ -8,7 +8,7 @@ import com.jbl.browser.R;
  * 推荐页面数据源   网站图标，网站名称，网站网址
  * 
  * */
-public class RecommendData {
+public class RecommendMainData {
 
 	public static List<Integer> image=new ArrayList<Integer>();
 	public static List<String> urlName=new ArrayList<String>();
