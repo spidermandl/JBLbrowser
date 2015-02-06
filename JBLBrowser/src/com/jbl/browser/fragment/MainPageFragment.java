@@ -7,10 +7,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SearchViewCompat;
@@ -22,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
@@ -52,6 +57,9 @@ import com.jbl.browser.db.BookMarkDao;
 import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
+import com.mozillaonline.providers.DownloadManager;
+import com.mozillaonline.providers.DownloadManager.Request;
+import com.mozillaonline.providers.downloads.ui.DownloadList;
 import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
 
@@ -106,6 +114,9 @@ public class MainPageFragment extends SherlockFragment {
 
 			"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
 	private boolean flag=false;    //标识是否是无图模式：true是无图，false是有图
+	
+	DownloadManager mDownloadManager;
+	private BroadcastReceiver mReceiver;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -119,6 +130,20 @@ public class MainPageFragment extends SherlockFragment {
 		
 
 		super.onCreate(savedInstanceState);
+	}
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		//注册广播
+		getActivity().registerReceiver(mReceiver, new IntentFilter(
+				DownloadManager.ACTION_NOTIFICATION_CLICKED));
+		super.onResume();
+	}
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		getActivity().unregisterReceiver(mReceiver);
+		super.onDestroy();
 	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -196,6 +221,21 @@ public class MainPageFragment extends SherlockFragment {
         }  
         return false; 
     }
+    //跳转到下载管理界面
+    private void showDownloadList() {
+    	Intent intent = new Intent();
+    	intent.setClass(getActivity(), DownloadList.class);
+    	startActivity(intent);
+        }
+    //开始下载
+   private void startDownload(String url) {
+	    	Uri srcUri = Uri.parse(url);
+	    	DownloadManager.Request request = new Request(srcUri);
+	    	request.setDestinationInExternalPublicDir(
+	    		Environment.DIRECTORY_DOWNLOADS, "/");
+	    	request.setDescription("Just for test");
+	    	mDownloadManager.enqueue(request);
+        }
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -394,6 +434,16 @@ public class MainPageFragment extends SherlockFragment {
 
 		// webView.getSettings().setUseWideViewPort(true);
 		// webView.getSettings().setLoadWithOverviewMode(true);
+		
+		mDownloadManager = new DownloadManager(getActivity().getContentResolver(),
+				getActivity().getPackageName());
+		mReceiver = new BroadcastReceiver() {
+
+		    @Override
+		    public void onReceive(Context context, Intent intent) {
+		    	showDownloadList();
+		    }
+		};
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setAppCacheMaxSize(8 * 1024 * 1024);
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -414,6 +464,15 @@ public class MainPageFragment extends SherlockFragment {
 			in.setClass(getActivity(),RecommendMainActivity.class);
 			startActivity(in);
 		}*/
+		mWebView.setDownloadListener(new DownloadListener() {
+			
+			@Override
+			public void onDownloadStart(String url, String userAgent,
+					String contentDisposition, String mimetype, long contentLength) {
+				// TODO Auto-generated method stub
+				startDownload(url);
+			}
+		});
 		mWebView.setWebViewClient(new MyWebViewClient());
 		mWebView.setWebChromeClient(new WebChromeClient() {
 			@Override
@@ -571,6 +630,7 @@ public class MainPageFragment extends SherlockFragment {
 								settingPanel.setVisibility(View.GONE);
 								break;
 							case 6:
+								showDownloadList();
 								break;
 							case 7:
 								break;
