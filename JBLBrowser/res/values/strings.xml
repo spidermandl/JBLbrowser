@@ -103,7 +103,7 @@
     <string name="delete_bookmark_succeed">删除书签成功</string>
     <string name="delete_bookmark_fail">删除书签失败</string>
     <string name="delete_bookmark">删除书签</string>
-
+	<string name="Main.ShareChooserTitle">分享</string>
     
     
     
