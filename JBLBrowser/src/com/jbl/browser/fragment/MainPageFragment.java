@@ -17,12 +17,16 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SearchViewCompat;
 import android.support.v4.widget.SearchViewCompat.OnQueryTextListenerCompat;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+
+import android.view.WindowManager.LayoutParams;
+
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.DownloadListener;
@@ -33,9 +37,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
 
@@ -115,7 +121,12 @@ public class MainPageFragment extends SherlockFragment {
 	private boolean visibile=true;//标示是否显示菜单栏
 	DownloadManager mDownloadManager;
 	private BroadcastReceiver mReceiver;
-	public WindowManager.LayoutParams lp;
+
+	
+	private Button nextPage;//向下翻页按钮
+	private Button previousPage;//向上翻页按钮
+
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -518,6 +529,9 @@ public class MainPageFragment extends SherlockFragment {
 		private List<List<String>> mPageList;
 		private List<GridView> mGridViews;
 		private Context mContext;
+		
+		
+		
 		public ViewPagerPresenter(Context context) {
 			mContext = context;
 			mPageList = new ArrayList<List<String>>();
@@ -632,8 +646,36 @@ public class MainPageFragment extends SherlockFragment {
 							case 6:
 								showDownloadList();
 								break;
-							case 7://退出系统
-								getActivity().finish();
+							case 7:
+								LayoutInflater layoutInflater = (LayoutInflater)getActivity()  
+			                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);   
+					            // 获取自定义布局文件pop_window_nextpager.xml的视图  
+					            View popview = layoutInflater.inflate(R.layout.pop_window_nextpager, null);  
+					            PopupWindow popWindow = new PopupWindow(popview,  
+					                    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);  
+					            //规定弹窗的位置  
+					            popWindow.showAtLocation(getActivity().findViewById(R.id.mWebView), Gravity.RIGHT,  
+					                    0, 0);  
+					            //PopupWindow里的两个Button  
+					            nextPage = (Button) popview.findViewById(R.id.next_page); 
+					            previousPage=(Button) popview.findViewById(R.id.previous_page);
+					            previousPage.setOnClickListener(new OnClickListener() {
+									
+									@Override
+									public void onClick(View v) {
+										// TODO Auto-generated method stub
+										mWebView.scrollTo(0, mWebView.getScrollY()-mWebView.getHeight());
+									}
+								});
+					            nextPage.setOnClickListener(new OnClickListener() {
+									
+									@Override
+									public void onClick(View v) {
+										// TODO Auto-generated method stub
+										mWebView.scrollTo(0, mWebView.getHeight()+mWebView.getScrollY());
+									}
+								});
+
 								break;
 							default:
 								break;
@@ -665,6 +707,5 @@ public class MainPageFragment extends SherlockFragment {
 		public List<View> getPageViews() {
 			return mViewPages;
 		}
-
 	}
 }
