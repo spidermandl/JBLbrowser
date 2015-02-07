@@ -70,6 +70,8 @@ public class StringUtils {
 	public static final String DAY_MODEL="日间模式";
 	public static final String NIGHT_MODEL="夜间模式";
 	public static final String EXTRA_ID_URL = "EXTRA_ID_URL";
+	public static final String OPEN_TURNING_BUTTON="开启翻页按钮";
+	public static final String COLSE_TURNING_BUTTON="关闭翻页按钮";
 	public static void sharePage(Activity activity, String title, String url) {
     	Intent shareIntent = new Intent(Intent.ACTION_SEND);
     	

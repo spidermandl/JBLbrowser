@@ -2,21 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent" >
-
         <View
              android:id="@+id/view"
              android:layout_width="fill_parent"
              android:layout_height="wrap_content"
              android:layout_above="@+id/setting_viewpager"
              android:background="#e0000000" />
-        
         <android.support.v4.view.ViewPager
             android:id="@id/setting_viewpager"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/setting_indicator"
             android:layout_gravity="center" />
-
         <com.viewpager.indicator.LinePageIndicator
         	android:id="@id/setting_indicator"
         	android:padding="5dip"
@@ -24,6 +21,4 @@
         	android:layout_width="fill_parent"
         	android:layout_alignParentBottom="true"
         />
-
-
 </RelativeLayout>

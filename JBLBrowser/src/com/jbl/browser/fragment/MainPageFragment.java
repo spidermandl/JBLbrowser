@@ -108,7 +108,7 @@ public class MainPageFragment extends SherlockFragment {
 	/** 菜单文字 **/
 	private String[] str = new String[] { "添加书签", "书签", "设置", "历史", "分享",
 
-			"无图模式", "下载管理", "退出", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
+			"无图模式", "下载管理", "退出", "开启翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
 
 			"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
 	private boolean flag=false;    //标识是否是无图模式：true是无图，false是有图
@@ -639,6 +639,25 @@ public class MainPageFragment extends SherlockFragment {
 								break;
 							}
 						}
+					});
+				}
+				if(i==1){
+					lv.setOnItemClickListener(new OnItemClickListener(){
+
+						@Override
+						public void onItemClick(AdapterView<?> parent,
+								View view, int position, long id) {
+							switch (position) {
+							case 0:
+								
+								break;
+
+							default:
+								break;
+							}
+							
+						}
+						
 					});
 				}
 			}
