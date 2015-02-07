@@ -6,12 +6,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,7 +24,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+
 import android.view.WindowManager.LayoutParams;
+
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.DownloadListener;
@@ -53,7 +53,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
-import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.adapter.MyListAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.jbl.browser.bean.BookMark;
@@ -113,18 +112,20 @@ public class MainPageFragment extends SherlockFragment {
 	private List<View> mViewPages;
 	public String fontSize="";
 	/** 菜单文字 **/
-	private String[] str = new String[] { "添加书签", "书签", "设置", "历史", "夜间模式",
+	private String[] str = new String[] { "添加书签", "书签", "设置", "历史", "分享",
 
 			"无图模式", "下载管理", "退出", "翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
 
 			"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
 	private boolean flag=false;    //标识是否是无图模式：true是无图，false是有图
-	
+	private boolean visibile=true;//标示是否显示菜单栏
 	DownloadManager mDownloadManager;
 	private BroadcastReceiver mReceiver;
+
 	
 	private Button nextPage;//向下翻页按钮
 	private Button previousPage;//向上翻页按钮
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -164,14 +165,12 @@ public class MainPageFragment extends SherlockFragment {
 		ab.setDisplayShowHomeEnabled(false);
 		setHasOptionsMenu(true);
 	}
-
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		MenuItem item = menu.add(0, 0, 0, "Search").setIcon(
 				android.R.drawable.ic_menu_search);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		View searchView = SearchViewCompat.newSearchView(getActivity());
-
 		if (searchView != null) {
 			SearchViewCompat.setOnQueryTextListener(searchView,
 					new OnQueryTextListenerCompat() {
@@ -386,7 +385,7 @@ public class MainPageFragment extends SherlockFragment {
 				// mWebView.getBackground().setAlpha(100);
 				count++;
 				// mWebView.setAlpha(200);
-				init();
+				init(visibile);
 				//getActivity().findViewById(R.id.buttom_tool_bar).setVisibility(View.GONE);
 			}
 		});
@@ -398,8 +397,8 @@ public class MainPageFragment extends SherlockFragment {
 
 	/* 点击webview取消菜单栏展示 */
 
-	private void init() {
-		if (count % 2 != 0) {
+	private void init(boolean visibile) {
+		if (visibile) {
 			mPresenter = new ViewPagerPresenter(this.getActivity());
 			mPageAdapter = new SettingPagerAdapter(mPresenter.getPageViews());
 			mViewPager.setAdapter(mPageAdapter);
@@ -407,10 +406,12 @@ public class MainPageFragment extends SherlockFragment {
 			mViewPager.setVisibility(View.VISIBLE);
 			settingPanel.setVisibility(View.VISIBLE);
 			mViewPager.startAnimation(animation1);
+			this.visibile=false;
 		} else {
 			mViewPager.setVisibility(View.GONE);
 			settingPanel.setVisibility(View.GONE);
 			mViewPager.startAnimation(animation2);
+			this.visibile=true;
 		}
 
 	}
@@ -621,10 +622,12 @@ public class MainPageFragment extends SherlockFragment {
 										HistoryFragment.class, null, true,
 										HistoryFragment.TAG);
 								break;
-							case 4:
+							case 4://分享
+								StringUtils.sharePage(getActivity(), mWebView.getTitle(), mWebView.getUrl());
+								mViewPager.setVisibility(View.GONE);
+								settingPanel.setVisibility(View.GONE);
 								break;
 							case 5:  //设置无图模式								
-
 								if(str[5].equals(StringUtils.NO_PICTURE)){
 									str[5]=StringUtils.YES_PICTURE;
 									flag=true;
@@ -672,6 +675,7 @@ public class MainPageFragment extends SherlockFragment {
 										mWebView.scrollTo(0, mWebView.getHeight()+mWebView.getScrollY());
 									}
 								});
+
 								break;
 							default:
 								break;

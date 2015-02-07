@@ -1,5 +1,12 @@
 package com.jbl.browser.utils;
 
+
+
+import com.jbl.browser.R;
+
+import android.app.Activity;
+import android.content.Intent;
+
 public class StringUtils {
 
 	 /**业务操作完成后，其结果对应的键*/
@@ -60,6 +67,21 @@ public class StringUtils {
 	public static final String FONT_MAX="大";
 	public static final String DELETE_RECOMMEND="删除推荐";
 	public static final String SUCCESS_DELETE="删除成功";
-	
+	public static final String DAY_MODEL="日间模式";
+	public static final String NIGHT_MODEL="夜间模式";
+	public static final String EXTRA_ID_URL = "EXTRA_ID_URL";
+	public static void sharePage(Activity activity, String title, String url) {
+    	Intent shareIntent = new Intent(Intent.ACTION_SEND);
+    	
+    	shareIntent.setType("text/plain");
+    	shareIntent.putExtra(Intent.EXTRA_TEXT, url);
+    	shareIntent.putExtra(Intent.EXTRA_SUBJECT, title);
+    	
+    	try {
+    		activity.startActivity(Intent.createChooser(shareIntent, activity.getString(R.string.Main_ShareChooserTitle)));
+        } catch(android.content.ActivityNotFoundException ex) {
+           
+        }
+    }
 	
 }
