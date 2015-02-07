@@ -125,8 +125,8 @@ public class MainPageFragment extends SherlockFragment {
 	
 	private Button nextPage;//向下翻页按钮
 	private Button previousPage;//向上翻页按钮
-
-
+	View popview;//翻页按钮布局
+	 PopupWindow popWindow;//悬浮翻页窗口
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -647,34 +647,7 @@ public class MainPageFragment extends SherlockFragment {
 								showDownloadList();
 								break;
 							case 7:
-								LayoutInflater layoutInflater = (LayoutInflater)getActivity()  
-			                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);   
-					            // 获取自定义布局文件pop_window_nextpager.xml的视图  
-					            View popview = layoutInflater.inflate(R.layout.pop_window_nextpager, null);  
-					            PopupWindow popWindow = new PopupWindow(popview,  
-					                    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);  
-					            //规定弹窗的位置  
-					            popWindow.showAtLocation(getActivity().findViewById(R.id.mWebView), Gravity.RIGHT,  
-					                    0, 0);  
-					            //PopupWindow里的两个Button  
-					            nextPage = (Button) popview.findViewById(R.id.next_page); 
-					            previousPage=(Button) popview.findViewById(R.id.previous_page);
-					            previousPage.setOnClickListener(new OnClickListener() {
-									
-									@Override
-									public void onClick(View v) {
-										// TODO Auto-generated method stub
-										mWebView.scrollTo(0, mWebView.getScrollY()-mWebView.getHeight());
-									}
-								});
-					            nextPage.setOnClickListener(new OnClickListener() {
-									
-									@Override
-									public void onClick(View v) {
-										// TODO Auto-generated method stub
-										mWebView.scrollTo(0, mWebView.getHeight()+mWebView.getScrollY());
-									}
-								});
+								
 
 								break;
 							default:
@@ -691,9 +664,44 @@ public class MainPageFragment extends SherlockFragment {
 								View view, int position, long id) {
 							switch (position) {
 							case 0:
-								
+								if(str[8].equals(StringUtils.OPEN_TURNING_BUTTON)){
+									str[8]=StringUtils.COLSE_TURNING_BUTTON;
+									flag=true;
+									Toast.makeText(getActivity(), StringUtils.OPEN_TURNING_BUTTON, 100).show();
+									LayoutInflater layoutInflater = (LayoutInflater)getActivity()  
+						                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);   
+								            // 获取自定义布局文件pop_window_nextpager.xml的视图  
+								            popview = layoutInflater.inflate(R.layout.pop_window_nextpager, null);  
+								            popWindow = new PopupWindow(popview,  
+								                    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);  
+								            //规定弹窗的位置  
+								            popWindow.showAtLocation(getActivity().findViewById(R.id.mWebView), Gravity.RIGHT,  
+								                    0, 0);  
+								            //PopupWindow里的两个Button  
+								            nextPage = (Button) popview.findViewById(R.id.next_page); 
+								            previousPage=(Button) popview.findViewById(R.id.previous_page);
+								            previousPage.setOnClickListener(new OnClickListener() {	
+												@Override
+												public void onClick(View v) {
+													mWebView.scrollTo(0, mWebView.getScrollY()-mWebView.getHeight());
+												}
+											});
+								            nextPage.setOnClickListener(new OnClickListener() {
+												@Override
+												public void onClick(View v) {
+													mWebView.scrollTo(0, mWebView.getHeight()+mWebView.getScrollY());
+												}
+											});
+								}
+								else{
+									str[8]=StringUtils.OPEN_TURNING_BUTTON;
+									flag=false;
+									Toast.makeText(getActivity(), StringUtils.COLSE_TURNING_BUTTON, 100).show();
+									popWindow.dismiss();
+								}
+							            mViewPager.setVisibility(View.GONE);
+										settingPanel.setVisibility(View.GONE);
 								break;
-
 							default:
 								break;
 							}
