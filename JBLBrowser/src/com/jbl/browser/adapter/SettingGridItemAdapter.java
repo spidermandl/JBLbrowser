@@ -12,12 +12,17 @@ import android.widget.TextView;
 
 import com.jbl.browser.R;
 
-public class MyListAdapter extends BaseAdapter  
+/**
+ * 设置界面中每一个小项布局界面
+ * @author Desmond
+ *
+ */
+public class SettingGridItemAdapter extends BaseAdapter  
 {  
     private LayoutInflater mInflater;  
     private List<String> mList;  
     private Context mContext;  
-    public MyListAdapter(Context context, List<String> list) {  
+    public SettingGridItemAdapter(Context context, List<String> list) {  
         mContext = context;  
         mInflater = LayoutInflater.from(mContext);  
         mList = list;  
@@ -42,7 +47,7 @@ public class MyListAdapter extends BaseAdapter
     {  
         ViewHolder holder;  
         if (convertView == null) {  
-            convertView = mInflater.inflate(R.layout.gridview_item, null);  
+            convertView = mInflater.inflate(R.layout.main_setting_item, null);  
             holder = new ViewHolder();  
             holder.icon = (ImageView) convertView.findViewById(R.id.viewpage_test_icon);  
             holder.text = (TextView) convertView.findViewById(R.id.viewpage_test_text);  

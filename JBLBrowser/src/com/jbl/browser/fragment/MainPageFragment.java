@@ -53,7 +53,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
-import com.jbl.browser.adapter.MyListAdapter;
+import com.jbl.browser.adapter.SettingGridItemAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
@@ -107,16 +107,9 @@ public class MainPageFragment extends SherlockFragment {
 	View settingPanel;// 设置主界面
 	PageIndicator mIndicator;
 	int count;
-	Animation animation1, animation2;// 实现动画效果
 	GridView lv;// 菜单栏信息
 	private List<View> mViewPages;
 	public String fontSize="";
-	/** 菜单文字 **/
-	private String[] str = new String[] { "添加书签", "书签", "设置", "历史", "分享",
-
-			"无图模式", "下载管理", "退出", "开启翻页按钮", "无痕浏览", "全屏浏览", "更换壁纸",
-
-			"省流加速", "阅读模式", "刷新", "关于", "意见反馈", "检查更新", "页内查找", "保存网页" };
 	private boolean flag=false;    //标识是否是无图模式：true是无图，false是有图
 	private boolean visibile=true;//标示是否显示菜单栏
 	DownloadManager mDownloadManager;
@@ -271,12 +264,6 @@ public class MainPageFragment extends SherlockFragment {
 		settingPanel = view.findViewById(R.id.main_setting_panel);
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
-		// 加载弹出菜单栏的动画效果
-		animation1 = AnimationUtils.loadAnimation(getActivity(),
-				R.anim.menu_bar_appear);
-		// 退出菜单栏时的动画效果
-		animation2 = AnimationUtils.loadAnimation(getActivity(),
-				R.anim.menu_bar_disappear);
 		// mWebView.setDownloadListener(new myDownloaderListener());
 		
 		/*
@@ -382,11 +369,8 @@ public class MainPageFragment extends SherlockFragment {
 
 			@Override
 			public void onClick(View v) {
-				// mWebView.getBackground().setAlpha(100);
 				count++;
-				// mWebView.setAlpha(200);
 				init(visibile);
-				//getActivity().findViewById(R.id.buttom_tool_bar).setVisibility(View.GONE);
 			}
 		});
 
@@ -405,12 +389,14 @@ public class MainPageFragment extends SherlockFragment {
 			mIndicator.setViewPager(mViewPager);
 			mViewPager.setVisibility(View.VISIBLE);
 			settingPanel.setVisibility(View.VISIBLE);
-			mViewPager.startAnimation(animation1);
+			mViewPager.startAnimation(// 加载弹出菜单栏的动画效果
+					AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_appear));
 			this.visibile=false;
 		} else {
 			mViewPager.setVisibility(View.GONE);
 			settingPanel.setVisibility(View.GONE);
-			mViewPager.startAnimation(animation2);
+			mViewPager.startAnimation(// 退出菜单栏时的动画效果
+					AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_disappear));
 			this.visibile=true;
 		}
 
@@ -525,20 +511,20 @@ public class MainPageFragment extends SherlockFragment {
 		private static final int TEST_LIST_SIZE = 43; // 数据总长度
 		int sTotalPages = 1;
 		private int mCurrentPage;
-		private List<MyListAdapter> mAdapters;
 		private List<List<String>> mPageList;
 		private List<GridView> mGridViews;
 		private Context mContext;
+		private String[] resArrays;
 		
 		
 		
 		public ViewPagerPresenter(Context context) {
 			mContext = context;
+			resArrays= getResources().getStringArray(R.array.setting_content_item);
 			mPageList = new ArrayList<List<String>>();
 			mGridViews = new ArrayList<GridView>();
-			mAdapters = new ArrayList<MyListAdapter>();
 			mViewPages = new ArrayList<View>();
-			initPages(getTestList());
+			initPages(resArrays);
 			initViewAndAdapter();
 
 		}
@@ -547,16 +533,16 @@ public class MainPageFragment extends SherlockFragment {
 		 * 
 		 * @param list
 		 */
-		public void initPages(List<String> list) {
-			if (list.size() % PAGE_SIZE == 0) {
-				sTotalPages = list.size() / PAGE_SIZE;
+		public void initPages(String[] list) {
+			if (list.length % PAGE_SIZE == 0) {
+				sTotalPages = list.length / PAGE_SIZE;
 			} else {
-				sTotalPages = list.size() / PAGE_SIZE + 1;
+				sTotalPages = list.length/ PAGE_SIZE + 1;
 			}
 			mCurrentPage = 0;
 			List<String> l = new ArrayList<String>();
-			for (int i = 0; i < list.size(); ++i) {
-				l.add(list.get(i));
+			for (int i = 0; i < list.length; ++i) {
+				l.add(list[i]);
 				if ((i + 1) % PAGE_SIZE == 0) {
 					mPageList.add(l);
 					l = new ArrayList<String>();
@@ -567,29 +553,14 @@ public class MainPageFragment extends SherlockFragment {
 			}
 			
 		}
-		/**
-		 * 模拟数据
-		 * 
-		 * @return
-		 */
-		public List<String> getTestList() {
-			List<String> strs = new ArrayList<String>();
-			for (int i = 0; i < str.length; ++i) {
-				String s = str[i].toString();
-				strs.add(s);
-			}
-			return strs;
-		}
 
 		private void initViewAndAdapter() {
 			LayoutInflater inflater = (LayoutInflater) mContext
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			for (int i = 0; i < sTotalPages; ++i) {
-				GridView lv = (GridView)inflater.inflate(R.layout.viewpager_gridview, null);
+				GridView lv = (GridView)inflater.inflate(R.layout.main_setting_gridview, null);
 				mGridViews.add(lv);
-				MyListAdapter adapter = new MyListAdapter(mContext,
-						mPageList.get(i));
-				mAdapters.add(adapter);
+				SettingGridItemAdapter adapter = new SettingGridItemAdapter(mContext,mPageList.get(i));
 				lv.setAdapter(adapter);
 				mViewPages.add(lv);
 				if (i == 0) {
@@ -628,13 +599,13 @@ public class MainPageFragment extends SherlockFragment {
 								settingPanel.setVisibility(View.GONE);
 								break;
 							case 5:  //设置无图模式								
-								if(str[5].equals(StringUtils.NO_PICTURE)){
-									str[5]=StringUtils.YES_PICTURE;
+								if(resArrays[5].equals(StringUtils.NO_PICTURE)){
+									resArrays[5]=StringUtils.YES_PICTURE;
 									flag=true;
 									Toast.makeText(getActivity(), StringUtils.OPEN_NO_PICTURE, 100).show();
 								}
 								else{
-									str[5]=StringUtils.NO_PICTURE;
+									resArrays[5]=StringUtils.NO_PICTURE;
 									flag=false;
 									Toast.makeText(getActivity(), StringUtils.OPEN_YES_PICTURE, 100).show();
 
@@ -664,8 +635,8 @@ public class MainPageFragment extends SherlockFragment {
 								View view, int position, long id) {
 							switch (position) {
 							case 0:
-								if(str[8].equals(StringUtils.OPEN_TURNING_BUTTON)){
-									str[8]=StringUtils.COLSE_TURNING_BUTTON;
+								if(resArrays[8].equals(StringUtils.OPEN_TURNING_BUTTON)){
+									resArrays[8]=StringUtils.COLSE_TURNING_BUTTON;
 									flag=true;
 									Toast.makeText(getActivity(), StringUtils.OPEN_TURNING_BUTTON, 100).show();
 									LayoutInflater layoutInflater = (LayoutInflater)getActivity()  
@@ -694,7 +665,7 @@ public class MainPageFragment extends SherlockFragment {
 											});
 								}
 								else{
-									str[8]=StringUtils.OPEN_TURNING_BUTTON;
+									resArrays[8]=StringUtils.OPEN_TURNING_BUTTON;
 									flag=false;
 									Toast.makeText(getActivity(), StringUtils.COLSE_TURNING_BUTTON, 100).show();
 									popWindow.dismiss();

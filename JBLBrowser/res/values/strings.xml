@@ -80,6 +80,8 @@
     <string name="weibosdk_comment">评论</string>
     <string name="weibosdk_forward">转发</string>
     <string name="weibosdk_fav">收藏</string>
+    
+    <!-- JBLBrowser -->
     <string name="title_activity_main_page_activity">MainPageActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -106,11 +108,32 @@
 	<string name="Main.ShareChooserTitle">分享</string>
     
     
-    
-    
     <string name="about">关于</string>    
     <string name="broswer">JBL Broswer</string>
     <string name="version">Version:1.0.0(01)</string>
     <string name="intruduce">使用JBL Broswer让你更好的使用互联网</string>
     <string name="auto_brightness_setting">自动调节亮度</string>
+    <!-- 菜单文字  -->
+    <string-array name="setting_content_item">
+        <item>添加书签</item>
+        <item>书签</item>
+        <item>设置</item>
+        <item>历史</item>
+        <item>分享</item>
+        <item>无图模式</item>
+        <item>下载管理</item>
+        <item>退出</item>
+        <item>开启翻页按钮</item>
+        <item>无痕浏览</item>
+        <item>全屏浏览</item>
+        <item>更换壁纸</item>
+        <item>省流加速</item>
+        <item>阅读模式</item>
+        <item>刷新</item>
+        <item>关于</item>
+        <item>意见反馈</item>
+        <item>检查更新</item>
+        <item>页内查找</item>
+        <item>保存网页</item>
+    </string-array> 
 </resources>
