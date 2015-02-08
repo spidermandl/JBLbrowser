@@ -53,6 +53,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
+import com.jbl.browser.activity.MainFragActivity;
+import com.jbl.browser.activity.MainPageActivity;
 import com.jbl.browser.adapter.SettingGridItemAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.jbl.browser.bean.BookMark;
@@ -102,7 +104,6 @@ public class MainPageFragment extends SherlockFragment {
 	private ViewPager mViewPager; // 水平实现滑动效果
 	private PagerAdapter mPageAdapter;
 	private ViewPagerPresenter mPresenter;
-	private LinearLayout ll;// viewpager的线性布局
 	private ScheduledExecutorService scheduledExecutorService;
 	View settingPanel;// 设置主界面
 	PageIndicator mIndicator;
@@ -112,8 +113,6 @@ public class MainPageFragment extends SherlockFragment {
 	public String fontSize="";
 	private boolean flag=false;    //标识是否是无图模式：true是无图，false是有图
 	private boolean visibile=true;//标示是否显示菜单栏
-	DownloadManager mDownloadManager;
-	private BroadcastReceiver mReceiver;
 
 	
 	private Button nextPage;//向下翻页按钮
@@ -133,20 +132,7 @@ public class MainPageFragment extends SherlockFragment {
 
 		super.onCreate(savedInstanceState);
 	}
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		//注册广播
-		getActivity().registerReceiver(mReceiver, new IntentFilter(
-				DownloadManager.ACTION_NOTIFICATION_CLICKED));
-		super.onResume();
-	}
-	@Override
-	public void onDestroy() {
-		// TODO Auto-generated method stub
-		getActivity().unregisterReceiver(mReceiver);
-		super.onDestroy();
-	}
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -221,21 +207,8 @@ public class MainPageFragment extends SherlockFragment {
         }  
         return false; 
     }
-    //跳转到下载管理界面
-    private void showDownloadList() {
-    	Intent intent = new Intent();
-    	intent.setClass(getActivity(), DownloadList.class);
-    	startActivity(intent);
-        }
-    //开始下载
-   private void startDownload(String url) {
-	    	Uri srcUri = Uri.parse(url);
-	    	DownloadManager.Request request = new Request(srcUri);
-	    	request.setDestinationInExternalPublicDir(
-	    		Environment.DIRECTORY_DOWNLOADS, "/");
-	    	request.setDescription("Just for test");
-	    	mDownloadManager.enqueue(request);
-        }
+
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -430,15 +403,6 @@ public class MainPageFragment extends SherlockFragment {
 		// webView.getSettings().setUseWideViewPort(true);
 		// webView.getSettings().setLoadWithOverviewMode(true);
 		
-		mDownloadManager = new DownloadManager(getActivity().getContentResolver(),
-				getActivity().getPackageName());
-		mReceiver = new BroadcastReceiver() {
-
-		    @Override
-		    public void onReceive(Context context, Intent intent) {
-		    	showDownloadList();
-		    }
-		};
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setAppCacheMaxSize(8 * 1024 * 1024);
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -465,7 +429,7 @@ public class MainPageFragment extends SherlockFragment {
 			public void onDownloadStart(String url, String userAgent,
 					String contentDisposition, String mimetype, long contentLength) {
 				// TODO Auto-generated method stub
-				startDownload(url);
+				((MainFragActivity)getActivity()).startDownload(url);
 			}
 		});
 		mWebView.setWebViewClient(new MyWebViewClient());
@@ -614,8 +578,8 @@ public class MainPageFragment extends SherlockFragment {
 								mViewPager.setVisibility(View.GONE);
 								settingPanel.setVisibility(View.GONE);
 								break;
-							case 6:
-								showDownloadList();
+							case 6: //下载管理
+								((MainFragActivity)getActivity()).showDownloadList();
 								break;
 							case 7:
 								
