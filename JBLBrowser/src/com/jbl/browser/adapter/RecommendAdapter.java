@@ -12,34 +12,37 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jbl.browser.R;
-import com.jbl.browser.fragment.RecommendMainFragment;
+/*
+ * 推荐页面适配器
+ * 
+ * */
+public class RecommendAdapter extends BaseAdapter{
 
-public class RecommendCustomAdapter extends BaseAdapter{
-
-	RecommendMainFragment rmf;
-	private LayoutInflater layoutInflater;
+	private LayoutInflater layoutInflater=null;
 	private Context context;
-	private List <String> listUrlName=new ArrayList<String>();
-	private List <String> listUrlAddress=new ArrayList<String>();
-	public RecommendCustomAdapter(Context context, List<String> listUrlNmae,
-			List<String> listUrlAddress) {
+	List<Integer> image=new ArrayList<Integer>();
+	List<String> urlName=new ArrayList<String>();
+	List<String> urlAddress=new ArrayList<String>();
+	public RecommendAdapter(Context context, List<Integer> image,
+			List<String> urlNames, List<String> urlAddresss) {
 		super();
 		this.layoutInflater=layoutInflater.from(context);
 		this.context = context;
-		this.listUrlName = listUrlNmae;
-		this.listUrlAddress = listUrlAddress;
+		this.image = image;
+		this.urlName = urlNames;
+		this.urlAddress = urlAddresss;
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return listUrlName==null?0:listUrlName.size();
+		return image==null?0:image.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return listUrlName.get(position);
+		return image.get(position);
 	}
 
 	@Override
@@ -49,28 +52,28 @@ public class RecommendCustomAdapter extends BaseAdapter{
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder=null;
 		if(convertView==null){
 			holder=new ViewHolder();
 			convertView=layoutInflater.inflate(R.layout.fragment_recommend_all_item,null);
 			holder.imv=(ImageView)convertView.findViewById(R.id.imv);
-			holder.urlName=(TextView)convertView.findViewById(R.id.tv1);
-			holder.urlAddress=(TextView)convertView.findViewById(R.id.tv2);
+			holder.tv1=(TextView)convertView.findViewById(R.id.tv1);
+			holder.tv2=(TextView)convertView.findViewById(R.id.tv2);
 			convertView.setTag(holder);
 		}else{
 			holder=(ViewHolder)convertView.getTag();
 		}
-		holder.urlName.setText(listUrlName.get(position));
-		holder.urlAddress.setText(listUrlAddress.get(position));
+		holder.imv.setBackgroundResource(image.get(position));
+		holder.tv1.setText(urlName.get(position));
+		holder.tv2.setText(urlAddress.get(position));
 		return convertView;
 	}
-	class ViewHolder{
-		private ImageView imv;
-		private TextView urlName;
-		private TextView urlAddress;
-	}
+class ViewHolder{
+	private ImageView imv;
+	private TextView tv1;
+	private TextView tv2;
+   }
 	
 }
 

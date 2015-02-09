@@ -170,7 +170,7 @@ public class BrowserSettings extends Observable {
             //s.setNeedInitialFocus(false);
             // Browser supports multiple windows
             //s.setSupportMultipleWindows(true);
-
+           
         }
     }
 

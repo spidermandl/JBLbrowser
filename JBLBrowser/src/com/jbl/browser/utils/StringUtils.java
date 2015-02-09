@@ -1,5 +1,11 @@
 package com.jbl.browser.utils;
 
+
+/**
+ * 常量字符串
+ * @author yyjoy-mac3
+ *
+ */
 public class StringUtils {
 
 	 /**业务操作完成后，其结果对应的键*/
@@ -45,5 +51,13 @@ public class StringUtils {
 	public static final String MUSIC_STORY_PATH = "music/";
 	/**音乐、音效的目录*/
 	public static final String MUSIC_PATH = "music/soundzy/";
+	
+	public static final String CUR_URL="http://www.baidu.com/";
+	
+	public static final String OPEN_NO_PICTURE="开启无图模式";
+	public static final String OPEN_YES_PICTURE="开启有图模式";
+	public static final String DELETE_RECOMMEND="删除推荐";
+	public static final String SUCCESS_DELETE="删除成功";
+	
 	
 }

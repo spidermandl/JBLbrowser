@@ -22,21 +22,18 @@ public class SettingPagerAdapter extends PagerAdapter  implements IconPagerAdapt
     public SettingPagerAdapter(List<View> viewPages) {  
         mViewPages = viewPages;  
     }  
-  
     @Override  
     public int getCount()  
     {  
         // TODO Auto-generated method stub  
         return mViewPages.size();  
     }  
-  
     @Override  
     public boolean isViewFromObject(View arg0, Object arg1)  
     {  
         // TODO Auto-generated method stub  
         return arg0 == arg1;  
     }  
-  
     @Override  
     public void destroyItem(View v, int position, Object object)  
     {  
@@ -89,5 +86,7 @@ public class SettingPagerAdapter extends PagerAdapter  implements IconPagerAdapt
 		// TODO Auto-generated method stub
 		return 0;
 	}  
+	
+	
   
 }  

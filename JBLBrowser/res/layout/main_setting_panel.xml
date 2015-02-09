@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-<!--     <View
-        android:id="@+id/view"
+    <View
+        android:id="@+id/fill_pad"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#e0000000" />
+        android:layout_height="0dip"
+        android:background="#CCCCCCCC"
+        android:layout_weight="2" />
 
-    <LinearLayout
-        android:id="@+id/linear"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" > -->
-        
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:background="#CCCCCCCC"
+        android:layout_weight="3" >
+
         <android.support.v4.view.ViewPager
             android:id="@+id/setting_viewpager"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_above="@+id/setting_indicator"
+            android:layout_gravity="center" 
+            android:background="#FFFFFFFF"/>
 
         <com.viewpager.indicator.LinePageIndicator
-        	android:id="@+id/setting_indicator"
-        	android:padding="5dip"
-        	android:layout_height="wrap_content"
-        	android:layout_width="fill_parent"
-        />
-        
-<!--     </LinearLayout> -->
+            android:id="@id/setting_indicator"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#FFFFFFFF"
+            android:padding="5dip" />
+    </RelativeLayout>
 
-</RelativeLayout>
+</LinearLayout>

@@ -14,11 +14,12 @@
     	 android:id="@+id/main_setting_panel"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
+         android:layout_above="@+id/buttom_tool_bar"
          android:visibility="gone">      
      </include>     
 
     <LinearLayout
-        android:id="@+id/buttom_tool_bar"
+        android:id="@id/buttom_tool_bar"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
