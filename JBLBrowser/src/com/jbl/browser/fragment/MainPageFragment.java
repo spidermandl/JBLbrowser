@@ -1,33 +1,22 @@
 package com.jbl.browser.fragment;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
-import android.content.BroadcastReceiver;
-import android.content.Context;
+
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SearchViewCompat;
 import android.support.v4.widget.SearchViewCompat.OnQueryTextListenerCompat;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
-import android.view.WindowManager.LayoutParams;
-
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
@@ -35,12 +24,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
@@ -86,7 +70,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	 * private EditText mEditTextInput; //1.2 mEditTextInput 输入网址 private Button
 	 * mButtonCode; //1.3 mButtonCode 二维码搜索 private Button mButtonLand; //1.4
 	 * mButtonLand 登陆注册
-	 *//* 定义webview控件 */
+	 */
+	/* 定义webview控件 */
 	public  WebView mWebView; // 主控件 webview
 	public  WebSettings settings;
 	public String cur_url =StringUtils.CUR_URL; // 设置初始网址
@@ -103,14 +88,12 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	View settingPanel;// 设置主界面
 	PageIndicator mIndicator;
 	int count;
-	GridView lv;// 菜单栏信息
 	private boolean visibile=true;//标示是否显示菜单栏
 
 	
-	private Button nextPage;//向下翻页按钮
-	private Button previousPage;//向上翻页按钮
 	View popview;//翻页按钮布局
-	 PopupWindow popWindow;//悬浮翻页窗口
+	PopupWindow popWindow;//悬浮翻页窗口
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
