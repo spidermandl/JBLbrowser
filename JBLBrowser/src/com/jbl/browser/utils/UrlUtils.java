@@ -18,7 +18,7 @@ public class UrlUtils {
 	/**注册页对应的url*/
 	public static String URL_REGISTER ="app-account";  
 	/**登录页对应的url*/
-	public static String URL_LOGIN = "app-login"; 
+	public static String URL_LOGIN = "http://m.hi2345.net/login.php"; 
 	/**修改名称页对应的url*/
 	public static String URL_UPDATENAME = "player/profile/updt-team"; 
 	/**游戏首页对应的url*/
