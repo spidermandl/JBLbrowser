@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -430,6 +431,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		});
 	}
 	/* webcilent */
+	@SuppressLint("SetJavaScriptEnabled")
 	class MyWebViewClient extends WebViewClient {
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -519,7 +521,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	@Override
 	public void manageDownload() {
 		// TODO Auto-generated method stub
-		
+		((MainFragActivity)getActivity()).showDownloadList();
 	}
 
 	@Override
