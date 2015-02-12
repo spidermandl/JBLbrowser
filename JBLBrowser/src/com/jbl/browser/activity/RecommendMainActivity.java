@@ -21,7 +21,6 @@ import com.jbl.browser.fragment.RecommendCollectFragment;
 import com.jbl.browser.fragment.RecommendCustomFragment;
 import com.jbl.browser.fragment.RecommendMainFragment;
 
-@SuppressLint("NewApi")
 /*
  * 推荐页面主activity，默认显示recommendFragment
  * 
