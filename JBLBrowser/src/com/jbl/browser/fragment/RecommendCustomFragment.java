@@ -3,7 +3,6 @@ package com.jbl.browser.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Fragment;
@@ -31,7 +30,6 @@ import com.jbl.browser.utils.StringUtils;
  * 还差一个添加自定义网址操作
  * 
  * */
-@SuppressLint("NewApi")
 public class RecommendCustomFragment extends Fragment implements OnItemLongClickListener,OnItemClickListener{
 	ListView lv;
 	RecommendAdapter tabAdapter;

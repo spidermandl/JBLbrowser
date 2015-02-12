@@ -133,15 +133,13 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		} 
 		/* 添加扫描二维码icon 对应ItemID 1 */
 
-		menu.add(0, 1, 0, "Code").setIcon(R.drawable.actionbar_title_caode)
+		menu.add(0, 1, 0, "Code").setIcon(R.drawable.resume_ad_close)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		/* 添加注册登录icon */
 
-		menu.add(0, 2, 2, "Land").setIcon(R.drawable.refresh_up)
+		menu.add(0, 2, 2, "Land").setIcon(R.drawable.resume_ad_close)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-
 	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
@@ -160,7 +158,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			Intent intent = new Intent();
 			intent.setClass(getActivity(), CaptureActivity.class);
 			startActivity(intent);
-
 			break;
 		case 2:
 			// 主册登录
@@ -283,7 +280,12 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				mWebView.goBack();
+				if(mWebView.canGoBack()){
+					mWebView.goBack();
+				}
+				else{
+					Toast.makeText(getActivity(), "不能后退了！", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 
@@ -292,7 +294,12 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 
 			@Override
 			public void onClick(View v) {
-				
+				if(mWebView.canGoForward()){
+					mWebView.goForward();
+				}
+				else{
+					Toast.makeText(getActivity(), "不能前进了！", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 
@@ -301,8 +308,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 
 			@Override
 			public void onClick(View v) {
-				
-
+			mWebView.clearHistory(); //清楚浏览记录
+			mWebView.loadUrl(UrlUtils.URL_GET_HOST); //加载主页
 			}
 		});
 
