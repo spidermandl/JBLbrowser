@@ -170,7 +170,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			break;
 		case 2:
 			// 主册登录
-			mWebView.loadUrl("http://www.hmudq.edu.cn/");
+			cur_url="http://www.hmudq.edu.cn/";
+			mWebView.loadUrl(cur_url);
 			break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -188,6 +189,14 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		String url_webAddress="";
+		url_webAddress=JBLPreference.getInstance(this.getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
+		if(url_webAddress==""){
+			cur_url=UrlUtils.URL_GET_HOST;
+		}else{
+			cur_url=url_webAddress;
+		}
+		//cur_url=UrlUtils.URL_GET_HOST;
 		View view = inflater.inflate(R.layout.fragment_main_page, container,
 				false);
 		mWebView = (WebView) view.findViewById(R.id.mWebView);// webview
@@ -426,7 +435,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 
 		// webView.getSettings().setUseWideViewPort(true);
 		// webView.getSettings().setLoadWithOverviewMode(true);
-		cur_url=UrlUtils.URL_GET_HOST;
+		
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setAppCacheMaxSize(8 * 1024 * 1024);
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -446,6 +455,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		});
 		mWebView.setWebViewClient(new MyWebViewClient());
 		mWebView.setWebChromeClient(new WebChromeClient() {
+			
 			@Override
 			public void onReceivedTitle(WebView view, String title) {
 				// TODO Auto-generated method stub
@@ -460,6 +470,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+			view.loadUrl(url);
+			cur_url = url;			
 			if(url.contains("www.baidu.com")){
 				/* 主页百度url拦截*/
 				Intent in=new Intent();
