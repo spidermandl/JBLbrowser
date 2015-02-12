@@ -56,6 +56,8 @@ public class StringUtils {
 	public static final String OPEN_YES_PICTURE="开启有图模式";
 	public static final String DELETE_RECOMMEND="删除推荐";
 	public static final String SUCCESS_DELETE="删除成功";
+	public static final String OPEN_TURNING_BUTTON="开启翻页按钮";
+	public static final String COLSE_TURNING_BUTTON="关闭翻页按钮";
 	
 	
 }

@@ -5,16 +5,20 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.LayoutParams;
 import android.support.v4.widget.SearchViewCompat;
 import android.support.v4.widget.SearchViewCompat.OnQueryTextListenerCompat;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.webkit.DownloadListener;
@@ -23,6 +27,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
@@ -90,8 +95,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	PageIndicator mIndicator;
 	int count;
 	private boolean visibile=true;//标示是否显示菜单栏
-
-	
 	View popview;//翻页按钮布局
 	PopupWindow popWindow;//悬浮翻页窗口
 	
@@ -373,14 +376,14 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 
 		// webView.getSettings().setUseWideViewPort(true);
 		// webView.getSettings().setLoadWithOverviewMode(true);
-		
+		cur_url=UrlUtils.URL_GET_HOST;
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setAppCacheMaxSize(8 * 1024 * 1024);
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 		// webView.getSettings().setPluginsEnabled(true);
 		mWebView.getSettings().setPluginState(PluginState.ON);
 
-		mWebView.loadUrl(UrlUtils.URL_GET_HOST);
+		mWebView.loadUrl(cur_url);
 		
 		mWebView.setDownloadListener(new DownloadListener() {
 			
@@ -497,19 +500,54 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 
 	@Override
 	public void manageDownload() {
+
 		// TODO Auto-generated method stub
 		((MainFragActivity)getActivity()).showDownloadList();
+
 	}
 
 	@Override
 	public void quit() {
-		// TODO Auto-generated method stub
-		
+		getActivity().finish();
 	}
-
 	@Override
 	public void pageTurningSwitch() {
-		// TODO Auto-generated method stub
+		switch (JBLPreference.getInstance(getActivity()).readInt(JBLPreference.TURNING_TYPE)) {
+		case JBLPreference.OPEN_TURNING_BUTTON:
+			JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.TURNING_TYPE, JBLPreference.COLSE_TURNING_BUTTON);
+			Toast.makeText(getActivity(), StringUtils.OPEN_TURNING_BUTTON, 100).show();
+			LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			popview=(View)mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
+			popWindow=new PopupWindow(popview,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+			popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
+			Button previous_page=(Button)popview.findViewById(R.id.previous_page);
+			Button next_page=(Button)popview.findViewById(R.id.next_page);
+			next_page.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					mWebView.scrollTo(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
+				}
+			});
+			previous_page.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					mWebView.scrollTo(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
+				}
+			});
+			break;
+		case JBLPreference.INVALID:
+		case JBLPreference.COLSE_TURNING_BUTTON:
+			JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.TURNING_TYPE,JBLPreference.OPEN_TURNING_BUTTON);
+			Toast.makeText(getActivity(), StringUtils.COLSE_TURNING_BUTTON, 100).show();
+			popWindow.dismiss();
+		default:
+			break;
+		}
+		mViewPager.setVisibility(View.GONE);
+		settingPanel.setVisibility(View.GONE);
+
 		
 	}
+		
+	
 }
