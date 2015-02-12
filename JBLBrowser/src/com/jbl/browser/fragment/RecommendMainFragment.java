@@ -30,8 +30,8 @@ import com.jbl.browser.utils.StringUtils;
 /*
  * 推荐主页面
  * 
- * */
-@SuppressLint("NewApi")
+ */
+
 public class RecommendMainFragment extends Fragment implements OnItemLongClickListener, OnItemClickListener{
 	ListView lv;
 	RecommendAdapter tabAdapter;

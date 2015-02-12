@@ -7,8 +7,9 @@ public class UrlUtils {
 	public static String URL_TEST_HOST = "http://218.104.200.106:8002";
 	
 	/**服务器地址存储的url*/
-	public static final String URL_GET_HOST =  "http://www.d2c-games.com/segdsarefdfi324sda8438/32iusj737473dsd/hjdau421udsahlldhd/serverAndroid2.php";//取正式服地址
+	public static final String URL_GET_HOST =  "http://m.hi2345.net/home.php";//取正式服地址
 			                                   //"http://114.141.132.167/url.php";//取测试服地址
+	//http://m.hi2345.net/login.php
 	/**服务器资源路径*/
 	public static String URL_HEAD2 =  null;
 	/**android服务器host*/
@@ -17,7 +18,7 @@ public class UrlUtils {
 	/**注册页对应的url*/
 	public static String URL_REGISTER ="app-account";  
 	/**登录页对应的url*/
-	public static String URL_LOGIN = "app-login"; 
+	public static String URL_LOGIN = "http://m.hi2345.net/login.php"; 
 	/**修改名称页对应的url*/
 	public static String URL_UPDATENAME = "player/profile/updt-team"; 
 	/**游戏首页对应的url*/

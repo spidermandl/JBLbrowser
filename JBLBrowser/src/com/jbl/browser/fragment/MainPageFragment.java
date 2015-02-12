@@ -1,34 +1,21 @@
 package com.jbl.browser.fragment;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SearchViewCompat;
 import android.support.v4.widget.SearchViewCompat.OnQueryTextListenerCompat;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-
-import android.view.WindowManager.LayoutParams;
-
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
@@ -36,12 +23,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
@@ -55,6 +37,7 @@ import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.activity.MainFragActivity;
+import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
@@ -63,6 +46,7 @@ import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.interfaces.SettingItemInterface;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
+import com.jbl.browser.utils.UrlUtils;
 import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
 
@@ -87,10 +71,11 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	 * private EditText mEditTextInput; //1.2 mEditTextInput 输入网址 private Button
 	 * mButtonCode; //1.3 mButtonCode 二维码搜索 private Button mButtonLand; //1.4
 	 * mButtonLand 登陆注册
-	 *//* 定义webview控件 */
+	 */
+	/* 定义webview控件 */
 	public  WebView mWebView; // 主控件 webview
 	public  WebSettings settings;
-	public String cur_url =StringUtils.CUR_URL; // 设置初始网址
+	public String cur_url; // 设置初始网址
 	public String webName = "";// 网页名
 	/* 定义操作栏控件 */
 	private ImageView mImageViewBack; // 3.1 mImageViewBack 后退
@@ -104,14 +89,12 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	View settingPanel;// 设置主界面
 	PageIndicator mIndicator;
 	int count;
-	GridView lv;// 菜单栏信息
 	private boolean visibile=true;//标示是否显示菜单栏
 
 	
-	private Button nextPage;//向下翻页按钮
-	private Button previousPage;//向上翻页按钮
 	View popview;//翻页按钮布局
-	 PopupWindow popWindow;//悬浮翻页窗口
+	PopupWindow popWindow;//悬浮翻页窗口
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -339,7 +322,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		});
 
 		/* 设置webview */
-		setWebStyle();
+		initWebView();
 		return view;
 	}
 
@@ -380,7 +363,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	}
 	
 
-	private void setWebStyle() {
+	private void initWebView() {
 		// TODO Auto-generated method stub
 		// mWebView.getSettings().setJavaScriptEnabled(true);
 		// mWebView.getSettings().setSupportZoom(true);
@@ -396,21 +379,9 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 		// webView.getSettings().setPluginsEnabled(true);
 		mWebView.getSettings().setPluginState(PluginState.ON);
-		//取得书签和历史记录界面传过来的值
-		if (JBLPreference.getInstance(getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY)!="") {
-			cur_url =JBLPreference.getInstance(getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
-		}
-		//取得推荐页面的网址
-		if (JBLPreference.getInstance(getActivity()).readString(JBLPreference.RECOMMEND_KEY)!="") {
-			cur_url =JBLPreference.getInstance(getActivity()).readString(JBLPreference.RECOMMEND_KEY);
-		}
-		mWebView.loadUrl(cur_url);
-		/* 这里是推荐监听页面     暂时先注释  因为我监听的事主页百度*/
-		/*if(cur_url.equals("http://www.baidu.com/?tn=95406117_hao_pg")){
-			Intent in=new Intent();
-			in.setClass(getActivity(),RecommendMainActivity.class);
-			startActivity(in);
-		}*/
+
+		mWebView.loadUrl(UrlUtils.URL_GET_HOST);
+		
 		mWebView.setDownloadListener(new DownloadListener() {
 			
 			@Override
@@ -433,18 +404,24 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	/* webcilent */
 	@SuppressLint("SetJavaScriptEnabled")
 	class MyWebViewClient extends WebViewClient {
+		
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			cur_url=url;
-			view.loadUrl(cur_url);
-			return true;
+			if(url.contains("www.baidu.com")){
+				/* 主页百度url拦截*/
+				Intent in=new Intent();
+				in.setClass(getActivity(),RecommendMainActivity.class);
+				startActivity(in);
+				return true;
+			}
+			return false;
 		}
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			// TODO Auto-generated method stub
 			String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA)
 					.format(new Date()).toString();
-			String temp=StringUtils.CUR_URL.substring(0, StringUtils.CUR_URL.length());
+			String temp=UrlUtils.URL_GET_HOST.substring(0, UrlUtils.URL_GET_HOST.length());
 			if(!url.equals(temp)){      //当加载默认网址时不加入历史记录
 				History history = new History();
 				history.setWebAddress(url);
