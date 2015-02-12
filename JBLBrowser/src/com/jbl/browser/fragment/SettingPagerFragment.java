@@ -120,8 +120,9 @@ public class SettingPagerFragment {
 							if(settingInterface!=null)
 								settingInterface.manageDownload();
 							break;
-						case 7:
-							
+						case 7://退出系统
+							if(settingInterface!=null)
+								settingInterface.quit();
 
 							break;
 						default:
