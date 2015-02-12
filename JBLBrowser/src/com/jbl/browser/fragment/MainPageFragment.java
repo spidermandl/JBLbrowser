@@ -146,11 +146,11 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		} 
 		/* 添加扫描二维码icon 对应ItemID 1 */
 
-		menu.add(0, 1, 0, "Code").setIcon(R.drawable.actionbar_title_caode)
+		menu.add(0, 1, 0, "Code").setIcon(R.drawable.resume_ad_close)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		/* 添加注册登录icon */
 
-		menu.add(0, 2, 2, "Land").setIcon(R.drawable.refresh_up)
+		menu.add(0, 2, 2, "Land").setIcon(R.drawable.resume_ad_close)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
 	}
