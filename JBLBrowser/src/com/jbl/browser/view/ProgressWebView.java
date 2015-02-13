@@ -7,6 +7,7 @@ import java.util.Locale;
 import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.db.HistoryDao;
+import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.UrlUtils;
 
 import android.content.Context;
@@ -106,16 +107,20 @@ public class ProgressWebView extends WebView {
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			// TODO Auto-generated method stub
-			curUrl=url;
-			String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA)
-					.format(new Date()).toString();
-			String temp=UrlUtils.URL_GET_HOST.substring(0, UrlUtils.URL_GET_HOST.length());
-			if(!url.equals(temp)){      //当加载默认网址时不加入历史记录
-				History history = new History();
-				history.setWebAddress(url);
-				history.setWebName(webName);
-				// 加载完加入历史记录
-				new HistoryDao(mContext).addHistory(history);
+			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.PIC_CACHE_TYPE)==1||JBLPreference.getInstance(mContext).readInt(JBLPreference.PIC_CACHE_TYPE)==-1){
+				if(url!=""){           
+					curUrl=url;
+					String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA)
+							.format(new Date()).toString();
+					String temp=UrlUtils.URL_GET_HOST.substring(0, UrlUtils.URL_GET_HOST.length());
+					if(!url.equals(temp)){      //当加载默认网址时不加入历史记录
+						History history = new History();
+						history.setWebAddress(url);
+						history.setWebName(webName);
+						// 加载完加入历史记录
+						new HistoryDao(mContext).addHistory(history);
+					}
+				}
 			}
 			super.onPageFinished(view, url);
 		}

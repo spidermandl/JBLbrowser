@@ -23,6 +23,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
 import com.jbl.browser.adapter.SettingGridItemAdapter;
 import com.jbl.browser.interfaces.SettingItemInterface;
+import com.jbl.browser.utils.JBLPreference;
 
 /*
  * 设置界面滑动分页控制类
@@ -40,12 +41,13 @@ public class SettingPagerFragment {//extends SherlockDialogFragment{
 	private Context mContext;
 	private String[] resArrays;
 	private List<View> mViewPages;
+	private boolean flag=true;//true :开启无图  false:关闭无图
 	//点击回调接口
 	private SettingItemInterface settingInterface;
 	
 	public SettingPagerFragment(Context context) {
 		mContext = context;
-		resArrays= mContext.getResources().getStringArray(R.array.setting_content_item);
+		resArrays= mContext.getResources().getStringArray(R.array.setting_content_item);		
 		mPageList = new ArrayList<List<String>>();
 		mGridViews = new ArrayList<GridView>();
 		mViewPages = new ArrayList<View>();
@@ -95,12 +97,25 @@ public class SettingPagerFragment {//extends SherlockDialogFragment{
 		if (list.length % PAGE_SIZE == 0) {
 			sTotalPages = list.length / PAGE_SIZE;
 		} else {
-			sTotalPages = list.length/ PAGE_SIZE + 1;
+			sTotalPages =list.length/ PAGE_SIZE + 1;
 		}
 		mCurrentPage = 0;
 		List<String> l = new ArrayList<String>();
 		for (int i = 0; i < list.length; ++i) {
-			l.add(list[i]);
+			if(i==5){
+				if(JBLPreference.getInstance(mContext).readInt(JBLPreference.PIC_CACHE_TYPE)==0){
+					l.add(list[i].substring(4));
+				}else{
+					l.add(list[i].substring(0,4));
+				}
+			}else if(i==9){
+					if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HISTORY_CACHE_TYPE)==0){
+						l.add(list[i].substring(6));
+					}else{
+						l.add(list[i].substring(0,6));
+				    }
+				 }else{
+					l.add(list[i]);}
 			if ((i + 1) % PAGE_SIZE == 0) {
 				mPageList.add(l);
 				l = new ArrayList<String>();
@@ -184,6 +199,14 @@ public class SettingPagerFragment {//extends SherlockDialogFragment{
 						case 0://页面翻转
 							if(settingInterface!=null)
 								settingInterface.pageTurningSwitch();
+							break;
+						case 1://网页无痕浏览模式
+							if(settingInterface!=null)
+								settingInterface.withoutTrace();
+							break;
+						case 6://页面刷新
+							if(settingInterface!=null)
+								settingInterface.refresh();
 							break;
 						default:
 							break;

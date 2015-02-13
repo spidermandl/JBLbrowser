@@ -58,6 +58,7 @@ import com.jbl.browser.view.UserDefinedDialog;
 import com.jbl.browser.websocket.WebSocketFactory;
 import com.umeng.analytics.MobclickAgent;
 
+@SuppressLint("JavascriptInterface")
 public class GameActivity extends Activity{
 
 	/**打开登录、注册页;登录、注册完成*/
@@ -708,7 +709,7 @@ public class GameActivity extends Activity{
 	}
 	//Desmond end
 	/**初始化webview*/
-	@SuppressLint("SetJavaScriptEnabled")
+	@SuppressLint({ "SetJavaScriptEnabled", "JavascriptInterface" })
 	private void initWebView(){
 		myHandler = new Handler(){
 
@@ -1244,7 +1245,7 @@ public class GameActivity extends Activity{
 		 UserDefinedDialog.getInstance().twoBtnDialog(
 				 this,R.drawable.app_icon2,
 				 getString(R.string.exit), 
-				 getString(R.string.cancel_01),getString(R.string.app_name), 
+				 getString(R.string.cancel),getString(R.string.app_name), 
 				 getString(R.string.exit_propmt), 
 				 new DialogInterface.OnClickListener() {
 						

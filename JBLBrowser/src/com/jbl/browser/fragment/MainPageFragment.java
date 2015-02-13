@@ -3,7 +3,11 @@ package com.jbl.browser.fragment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
+
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -375,8 +379,13 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 		// webView.getSettings().setPluginsEnabled(true);
 		mWebView.getSettings().setPluginState(PluginState.ON);
-
-		mWebView.loadUrl(UrlUtils.URL_GET_HOST);
+		String urlAddress="";   //声明接收从书签和历史记录界面传来的值
+		urlAddress=JBLPreference.getInstance(getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
+		if(urlAddress==""){
+			mWebView.loadUrl(UrlUtils.URL_GET_HOST);
+		}else{
+			mWebView.loadUrl(urlAddress);
+		}
 		mWebView.setDownloadListener(new DownloadListener() {
 			
 			@Override
@@ -424,15 +433,15 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	@Override
 	public void fitlerPicLoading() {
 		switch (JBLPreference.getInstance(getActivity()).readInt(JBLPreference.PIC_CACHE_TYPE)) {
+		case JBLPreference.INVALID:
 		case JBLPreference.NO_PICTURE:
 			JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.PIC_CACHE_TYPE, JBLPreference.YES_PICTURE);
 			Toast.makeText(getActivity(), StringUtils.OPEN_NO_PICTURE, 100).show();
 			mWebView.getSettings().setBlockNetworkImage(true);
 			break;
-		case JBLPreference.INVALID:
 		case JBLPreference.YES_PICTURE:
 			JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.PIC_CACHE_TYPE,JBLPreference.NO_PICTURE);
-			Toast.makeText(getActivity(), StringUtils.OPEN_YES_PICTURE, 100).show();
+			Toast.makeText(getActivity(), StringUtils.CLOSE_NO_PICTURE, 100).show();
 			mWebView.getSettings().setBlockNetworkImage(false);
 		default:
 			break;
@@ -448,8 +457,26 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 
 	}
 	@Override
-	public void quit() {
-		getActivity().finish();
+	public void quit() {  //退出跳出对话框确定
+		Dialog dialog=new AlertDialog.Builder(getActivity())
+		.setTitle(R.string.quit)
+		.setMessage(R.string.confirm_quit)
+		.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub				
+				getActivity().finish();
+			}
+		}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener(){
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+			}			
+		})
+		.create();
+		dialog.show();
 	}
 	
 	@Override
@@ -487,6 +514,33 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		}
 		mViewPager.setVisibility(View.GONE);
 		settingPanel.setVisibility(View.GONE);	
+	}
+
+	@Override
+	public void refresh() {     //刷新当前界面
+		// TODO Auto-generated method stub
+		mWebView.reload();
+		mViewPager.setVisibility(View.GONE);
+		settingPanel.setVisibility(View.GONE);
+	}
+
+	@Override
+	public void withoutTrace() {   //无痕浏览
+		// TODO Auto-generated method stub
+		switch (JBLPreference.getInstance(getActivity()).readInt(JBLPreference.HISTORY_CACHE_TYPE)) {
+		case JBLPreference.INVALID:
+		case JBLPreference.NO_HISTORY:
+			JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.HISTORY_CACHE_TYPE, JBLPreference.YES_HISTORY);
+			Toast.makeText(getActivity(), StringUtils.OPEN_NO_HISTORY, 100).show();
+			break;
+		case JBLPreference.YES_HISTORY:
+			JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.HISTORY_CACHE_TYPE,JBLPreference.YES_HISTORY);
+			Toast.makeText(getActivity(), StringUtils.CLOSE_NO_HISTORY, 100).show();
+		default:
+			break;
+		}
+		mViewPager.setVisibility(View.GONE);
+		settingPanel.setVisibility(View.GONE);
 	}
 		
 
