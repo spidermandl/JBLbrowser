@@ -136,4 +136,5 @@
         <item>页内查找</item>
         <item>保存网页</item>
     </string-array> 
+        <string name="please_input_and_search">请输入网址或搜索</string>
 </resources>
