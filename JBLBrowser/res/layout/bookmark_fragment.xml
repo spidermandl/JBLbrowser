@@ -8,6 +8,8 @@
         android:id="@+id/list_view_bookmark"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:divider="@color/list_line"
+        android:dividerHeight="@dimen/list_line_height"
         android:persistentDrawingCache="animation|scrolling" />
 
     <TextView
