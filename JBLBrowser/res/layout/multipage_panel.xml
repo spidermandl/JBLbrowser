@@ -8,6 +8,7 @@
         android:layout_height="0dip"
         android:background="#CCCCCCCC"
         android:layout_weight="3" >
+        
         <android.support.v4.view.ViewPager
             android:id="@+id/multipage_viewpager"
             android:layout_width="fill_parent"

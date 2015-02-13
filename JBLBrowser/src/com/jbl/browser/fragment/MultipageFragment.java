@@ -1,12 +1,16 @@
 package com.jbl.browser.fragment;
 import java.util.ArrayList;
 import java.util.List;
+
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebSettings.PluginState;
+
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.adapter.MultipageAdapter;
@@ -16,7 +20,8 @@ public class MultipageFragment extends SherlockFragment{
 	public final static String TAG="MultipageFragment";
 	private ViewPager multiViewPager;//多页效果
 	PageIndicator multipageIndicator;
-	MultipageAdapter multipageAdapter;
+	private ArrayList<WebView> mViewPages;
+	private LayoutInflater mInflater;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,17 +36,20 @@ public class MultipageFragment extends SherlockFragment{
 		return view;
 	}
 	private void multiPage() {
-			MultipageAdapter.mViewPages = new ArrayList<View>();
-	        addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article2.html");
-			addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article6.html");
-			addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article10.html");
-			multipageAdapter = new MultipageAdapter();
-			multiViewPager.setAdapter(multipageAdapter);
+			mViewPages = new ArrayList<WebView>();
+	        addView(mViewPages, "http://www.baidu.com");
+			addView(mViewPages, "http://www.baidu.com");
+			addView(mViewPages, "http://www.baidu.com");
+			multiViewPager.setAdapter(new MultipageAdapter(mViewPages));
 			multipageIndicator.setViewPager(multiViewPager);
 	} 
-	private void addView(List<View> viewList,String url){
+	private void addView(ArrayList<WebView> viewList,String url){
 			 WebView webView=new WebView(getActivity());
 			 webView.loadUrl(url);
 			 viewList.add(webView);
+			 webView.getSettings().setJavaScriptEnabled(true);
+			 webView.getSettings().setAppCacheMaxSize(8 * 1024 * 1024);
+			 webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+			 webView.getSettings().setPluginState(PluginState.ON);	 
     }
 }

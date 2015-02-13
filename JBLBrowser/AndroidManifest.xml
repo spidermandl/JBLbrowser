@@ -13,7 +13,7 @@
         android:description="@string/permdesc_downloadManager"
         android:label="@string/permlab_downloadManager"
         android:protectionLevel="normal" />
-
+    <uses-permission android:name="android.permission.INTERNET"/> 
     <!-- Allows advanced access to the Download Manager -->
     <permission
         android:name="com.mozillaonline.permission.ACCESS_DOWNLOAD_MANAGER_ADVANCED"

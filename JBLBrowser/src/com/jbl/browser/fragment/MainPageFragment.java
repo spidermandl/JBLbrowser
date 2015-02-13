@@ -186,7 +186,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 
 			/*   2-Home-主页监听   */
 			mWebView.clearHistory(); //清楚浏览记录
-			mWebView.loadUrl(UrlUtils.URL_GET_HOST); //加载主页
+			mWebView.loadUrl("http://www.baidu.com/"); //加载主页
 			break;
 		case 3:
 			/*  3-Change-多页监听    */
@@ -212,8 +212,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
         }  
         return false; 
     }
-
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
