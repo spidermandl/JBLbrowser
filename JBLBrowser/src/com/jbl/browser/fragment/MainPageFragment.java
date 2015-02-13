@@ -49,6 +49,7 @@ import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
 import com.jbl.browser.view.ProgressWebView;
+import com.unionpay.upomp.bypay.util.Utils;
 import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
 
@@ -100,7 +101,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	private boolean visibile=true;//标示是否显示菜单栏
 	View popview;//翻页按钮布局
 	PopupWindow popWindow;//悬浮翻页窗口
-	private ViewPager multiViewPager;//多页效果
 	View multipagePanel;//多页布局
 	PageIndicator multipageIndicator;
 	 
@@ -300,7 +300,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				mWebView.loadUrl("http://www.hmudq.edu.cn/");
+				mWebView.loadUrl(UrlUtils.URL_LOGIN);
 			}
 		});
 		/*
@@ -320,61 +320,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		});
 
 		
-		/* 3.1 返回监听 
-		mImageViewBack.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if(mWebView.canGoBack()){
-					mWebView.goBack();
-				}
-				else{
-					Toast.makeText(getActivity(), "不能后退了！", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-
-		 3.2 前进监听 
-		mImageViewInto.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if(mWebView.canGoForward()){
-					mWebView.goForward();
-				}
-				else{
-					Toast.makeText(getActivity(), "不能前进了！", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-
-		 3.3 返回home主界面 
-		mImageViewHome.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-			mWebView.clearHistory(); //清楚浏览记录
-			mWebView.loadUrl(UrlUtils.URL_GET_HOST); //加载主页
-			}
-		});
-
-		 3.4 切换多页模式 
-		mImageViewChange.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				multiPage(visibile);
-			}
-		});
-
-		 3.5 选项菜单 
-		mImageViewOption.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				init(visibile);
-			}
-		});*/
 
 		/* 设置webview */
 		initWebView();
@@ -513,6 +458,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	public void quit() {
 		getActivity().finish();
 	}
+	
 	@Override
 	public void pageTurningSwitch() {
 		switch (JBLPreference.getInstance(getActivity()).readInt(JBLPreference.TURNING_TYPE)) {
