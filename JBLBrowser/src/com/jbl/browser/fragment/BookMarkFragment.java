@@ -62,13 +62,13 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		/*final ActionBar ab = this.getSherlockActivity().getSupportActionBar();
+		final ActionBar ab = this.getSherlockActivity().getSupportActionBar();
 
 		// set defaults for logo & home up
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
 		ab.setDisplayShowHomeEnabled(false);
-		setHasOptionsMenu(true);*/
+		setHasOptionsMenu(true);
 	}
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

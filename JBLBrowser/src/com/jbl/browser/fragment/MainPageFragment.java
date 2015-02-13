@@ -1,16 +1,11 @@
 package com.jbl.browser.fragment;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.LayoutParams;
@@ -23,11 +18,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.webkit.DownloadListener;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -56,6 +49,7 @@ import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
 import com.jbl.browser.view.ProgressWebView;
+import com.unionpay.upomp.bypay.util.Utils;
 import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
 
@@ -107,7 +101,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	private boolean visibile=true;//标示是否显示菜单栏
 	View popview;//翻页按钮布局
 	PopupWindow popWindow;//悬浮翻页窗口
-	private ViewPager multiViewPager;//多页效果
 	View multipagePanel;//多页布局
 	PageIndicator multipageIndicator;
 	 
@@ -203,6 +196,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			/*  4-Option-设置监听    */
 			count++;
 			init(visibile);
+			//SettingPagerFragment fire = SettingPagerFragment.newInstance(null);  
+			//fire.show(getFragmentManager(), "dialog");  
 			break;
 			
 		}
@@ -278,37 +273,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		}
 
 		BrowserSettings.getInstance().update();
-		/*
-		 * 设置title各个控件监听 1.1 search mImageViewSearch.setOnClickListener(new
-		 * View.OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { // TODO Auto-generated method
-		 * stub
-		 * 
-		 * } });
-		 * 
-		 * 1.2 输入网址 获取网址信息 url为获取到的输入网址 为1.1 search获得数据 String
-		 * url=mEditTextInput.getText().toString();
-		 * 
-		 * 1.3 点击事件 启动二维码扫描 mButtonCode.setOnClickListener(new
-		 * View.OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { // TODO Auto-generated method
-		 * stub Intent intent=new Intent();
-		 * //intent.setClassName(MainPageFragment.class, CaptureActivity.class);
-		 * startActivity(intent); } });
-		 * 
-		 * 1.4 设置监听事件 启动注册登陆 mButtonLand.setOnClickListener(new
-		 * View.OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { // TODO Auto-generated method
-		 * stub
-		 * 
-		 * } });
-		 */
-		/*
-		 *标题栏  title  
-		 * */
+
 		/*  1.0 搜索监听 */
 		mImageView_Search.setOnClickListener(new View.OnClickListener() {
 			
@@ -335,7 +300,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				mWebView.loadUrl("http://www.hmudq.edu.cn/");
+				mWebView.loadUrl(UrlUtils.URL_LOGIN);
 			}
 		});
 		/*
@@ -355,61 +320,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		});
 
 		
-		/* 3.1 返回监听 
-		mImageViewBack.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if(mWebView.canGoBack()){
-					mWebView.goBack();
-				}
-				else{
-					Toast.makeText(getActivity(), "不能后退了！", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-
-		 3.2 前进监听 
-		mImageViewInto.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if(mWebView.canGoForward()){
-					mWebView.goForward();
-				}
-				else{
-					Toast.makeText(getActivity(), "不能前进了！", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-
-		 3.3 返回home主界面 
-		mImageViewHome.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-			mWebView.clearHistory(); //清楚浏览记录
-			mWebView.loadUrl(UrlUtils.URL_GET_HOST); //加载主页
-			}
-		});
-
-		 3.4 切换多页模式 
-		mImageViewChange.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				multiPage(visibile);
-			}
-		});
-
-		 3.5 选项菜单 
-		mImageViewOption.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				init(visibile);
-			}
-		});*/
 
 		/* 设置webview */
 		initWebView();
@@ -548,6 +458,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	public void quit() {
 		getActivity().finish();
 	}
+	
 	@Override
 	public void pageTurningSwitch() {
 		switch (JBLPreference.getInstance(getActivity()).readInt(JBLPreference.TURNING_TYPE)) {
