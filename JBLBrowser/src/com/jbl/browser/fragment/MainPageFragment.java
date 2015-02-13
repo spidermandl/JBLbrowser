@@ -170,8 +170,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			break;
 		case 2:
 			// 主册登录
-			cur_url="http://www.hmudq.edu.cn/";
-			mWebView.loadUrl(cur_url);
+			mWebView.loadUrl(UrlUtils.URL_LOGIN);
 			break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -189,13 +188,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		String url_webAddress="";
-		url_webAddress=JBLPreference.getInstance(this.getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
-		if(url_webAddress==""){
-			cur_url=UrlUtils.URL_GET_HOST;
-		}else{
-			cur_url=url_webAddress;
-		}
 		//cur_url=UrlUtils.URL_GET_HOST;
 		View view = inflater.inflate(R.layout.fragment_main_page, container,
 				false);
@@ -442,7 +434,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		// webView.getSettings().setPluginsEnabled(true);
 		mWebView.getSettings().setPluginState(PluginState.ON);
 
-		mWebView.loadUrl(cur_url);
+		mWebView.loadUrl(UrlUtils.URL_GET_HOST);
 		
 		mWebView.setDownloadListener(new DownloadListener() {
 			
@@ -469,9 +461,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	class MyWebViewClient extends WebViewClient {
 		
 		@Override
-		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			view.loadUrl(url);
-			cur_url = url;			
+		public boolean shouldOverrideUrlLoading(WebView view, String url) {		
 			if(url.contains("www.baidu.com")){
 				/* 主页百度url拦截*/
 				Intent in=new Intent();
@@ -484,6 +474,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			// TODO Auto-generated method stub
+			cur_url=url;
 			String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA)
 					.format(new Date()).toString();
 			String temp=UrlUtils.URL_GET_HOST.substring(0, UrlUtils.URL_GET_HOST.length());
