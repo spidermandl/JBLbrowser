@@ -1,5 +1,4 @@
 package com.jbl.browser.fragment;
-
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import com.jbl.browser.R;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
-
 public class MultipageFragment extends SherlockFragment{
 	public final static String TAG="MultipageFragment";
 	private ViewPager multiViewPager;//多页效果
@@ -21,7 +19,6 @@ public class MultipageFragment extends SherlockFragment{
 	MultipageAdapter multipageAdapter;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 	}
 	@Override
@@ -35,9 +32,9 @@ public class MultipageFragment extends SherlockFragment{
 	}
 	private void multiPage() {
 			MultipageAdapter.mViewPages = new ArrayList<View>();
-	        addView(MultipageAdapter.mViewPages, "http://www.hao123.com");
-			addView(MultipageAdapter.mViewPages, "http://www.baidu.com");
-			addView(MultipageAdapter.mViewPages, "http://www.sohu.com");
+	        addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article2.html");
+			addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article6.html");
+			addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article10.html");
 			multipageAdapter = new MultipageAdapter();
 			multiViewPager.setAdapter(multipageAdapter);
 			multipageIndicator.setViewPager(multiViewPager);
@@ -46,5 +43,5 @@ public class MultipageFragment extends SherlockFragment{
 			 WebView webView=new WebView(getActivity());
 			 webView.loadUrl(url);
 			 viewList.add(webView);
-   }
+    }
 }

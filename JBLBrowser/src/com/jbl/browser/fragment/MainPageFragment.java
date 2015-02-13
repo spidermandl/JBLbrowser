@@ -118,6 +118,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
 		ab.setDisplayShowHomeEnabled(false);
+		ab.setDisplayShowTitleEnabled(false); 
 		setHasOptionsMenu(true);
 	}
 	@Override
@@ -318,9 +319,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 				return false;
 			}
 		});
-
-		
-
 		/* 设置webview */
 		initWebView();
 		return view;
@@ -361,7 +359,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		else
 			Toast.makeText(getActivity(), R.string.add_bookmark_fail, 80).show();
 	}
-	
 	private void initWebView() {
 		// TODO Auto-generated method stub
 		// mWebView.getSettings().setJavaScriptEnabled(true);
@@ -380,7 +377,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		mWebView.getSettings().setPluginState(PluginState.ON);
 
 		mWebView.loadUrl(UrlUtils.URL_GET_HOST);
-		
 		mWebView.setDownloadListener(new DownloadListener() {
 			
 			@Override
@@ -391,9 +387,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			}
 		});
 	}
-
-	
-	
 	@Override
 	public void addBookMark() {
 		MainPageFragment.this.addNewBookMark();
@@ -474,13 +467,13 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			next_page.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
-					mWebView.scrollTo(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
+					//mWebView.scrollTo(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
 				}
 			});
 			previous_page.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
-					mWebView.scrollTo(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
+					//mWebView.scrollTo(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
 				}
 			});
 			break;
