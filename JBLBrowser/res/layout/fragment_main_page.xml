@@ -4,11 +4,49 @@
     android:layout_height="match_parent"
     tools:context="com.example.textwebview.MainActivity" >
 
-    <WebView
-        android:id="@+id/mWebView"
+     <LinearLayout
+        android:id="@+id/linear_top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true" />
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="#b0e0e6"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/mImageView_Search"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_search_pre"
+            android:clickable="true" />
+
+        <AutoCompleteTextView
+            android:id="@+id/net_address"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/main_netaddress_input_search"
+            android:hint="@string/please_input_and_search"
+            android:imeOptions="actionGo"
+            android:paddingLeft="10dp"
+            android:singleLine="true" />
+
+        <ImageView
+            android:id="@+id/mImageView_Code"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#ff4500"
+            android:clickable="true" />
+        
+        <ImageView android:id="@+id/mImageView_Land" android:layout_width="40dp" android:layout_height="40dp" 
+            android:background="#ffd700" android:clickable="true"/>
+    </LinearLayout>
+    
+    <com.jbl.browser.view.ProgressWebView
+        android:id="@+id/mWebView"
+        android:layout_below="@+id/linear_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </com.jbl.browser.view.ProgressWebView>
     
 	<include layout="@layout/main_setting_panel"
     	 android:id="@+id/main_setting_panel"
@@ -18,6 +56,9 @@
          android:visibility="gone">  
              
      </include>     
+
+
+
 	<include layout="@layout/multipage_panel"
     	 android:id="@+id/multipage_panel"
          android:layout_width="match_parent"
@@ -26,7 +67,7 @@
          android:visibility="gone">         
      </include>     
 	
-    <LinearLayout
+<!--     <LinearLayout
         android:id="@id/buttom_tool_bar"
         android:layout_width="fill_parent"
         android:layout_height="37dp"
@@ -68,6 +109,5 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="#fffacd" />
-    </LinearLayout>
-
+    </LinearLayout> -->
 </RelativeLayout>
