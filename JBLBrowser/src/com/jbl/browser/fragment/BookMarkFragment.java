@@ -22,7 +22,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.BookMarkAdapter;
@@ -99,9 +98,9 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	private void initDataFavorites() {
 		listview.setVisibility(View.GONE);
 		list=getData();
-		if(list==null){
+		if(list.size()==0){//没有书签时屏幕中间显示“没有书签”文字
 			noBookmark.setVisibility(View.VISIBLE);
-		}else{
+		}else{            //有书签时显示书签
 			noBookmark.setVisibility(View.GONE);
 			listview.setVisibility(View.VISIBLE);
 			bookMarkAdapter=new BookMarkAdapter(getActivity(), list);

@@ -14,8 +14,6 @@ import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.LayoutParams;
-import android.support.v4.widget.SearchViewCompat;
-import android.support.v4.widget.SearchViewCompat.OnQueryTextListenerCompat;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -30,6 +28,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -56,7 +55,7 @@ import com.jbl.browser.interfaces.SettingItemInterface;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
-import com.viewpager.indicator.IconPagerAdapter;
+import com.jbl.browser.view.ProgressWebView;
 import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
 
@@ -82,17 +81,22 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	 * mButtonCode; //1.3 mButtonCode 二维码搜索 private Button mButtonLand; //1.4
 	 * mButtonLand 登陆注册
 	 */
+	
+	/*  1.0 ImageView_search  1.1 AutoCompleteTextView 1.2ImageView_Code  
+	 *  1.3 ImageView_Land
+	 *    */
+	private ImageView mImageView_Search,mImageView_Code,mImageView_Land;
+	private AutoCompleteTextView mNetAddress;
 	/* 定义webview控件 */
-	public  WebView mWebView; // 主控件 webview
+	public  ProgressWebView mWebView; // 主控件 webview
 	public  WebSettings settings;
-	public String cur_url; // 设置初始网址
-	public String webName = "";// 网页名
-	/* 定义操作栏控件 */
+	/* 定义操作栏控件 
 	private ImageView mImageViewBack; // 3.1 mImageViewBack 后退
 	private ImageView mImageViewInto; // 3.2 mImageViewInto 前进
 	private ImageView mImageViewHome; // 3.3 mImageViewHome Home
 	private ImageView mImageViewChange;// 3.4 mImageViewChange 切换多页模式
 	private ImageView mImageViewOption;// 3.5 mImageViewOption 选项菜单
+*/	
 	private ViewPager mViewPager; // 水平实现滑动效果
 	private PagerAdapter mPageAdapter;
 	private MultipageAdapter multipageAdapter;//多页效果适配器 
@@ -125,7 +129,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	}
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		MenuItem item = menu.add(0, 0, 0, "Search").setIcon(
+		/*MenuItem item = menu.add(0, 0, 0, "Search").setIcon(
 				android.R.drawable.ic_menu_search);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		View searchView = SearchViewCompat.newSearchView(getActivity());
@@ -139,40 +143,67 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 							return false;
 						}
 					});
-		} 
-		/* 添加扫描二维码icon 对应ItemID 1 */
-
-		menu.add(0, 1, 0, "Code").setIcon(R.drawable.resume_ad_close)
+		} */
+		menu.add(0, 0, 0, "Back").setIcon(R.drawable.resume_ad_close)
+		        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		
+		menu.add(0, 1, 1, "GoTo").setIcon(R.drawable.resume_ad_close)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		/* 添加注册登录icon */
-
-		menu.add(0, 2, 2, "Land").setIcon(R.drawable.resume_ad_close)
+		
+		menu.add(0, 2, 2, "Home").setIcon(R.drawable.resume_ad_close)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		
+		menu.add(0, 3, 3, "Change").setIcon(R.drawable.resume_ad_close)
+		        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		
+		menu.add(0, 4, 4, "Option").setIcon(R.drawable.resume_ad_close)
+		         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
-		/* 二维码ID 1 主册登录ID 2 */
+		/* 0-Back-返回监听    1-GoTo-前进监听  2-Home-主页监听  3-Change-多页监听  4-Option-设置监听 */
 
 		switch (item.getItemId()) {
 		case 0:
-			// 点击搜索。fragment跳转；
-			/* 这里监听不到searchview点击事件 无法跳转fragment 但是fragment方法可是使用 */
+			/*  0-Back-返回监听   */
+			if(mWebView.canGoBack()){
+				mWebView.goBack();
+			}
+			else{
+				Toast.makeText(getActivity(), "不能后退了！", Toast.LENGTH_SHORT).show();
+			}
+			
+			/*
 			((BaseFragActivity) this.getActivity()).navigateTo(
 					UrlRedirectFragment.class, null, true,
-					UrlRedirectFragment.TAG);
+					UrlRedirectFragment.TAG);*/
 			break;
 		case 1:
-			// 二维码
-			Intent intent = new Intent();
-			intent.setClass(getActivity(), CaptureActivity.class);
-			startActivity(intent);
+			/*  1-GoTo-前进监听  */
+			if(mWebView.canGoForward()){
+				mWebView.goForward();
+			}
+			else{
+				Toast.makeText(getActivity(), "不能前进了！", Toast.LENGTH_SHORT).show();
+			}
 			break;
 		case 2:
-			// 主册登录
-			cur_url="http://www.hmudq.edu.cn/";
-			mWebView.loadUrl(cur_url);
+
+			/*   2-Home-主页监听   */
+			mWebView.clearHistory(); //清楚浏览记录
+			mWebView.loadUrl(UrlUtils.URL_GET_HOST); //加载主页
 			break;
+		case 3:
+			/*  3-Change-多页监听    */
+			
+			break;
+		case 4:
+			/*  4-Option-设置监听    */
+			count++;
+			init(visibile);
+			break;
+			
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -189,19 +220,12 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		String url_webAddress="";
-		url_webAddress=JBLPreference.getInstance(this.getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
-		if(url_webAddress==""){
-			cur_url=UrlUtils.URL_GET_HOST;
-		}else{
-			cur_url=url_webAddress;
-		}
 		//cur_url=UrlUtils.URL_GET_HOST;
 		View view = inflater.inflate(R.layout.fragment_main_page, container,
 				false);
-		mWebView = (WebView) view.findViewById(R.id.mWebView);// webview
+		mWebView = (ProgressWebView) view.findViewById(R.id.mWebView);// webview
 		//Intent intent = getActivity().getIntent();  //监听webview跳转，实现activity跳转到推荐页面
-		mImageViewBack = (ImageView) view.findViewById(R.id.mImageViewBack); // 3.1
+		/*mImageViewBack = (ImageView) view.findViewById(R.id.mImageViewBack); // 3.1
 																				// mImageViewBack
 																				// 后退
 		mImageViewInto = (ImageView) view.findViewById(R.id.mImageViewInto); // 3.2
@@ -216,6 +240,17 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		mImageViewOption = (ImageView) view.findViewById(R.id.mImageViewOption); // 3.5
 																					// mImageViewOption
 																					// 选项菜单
+*/		
+		/* 标题栏 
+		 * 1.0 ImageView_search  1.1 AutoCompleteTextView 1.2ImageView_Code  
+		 *  1.3 ImageView_Land
+		 *    */
+		mImageView_Search=(ImageView)view.findViewById(R.id.mImageView_Search);//搜索图标
+		
+		mImageView_Code=(ImageView)view.findViewById(R.id.mImageView_Code);//二维码
+		mImageView_Land=(ImageView)view.findViewById(R.id.mImageView_Land);//登陆注册
+		
+		
 		mViewPager = (ViewPager) view.findViewById(R.id.setting_viewpager);
 		mIndicator = (LinePageIndicator)view.findViewById(R.id.setting_indicator);
 		settingPanel = view.findViewById(R.id.main_setting_panel);
@@ -278,7 +313,38 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		 * 
 		 * } });
 		 */
-
+		/*
+		 *标题栏  title  
+		 * */
+		/*  1.0 搜索监听 */
+		mImageView_Search.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		/*  1.2  二维码监听 */
+		mImageView_Code.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.setClass(getActivity(), CaptureActivity.class);
+				startActivity(intent);
+			}
+		});
+		/* 登陆注册监听 */
+		mImageView_Land.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mWebView.loadUrl("http://www.hmudq.edu.cn/");
+			}
+		});
 		/*
 		 * 2.0 WebView touch监听
 		 * 
@@ -295,7 +361,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			}
 		});
 
-		/* 3.1 返回监听 */
+		
+		/* 3.1 返回监听 
 		mImageViewBack.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -310,7 +377,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			}
 		});
 
-		/* 3.2 前进监听 */
+		 3.2 前进监听 
 		mImageViewInto.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -324,7 +391,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			}
 		});
 
-		/* 3.3 返回home主界面 */
+		 3.3 返回home主界面 
 		mImageViewHome.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -334,7 +401,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			}
 		});
 
-		/* 3.4 切换多页模式 */
+		 3.4 切换多页模式 
 		mImageViewChange.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -342,14 +409,14 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			}
 		});
 
-		/* 3.5 选项菜单 */
+		 3.5 选项菜单 
 		mImageViewOption.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				init(visibile);
 			}
-		});
+		});*/
 
 		/* 设置webview */
 		initWebView();
@@ -413,18 +480,20 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	         webView.loadUrl(url);
 	         viewList.add(webView);
 	    }
+	
 	// 添加书签
-	public void addNewBookMark() {
+	private void addNewBookMark() {
 		boolean flag=false;
 		BookMark bookMark =new BookMark();
-		bookMark.setWebName(webName);
-		bookMark.setWebAddress(cur_url);
+		bookMark.setWebName(mWebView.getWebName());
+		bookMark.setWebAddress(mWebView.getCurrentUrl());
 		flag=new BookMarkDao(getActivity()).addBookMark(bookMark);
 		if (flag)
 			Toast.makeText(getActivity(), R.string.add_bookmark_succeed, 80).show();
 		else
 			Toast.makeText(getActivity(), R.string.add_bookmark_fail, 80).show();
 	}
+	
 	private void initWebView() {
 		// TODO Auto-generated method stub
 		// mWebView.getSettings().setJavaScriptEnabled(true);
@@ -442,7 +511,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		// webView.getSettings().setPluginsEnabled(true);
 		mWebView.getSettings().setPluginState(PluginState.ON);
 
-		mWebView.loadUrl(cur_url);
+		mWebView.loadUrl(UrlUtils.URL_GET_HOST);
 		
 		mWebView.setDownloadListener(new DownloadListener() {
 			
@@ -453,48 +522,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 				((MainFragActivity)getActivity()).startDownload(url);
 			}
 		});
-		mWebView.setWebViewClient(new MyWebViewClient());
-		mWebView.setWebChromeClient(new WebChromeClient() {
-			
-			@Override
-			public void onReceivedTitle(WebView view, String title) {
-				// TODO Auto-generated method stub
-				super.onReceivedTitle(view, title);
-				webName = title;
-			}
-		});
 	}
-	/* webcilent */
-	@SuppressLint("SetJavaScriptEnabled")
-	class MyWebViewClient extends WebViewClient {
-		
-		@Override
-		public boolean shouldOverrideUrlLoading(WebView view, String url) {			
-			if(url.contains("www.baidu.com")){
-				/* 主页百度url拦截*/
-				Intent in=new Intent();
-				in.setClass(getActivity(),RecommendMainActivity.class);
-				startActivity(in);
-				return true;
-			}
-			return false;
-		}
-		@Override
-		public void onPageFinished(WebView view, String url) {
-			// TODO Auto-generated method stub
-			String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA)
-					.format(new Date()).toString();
-			String temp=UrlUtils.URL_GET_HOST.substring(0, UrlUtils.URL_GET_HOST.length());
-			if(!url.equals(temp)){      //当加载默认网址时不加入历史记录
-				History history = new History();
-				history.setWebAddress(url);
-				history.setWebName(webName);
-				// 加载完加入历史记录
-				new HistoryDao(getActivity()).addHistory(history);
-			}
-			super.onPageFinished(view, url);
-		}
-	}
+
 	
 	
 	@Override
