@@ -196,7 +196,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			break;
 		case 3:
 			/*  3-Change-多页监听    */
-			multiPage(visibile);
+			((BaseFragActivity) getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
+			Toast.makeText(getActivity(), "已进入多页模式", 1).show();
 			break;
 		case 4:
 			/*  4-Option-设置监听    */
@@ -251,9 +252,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		mViewPager = (ViewPager) view.findViewById(R.id.setting_viewpager);
 		mIndicator = (LinePageIndicator)view.findViewById(R.id.setting_indicator);
 		settingPanel = view.findViewById(R.id.main_setting_panel);
-		multiViewPager=(ViewPager) view.findViewById(R.id.multipage_viewpager);
-		multipageIndicator=(LinePageIndicator)view.findViewById(R.id.multipage_indicator);
-		multipagePanel=view.findViewById(R.id.multipage_panel);
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
 		// mWebView.setDownloadListener(new myDownloaderListener());
@@ -441,41 +439,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		}
 
 	}
-	/*
-	 * 实现webview多页效果
-	 */
-	private void multiPage(boolean visibile) {
-		if (visibile) {
-			MultipageAdapter.mViewPages = new ArrayList<View>();
-	        addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article2.html");
-			addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article6.html");
-			addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article10.html");
-			multipageAdapter = new MultipageAdapter();
-			multiViewPager.setAdapter(multipageAdapter);
-			multipageIndicator.setViewPager(multiViewPager);
-			multiViewPager.setVisibility(View.VISIBLE);
-			multipagePanel.setVisibility(View.VISIBLE);
-			multiViewPager.startAnimation(// 加载弹出菜单栏的动画效果
-					AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_appear));
-			this.visibile=false;
-		} else {
-			multiViewPager.setVisibility(View.GONE);
-			multipagePanel.setVisibility(View.GONE);
-			multiViewPager.startAnimation(// 退出菜单栏时的动画效果
-					AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_disappear));
-			this.visibile=true;
-		}
-	}
-	/*
-	 * 模拟网页
-	 */
-	private void addView(List<View> viewList,String url)
-	   {
-	         WebView webView=new WebView(getActivity());
-	         webView.loadUrl(url);
-	         viewList.add(webView);
-	    }
-	
 	// 添加书签
 	private void addNewBookMark() {
 		boolean flag=false;
