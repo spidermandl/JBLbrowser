@@ -118,6 +118,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
 		ab.setDisplayShowHomeEnabled(false);
+		ab.setDisplayShowTitleEnabled(false); 
 		setHasOptionsMenu(true);
 	}
 	@Override
@@ -466,13 +467,13 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			next_page.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
-					mWebView.scrollTo(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
+					//mWebView.scrollTo(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
 				}
 			});
 			previous_page.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
-					mWebView.scrollTo(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
+					//mWebView.scrollTo(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
 				}
 			});
 			break;
