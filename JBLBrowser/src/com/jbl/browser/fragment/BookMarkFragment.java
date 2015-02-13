@@ -40,11 +40,13 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	//书签listView
 	ListView listview;
 	//书签数据
-	List<BookMark> list=new ArrayList<BookMark>();
+	List<BookMark> list=null;
 	//网址
 	String webAddress="";
 	//网名
 	String webName="";
+	//没有书签
+	TextView noBookmark;
 	BookMarkAdapter bookMarkAdapter;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,22 +57,19 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	public List<BookMark> getData(){
 		List<BookMark> list;
 		list=new BookMarkDao(getActivity()).queryAll();
-		if(list==null){
-			Toast.makeText(getActivity(), R.string.no_bookmark, 100).show();
-		}
 		return list;
 	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		final ActionBar ab = this.getSherlockActivity().getSupportActionBar();
+		/*final ActionBar ab = this.getSherlockActivity().getSupportActionBar();
 
 		// set defaults for logo & home up
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
 		ab.setDisplayShowHomeEnabled(false);
-		setHasOptionsMenu(true);
+		setHasOptionsMenu(true);*/
 	}
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -85,9 +84,9 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		View view = inflater.inflate(R.layout.bookmark_fragment, container, false);
+		View view = inflater.inflate(R.layout.bookmark_fragment, container, false);		
 		listview=(ListView)view.findViewById(R.id.list_view_bookmark);
-		//init();
+		noBookmark=(TextView)view.findViewById(R.id.empty);
 		initDataFavorites();
 		listview.setOnItemClickListener(this);
 		listview.setOnItemLongClickListener(this);
@@ -98,9 +97,16 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	 * */
 	@SuppressWarnings("deprecation")
 	private void initDataFavorites() {
+		listview.setVisibility(View.GONE);
 		list=getData();
-		bookMarkAdapter=new BookMarkAdapter(getActivity(), list);
-		listview.setAdapter(bookMarkAdapter);
+		if(list==null){
+			noBookmark.setVisibility(View.VISIBLE);
+		}else{
+			noBookmark.setVisibility(View.GONE);
+			listview.setVisibility(View.VISIBLE);
+			bookMarkAdapter=new BookMarkAdapter(getActivity(), list);
+			listview.setAdapter(bookMarkAdapter);
+		}		
 	}
 	//长按显示删除确定对话框
 	@Override

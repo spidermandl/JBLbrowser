@@ -469,9 +469,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	class MyWebViewClient extends WebViewClient {
 		
 		@Override
-		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			view.loadUrl(url);
-			cur_url = url;			
+		public boolean shouldOverrideUrlLoading(WebView view, String url) {			
 			if(url.contains("www.baidu.com")){
 				/* 主页百度url拦截*/
 				Intent in=new Intent();
