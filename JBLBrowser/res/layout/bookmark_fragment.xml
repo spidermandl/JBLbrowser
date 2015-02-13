@@ -4,6 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical" 
     android:background="#ffffff">
+    <FrameLayout android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 android:layout_weight="1">
     <ListView android:id="@+id/list_view_bookmark" android:layout_width="fill_parent" android:layout_height="wrap_content"
         android:persistentDrawingCache="animation|scrolling"/>	
+    <TextView android:id="@+id/empty" android:layout_width="fill_parent" android:layout_height="fill_parent"
+        android:text="@string/no_bookmark" android:gravity="center" android:textStyle="bold"/>
+    </FrameLayout>
 </LinearLayout>
