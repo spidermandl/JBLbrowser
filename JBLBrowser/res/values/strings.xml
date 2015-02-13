@@ -6,8 +6,7 @@
     <string name="acount_propmt_input">请输入游戏内使用的</string>
     <string name="acount_propmt_change">重新安装APP或者变更游戏机种需要使用</string>
     <string name="buying">存在未处理完成的订单，系统正在处理，暂时无法继续购买，请稍后再试！</string>
-    <string name="confirm">确定</string>
-    <string name="cancel_01">取消</string>
+    
     <string name="check_network">请先检查通信状况</string>
     <string name="click_retry">点击重试按钮</string>
     <string name="check_con_fail">无法链接到服务器，错误代码：</string>
@@ -107,7 +106,8 @@
     <string name="delete_bookmark">删除书签</string>
     <string name="no_bookmark">没有书签</string>
     <string name="no_history">没有历史记录</string>
-    
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
 	<string name="main_share_chooser_title">分享</string>
     
     
@@ -123,11 +123,11 @@
         <item>设置</item>
         <item>历史</item>
         <item>分享</item>
-        <item>无图模式</item>
+		<item>开启无图关闭无图</item>  
         <item>下载管理</item>
         <item>退出</item>
         <item>开启翻页按钮</item>
-        <item>无痕浏览</item>
+        <item>开启无痕浏览关闭无痕浏览</item>
         <item>全屏浏览</item>
         <item>更换壁纸</item>
         <item>省流加速</item>
@@ -140,4 +140,8 @@
         <item>保存网页</item>
     </string-array> 
         <string name="please_input_and_search">请输入网址或搜索</string>
+ 
+        <string name="quit">程序退出？</string>
+ 
+        <string name="confirm_quit">您确定要退出？</string>
 </resources>

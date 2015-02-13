@@ -21,8 +21,13 @@ public class JBLPreference {
 	public static final String PIC_CACHE_TYPE="PIC_CACHE_TYPE";//网页图片缓存模式
 	public static final int NO_PICTURE=1;
 	public static final int YES_PICTURE=0;
-	public static final String OPEN_NO_PICTURE="开启无图模式";
-	public static final String OPEN_YES_PICTURE="开启有图模式";
+
+	
+	public static final String HISTORY_CACHE_TYPE="PIC_CACHE_TYPE";//网页无痕浏览模式
+	public static final int NO_HISTORY=1;
+	public static final int YES_HISTORY=0;
+
+	
 	//书签和历史记录传网址到主页fragment关键字
 	public static final String BOOKMARK_HISTORY_KEY="webAddress";
 	public static final String RECOMMEND_KEY="urlAddress";

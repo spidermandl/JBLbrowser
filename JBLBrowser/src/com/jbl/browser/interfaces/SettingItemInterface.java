@@ -23,11 +23,13 @@ public interface SettingItemInterface {
 //    开启翻页按钮
 	void pageTurningSwitch();
 //    无痕浏览
+	void withoutTrace();
 //    全屏浏览
 //    更换壁纸
 //    省流加速
 //    阅读模式
 //    刷新
+	void refresh();
 //    关于
 //    意见反馈
 //    检查更新

@@ -107,7 +107,7 @@ public class UserDefinedDialog {
 		builder.setIcon(iconId);
 		builder.setMessage(message);
 		builder.setPositiveButton(context.getResources().getString(R.string.confirm), listener);
-		builder.setNegativeButton(context.getResources().getString(R.string.cancel_01), null);
+		builder.setNegativeButton(context.getResources().getString(R.string.cancel), null);
 		return builder.create();
 	}
 	
