@@ -106,6 +106,7 @@
     <string name="delete_bookmark_fail">删除书签失败</string>
     <string name="delete_bookmark">删除书签</string>
     <string name="no_bookmark">没有书签</string>
+    <string name="no_history">没有历史记录</string>
     
 	<string name="main_share_chooser_title">分享</string>
     

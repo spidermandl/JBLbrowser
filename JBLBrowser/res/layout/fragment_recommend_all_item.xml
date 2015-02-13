@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-     >
-    
-    <ImageView android:id="@+id/imv" android:layout_width="45dp" android:layout_height="45dp" 
-        android:background="#ff69b4"/>
-    <TextView  android:id="@+id/tv1" android:layout_width="match_parent" android:layout_height="30dp"
-        android:layout_toRightOf="@+id/imv" android:layout_above="@+id/tv2" android:gravity="center_vertical"/>
-
-    <TextView
-        android:id="@+id/tv2"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_alignBottom="@+id/imv"
-        android:layout_alignLeft="@+id/tv1"
-        android:layout_alignParentRight="true" />
-
-</RelativeLayout>
+    android:orientation="vertical"
+    >
+    <LinearLayout android:id="@+id/ll_list_item" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+	    <ImageView android:id="@+id/imv" android:layout_width="@dimen/list_width" android:layout_height="@dimen/list_height" android:src="@drawable/refresh" android:layout_gravity="center" android:scaleType="centerInside"/>
+	    <LinearLayout android:id="@+id/ll_text" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="@dimen/padding_top">
+		    <TextView android:id="@+id/tv1" android:layout_width="fill_parent" android:layout_height="wrap_content" android:lines="1"
+		       android:textSize="@dimen/font_size_item_max"   android:textColor="@color/black"/>
+		    <TextView android:id="@+id/tv2" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="@dimen/font_size_item_min" android:layout_marginTop="@dimen/padding_medium"
+		            android:lines="1" android:layout_marginBottom="@dimen/padding_bottom" /> 
+		</LinearLayout>
+	</LinearLayout>
+    <View android:id="@+id/line" android:layout_width="fill_parent" android:layout_height="@dimen/list_line_height" android:background="@color/list_line"/>
+</LinearLayout>
