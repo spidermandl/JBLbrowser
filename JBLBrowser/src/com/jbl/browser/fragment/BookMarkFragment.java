@@ -22,7 +22,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.BookMarkAdapter;
@@ -53,10 +52,10 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	}
 	//从数据库中获得数据
 	public List<BookMark> getData(){
-		List<BookMark> list=new ArrayList<BookMark>();
+		List<BookMark> list;
 		list=new BookMarkDao(getActivity()).queryAll();
 		if(list==null){
-			Toast.makeText(getActivity(), "没有书签", 100).show();
+			Toast.makeText(getActivity(), R.string.no_bookmark, 100).show();
 		}
 		return list;
 	}

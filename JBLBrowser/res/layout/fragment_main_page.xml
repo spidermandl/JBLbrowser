@@ -52,10 +52,21 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:layout_above="@+id/buttom_tool_bar"
-         android:visibility="gone">      
+         android:visibility="gone">  
+             
      </include>     
 
-    <!-- <LinearLayout
+
+
+	<include layout="@layout/multipage_panel"
+    	 android:id="@+id/multipage_panel"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/buttom_tool_bar"
+         android:visibility="gone">         
+     </include>     
+	
+<!--     <LinearLayout
         android:id="@id/buttom_tool_bar"
         android:layout_width="fill_parent"
         android:layout_height="37dp"
@@ -67,7 +78,8 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="#fffacd" />
+            android:background="#fffacd"
+             />
 
         <ImageView
             android:id="@+id/mImageViewInto"
@@ -96,6 +108,5 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="#fffacd" />
-    </LinearLayout>
- -->
+    </LinearLayout> -->
 </RelativeLayout>

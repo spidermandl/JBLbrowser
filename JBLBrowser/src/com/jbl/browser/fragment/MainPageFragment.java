@@ -1,13 +1,16 @@
 package com.jbl.browser.fragment;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.LayoutParams;
@@ -42,6 +45,7 @@ import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.activity.RecommendMainActivity;
+import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
@@ -51,6 +55,7 @@ import com.jbl.browser.interfaces.SettingItemInterface;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
+import com.viewpager.indicator.IconPagerAdapter;
 import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
 
@@ -96,6 +101,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 */	
 	private ViewPager mViewPager; // 水平实现滑动效果
 	private PagerAdapter mPageAdapter;
+	private MultipageAdapter multipageAdapter;//多页效果适配器 
 	private ScheduledExecutorService scheduledExecutorService;
 	View settingPanel;// 设置主界面
 	PageIndicator mIndicator;
@@ -103,7 +109,10 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	private boolean visibile=true;//标示是否显示菜单栏
 	View popview;//翻页按钮布局
 	PopupWindow popWindow;//悬浮翻页窗口
-	
+	private ViewPager multiViewPager;//多页效果
+	View multipagePanel;//多页布局
+	PageIndicator multipageIndicator;
+	 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -212,6 +221,14 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		String url_webAddress="";
+		url_webAddress=JBLPreference.getInstance(this.getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
+		if(url_webAddress==""){
+			cur_url=UrlUtils.URL_GET_HOST;
+		}else{
+			cur_url=url_webAddress;
+		}
+		//cur_url=UrlUtils.URL_GET_HOST;
 		View view = inflater.inflate(R.layout.fragment_main_page, container,
 				false);
 		mWebView = (WebView) view.findViewById(R.id.mWebView);// webview
@@ -244,8 +261,11 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		
 		mViewPager = (ViewPager) view.findViewById(R.id.setting_viewpager);
 		mIndicator = (LinePageIndicator)view.findViewById(R.id.setting_indicator);
-
 		settingPanel = view.findViewById(R.id.main_setting_panel);
+		
+		multiViewPager=(ViewPager) view.findViewById(R.id.multipage_viewpager);
+		multipageIndicator=(LinePageIndicator)view.findViewById(R.id.multipage_indicator);
+		multipagePanel=view.findViewById(R.id.multipage_panel);
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
 		// mWebView.setDownloadListener(new myDownloaderListener());
@@ -393,7 +413,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		mImageViewChange.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				multiPage(visibile);
 			}
 		});
 
@@ -402,7 +422,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 
 			@Override
 			public void onClick(View v) {
-				count++;
 				init(visibile);
 			}
 		});*/
@@ -435,6 +454,40 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		}
 
 	}
+	/*
+	 * 实现webview多页效果
+	 */
+	private void multiPage(boolean visibile) {
+		if (visibile) {
+			MultipageAdapter.mViewPages = new ArrayList<View>();
+	        addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article2.html");
+			addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article6.html");
+			addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article10.html");
+			multipageAdapter = new MultipageAdapter();
+			multiViewPager.setAdapter(multipageAdapter);
+			multipageIndicator.setViewPager(multiViewPager);
+			multiViewPager.setVisibility(View.VISIBLE);
+			multipagePanel.setVisibility(View.VISIBLE);
+			multiViewPager.startAnimation(// 加载弹出菜单栏的动画效果
+					AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_appear));
+			this.visibile=false;
+		} else {
+			multiViewPager.setVisibility(View.GONE);
+			multipagePanel.setVisibility(View.GONE);
+			multiViewPager.startAnimation(// 退出菜单栏时的动画效果
+					AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_disappear));
+			this.visibile=true;
+		}
+	}
+	/*
+	 * 模拟网页
+	 */
+	private void addView(List<View> viewList,String url)
+	   {
+	         WebView webView=new WebView(getActivity());
+	         webView.loadUrl(url);
+	         viewList.add(webView);
+	    }
 	// 添加书签
 	public void addNewBookMark() {
 		boolean flag=false;
@@ -447,8 +500,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		else
 			Toast.makeText(getActivity(), R.string.add_bookmark_fail, 80).show();
 	}
-	
-
 	private void initWebView() {
 		// TODO Auto-generated method stub
 		// mWebView.getSettings().setJavaScriptEnabled(true);
@@ -466,7 +517,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		// webView.getSettings().setPluginsEnabled(true);
 		mWebView.getSettings().setPluginState(PluginState.ON);
 
-		mWebView.loadUrl(UrlUtils.URL_GET_HOST);
+		mWebView.loadUrl(cur_url);
 		
 		mWebView.setDownloadListener(new DownloadListener() {
 			
@@ -479,6 +530,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		});
 		mWebView.setWebViewClient(new MyWebViewClient());
 		mWebView.setWebChromeClient(new WebChromeClient() {
+			
 			@Override
 			public void onReceivedTitle(WebView view, String title) {
 				// TODO Auto-generated method stub
@@ -488,10 +540,13 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		});
 	}
 	/* webcilent */
+	@SuppressLint("SetJavaScriptEnabled")
 	class MyWebViewClient extends WebViewClient {
 		
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+			view.loadUrl(url);
+			cur_url = url;			
 			if(url.contains("www.baidu.com")){
 				/* 主页百度url拦截*/
 				Intent in=new Intent();
@@ -525,22 +580,18 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		mViewPager.setVisibility(View.GONE);
 		settingPanel.setVisibility(View.GONE);
 	}
-
 	@Override
 	public void listBookMark() {
 		((BaseFragActivity) getActivity()).navigateTo(BookMarkFragment.class, null, true,BookMarkFragment.TAG);
 	}
-
 	@Override
 	public void browserSetting() {
 		((BaseFragActivity) getActivity()).navigateTo(MenuSetFragment.class, null, true,MenuSetFragment.TAG);
 	}
-
 	@Override
 	public void listHistory() {
 		((BaseFragActivity) getActivity()).navigateTo(HistoryFragment.class, null, true,HistoryFragment.TAG);
 	}
-
 	@Override
 	public void share() {
     	Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -553,12 +604,10 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
         } catch(android.content.ActivityNotFoundException ex) {
            
         }
-    	
 		mViewPager.setVisibility(View.GONE);
 		settingPanel.setVisibility(View.GONE);
 		
 	}
-
 	@Override
 	public void fitlerPicLoading() {
 		switch (JBLPreference.getInstance(getActivity()).readInt(JBLPreference.PIC_CACHE_TYPE)) {
@@ -577,15 +626,14 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		}
 		mViewPager.setVisibility(View.GONE);
 		settingPanel.setVisibility(View.GONE);
-		
 	}
-
 	@Override
 	public void manageDownload() {
-		((MainFragActivity)getActivity()).showDownloadList();
-		
-	}
 
+		// TODO Auto-generated method stub
+		((MainFragActivity)getActivity()).showDownloadList();
+
+	}
 	@Override
 	public void quit() {
 		getActivity().finish();
@@ -624,10 +672,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			break;
 		}
 		mViewPager.setVisibility(View.GONE);
-		settingPanel.setVisibility(View.GONE);
-
-		
+		settingPanel.setVisibility(View.GONE);	
 	}
 		
-	
+
 }

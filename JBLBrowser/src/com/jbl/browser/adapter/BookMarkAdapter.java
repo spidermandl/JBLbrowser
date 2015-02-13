@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -48,7 +49,8 @@ public class BookMarkAdapter extends BaseAdapter{
             holder = new ViewHolder();  
             holder.line = (View) convertView.findViewById(R.id.line);  
             holder.urlName = (TextView) convertView.findViewById(R.id.url_name);  
-            holder.urlAddress = (TextView) convertView.findViewById(R.id.url_address);  
+            holder.urlAddress = (TextView) convertView.findViewById(R.id.url_address);
+            holder.image=(ImageView)convertView.findViewById(R.id.iv_url_image);
             convertView.setTag(holder);  
         } else {  
             holder = (ViewHolder) convertView.getTag();
@@ -61,6 +63,6 @@ public class BookMarkAdapter extends BaseAdapter{
     {  
         public View line; 
         public TextView urlName,urlAddress;  
-  
+        public ImageView image;
     }  
 }
