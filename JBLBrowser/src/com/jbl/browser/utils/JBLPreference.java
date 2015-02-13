@@ -27,9 +27,13 @@ public class JBLPreference {
 	public static final String BOOKMARK_HISTORY_KEY="webAddress";
 	public static final String RECOMMEND_KEY="urlAddress";
 	public static final String FONT_TYPE="FONT_TYPE";//字体类型
+	public static final String SCREEN_TYPE="SCREEN_TYPE";//屏幕类型
 	public static final int FONT_MIN= 0;//"小";
 	public static final int FONT_MEDIUM= 1;//"中";
 	public static final int FONT_MAX= 2;//"大";
+	public static final int FOLLOW_SYSTEM= 0;//"跟随系统";
+	public static final int LOCK_VERTAICAL= 1;//"锁定竖屏";
+	public static final int LOCK_HORZON= 2;//"锁定横屏";
 	public static final String DELETE_RECOMMEND="删除推荐";
 	public static final String SUCCESS_DELETE="删除成功";
 	public static final String BRIGHTNESS_TYPE="BRIGHTNESS";//日间 夜间 模式
@@ -39,7 +43,11 @@ public class JBLPreference {
 	public static final String TURNING_TYPE="TURNING_TYPE";//页面翻转模式
 	public static final int OPEN_TURNING_BUTTON=1;//"开启翻页按钮";
 	public static final int COLSE_TURNING_BUTTON=0;//"关闭翻页按钮";
-	
+	public static final String FONT_SIZE="字体大小";
+	public static final String SCREEN_INTENSITY="屏幕亮度";
+	public static final String MODERATE="适中";
+	public static final String ROTARY_SCREEN="旋转屏幕";
+	public static final String ABOUT="关于";
 	
 	// 提供私有的构造方法
 	private JBLPreference() {

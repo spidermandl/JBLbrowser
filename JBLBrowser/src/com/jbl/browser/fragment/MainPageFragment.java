@@ -183,7 +183,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			/*  1-GoTo-前进监听  */
 			if(mWebView.canGoForward()){
 				mWebView.goForward();
-			}
+			}	
 			else{
 				Toast.makeText(getActivity(), "不能前进了！", Toast.LENGTH_SHORT).show();
 			}
@@ -196,7 +196,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			break;
 		case 3:
 			/*  3-Change-多页监听    */
-			
+			multiPage(visibile);
 			break;
 		case 4:
 			/*  4-Option-设置监听    */
@@ -246,22 +246,17 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		 *  1.3 ImageView_Land
 		 *    */
 		mImageView_Search=(ImageView)view.findViewById(R.id.mImageView_Search);//搜索图标
-		
 		mImageView_Code=(ImageView)view.findViewById(R.id.mImageView_Code);//二维码
 		mImageView_Land=(ImageView)view.findViewById(R.id.mImageView_Land);//登陆注册
-		
-		
 		mViewPager = (ViewPager) view.findViewById(R.id.setting_viewpager);
 		mIndicator = (LinePageIndicator)view.findViewById(R.id.setting_indicator);
 		settingPanel = view.findViewById(R.id.main_setting_panel);
-		
 		multiViewPager=(ViewPager) view.findViewById(R.id.multipage_viewpager);
 		multipageIndicator=(LinePageIndicator)view.findViewById(R.id.multipage_indicator);
 		multipagePanel=view.findViewById(R.id.multipage_panel);
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
 		// mWebView.setDownloadListener(new myDownloaderListener());
-		
 		/*
 		 * 设置webview字体大小
 		 */
