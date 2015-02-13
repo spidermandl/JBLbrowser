@@ -3,13 +3,23 @@ package com.jbl.browser.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.actionbarsherlock.app.SherlockDialogFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
 import com.jbl.browser.adapter.SettingGridItemAdapter;
 import com.jbl.browser.interfaces.SettingItemInterface;
@@ -18,7 +28,7 @@ import com.jbl.browser.interfaces.SettingItemInterface;
  * 设置界面滑动分页控制类
  */
 
-public class SettingPagerFragment {
+public class SettingPagerFragment {//extends SherlockDialogFragment{
 	private static final String TAG = "SettingPagerFragment";
 	
 	private static final int PAGE_SIZE = 8; // 每页显示的数据个数
@@ -43,6 +53,39 @@ public class SettingPagerFragment {
 		initViewAndAdapter();
 
 	}
+//	public static SettingPagerFragment newInstance(String title) {  
+//		SettingPagerFragment frag = new SettingPagerFragment();  
+//        return frag;  
+//    }
+//	@Override
+//	public void onCreate(Bundle savedInstanceState) {
+//		mContext = this.getActivity();
+//		resArrays= mContext.getResources().getStringArray(R.array.setting_content_item);
+//		mPageList = new ArrayList<List<String>>();
+//		mGridViews = new ArrayList<GridView>();
+//		mViewPages = new ArrayList<View>();
+//		initPages(resArrays);
+//		initViewAndAdapter();
+//		setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomDialog);//android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+//		//getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//		super.onCreate(savedInstanceState);
+//	}
+//	
+//	@Override
+//	public Dialog onCreateDialog(Bundle savedInstanceState) {
+//		// TODO Auto-generated method stub
+//		return super.onCreateDialog(savedInstanceState);
+//	}
+//	
+//	@Override
+//	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//			Bundle savedInstanceState) {
+//		View v=new View(mContext);
+//		v.setBackgroundColor(0x44CCCCCC);
+//		return v;
+//	}
+	
+	
 	/**
 	 * 将数据分页
 	 * 

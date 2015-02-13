@@ -1,16 +1,11 @@
 package com.jbl.browser.fragment;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.LayoutParams;
@@ -23,11 +18,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.webkit.DownloadListener;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -202,6 +195,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			/*  4-Option-设置监听    */
 			count++;
 			init(visibile);
+			//SettingPagerFragment fire = SettingPagerFragment.newInstance(null);  
+			//fire.show(getFragmentManager(), "dialog");  
 			break;
 			
 		}
@@ -285,37 +280,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		}
 
 		BrowserSettings.getInstance().update();
-		/*
-		 * 设置title各个控件监听 1.1 search mImageViewSearch.setOnClickListener(new
-		 * View.OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { // TODO Auto-generated method
-		 * stub
-		 * 
-		 * } });
-		 * 
-		 * 1.2 输入网址 获取网址信息 url为获取到的输入网址 为1.1 search获得数据 String
-		 * url=mEditTextInput.getText().toString();
-		 * 
-		 * 1.3 点击事件 启动二维码扫描 mButtonCode.setOnClickListener(new
-		 * View.OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { // TODO Auto-generated method
-		 * stub Intent intent=new Intent();
-		 * //intent.setClassName(MainPageFragment.class, CaptureActivity.class);
-		 * startActivity(intent); } });
-		 * 
-		 * 1.4 设置监听事件 启动注册登陆 mButtonLand.setOnClickListener(new
-		 * View.OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { // TODO Auto-generated method
-		 * stub
-		 * 
-		 * } });
-		 */
-		/*
-		 *标题栏  title  
-		 * */
+
 		/*  1.0 搜索监听 */
 		mImageView_Search.setOnClickListener(new View.OnClickListener() {
 			
