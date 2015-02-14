@@ -5,5 +5,5 @@
     android:orientation="vertical" 
     android:background="#ffffff">
      <ListView android:id="@+id/list_view_set" android:layout_width="fill_parent" android:layout_height="wrap_content"
-        android:persistentDrawingCache="animation|scrolling"/>	
+        android:persistentDrawingCache="animation|scrolling" android:divider="@color/list_line" android:dividerHeight="@dimen/list_line_height"/>	
 </LinearLayout>

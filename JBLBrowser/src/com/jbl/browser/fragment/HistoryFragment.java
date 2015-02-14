@@ -45,6 +45,8 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	TextView tv_history_time;*/
 	//历史记录适配器
 	HistoryAdapter historyAdapter;
+	//无历史记录
+	TextView noHistory;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -52,7 +54,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	}
 	//从数据库中获得数据
 	public List<History> getData(){
-		List<History> history=null;
+		List<History> history;
 		history=new HistoryDao(getActivity()).queryAll();
 		return history;
 	}
@@ -60,13 +62,13 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		final ActionBar ab = this.getSherlockActivity().getSupportActionBar();
+		/*final ActionBar ab = this.getSherlockActivity().getSupportActionBar();
 
 		// set defaults for logo & home up
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
 		ab.setDisplayShowHomeEnabled(false);
-		setHasOptionsMenu(true);
+		setHasOptionsMenu(true);*/
 	}
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -81,6 +83,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 		
 		View view = inflater.inflate(R.layout.history_fragment, container, false);
 		listview=(ListView)view.findViewById(R.id.list_view_history_today);
+		noHistory=(TextView)view.findViewById(R.id.empty);
 		initDataHistory();
 		listview.setOnItemClickListener(this);
 		listview.setOnItemLongClickListener(this);
@@ -91,9 +94,16 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	 * */
 	@SuppressWarnings("deprecation")
 	private void initDataHistory() {
+		listview.setVisibility(View.GONE);
 		list=getData();
-		historyAdapter=new HistoryAdapter(getActivity(), list);
-		listview.setAdapter(historyAdapter);
+		if(list.size()==0){      //没有历史记录时屏幕中间显示“没有历史记录”文字
+			noHistory.setVisibility(View.VISIBLE);
+		}else{                   //有历史记录时显示历史记录
+			noHistory.setVisibility(View.GONE);
+			listview.setVisibility(View.VISIBLE);
+			historyAdapter=new HistoryAdapter(getActivity(), list);
+			listview.setAdapter(historyAdapter);
+		}
 	}
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,

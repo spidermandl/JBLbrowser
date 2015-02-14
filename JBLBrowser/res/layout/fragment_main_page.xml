@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     tools:context="com.example.textwebview.MainActivity" >
 
-     <LinearLayout
+    <LinearLayout
         android:id="@+id/linear_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:background="#b0e0e6"
+        android:gravity="center_vertical"
         android:orientation="horizontal" >
 
         <ImageView
@@ -38,35 +38,34 @@
         
         <ImageView android:id="@+id/mImageView_Land" android:layout_width="37dp" android:layout_height="37dp" 
             android:background="#ffd700" android:clickable="true"/>
+      
     </LinearLayout>
-    
-    <WebView
+
+    <com.jbl.browser.view.ProgressWebView
         android:id="@+id/mWebView"
-        android:layout_below="@+id/linear_top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    
-	<include layout="@layout/main_setting_panel"
-    	 android:id="@+id/main_setting_panel"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_above="@+id/buttom_tool_bar"
-         android:visibility="gone">  
-             
-     </include>     
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linear_top" >
+    </com.jbl.browser.view.ProgressWebView>
 
-
-
+    <include
+        android:id="@+id/main_setting_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        layout="@layout/main_setting_panel"
+        android:visibility="gone" >
+    </include>
 	<include layout="@layout/multipage_panel"
     	 android:id="@+id/multipage_panel"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:layout_above="@+id/buttom_tool_bar"
          android:visibility="gone">         
-     </include>     
-	
+     </include>
+          
      <LinearLayout
-        android:id="@id/buttom_tool_bar"
+        android:id="@+id/buttom_tool_bar"
         android:layout_width="fill_parent"
         android:layout_height="37dp"
         android:layout_alignParentBottom="true"
@@ -107,5 +106,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="#fffacd" />
+
     </LinearLayout> 
+
 </RelativeLayout>

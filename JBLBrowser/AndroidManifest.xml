@@ -4,7 +4,8 @@
     android:versionCode="1"
     android:versionName="1.0.0" >
 
-    <uses-sdk android:minSdkVersion="11" />
+    <uses-sdk android:targetSdkVersion="19" 
+        android:minSdkVersion="8" />
     
      <!-- Allows access to the Download Manager -->
     <permission
@@ -12,7 +13,7 @@
         android:description="@string/permdesc_downloadManager"
         android:label="@string/permlab_downloadManager"
         android:protectionLevel="normal" />
-
+    <uses-permission android:name="android.permission.INTERNET"/> 
     <!-- Allows advanced access to the Download Manager -->
     <permission
         android:name="com.mozillaonline.permission.ACCESS_DOWNLOAD_MANAGER_ADVANCED"
@@ -148,7 +149,6 @@
         </activity>
         <activity
             android:name=".activity.RecommendMainActivity"
-            android:theme="@android:style/Theme.Holo.Light"
             android:label="@string/title_activity_recommend_main"
              >
              

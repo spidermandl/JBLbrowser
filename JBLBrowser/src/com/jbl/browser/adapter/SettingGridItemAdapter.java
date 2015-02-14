@@ -55,7 +55,8 @@ public class SettingGridItemAdapter extends BaseAdapter
         } else {  
             holder = (ViewHolder) convertView.getTag();
         }  
-        holder.text.setText(mList.get(position));  
+        holder.text.setText(mList.get(position));
+        
         return convertView;  
     }  
       

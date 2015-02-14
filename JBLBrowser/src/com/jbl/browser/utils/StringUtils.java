@@ -52,12 +52,15 @@ public class StringUtils {
 	/**音乐、音效的目录*/
 	public static final String MUSIC_PATH = "music/soundzy/";
 	
-	public static final String OPEN_NO_PICTURE="开启无图模式";
-	public static final String OPEN_YES_PICTURE="开启有图模式";
+	public static final String OPEN_NO_PICTURE="开启无图";
+	public static final String CLOSE_NO_PICTURE="关闭无图";
 	public static final String DELETE_RECOMMEND="删除推荐";
 	public static final String SUCCESS_DELETE="删除成功";
 	public static final String OPEN_TURNING_BUTTON="开启翻页按钮";
 	public static final String COLSE_TURNING_BUTTON="关闭翻页按钮";
-	
+	public static final String OPEN_NO_HISTORY="开启无痕浏览";
+	public static final String CLOSE_NO_HISTORY="关闭无痕浏览";
+	public static final String OPEN_NO_FULL="开启全屏浏览";
+	public static final String CLOSE_NO_FULL="关闭全屏浏览";
 	
 }

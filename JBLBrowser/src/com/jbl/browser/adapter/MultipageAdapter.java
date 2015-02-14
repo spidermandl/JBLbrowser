@@ -1,11 +1,13 @@
 package com.jbl.browser.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.webkit.WebView;
 
 import com.viewpager.indicator.IconPagerAdapter;
 
@@ -17,11 +19,11 @@ import com.viewpager.indicator.IconPagerAdapter;
 public class MultipageAdapter extends PagerAdapter  implements IconPagerAdapter
 {  
     private static final String TAG = "MultipageAdapter";  
-    public static  List<View> mViewPages;  
+    private ArrayList<WebView> mViewPages;  
     public MultipageAdapter(){
 	  
   }
-    public MultipageAdapter(List<View> viewPages) {  
+    public MultipageAdapter(ArrayList<WebView> viewPages) {  
         mViewPages = viewPages;  
     }  
     @Override  

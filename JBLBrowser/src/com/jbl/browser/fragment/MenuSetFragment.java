@@ -51,19 +51,19 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 	 */
 	public void init(){
 		SetContent s1=new SetContent();
-		s1.setSetText("字体大小");
+		s1.setSetText(JBLPreference.FONT_SIZE);
 		s1.setTextSize(getFontType());
 		list.add(s1);
 		SetContent s2=new SetContent();
-		s2.setSetText("屏幕亮度");
-		s2.setTextSize("适中");
+		s2.setSetText(JBLPreference.SCREEN_INTENSITY);
+		s2.setTextSize(JBLPreference.MODERATE);
 		list.add(s2);
 		SetContent s3=new SetContent();
-		s3.setSetText("旋转屏幕");
-		s3.setTextSize("锁定竖屏");
+		s3.setSetText(JBLPreference.ROTARY_SCREEN);
+		s3.setTextSize(getScreenType());
 		list.add(s3);
 		SetContent s4=new SetContent();
-		s4.setSetText("关于");
+		s4.setSetText(JBLPreference.ABOUT);
 		list.add(s4);
 	}
 	@Override
@@ -142,6 +142,19 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 			builder3.setSingleChoiceItems(items1, 1, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					Toast.makeText(getActivity(), "您选择了:"+items1[which], 1).show();
+					switch (which) {
+					case 0:
+						JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.SCREEN_TYPE, JBLPreference.FOLLOW_SYSTEM);
+						break;
+					case 1:
+						JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.SCREEN_TYPE, JBLPreference.LOCK_VERTAICAL);
+						break;
+					case 2:	
+						JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.SCREEN_TYPE, JBLPreference.LOCK_HORZON);
+						break;
+					default:
+						break;
+					}
 				}
 			});
 			builder3.setPositiveButton("取消",new DialogInterface.OnClickListener() {
@@ -176,6 +189,19 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 	        return "大";
 		default:
 			return "中";
+		}
+	}
+	private String getScreenType(){
+		switch (JBLPreference.getInstance(getActivity()).readInt(JBLPreference.SCREEN_TYPE)) {
+		case JBLPreference.FOLLOW_SYSTEM:
+			return "跟随系统";
+		case JBLPreference.INVALID:
+        case JBLPreference.LOCK_VERTAICAL:
+			return "锁定竖屏";
+        case JBLPreference.LOCK_HORZON:
+	        return "锁定横屏";
+		default:
+			return "锁定竖屏";
 		}
 	}
 }

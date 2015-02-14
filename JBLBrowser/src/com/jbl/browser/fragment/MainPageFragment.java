@@ -1,14 +1,12 @@
 package com.jbl.browser.fragment;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -21,13 +19,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.webkit.DownloadListener;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -36,23 +32,19 @@ import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.activity.MainFragActivity;
-import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.jbl.browser.bean.BookMark;
-import com.jbl.browser.bean.History;
 import com.jbl.browser.db.BookMarkDao;
-import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.interfaces.SettingItemInterface;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
+import com.jbl.browser.view.ProgressWebView;
 import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
 
@@ -85,11 +77,12 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	private ImageView mImageView_Search,mImageView_Code,mImageView_Land;
 	private AutoCompleteTextView mNetAddress;
 	/* 定义webview控件 */
-	public  WebView mWebView; // 主控件 webview
+	public  ProgressWebView mWebView; // 主控件 webview
 	public  WebSettings settings;
+
 	public String cur_url; // 设置初始网址
-	public String webName = "";// 网页名
-	// 定义操作栏控件 
+	public String webName=""; // 网页名
+	//定义操作栏控件 
 	private ImageView mImageViewBack; // 3.1 mImageViewBack 后退
 	private ImageView mImageViewInto; // 3.2 mImageViewInto 前进
 	private ImageView mImageViewHome; // 3.3 mImageViewHome Home
@@ -106,7 +99,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	private boolean visibile=true;//标示是否显示菜单栏
 	View popview;//翻页按钮布局
 	PopupWindow popWindow;//悬浮翻页窗口
-	private ViewPager multiViewPager;//多页效果
 	View multipagePanel;//多页布局
 	PageIndicator multipageIndicator;
 	 
@@ -124,7 +116,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
 		ab.setDisplayShowHomeEnabled(false);
-		setHasOptionsMenu(true);*/
 	}
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -143,6 +134,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 						}
 					});
 		} */
+
 		/*menu.add(0, 0, 0, "Back").setIcon(R.drawable.resume_ad_close)
 		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		
@@ -153,9 +145,10 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		
 		menu.add(0, 3, 3, "Change").setIcon(R.drawable.resume_ad_close)
-		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		
 		menu.add(0, 4, 4, "Option").setIcon(R.drawable.resume_ad_close)
+
 		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);*/
 	}
 /*	@Override
@@ -182,30 +175,31 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			  1-GoTo-前进监听  
 			if(mWebView.canGoForward()){
 				mWebView.goForward();
-			}
+			}	
 			else{
 				Toast.makeText(getActivity(), "不能前进了！", Toast.LENGTH_SHORT).show();
 			}
 			break;
 		case 2:
-			   2-Home-主页监听   
 			mWebView.clearHistory(); //清楚浏览记录
-			mWebView.loadUrl(UrlUtils.URL_GET_HOST); //加载主页
+			mWebView.loadUrl("http://m.hi2345.net/home.php"); //加载主页
 			break;
 		case 3:
 			  3-Change-多页监听    
-			
+			((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
+			Toast.makeText(getActivity(), "已进入多页模式", 1).show();
 			break;
 		case 4:
-			  4-Option-设置监听    
+			 // 4-Option-设置监听    
 			count++;
 			init(visibile);
+			//SettingPagerFragment fire = SettingPagerFragment.newInstance(null);  
+			//fire.show(getFragmentManager(), "dialog");  
 			break;
-			
-		}
-		return super.onOptionsItemSelected(item);
 	}*/
-	//覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法  
+	
+	//覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法
+	
     public boolean onKeyDown(int keyCode, KeyEvent event) {  
         if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {  
         	mWebView.goBack(); //goBack()表示返回WebView的上一页面  
@@ -213,21 +207,13 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
         }  
         return false; 
     }
-  
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		String url_webAddress="";
-		url_webAddress=JBLPreference.getInstance(this.getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
-		if(url_webAddress==""){
-			cur_url=UrlUtils.URL_GET_HOST;
-		}else{
-			cur_url=url_webAddress;
-		}
 		//cur_url=UrlUtils.URL_GET_HOST;
 		View view = inflater.inflate(R.layout.fragment_main_page, container,
 				false);
-		mWebView = (WebView) view.findViewById(R.id.mWebView);// webview
+		mWebView = (ProgressWebView) view.findViewById(R.id.mWebView);// webview
 		//Intent intent = getActivity().getIntent();  //监听webview跳转，实现activity跳转到推荐页面
 		mImageViewBack = (ImageView) view.findViewById(R.id.mImageViewBack); // 3.1
 																				// mImageViewBack
@@ -253,18 +239,13 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		mNetAddress=(AutoCompleteTextView)view.findViewById(R.id.net_address);//输入栏
 		mImageView_Code=(ImageView)view.findViewById(R.id.mImageView_Code);//二维码
 		mImageView_Land=(ImageView)view.findViewById(R.id.mImageView_Land);//登陆注册
-		
+
 		mViewPager = (ViewPager) view.findViewById(R.id.setting_viewpager);
 		mIndicator = (LinePageIndicator)view.findViewById(R.id.setting_indicator);
 		settingPanel = view.findViewById(R.id.main_setting_panel);
-		
-		multiViewPager=(ViewPager) view.findViewById(R.id.multipage_viewpager);
-		multipageIndicator=(LinePageIndicator)view.findViewById(R.id.multipage_indicator);
-		multipagePanel=view.findViewById(R.id.multipage_panel);
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
 		// mWebView.setDownloadListener(new myDownloaderListener());
-		
 		/*
 		 * 设置webview字体大小
 		 */
@@ -288,37 +269,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		}
 
 		BrowserSettings.getInstance().update();
-		/*
-		 * 设置title各个控件监听 1.1 search mImageViewSearch.setOnClickListener(new
-		 * View.OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { // TODO Auto-generated method
-		 * stub
-		 * 
-		 * } });
-		 * 
-		 * 1.2 输入网址 获取网址信息 url为获取到的输入网址 为1.1 search获得数据 String
-		 * url=mEditTextInput.getText().toString();
-		 * 
-		 * 1.3 点击事件 启动二维码扫描 mButtonCode.setOnClickListener(new
-		 * View.OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { // TODO Auto-generated method
-		 * stub Intent intent=new Intent();
-		 * //intent.setClassName(MainPageFragment.class, CaptureActivity.class);
-		 * startActivity(intent); } });
-		 * 
-		 * 1.4 设置监听事件 启动注册登陆 mButtonLand.setOnClickListener(new
-		 * View.OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { // TODO Auto-generated method
-		 * stub
-		 * 
-		 * } });
-		 */
-		/*
-		 *标题栏  title  
-		 * */
+
 		/*  1.0 搜索监听 */
 		mImageView_Search.setOnClickListener(new View.OnClickListener() {
 			
@@ -328,17 +279,20 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 				
 			}
 		});
-		/*   1.1 输入栏切换fragment 
+		  // 1.1 输入栏切换fragment 
 		mNetAddress.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				((BaseFragActivity)getActivity()).navigateTo(
+				mNetAddress.requestFocus();
+				mNetAddress.setSelectAllOnFocus(true);
+				
+				/*((BaseFragActivity)getActivity()).navigateTo(
 						UrlRedirectFragment.class, null, true,
-						UrlRedirectFragment.TAG);
+						UrlRedirectFragment.TAG);*/
 			}
-		});*/
+		});
 		/*  1.2  二维码监听 */
 		mImageView_Code.setOnClickListener(new View.OnClickListener() {
 			
@@ -356,7 +310,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				mWebView.loadUrl("http://www.hmudq.edu.cn/");
+				mWebView.loadUrl(UrlUtils.URL_LOGIN);
 			}
 		});
 		/*
@@ -374,7 +328,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 				return false;
 			}
 		});
-
 		
 		// 3.1 返回监听 
 		mImageViewBack.setOnClickListener(new View.OnClickListener() {
@@ -419,7 +372,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		mImageViewChange.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				multiPage(visibile);
+				//multiPage(visibile);
 			}
 		});
 
@@ -460,46 +413,12 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		}
 
 	}
-	/*
-	 * 实现webview多页效果
-	 */
-	private void multiPage(boolean visibile) {
-		if (visibile) {
-			MultipageAdapter.mViewPages = new ArrayList<View>();
-	        addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article2.html");
-			addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article6.html");
-			addView(MultipageAdapter.mViewPages, "file:///android_asset/experience/exp_article10.html");
-			multipageAdapter = new MultipageAdapter();
-			multiViewPager.setAdapter(multipageAdapter);
-			multipageIndicator.setViewPager(multiViewPager);
-			multiViewPager.setVisibility(View.VISIBLE);
-			multipagePanel.setVisibility(View.VISIBLE);
-			multiViewPager.startAnimation(// 加载弹出菜单栏的动画效果
-					AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_appear));
-			this.visibile=false;
-		} else {
-			multiViewPager.setVisibility(View.GONE);
-			multipagePanel.setVisibility(View.GONE);
-			multiViewPager.startAnimation(// 退出菜单栏时的动画效果
-					AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_disappear));
-			this.visibile=true;
-		}
-	}
-	/*
-	 * 模拟网页
-	 */
-	private void addView(List<View> viewList,String url)
-	   {
-	         WebView webView=new WebView(getActivity());
-	         webView.loadUrl(url);
-	         viewList.add(webView);
-	    }
 	// 添加书签
-	public void addNewBookMark() {
+	private void addNewBookMark() {
 		boolean flag=false;
 		BookMark bookMark =new BookMark();
-		bookMark.setWebName(webName);
-		bookMark.setWebAddress(cur_url);
+		bookMark.setWebName(mWebView.getWebName());
+		bookMark.setWebAddress(mWebView.getCurrentUrl());
 		flag=new BookMarkDao(getActivity()).addBookMark(bookMark);
 		if (flag)
 			Toast.makeText(getActivity(), R.string.add_bookmark_succeed, 80).show();
@@ -522,9 +441,13 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 		// webView.getSettings().setPluginsEnabled(true);
 		mWebView.getSettings().setPluginState(PluginState.ON);
-
-		mWebView.loadUrl(cur_url);
-		
+		String urlAddress="";   //声明接收从书签和历史记录界面传来的值
+		urlAddress=JBLPreference.getInstance(getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
+		if(urlAddress==""){
+			mWebView.loadUrl(UrlUtils.URL_GET_HOST);
+		}else{
+			mWebView.loadUrl(urlAddress);
+		}
 		mWebView.setDownloadListener(new DownloadListener() {
 			
 			@Override
@@ -534,52 +457,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 				((MainFragActivity)getActivity()).startDownload(url);
 			}
 		});
-		mWebView.setWebViewClient(new MyWebViewClient());
-		mWebView.setWebChromeClient(new WebChromeClient() {
-			
-			@Override
-			public void onReceivedTitle(WebView view, String title) {
-				// TODO Auto-generated method stub
-				super.onReceivedTitle(view, title);
-				webName = title;
-			}
-		});
 	}
-	/* webcilent */
-	@SuppressLint("SetJavaScriptEnabled")
-	class MyWebViewClient extends WebViewClient {
-		
-		@Override
-		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			view.loadUrl(url);
-			cur_url = url;			
-			if(url.contains("www.baidu.com")){
-				/* 主页百度url拦截*/
-				Intent in=new Intent();
-				in.setClass(getActivity(),RecommendMainActivity.class);
-				startActivity(in);
-				return true;
-			}
-			return false;
-		}
-		@Override
-		public void onPageFinished(WebView view, String url) {
-			// TODO Auto-generated method stub
-			String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA)
-					.format(new Date()).toString();
-			String temp=UrlUtils.URL_GET_HOST.substring(0, UrlUtils.URL_GET_HOST.length());
-			if(!url.equals(temp)){      //当加载默认网址时不加入历史记录
-				History history = new History();
-				history.setWebAddress(url);
-				history.setWebName(webName);
-				// 加载完加入历史记录
-				new HistoryDao(getActivity()).addHistory(history);
-			}
-			super.onPageFinished(view, url);
-		}
-	}
-	
-	
 	@Override
 	public void addBookMark() {
 		MainPageFragment.this.addNewBookMark();
@@ -616,22 +494,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	}
 	@Override
 	public void fitlerPicLoading() {
-		switch (JBLPreference.getInstance(getActivity()).readInt(JBLPreference.PIC_CACHE_TYPE)) {
-		case JBLPreference.NO_PICTURE:
-			JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.PIC_CACHE_TYPE, JBLPreference.YES_PICTURE);
-			Toast.makeText(getActivity(), StringUtils.OPEN_NO_PICTURE, 100).show();
-			mWebView.getSettings().setBlockNetworkImage(true);
-			break;
-		case JBLPreference.INVALID:
-		case JBLPreference.YES_PICTURE:
-			JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.PIC_CACHE_TYPE,JBLPreference.NO_PICTURE);
-			Toast.makeText(getActivity(), StringUtils.OPEN_YES_PICTURE, 100).show();
-			mWebView.getSettings().setBlockNetworkImage(false);
-		default:
-			break;
-		}
-		mViewPager.setVisibility(View.GONE);
-		settingPanel.setVisibility(View.GONE);
+		operate(JBLPreference.getInstance(getActivity()).readInt(JBLPreference.PIC_CACHE_TYPE),JBLPreference.PIC_CACHE_TYPE,
+				JBLPreference.NO_PICTURE,JBLPreference.YES_PICTURE,StringUtils.OPEN_NO_PICTURE, StringUtils.CLOSE_NO_PICTURE);
 	}
 	@Override
 	public void manageDownload() {
@@ -641,9 +505,28 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 
 	}
 	@Override
-	public void quit() {
-		getActivity().finish();
+	public void quit() {  //退出跳出对话框确定
+		Dialog dialog=new AlertDialog.Builder(getActivity())
+		.setTitle(R.string.quit)
+		.setMessage(R.string.confirm_quit)
+		.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub				
+				getActivity().finish();
+			}
+		}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener(){
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+			}			
+		})
+		.create();
+		dialog.show();
 	}
+	
 	@Override
 	public void pageTurningSwitch() {
 		switch (JBLPreference.getInstance(getActivity()).readInt(JBLPreference.TURNING_TYPE)) {
@@ -657,12 +540,14 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			Button previous_page=(Button)popview.findViewById(R.id.previous_page);
 			Button next_page=(Button)popview.findViewById(R.id.next_page);
 			next_page.setOnClickListener(new OnClickListener(){
+				@SuppressLint("NewApi")
 				@Override
 				public void onClick(View v) {
 					mWebView.scrollTo(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
 				}
 			});
 			previous_page.setOnClickListener(new OnClickListener(){
+				@SuppressLint("NewApi")
 				@Override
 				public void onClick(View v) {
 					mWebView.scrollTo(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
@@ -680,6 +565,58 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		mViewPager.setVisibility(View.GONE);
 		settingPanel.setVisibility(View.GONE);	
 	}
-		
+
+	@Override
+	public void refresh() {     //刷新当前界面
+		// TODO Auto-generated method stub
+		mWebView.reload();
+		mViewPager.setVisibility(View.GONE);
+		settingPanel.setVisibility(View.GONE);
+	}
+
+	@Override
+	public void withoutTrace() {   //无痕浏览
+		// TODO Auto-generated method stub
+		operate(JBLPreference.getInstance(getActivity()).readInt(JBLPreference.HISTORY_CACHE_TYPE),JBLPreference.HISTORY_CACHE_TYPE,
+				JBLPreference.NO_HISTORY,JBLPreference.YES_HISTORY,StringUtils.OPEN_NO_HISTORY, StringUtils.CLOSE_NO_HISTORY);
+	}
+
+	@Override
+	public void fullScreen() {     //全屏浏览
+		// TODO Auto-generated method stub
+		operate(JBLPreference.getInstance(getActivity()).readInt(JBLPreference.FULL_SCREEN_TYPE),JBLPreference.FULL_SCREEN_TYPE,
+				JBLPreference.NO_FULL,JBLPreference.YES_FULL,StringUtils.OPEN_NO_FULL, StringUtils.CLOSE_NO_FULL);
+	}
+	
+	public void operate(int type,String strType,int no,int yes,String open,String close){
+		switch (type) {
+		case -1:
+		case 1:
+			JBLPreference.getInstance(getActivity()).writeInt(strType,yes);
+			Toast.makeText(getActivity(), open, 100).show();
+			if(strType==JBLPreference.PIC_CACHE_TYPE){
+				mWebView.getSettings().setBlockNetworkImage(true);
+			}
+			if(strType==JBLPreference.FULL_SCREEN_TYPE){
+				getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN); 
+			}
+			break;
+		case 0:
+			JBLPreference.getInstance(getActivity()).writeInt(strType,no);
+			Toast.makeText(getActivity(), close, 100).show();
+			if(strType==JBLPreference.PIC_CACHE_TYPE){
+				mWebView.getSettings().setBlockNetworkImage(false);
+			}
+			if(strType==JBLPreference.FULL_SCREEN_TYPE){
+				getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+		        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); 
+			}
+		default:
+			break;
+		}
+		mViewPager.setVisibility(View.GONE);
+		settingPanel.setVisibility(View.GONE);
+	}
 
 }
