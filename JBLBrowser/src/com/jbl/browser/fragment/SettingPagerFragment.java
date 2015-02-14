@@ -108,6 +108,12 @@ public class SettingPagerFragment {//extends SherlockDialogFragment{
 				}else{
 					l.add(list[i].substring(0,4));
 				}
+			}else if(i==8){
+				   if(JBLPreference.getInstance(mContext).readInt(JBLPreference.TURNING_TYPE)==0){
+					   l.add(list[i].substring(4));
+				   }else{
+					   l.add(list[i].substring(0,4));
+				   }
 			}else if(i==9){
 					if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HISTORY_CACHE_TYPE)==0){
 						l.add(list[i].substring(4));

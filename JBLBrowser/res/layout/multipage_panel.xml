@@ -8,6 +8,12 @@
         android:layout_height="0dip"
         android:background="#CCCCCCCC"
         android:layout_weight="3" >
+        <com.jbl.browser.view.ProgressWebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linear_top" >
+    </com.jbl.browser.view.ProgressWebView>
         <android.support.v4.view.ViewPager
             android:id="@+id/multipage_viewpager"
             android:layout_width="fill_parent"

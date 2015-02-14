@@ -3,7 +3,7 @@ package com.jbl.browser.fragment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
-
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -32,7 +32,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -191,7 +190,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 
 			/*   2-Home-主页监听   */
 			mWebView.clearHistory(); //清楚浏览记录
-			mWebView.loadUrl(UrlUtils.URL_GET_HOST); //加载主页
+			mWebView.loadUrl("http://m.hi2345.net/home.php"); //加载主页
 			break;
 		case 3:
 			/*  3-Change-多页监听    */
@@ -217,8 +216,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
         }  
         return false; 
     }
-
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -479,15 +476,17 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			Button previous_page=(Button)popview.findViewById(R.id.previous_page);
 			Button next_page=(Button)popview.findViewById(R.id.next_page);
 			next_page.setOnClickListener(new OnClickListener(){
+				@SuppressLint("NewApi")
 				@Override
 				public void onClick(View v) {
-					//mWebView.scrollTo(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
+					mWebView.scrollTo(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
 				}
 			});
 			previous_page.setOnClickListener(new OnClickListener(){
+				@SuppressLint("NewApi")
 				@Override
 				public void onClick(View v) {
-					//mWebView.scrollTo(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
+					mWebView.scrollTo(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
 				}
 			});
 			break;
