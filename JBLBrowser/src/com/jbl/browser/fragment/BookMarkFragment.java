@@ -59,27 +59,6 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		return list;
 	}
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onActivityCreated(savedInstanceState);
-		final ActionBar ab = this.getSherlockActivity().getSupportActionBar();
-
-		// set defaults for logo & home up
-		ab.setDisplayHomeAsUpEnabled(false);
-		ab.setDisplayUseLogoEnabled(false);
-		ab.setDisplayShowHomeEnabled(false);
-		setHasOptionsMenu(true);
-	}
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// TODO Auto-generated method stub
-		menu.removeGroup(0);
-		//添加返回图标
-		menu.add(1, 1, 0, "Back").setIcon(R.drawable.back_web).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		
-		super.onCreateOptionsMenu(menu, inflater);
-	}
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
