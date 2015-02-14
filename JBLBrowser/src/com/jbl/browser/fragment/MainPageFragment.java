@@ -6,11 +6,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.LayoutParams;
@@ -35,11 +35,9 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
@@ -55,7 +53,6 @@ import com.jbl.browser.interfaces.SettingItemInterface;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
-import com.viewpager.indicator.IconPagerAdapter;
 import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
 
@@ -81,10 +78,10 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	 * mButtonCode; //1.3 mButtonCode 二维码搜索 private Button mButtonLand; //1.4
 	 * mButtonLand 登陆注册
 	 */
-	
 	/*  1.0 ImageView_search  1.1 AutoCompleteTextView 1.2ImageView_Code  
 	 *  1.3 ImageView_Land
 	 *    */
+	
 	private ImageView mImageView_Search,mImageView_Code,mImageView_Land;
 	private AutoCompleteTextView mNetAddress;
 	/* 定义webview控件 */
@@ -92,13 +89,13 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	public  WebSettings settings;
 	public String cur_url; // 设置初始网址
 	public String webName = "";// 网页名
-	/* 定义操作栏控件 
+	// 定义操作栏控件 
 	private ImageView mImageViewBack; // 3.1 mImageViewBack 后退
 	private ImageView mImageViewInto; // 3.2 mImageViewInto 前进
 	private ImageView mImageViewHome; // 3.3 mImageViewHome Home
 	private ImageView mImageViewChange;// 3.4 mImageViewChange 切换多页模式
 	private ImageView mImageViewOption;// 3.5 mImageViewOption 选项菜单
-*/	
+	
 	private ViewPager mViewPager; // 水平实现滑动效果
 	private PagerAdapter mPageAdapter;
 	private MultipageAdapter multipageAdapter;//多页效果适配器 
@@ -115,19 +112,19 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);		
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		final ActionBar ab = this.getSherlockActivity().getSupportActionBar();
+		/*final ActionBar ab = this.getSherlockActivity().getSupportActionBar();
 		// set defaults for logo & home up
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
 		ab.setDisplayShowHomeEnabled(false);
-		setHasOptionsMenu(true);
+		setHasOptionsMenu(true);*/
 	}
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -146,7 +143,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 						}
 					});
 		} */
-		menu.add(0, 0, 0, "Back").setIcon(R.drawable.resume_ad_close)
+		/*menu.add(0, 0, 0, "Back").setIcon(R.drawable.resume_ad_close)
 		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		
 		menu.add(0, 1, 1, "GoTo").setIcon(R.drawable.resume_ad_close)
@@ -159,16 +156,16 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		
 		menu.add(0, 4, 4, "Option").setIcon(R.drawable.resume_ad_close)
-		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);*/
 	}
-	@Override
+/*	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
-		/* 0-Back-返回监听    1-GoTo-前进监听  2-Home-主页监听  3-Change-多页监听  4-Option-设置监听 */
+		 0-Back-返回监听    1-GoTo-前进监听  2-Home-主页监听  3-Change-多页监听  4-Option-设置监听 
 
 		switch (item.getItemId()) {
 		case 0:
-			/*  0-Back-返回监听   */
+			  0-Back-返回监听   
 			if(mWebView.canGoBack()){
 				mWebView.goBack();
 			}
@@ -176,13 +173,13 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 				Toast.makeText(getActivity(), "不能后退了！", Toast.LENGTH_SHORT).show();
 			}
 			
-			/*
+			
 			((BaseFragActivity) this.getActivity()).navigateTo(
 					UrlRedirectFragment.class, null, true,
-					UrlRedirectFragment.TAG);*/
+					UrlRedirectFragment.TAG);
 			break;
 		case 1:
-			/*  1-GoTo-前进监听  */
+			  1-GoTo-前进监听  
 			if(mWebView.canGoForward()){
 				mWebView.goForward();
 			}
@@ -191,23 +188,23 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			}
 			break;
 		case 2:
-			/*   2-Home-主页监听   */
+			   2-Home-主页监听   
 			mWebView.clearHistory(); //清楚浏览记录
 			mWebView.loadUrl(UrlUtils.URL_GET_HOST); //加载主页
 			break;
 		case 3:
-			/*  3-Change-多页监听    */
+			  3-Change-多页监听    
 			
 			break;
 		case 4:
-			/*  4-Option-设置监听    */
+			  4-Option-设置监听    
 			count++;
 			init(visibile);
 			break;
 			
 		}
 		return super.onOptionsItemSelected(item);
-	}
+	}*/
 	//覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法  
     public boolean onKeyDown(int keyCode, KeyEvent event) {  
         if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {  
@@ -216,8 +213,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
         }  
         return false; 
     }
-
-
+  
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -233,7 +229,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 				false);
 		mWebView = (WebView) view.findViewById(R.id.mWebView);// webview
 		//Intent intent = getActivity().getIntent();  //监听webview跳转，实现activity跳转到推荐页面
-		/*mImageViewBack = (ImageView) view.findViewById(R.id.mImageViewBack); // 3.1
+		mImageViewBack = (ImageView) view.findViewById(R.id.mImageViewBack); // 3.1
 																				// mImageViewBack
 																				// 后退
 		mImageViewInto = (ImageView) view.findViewById(R.id.mImageViewInto); // 3.2
@@ -248,16 +244,15 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		mImageViewOption = (ImageView) view.findViewById(R.id.mImageViewOption); // 3.5
 																					// mImageViewOption
 																					// 选项菜单
-*/		
+		
 		/* 标题栏 
 		 * 1.0 ImageView_search  1.1 AutoCompleteTextView 1.2ImageView_Code  
 		 *  1.3 ImageView_Land
-		 *    */
+		 *    */		
 		mImageView_Search=(ImageView)view.findViewById(R.id.mImageView_Search);//搜索图标
-		
+		mNetAddress=(AutoCompleteTextView)view.findViewById(R.id.net_address);//输入栏
 		mImageView_Code=(ImageView)view.findViewById(R.id.mImageView_Code);//二维码
 		mImageView_Land=(ImageView)view.findViewById(R.id.mImageView_Land);//登陆注册
-		
 		
 		mViewPager = (ViewPager) view.findViewById(R.id.setting_viewpager);
 		mIndicator = (LinePageIndicator)view.findViewById(R.id.setting_indicator);
@@ -333,6 +328,17 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 				
 			}
 		});
+		/*   1.1 输入栏切换fragment 
+		mNetAddress.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				((BaseFragActivity)getActivity()).navigateTo(
+						UrlRedirectFragment.class, null, true,
+						UrlRedirectFragment.TAG);
+			}
+		});*/
 		/*  1.2  二维码监听 */
 		mImageView_Code.setOnClickListener(new View.OnClickListener() {
 			
@@ -370,7 +376,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		});
 
 		
-		/* 3.1 返回监听 
+		// 3.1 返回监听 
 		mImageViewBack.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -385,7 +391,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			}
 		});
 
-		 3.2 前进监听 
+		// 3.2 前进监听 
 		mImageViewInto.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -399,7 +405,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			}
 		});
 
-		 3.3 返回home主界面 
+		// 3.3 返回home主界面 
 		mImageViewHome.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -409,7 +415,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			}
 		});
 
-		 3.4 切换多页模式 
+		 //3.4 切换多页模式 
 		mImageViewChange.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -417,14 +423,14 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			}
 		});
 
-		 3.5 选项菜单 
+		// 3.5 选项菜单 
 		mImageViewOption.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				init(visibile);
 			}
-		});*/
+		});
 
 		/* 设置webview */
 		initWebView();

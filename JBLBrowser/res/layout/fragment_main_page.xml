@@ -14,30 +14,29 @@
 
         <ImageView
             android:id="@+id/mImageView_Search"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/btn_search_pre"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:background="#ff4500"
             android:clickable="true" />
 
         <AutoCompleteTextView
             android:id="@+id/net_address"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="37dp"
             android:layout_weight="1"
             android:background="@drawable/main_netaddress_input_search"
             android:hint="@string/please_input_and_search"
             android:imeOptions="actionGo"
-            android:paddingLeft="10dp"
             android:singleLine="true" />
 
         <ImageView
             android:id="@+id/mImageView_Code"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
             android:background="#ff4500"
             android:clickable="true" />
         
-        <ImageView android:id="@+id/mImageView_Land" android:layout_width="40dp" android:layout_height="40dp" 
+        <ImageView android:id="@+id/mImageView_Land" android:layout_width="37dp" android:layout_height="37dp" 
             android:background="#ffd700" android:clickable="true"/>
     </LinearLayout>
     
@@ -66,7 +65,7 @@
          android:visibility="gone">         
      </include>     
 	
-<!--     <LinearLayout
+     <LinearLayout
         android:id="@id/buttom_tool_bar"
         android:layout_width="fill_parent"
         android:layout_height="37dp"
@@ -108,5 +107,5 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="#fffacd" />
-    </LinearLayout> -->
+    </LinearLayout> 
 </RelativeLayout>
