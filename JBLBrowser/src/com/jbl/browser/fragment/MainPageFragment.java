@@ -372,7 +372,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		mImageViewChange.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//multiPage(visibile);
+				((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
+				Toast.makeText(getActivity(), "已进入多页模式", 1).show();
 			}
 		});
 
