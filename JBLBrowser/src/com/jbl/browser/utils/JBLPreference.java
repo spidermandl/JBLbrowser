@@ -23,10 +23,13 @@ public class JBLPreference {
 	public static final int YES_PICTURE=0;
 
 	
-	public static final String HISTORY_CACHE_TYPE="PIC_CACHE_TYPE";//网页无痕浏览模式
+	public static final String HISTORY_CACHE_TYPE="HISTORY_CACHE_TYPE";//网页无痕浏览模式
 	public static final int NO_HISTORY=1;
 	public static final int YES_HISTORY=0;
-
+	
+	public static final String FULL_SCREEN_TYPE="FULL_SCREEN_TYPE";//网页全屏浏览模式
+	public static final int NO_FULL=1;
+	public static final int YES_FULL=0;
 	
 	//书签和历史记录传网址到主页fragment关键字
 	public static final String BOOKMARK_HISTORY_KEY="webAddress";

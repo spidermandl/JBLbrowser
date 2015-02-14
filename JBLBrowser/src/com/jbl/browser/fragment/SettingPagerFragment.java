@@ -110,12 +110,19 @@ public class SettingPagerFragment {//extends SherlockDialogFragment{
 				}
 			}else if(i==9){
 					if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HISTORY_CACHE_TYPE)==0){
-						l.add(list[i].substring(6));
+						l.add(list[i].substring(4));
 					}else{
-						l.add(list[i].substring(0,6));
+						l.add(list[i].substring(0,4));
 				    }
-				 }else{
-					l.add(list[i]);}
+				 }else if(i==10){
+					 if(JBLPreference.getInstance(mContext).readInt(JBLPreference.FULL_SCREEN_TYPE)==0){
+							l.add(list[i].substring(4));
+						}else{
+							l.add(list[i].substring(0,4));
+					    }
+				}else{
+						l.add(list[i]);
+					}
 			if ((i + 1) % PAGE_SIZE == 0) {
 				mPageList.add(l);
 				l = new ArrayList<String>();
@@ -204,7 +211,11 @@ public class SettingPagerFragment {//extends SherlockDialogFragment{
 							if(settingInterface!=null)
 								settingInterface.withoutTrace();
 							break;
-						case 6://页面刷新
+						case 2://网页全屏浏览模式
+							if(settingInterface!=null)
+								settingInterface.fullScreen();
+							break;
+						case 5://页面刷新
 							if(settingInterface!=null)
 								settingInterface.refresh();
 							break;

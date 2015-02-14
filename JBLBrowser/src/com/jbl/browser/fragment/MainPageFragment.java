@@ -20,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
@@ -432,22 +433,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	}
 	@Override
 	public void fitlerPicLoading() {
-		switch (JBLPreference.getInstance(getActivity()).readInt(JBLPreference.PIC_CACHE_TYPE)) {
-		case JBLPreference.INVALID:
-		case JBLPreference.NO_PICTURE:
-			JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.PIC_CACHE_TYPE, JBLPreference.YES_PICTURE);
-			Toast.makeText(getActivity(), StringUtils.OPEN_NO_PICTURE, 100).show();
-			mWebView.getSettings().setBlockNetworkImage(true);
-			break;
-		case JBLPreference.YES_PICTURE:
-			JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.PIC_CACHE_TYPE,JBLPreference.NO_PICTURE);
-			Toast.makeText(getActivity(), StringUtils.CLOSE_NO_PICTURE, 100).show();
-			mWebView.getSettings().setBlockNetworkImage(false);
-		default:
-			break;
-		}
-		mViewPager.setVisibility(View.GONE);
-		settingPanel.setVisibility(View.GONE);
+		operate(JBLPreference.getInstance(getActivity()).readInt(JBLPreference.PIC_CACHE_TYPE),JBLPreference.PIC_CACHE_TYPE,
+				JBLPreference.NO_PICTURE,JBLPreference.YES_PICTURE,StringUtils.OPEN_NO_PICTURE, StringUtils.CLOSE_NO_PICTURE);
 	}
 	@Override
 	public void manageDownload() {
@@ -527,21 +514,46 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	@Override
 	public void withoutTrace() {   //无痕浏览
 		// TODO Auto-generated method stub
-		switch (JBLPreference.getInstance(getActivity()).readInt(JBLPreference.HISTORY_CACHE_TYPE)) {
-		case JBLPreference.INVALID:
-		case JBLPreference.NO_HISTORY:
-			JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.HISTORY_CACHE_TYPE, JBLPreference.YES_HISTORY);
-			Toast.makeText(getActivity(), StringUtils.OPEN_NO_HISTORY, 100).show();
+		operate(JBLPreference.getInstance(getActivity()).readInt(JBLPreference.HISTORY_CACHE_TYPE),JBLPreference.HISTORY_CACHE_TYPE,
+				JBLPreference.NO_HISTORY,JBLPreference.YES_HISTORY,StringUtils.OPEN_NO_HISTORY, StringUtils.CLOSE_NO_HISTORY);
+	}
+
+	@Override
+	public void fullScreen() {     //全屏浏览
+		// TODO Auto-generated method stub
+		operate(JBLPreference.getInstance(getActivity()).readInt(JBLPreference.FULL_SCREEN_TYPE),JBLPreference.FULL_SCREEN_TYPE,
+				JBLPreference.NO_FULL,JBLPreference.YES_FULL,StringUtils.OPEN_NO_FULL, StringUtils.CLOSE_NO_FULL);
+	}
+	
+	public void operate(int type,String strType,int no,int yes,String open,String close){
+		switch (type) {
+		case -1:
+		case 1:
+			JBLPreference.getInstance(getActivity()).writeInt(strType,yes);
+			Toast.makeText(getActivity(), open, 100).show();
+			if(strType==JBLPreference.PIC_CACHE_TYPE){
+				mWebView.getSettings().setBlockNetworkImage(true);
+			}
+			if(strType==JBLPreference.FULL_SCREEN_TYPE){
+				getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN); 
+			}
 			break;
-		case JBLPreference.YES_HISTORY:
-			JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.HISTORY_CACHE_TYPE,JBLPreference.YES_HISTORY);
-			Toast.makeText(getActivity(), StringUtils.CLOSE_NO_HISTORY, 100).show();
+		case 0:
+			JBLPreference.getInstance(getActivity()).writeInt(strType,no);
+			Toast.makeText(getActivity(), close, 100).show();
+			if(strType==JBLPreference.PIC_CACHE_TYPE){
+				mWebView.getSettings().setBlockNetworkImage(false);
+			}
+			if(strType==JBLPreference.FULL_SCREEN_TYPE){
+				getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+		        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); 
+			}
 		default:
 			break;
 		}
 		mViewPager.setVisibility(View.GONE);
 		settingPanel.setVisibility(View.GONE);
 	}
-		
 
 }

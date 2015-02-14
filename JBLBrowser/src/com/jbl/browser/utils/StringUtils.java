@@ -60,5 +60,7 @@ public class StringUtils {
 	public static final String COLSE_TURNING_BUTTON="关闭翻页按钮";
 	public static final String OPEN_NO_HISTORY="开启无痕浏览";
 	public static final String CLOSE_NO_HISTORY="关闭无痕浏览";
+	public static final String OPEN_NO_FULL="开启全屏浏览";
+	public static final String CLOSE_NO_FULL="关闭全屏浏览";
 	
 }
