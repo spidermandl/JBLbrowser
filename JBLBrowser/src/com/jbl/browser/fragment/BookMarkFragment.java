@@ -10,10 +10,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +48,8 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	String webName="";
 	//没有书签
 	TextView noBookmark;
+	//返回图标
+	ImageView back;
 	BookMarkAdapter bookMarkAdapter;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -62,12 +66,21 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		View view = inflater.inflate(R.layout.bookmark_fragment, container, false);		
+		View view = inflater.inflate(R.layout.bookmark_fragment, container, false);	
+		back=(ImageView)view.findViewById(R.id.back);
 		listview=(ListView)view.findViewById(R.id.list_view_bookmark);
 		noBookmark=(TextView)view.findViewById(R.id.empty);
 		initDataFavorites();
 		listview.setOnItemClickListener(this);
 		listview.setOnItemLongClickListener(this);
+		back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class);
+			}
+		});
 		return view;
 	}
 	/**

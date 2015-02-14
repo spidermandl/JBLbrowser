@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +49,8 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	HistoryAdapter historyAdapter;
 	//无历史记录
 	TextView noHistory;
+	//返回图标
+	ImageView back;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -63,11 +67,20 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 			Bundle savedInstanceState) {
 		
 		View view = inflater.inflate(R.layout.history_fragment, container, false);
+		back=(ImageView)view.findViewById(R.id.back);
 		listview=(ListView)view.findViewById(R.id.list_view_history_today);
 		noHistory=(TextView)view.findViewById(R.id.empty);
 		initDataHistory();
 		listview.setOnItemClickListener(this);
 		listview.setOnItemLongClickListener(this);
+		back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class);
+			}
+		});
 		return view;
 	}
 	/**

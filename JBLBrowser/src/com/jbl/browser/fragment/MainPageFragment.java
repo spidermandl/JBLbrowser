@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
@@ -211,16 +212,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			//fire.show(getFragmentManager(), "dialog");  
 			break;
 	}*/
-	
-	//覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法
-	
-    public boolean onKeyDown(int keyCode, KeyEvent event) {  
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {  
-        	mWebView.goBack(); //goBack()表示返回WebView的上一页面  
-            return true;  
-        }  
-        return false; 
-    }
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -463,6 +454,21 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		}else{
 			mWebView.loadUrl(urlAddress);
 		}
+		//监听物理返回键
+		mWebView.setOnKeyListener(new OnKeyListener() {
+			
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				// TODO Auto-generated method stub
+				 if (event.getAction() == KeyEvent.ACTION_DOWN) { 
+					 if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
+						 mWebView.goBack(); //goBack()表示返回WebView的上一页面  
+				         return true;  
+					 }
+				 }
+				return false;
+			}
+		});
 		mWebView.setDownloadListener(new DownloadListener() {
 			
 			@Override
