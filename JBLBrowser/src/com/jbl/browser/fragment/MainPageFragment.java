@@ -336,7 +336,16 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		initWebView();
 		return view;
 	}
-
+	
+	@Override
+	public void onDestroyView() {      //销毁内嵌的BottomMenuFragment
+		// TODO Auto-generated method stub
+		super.onDestroyView();
+		BottomMenuFragment bottonMenuFragment =(BottomMenuFragment)getFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment);  
+		  if(bottonMenuFragment !=null ){  
+		   getFragmentManager().beginTransaction().remove(bottonMenuFragment).commit();  
+		  }  
+	}
 	/* 点击webview取消菜单栏展示 */
 
 	private void init(boolean visibile) {

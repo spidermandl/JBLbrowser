@@ -101,10 +101,12 @@
 
 		</LinearLayout>
 
-		<ImageView android:layout_height="wrap_content"
+		<ImageView 
+		    android:id="@+id/BubbleRightView"
+		    android:layout_height="wrap_content"
 			android:layout_width="wrap_content" android:src="@drawable/bubbleright48"
 			android:layout_alignParentBottom="true"
-			android:layout_alignParentRight="true" android:id="@+id/BubbleRightView"></ImageView>
+			android:layout_alignParentRight="true" ></ImageView>
 			
 		<ImageView android:layout_height="wrap_content"
 			android:layout_width="wrap_content" android:src="@drawable/bubbleleft48"
