@@ -4,24 +4,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
 
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.adapter.SettingGridItemAdapter;
+import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.jbl.browser.interfaces.SettingItemInterface;
 import com.jbl.browser.utils.JBLPreference;
+import com.viewpager.indicator.LinePageIndicator;
+import com.viewpager.indicator.PageIndicator;
 
-/*
+/**
+ * @author yyjoy-mac3
  * 设置界面滑动分页控制类
  */
 
-public class SettingPagerFragment {//extends SherlockDialogFragment{
+public class SettingPagerFragment extends SherlockFragment{
 	private static final String TAG = "SettingPagerFragment";
+	
+	private ViewPager mViewPager; // 水平实现滑动效果
+	private PagerAdapter mPageAdapter;	
+	PageIndicator mIndicator;
+	
 	
 	private static final int PAGE_SIZE = 8; // 每页显示的数据个数
 	private static final int TEST_LIST_SIZE = 43; // 数据总长度
@@ -36,48 +50,31 @@ public class SettingPagerFragment {//extends SherlockDialogFragment{
 	//点击回调接口
 	private SettingItemInterface settingInterface;
 	
-	public SettingPagerFragment(Context context) {
-		mContext = context;
-		resArrays= mContext.getResources().getStringArray(R.array.setting_content_item);		
-		mPageList = new ArrayList<List<String>>();
-		mGridViews = new ArrayList<GridView>();
-		mViewPages = new ArrayList<View>();
-		initPages(resArrays);
-		initViewAndAdapter();
-
-	}
-//	public static SettingPagerFragment newInstance(String title) {  
-//		SettingPagerFragment frag = new SettingPagerFragment();  
-//        return frag;  
-//    }
-//	@Override
-//	public void onCreate(Bundle savedInstanceState) {
-//		mContext = this.getActivity();
-//		resArrays= mContext.getResources().getStringArray(R.array.setting_content_item);
+//	public SettingPagerFragment(Context context) {
+//		mContext = context;
+//		resArrays= mContext.getResources().getStringArray(R.array.setting_content_item);		
 //		mPageList = new ArrayList<List<String>>();
 //		mGridViews = new ArrayList<GridView>();
 //		mViewPages = new ArrayList<View>();
 //		initPages(resArrays);
 //		initViewAndAdapter();
-//		setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomDialog);//android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
-//		//getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//		super.onCreate(savedInstanceState);
-//	}
-//	
-//	@Override
-//	public Dialog onCreateDialog(Bundle savedInstanceState) {
-//		// TODO Auto-generated method stub
-//		return super.onCreateDialog(savedInstanceState);
-//	}
-//	
-//	@Override
-//	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//			Bundle savedInstanceState) {
-//		View v=new View(mContext);
-//		v.setBackgroundColor(0x44CCCCCC);
-//		return v;
+//
 //	}
 	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view=inflater.inflate(R.layout.main_setting_panel, container, false);
+		
+		mViewPager = (ViewPager) view.findViewById(R.id.setting_viewpager);
+		mIndicator = (LinePageIndicator)view.findViewById(R.id.setting_indicator);
+		this.
+		mPageAdapter = new SettingPagerAdapter(getPageViews());
+		mViewPager.setAdapter(mPageAdapter);
+		mIndicator.setViewPager(mViewPager);
+		
+		return view;
+	}
 	
 	/**
 	 * 将数据分页

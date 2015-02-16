@@ -48,14 +48,19 @@
         android:layout_above="@+id/bottom_toolbar_fragment" >
     </com.jbl.browser.view.ProgressWebView>
 
-    <include
+<!--     <include
         android:id="@+id/main_setting_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottom_toolbar_fragment"
         layout="@layout/main_setting_panel"
         android:visibility="gone" >
-    </include>
+    </include> -->
+   <FrameLayout android:id="@+id/main_setting_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:layout_above="@+id/bottom_toolbar_fragment">
+   </FrameLayout>
     
    <fragment android:id="@+id/bottom_toolbar_fragment"
         android:name="com.jbl.browser.fragment.BottomMenuFragment"
@@ -64,57 +69,5 @@
         android:layout_alignParentBottom="true">
         
     </fragment> 
-<!-- 	<include layout="@layout/multipage_panel"
-    	 android:id="@+id/multipage_panel"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_above="@+id/buttom_tool_bar"
-         android:visibility="gone">         
-     </include> -->
-          
-     <!-- <LinearLayout
-        android:id="@+id/buttom_tool_bar"
-        android:layout_width="fill_parent"
-        android:layout_height="37dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:weightSum="5" >
-        <ImageView
-            android:id="@+id/mImageViewBack"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="#fffacd"
-             />
-
-        <ImageView
-            android:id="@+id/mImageViewInto"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="#ffdab9" />
-
-        <ImageView
-            android:id="@+id/mImageViewHome"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="#deb887" />
-
-        <ImageView
-            android:id="@+id/mImageViewChange"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="#da70d6" />
-
-        <ImageView
-            android:id="@+id/mImageViewOption"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="#fffacd" />
-
-    </LinearLayout>  -->
 
 </RelativeLayout>
