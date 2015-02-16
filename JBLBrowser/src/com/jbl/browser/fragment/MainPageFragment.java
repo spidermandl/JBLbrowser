@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.LayoutParams;
@@ -84,12 +85,14 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	public String webName=""; // 网页名
 	 
 	
-	private ViewPager mViewPager; // 水平实现滑动效果
-	private PagerAdapter mPageAdapter;
+//	private ViewPager mViewPager; // 水平实现滑动效果
+//	private PagerAdapter mPageAdapter;	
+//	View settingPanel;// 设置主界面
+//	PageIndicator mIndicator;
+	
 	private MultipageAdapter multipageAdapter;//多页效果适配器 
 	private ScheduledExecutorService scheduledExecutorService;
-	View settingPanel;// 设置主界面
-	PageIndicator mIndicator;
+
 	int count;
 	private boolean visibile=true;//标示是否显示菜单栏
 	View popview;//翻页按钮布局
@@ -120,98 +123,13 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		/*final ActionBar ab = this.getSherlockActivity().getSupportActionBar();
-		// set defaults for logo & home up
-		ab.setDisplayHomeAsUpEnabled(false);
-		ab.setDisplayUseLogoEnabled(false);
-		ab.setDisplayShowHomeEnabled(false);
 	}
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		/*MenuItem item = menu.add(0, 0, 0, "Search").setIcon(
-				android.R.drawable.ic_menu_search);
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		View searchView = SearchViewCompat.newSearchView(getActivity());
-		if (searchView != null) {
-			SearchViewCompat.setOnQueryTextListener(searchView,
-					new OnQueryTextListenerCompat() {
-						@Override
-						public boolean onQueryTextSubmit(String query) {
-							// TODO Auto-generated method stub
 
-							return false;
-						}
-					});
-		} */
-
-		/*menu.add(0, 0, 0, "Back").setIcon(R.drawable.resume_ad_close)
-		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		
-		menu.add(0, 1, 1, "GoTo").setIcon(R.drawable.resume_ad_close)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		
-		menu.add(0, 2, 2, "Home").setIcon(R.drawable.resume_ad_close)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		
-		menu.add(0, 3, 3, "Change").setIcon(R.drawable.resume_ad_close)
-		        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		
-		menu.add(0, 4, 4, "Option").setIcon(R.drawable.resume_ad_close)
-
-		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);*/
-	}
-/*	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		 0-Back-返回监听    1-GoTo-前进监听  2-Home-主页监听  3-Change-多页监听  4-Option-设置监听 
-
-		switch (item.getItemId()) {
-		case 0:
-			  0-Back-返回监听   
-			if(mWebView.canGoBack()){
-				mWebView.goBack();
-			}
-			else{
-				Toast.makeText(getActivity(), "不能后退了！", Toast.LENGTH_SHORT).show();
-			}
-			
-			
-			((BaseFragActivity) this.getActivity()).navigateTo(
-					UrlRedirectFragment.class, null, true,
-					UrlRedirectFragment.TAG);
-			break;
-		case 1:
-			  1-GoTo-前进监听  
-			if(mWebView.canGoForward()){
-				mWebView.goForward();
-			}	
-			else{
-				Toast.makeText(getActivity(), "不能前进了！", Toast.LENGTH_SHORT).show();
-			}
-			break;
-		case 2:
-			mWebView.clearHistory(); //清楚浏览记录
-			mWebView.loadUrl("http://m.hi2345.net/home.php"); //加载主页
-			break;
-		case 3:
-			  3-Change-多页监听    
-			((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
-			Toast.makeText(getActivity(), "已进入多页模式", 1).show();
-			break;
-		case 4:
-			 // 4-Option-设置监听    
-			count++;
-			init(visibile);
-			//SettingPagerFragment fire = SettingPagerFragment.newInstance(null);  
-			//fire.show(getFragmentManager(), "dialog");  
-			break;
-	}*/
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		//cur_url=UrlUtils.URL_GET_HOST;
-		View view = inflater.inflate(R.layout.fragment_main_page, container,
-				false);
+		View view = inflater.inflate(R.layout.fragment_main_page, container,false);
 		mWebView = (ProgressWebView) view.findViewById(R.id.mWebView);// webview
 //		//Intent intent = getActivity().getIntent();  //监听webview跳转，实现activity跳转到推荐页面
 
@@ -225,9 +143,11 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 //		mImageView_Code=(ImageView)view.findViewById(R.id.mImageView_Code);//二维码
 //		mImageView_Land=(ImageView)view.findViewById(R.id.mImageView_Land);//登陆注册
 
-		mViewPager = (ViewPager) view.findViewById(R.id.setting_viewpager);
-		mIndicator = (LinePageIndicator)view.findViewById(R.id.setting_indicator);
-		settingPanel = view.findViewById(R.id.main_setting_panel);
+//		mViewPager = (ViewPager) view.findViewById(R.id.setting_viewpager);
+//		mIndicator = (LinePageIndicator)view.findViewById(R.id.setting_indicator);
+//		settingPanel = view.findViewById(R.id.main_setting_panel);
+		
+		
 		toolbarFragment=(BottomMenuFragment)(this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
 		toolbarFragment.setToolbarAction(this);//设置回调接口
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
@@ -273,62 +193,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			}
 		});
 		
-//		// 3.1 返回监听 
-//		mImageViewBack.setOnClickListener(new View.OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				// TODO Auto-generated method stub
-//				if(mWebView.canGoBack()){
-//					mWebView.goBack();
-//				}
-//				else{
-//					Toast.makeText(getActivity(), "不能后退了！", Toast.LENGTH_SHORT).show();
-//				}
-//			}
-//		});
-//
-//		// 3.2 前进监听 
-//		mImageViewInto.setOnClickListener(new View.OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				if(mWebView.canGoForward()){
-//					mWebView.goForward();
-//				}
-//				else{
-//					Toast.makeText(getActivity(), "不能前进了！", Toast.LENGTH_SHORT).show();
-//				}
-//			}
-//		});
-//
-//		// 3.3 返回home主界面 
-//		mImageViewHome.setOnClickListener(new View.OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//			mWebView.clearHistory(); //清楚浏览记录
-//			mWebView.loadUrl(UrlUtils.URL_GET_HOST); //加载主页
-//			}
-//		});
-//
-//		 //3.4 切换多页模式 
-//		mImageViewChange.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
-//				Toast.makeText(getActivity(), "已进入多页模式", 1).show();
-//			}
-//		});
-//
-//		// 3.5 选项菜单 
-//		mImageViewOption.setOnClickListener(new View.OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				init(visibile);
-//			}
-//		});
 
 		/* 设置webview */
 		initWebView();
@@ -337,27 +201,27 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 
 	/* 点击webview取消菜单栏展示 */
 
-	private void init(boolean visibile) {
-		if (visibile) {
-			SettingPagerFragment settingPager = new SettingPagerFragment(this.getActivity());
-			settingPager.setInterface(this);//设置回调接口
-			mPageAdapter = new SettingPagerAdapter(settingPager.getPageViews());
-			mViewPager.setAdapter(mPageAdapter);
-			mIndicator.setViewPager(mViewPager);
-			mViewPager.setVisibility(View.VISIBLE);
-			settingPanel.setVisibility(View.VISIBLE);
-			mViewPager.startAnimation(// 加载弹出菜单栏的动画效果
-					AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_appear));
-			this.visibile=false;
-		} else {
-			mViewPager.setVisibility(View.GONE);
-			settingPanel.setVisibility(View.GONE);
-			mViewPager.startAnimation(// 退出菜单栏时的动画效果
-					AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_disappear));
-			this.visibile=true;
-		}
-
-	}
+//	private void init(boolean visibile) {
+//		if (visibile) {
+//			SettingPagerFragment settingPager = new SettingPagerFragment(this.getActivity());
+//			settingPager.setInterface(this);//设置回调接口
+//			mPageAdapter = new SettingPagerAdapter(settingPager.getPageViews());
+//			mViewPager.setAdapter(mPageAdapter);
+//			mIndicator.setViewPager(mViewPager);
+//			mViewPager.setVisibility(View.VISIBLE);
+//			settingPanel.setVisibility(View.VISIBLE);
+//			mViewPager.startAnimation(// 加载弹出菜单栏的动画效果
+//					AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_appear));
+//			this.visibile=false;
+//		} else {
+//			mViewPager.setVisibility(View.GONE);
+//			settingPanel.setVisibility(View.GONE);
+//			mViewPager.startAnimation(// 退出菜单栏时的动画效果
+//					AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_disappear));
+//			this.visibile=true;
+//		}
+//
+//	}
 	// 添加书签
 	private void addNewBookMark() {
 		boolean flag=false;
@@ -421,8 +285,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	@Override
 	public void addBookMark() {
 		MainPageFragment.this.addNewBookMark();
-		mViewPager.setVisibility(View.GONE);
-		settingPanel.setVisibility(View.GONE);
+//		mViewPager.setVisibility(View.GONE);
+//		settingPanel.setVisibility(View.GONE);
 	}
 	@Override
 	public void listBookMark() {
@@ -448,8 +312,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
         } catch(android.content.ActivityNotFoundException ex) {
            
         }
-		mViewPager.setVisibility(View.GONE);
-		settingPanel.setVisibility(View.GONE);
+//		mViewPager.setVisibility(View.GONE);
+//		settingPanel.setVisibility(View.GONE);
 		
 	}
 	@Override
@@ -522,16 +386,16 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		default:
 			break;
 		}
-		mViewPager.setVisibility(View.GONE);
-		settingPanel.setVisibility(View.GONE);	
+//		mViewPager.setVisibility(View.GONE);
+//		settingPanel.setVisibility(View.GONE);	
 	}
 
 	@Override
 	public void refresh() {     //刷新当前界面
 		// TODO Auto-generated method stub
 		mWebView.reload();
-		mViewPager.setVisibility(View.GONE);
-		settingPanel.setVisibility(View.GONE);
+//		mViewPager.setVisibility(View.GONE);
+//		settingPanel.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -567,8 +431,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		default:
 			break;
 		}
-		mViewPager.setVisibility(View.GONE);
-		settingPanel.setVisibility(View.GONE);
+//		mViewPager.setVisibility(View.GONE);
+//		settingPanel.setVisibility(View.GONE);
 	}
 	
 	@Override
@@ -597,8 +461,15 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	}
 	@Override
 	public void goMenu() {
- 		init(visibile);
-		
+ 		//init(visibile);
+		Fragment newFragment = new SettingPagerFragment();
+		FragmentTransaction transaction =getFragmentManager().beginTransaction();
+		// Replace whatever is in thefragment_container view with this fragment,
+		// and add the transaction to the backstack
+		transaction.replace(R.id.main_setting_panel,newFragment);
+		transaction.addToBackStack(null);
+		//提交修改
+		transaction.commit();
 	}
 	@Override
 	public void goMultiWindow() {
