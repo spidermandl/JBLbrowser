@@ -11,7 +11,6 @@
       android:orientation="horizontal"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:background="@drawable/top_bg"
       android:gravity="center"
     >
       <RelativeLayout 
@@ -30,7 +29,6 @@
           android:id="@+id/home"
           android:layout_width="wrap_content" 
           android:layout_height="wrap_content"
-          android:background="@drawable/voice"  
           android:layout_alignParentTop="true" 
           android:layout_alignParentLeft="true" 
           android:layout_marginLeft="5dp"
@@ -41,14 +39,12 @@
           android:id="@+id/goback"
           android:layout_width="wrap_content" 
           android:layout_height="wrap_content"
-          android:background="@drawable/back"
           android:layout_toRightOf="@id/home"
           android:layout_marginLeft="12dp"
           android:layout_centerVertical="true"
         />
         <Button
           android:id="@+id/else_image" 
-          android:background="@drawable/voice" 
           android:layout_width="wrap_content" 
           android:layout_height="wrap_content" 
           android:layout_centerVertical="true"
@@ -62,7 +58,6 @@
           android:id="@+id/right_image"
           android:layout_width="wrap_content" 
           android:layout_height="wrap_content"
-          android:background="@drawable/top"
           android:layout_toLeftOf="@id/else_image" 
           android:layout_marginRight="15dp"
           android:layout_centerVertical="true"

@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             android:layout_marginLeft="15dip"
-            android:background="@drawable/actionbar_title_caode"/>
+            />
         <TextView
             android:id="@+id/about"
             android:layout_width="wrap_content"
@@ -41,7 +41,6 @@
             android:layout_width="60dip"
             android:layout_height="60dip"
             android:paddingTop="20dip"
-            android:background="@drawable/actionbar_title_caode"
             />
         <TextView 
             android:id="@+id/broswer_name"

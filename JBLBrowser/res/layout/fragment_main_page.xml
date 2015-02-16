@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.textwebview.MainActivity" >
 
-    <LinearLayout
+    <!-- <LinearLayout
         android:id="@+id/linear_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,32 +39,40 @@
         <ImageView android:id="@+id/mImageView_Land" android:layout_width="37dp" android:layout_height="37dp" 
             android:background="#ffd700" android:clickable="true"/>
       
-    </LinearLayout>
+    </LinearLayout> -->
 
     <com.jbl.browser.view.ProgressWebView
         android:id="@+id/mWebView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linear_top" >
+        android:layout_above="@+id/bottom_toolbar_fragment" >
     </com.jbl.browser.view.ProgressWebView>
 
     <include
         android:id="@+id/main_setting_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/bottom_toolbar_fragment"
         layout="@layout/main_setting_panel"
         android:visibility="gone" >
     </include>
-	<include layout="@layout/multipage_panel"
+    
+   <fragment android:id="@id/bottom_toolbar_fragment"
+        android:name="com.jbl.browser.fragment.BottomMenuFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        
+    </fragment> 
+<!-- 	<include layout="@layout/multipage_panel"
     	 android:id="@+id/multipage_panel"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:layout_above="@+id/buttom_tool_bar"
          android:visibility="gone">         
-     </include>
+     </include> -->
           
-     <LinearLayout
+     <!-- <LinearLayout
         android:id="@+id/buttom_tool_bar"
         android:layout_width="fill_parent"
         android:layout_height="37dp"
@@ -107,6 +115,6 @@
             android:layout_weight="1"
             android:background="#fffacd" />
 
-    </LinearLayout> 
+    </LinearLayout>  -->
 
 </RelativeLayout>

@@ -75,8 +75,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	 *  1.3 ImageView_Land
 	 *    */
 	
-	private ImageView mImageView_Search,mImageView_Code,mImageView_Land;
-	private AutoCompleteTextView mNetAddress;
+//	private ImageView mImageView_Search,mImageView_Code,mImageView_Land;
+//	private AutoCompleteTextView mNetAddress;
 	/* 定义webview控件 */
 	public  ProgressWebView mWebView; // 主控件 webview
 	public  WebSettings settings;
@@ -84,11 +84,11 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	public String cur_url; // 设置初始网址
 	public String webName=""; // 网页名
 	//定义操作栏控件 
-	private ImageView mImageViewBack; // 3.1 mImageViewBack 后退
-	private ImageView mImageViewInto; // 3.2 mImageViewInto 前进
-	private ImageView mImageViewHome; // 3.3 mImageViewHome Home
-	private ImageView mImageViewChange;// 3.4 mImageViewChange 切换多页模式
-	private ImageView mImageViewOption;// 3.5 mImageViewOption 选项菜单
+//	private ImageView mImageViewBack; // 3.1 mImageViewBack 后退
+//	private ImageView mImageViewInto; // 3.2 mImageViewInto 前进
+//	private ImageView mImageViewHome; // 3.3 mImageViewHome Home
+//	private ImageView mImageViewChange;// 3.4 mImageViewChange 切换多页模式
+//	private ImageView mImageViewOption;// 3.5 mImageViewOption 选项菜单
 	
 	private ViewPager mViewPager; // 水平实现滑动效果
 	private PagerAdapter mPageAdapter;
@@ -113,12 +113,12 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		//开启全屏模式
 		if(JBLPreference.getInstance(getActivity()).readInt(JBLPreference.PIC_CACHE_TYPE)==1||
 				JBLPreference.getInstance(getActivity()).readInt(JBLPreference.PIC_CACHE_TYPE)==-1){
-			getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+//			getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//	        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 	    //关闭全屏模式
 		}else{
-			getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-	        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); 
+//			getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+//	        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); 
 		}
 		super.onResume();
 	}
@@ -219,31 +219,31 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		View view = inflater.inflate(R.layout.fragment_main_page, container,
 				false);
 		mWebView = (ProgressWebView) view.findViewById(R.id.mWebView);// webview
-		//Intent intent = getActivity().getIntent();  //监听webview跳转，实现activity跳转到推荐页面
-		mImageViewBack = (ImageView) view.findViewById(R.id.mImageViewBack); // 3.1
-																				// mImageViewBack
-																				// 后退
-		mImageViewInto = (ImageView) view.findViewById(R.id.mImageViewInto); // 3.2
-																				// mImageViewInto
-																				// 前进
-		mImageViewHome = (ImageView) view.findViewById(R.id.mImageViewHome); // 3.3
-																				// mImageViewHome
-																				// Home
-		mImageViewChange = (ImageView) view.findViewById(R.id.mImageViewChange); // 3.4
-																					// mImageViewChange
-																					// 切换多页模式
-		mImageViewOption = (ImageView) view.findViewById(R.id.mImageViewOption); // 3.5
-																					// mImageViewOption
-																					// 选项菜单
+//		//Intent intent = getActivity().getIntent();  //监听webview跳转，实现activity跳转到推荐页面
+//		mImageViewBack = (ImageView) view.findViewById(R.id.mImageViewBack); // 3.1
+//																				// mImageViewBack
+//																				// 后退
+//		mImageViewInto = (ImageView) view.findViewById(R.id.mImageViewInto); // 3.2
+//																				// mImageViewInto
+//																				// 前进
+//		mImageViewHome = (ImageView) view.findViewById(R.id.mImageViewHome); // 3.3
+//																				// mImageViewHome
+//																				// Home
+//		mImageViewChange = (ImageView) view.findViewById(R.id.mImageViewChange); // 3.4
+//																					// mImageViewChange
+//																					// 切换多页模式
+//		mImageViewOption = (ImageView) view.findViewById(R.id.mImageViewOption); // 3.5
+//																					// mImageViewOption
+//																					// 选项菜单
 		
 		/* 标题栏 
 		 * 1.0 ImageView_search  1.1 AutoCompleteTextView 1.2ImageView_Code  
 		 *  1.3 ImageView_Land
 		 *    */		
-		mImageView_Search=(ImageView)view.findViewById(R.id.mImageView_Search);//搜索图标
-		mNetAddress=(AutoCompleteTextView)view.findViewById(R.id.net_address);//输入栏
-		mImageView_Code=(ImageView)view.findViewById(R.id.mImageView_Code);//二维码
-		mImageView_Land=(ImageView)view.findViewById(R.id.mImageView_Land);//登陆注册
+//		mImageView_Search=(ImageView)view.findViewById(R.id.mImageView_Search);//搜索图标
+//		mNetAddress=(AutoCompleteTextView)view.findViewById(R.id.net_address);//输入栏
+//		mImageView_Code=(ImageView)view.findViewById(R.id.mImageView_Code);//二维码
+//		mImageView_Land=(ImageView)view.findViewById(R.id.mImageView_Land);//登陆注册
 
 		mViewPager = (ViewPager) view.findViewById(R.id.setting_viewpager);
 		mIndicator = (LinePageIndicator)view.findViewById(R.id.setting_indicator);
@@ -276,48 +276,48 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		BrowserSettings.getInstance().update();
 
 		/*  1.0 搜索监听 */
-		mImageView_Search.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		  // 1.1 输入栏切换fragment 
-		mNetAddress.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				mNetAddress.requestFocus();
-				mNetAddress.setSelectAllOnFocus(true);
-				
-				/*((BaseFragActivity)getActivity()).navigateTo(
-						UrlRedirectFragment.class, null, true,
-						UrlRedirectFragment.TAG);*/
-			}
-		});
-		/*  1.2  二维码监听 */
-		mImageView_Code.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent();
-				intent.setClass(getActivity(), CaptureActivity.class);
-				startActivity(intent);
-			}
-		});
-		/* 登陆注册监听 */
-		mImageView_Land.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				mWebView.loadUrl(UrlUtils.URL_LOGIN);
-			}
-		});
+//		mImageView_Search.setOnClickListener(new View.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+//		  // 1.1 输入栏切换fragment 
+//		mNetAddress.setOnClickListener(new View.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				mNetAddress.requestFocus();
+//				mNetAddress.setSelectAllOnFocus(true);
+//				
+//				/*((BaseFragActivity)getActivity()).navigateTo(
+//						UrlRedirectFragment.class, null, true,
+//						UrlRedirectFragment.TAG);*/
+//			}
+//		});
+//		/*  1.2  二维码监听 */
+//		mImageView_Code.setOnClickListener(new View.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				Intent intent = new Intent();
+//				intent.setClass(getActivity(), CaptureActivity.class);
+//				startActivity(intent);
+//			}
+//		});
+//		/* 登陆注册监听 */
+//		mImageView_Land.setOnClickListener(new View.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				mWebView.loadUrl(UrlUtils.URL_LOGIN);
+//			}
+//		});
 		/*
 		 * 2.0 WebView touch监听
 		 * 
@@ -334,62 +334,62 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			}
 		});
 		
-		// 3.1 返回监听 
-		mImageViewBack.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if(mWebView.canGoBack()){
-					mWebView.goBack();
-				}
-				else{
-					Toast.makeText(getActivity(), "不能后退了！", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-
-		// 3.2 前进监听 
-		mImageViewInto.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if(mWebView.canGoForward()){
-					mWebView.goForward();
-				}
-				else{
-					Toast.makeText(getActivity(), "不能前进了！", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-
-		// 3.3 返回home主界面 
-		mImageViewHome.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-			mWebView.clearHistory(); //清楚浏览记录
-			mWebView.loadUrl(UrlUtils.URL_GET_HOST); //加载主页
-			}
-		});
-
-		 //3.4 切换多页模式 
-		mImageViewChange.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
-				Toast.makeText(getActivity(), "已进入多页模式", 1).show();
-			}
-		});
-
-		// 3.5 选项菜单 
-		mImageViewOption.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				init(visibile);
-			}
-		});
+//		// 3.1 返回监听 
+//		mImageViewBack.setOnClickListener(new View.OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				if(mWebView.canGoBack()){
+//					mWebView.goBack();
+//				}
+//				else{
+//					Toast.makeText(getActivity(), "不能后退了！", Toast.LENGTH_SHORT).show();
+//				}
+//			}
+//		});
+//
+//		// 3.2 前进监听 
+//		mImageViewInto.setOnClickListener(new View.OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				if(mWebView.canGoForward()){
+//					mWebView.goForward();
+//				}
+//				else{
+//					Toast.makeText(getActivity(), "不能前进了！", Toast.LENGTH_SHORT).show();
+//				}
+//			}
+//		});
+//
+//		// 3.3 返回home主界面 
+//		mImageViewHome.setOnClickListener(new View.OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//			mWebView.clearHistory(); //清楚浏览记录
+//			mWebView.loadUrl(UrlUtils.URL_GET_HOST); //加载主页
+//			}
+//		});
+//
+//		 //3.4 切换多页模式 
+//		mImageViewChange.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
+//				Toast.makeText(getActivity(), "已进入多页模式", 1).show();
+//			}
+//		});
+//
+//		// 3.5 选项菜单 
+//		mImageViewOption.setOnClickListener(new View.OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				init(visibile);
+//			}
+//		});
 
 		/* 设置webview */
 		initWebView();

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/toolbar_bg">
+     
+    <View android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="#FFD3D3D3"
+        android:id="@+id/toolbar_devide"/>
+    
+     <com.jbl.browser.view.ScaleImageView
+        android:id="@+id/toolbar_back" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_devide"
+        android:src="@drawable/toolbar_back_selector"
+        android:clickable="true"/>
+     
+     <com.jbl.browser.view.ScaleImageView
+        android:id="@+id/toolbar_forward" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/toolbar_back"
+        android:layout_below="@id/toolbar_devide"
+        android:src="@drawable/toolbar_forward_selector"
+        android:clickable="true"/>
+     
+     <com.jbl.browser.view.ScaleImageView
+        android:id="@+id/toolbar_home" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_devide"
+        android:layout_toRightOf="@id/toolbar_forward"
+        android:src="@drawable/toolbar_home_selector"
+        android:clickable="true"/>
+     
+     <com.jbl.browser.view.ScaleImageView
+        android:id="@+id/toolbar_menu" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_devide"
+        android:layout_toRightOf="@id/toolbar_home"
+        android:src="@drawable/toolbar_menu_selector"
+        android:clickable="true"/>
+     
+     <com.jbl.browser.view.ScaleImageView
+        android:id="@+id/toolbar_multipage" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_devide"
+        android:layout_toRightOf="@id/toolbar_menu"
+        android:src="@drawable/toolbar_window_selector"
+        android:clickable="true"/>
+
+</RelativeLayout>

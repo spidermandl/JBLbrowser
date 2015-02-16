@@ -9,8 +9,7 @@
 	<RelativeLayout
 		android:id="@+id/weibosdk_rlTitle"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:background="@drawable/weibosdk_bg_title">
+		android:layout_height="wrap_content">
 		<Button
 			android:id="@+id/weibosdk_btnClose"
 			android:layout_width="wrap_content"
@@ -22,7 +21,6 @@
 			android:layout_marginLeft="6dp"
 			android:layout_marginTop="8dp"
 			android:paddingBottom="2dp"
-			android:background="@drawable/weibosdk_bg_btn"
 			android:layout_alignParentLeft="true"/>
 				
 		<TextView
@@ -45,7 +43,6 @@
 			    android:layout_marginRight="6dp"
 			    android:layout_marginTop="8dp"
 			    android:layout_toLeftOf="@+id/weibosdk_btnSend"
-			    android:background="@drawable/weibosdk_bg_btn"
 			    android:paddingBottom="2dp"
 			    android:text="@string/weibosdk_photo"
 			    android:textColor="#fff"
@@ -62,15 +59,13 @@
 			android:layout_marginRight="6dp"
 			android:layout_marginTop="8dp"
 			android:paddingBottom="2dp"
-			android:background="@drawable/weibosdk_bg_btn"
 			android:layout_alignParentRight="true"/>
 	</RelativeLayout>
 	
 	<RelativeLayout
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:layout_weight="1"
-		android:background="@drawable/weibosdk_bg_content">
+		android:layout_weight="1">
 		
 
 		<LinearLayout
@@ -93,7 +88,6 @@
 					android:layout_centerVertical="true"
 					android:layout_alignParentRight="true"
 					android:gravity="center"
-					android:background="@drawable/weibosdk_bg_delwords"
 					android:focusable="true"
 					android:clickable="true" 
 					android:layout_alignParentBottom="false">
@@ -107,7 +101,6 @@
 						android:textColor="#333"/>
 					
 					<ImageView
-						android:src="@drawable/weibosdk_icon_delwords"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content" />
 					
