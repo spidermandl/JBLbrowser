@@ -2,6 +2,8 @@ package com.jbl.browser.fragment;
 
 import java.util.concurrent.ScheduledExecutorService;
 
+import org.zirco.ui.activities.MainActivity;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -473,8 +475,10 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	}
 	@Override
 	public void goMultiWindow() {
-		((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
-		Toast.makeText(getActivity(), "已进入多页模式", 1).show();
+		/*((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
+		Toast.makeText(getActivity(), "已进入多页模式", 1).show();*/
+		Intent intent=new Intent(getActivity(),MainActivity.class);
+		startActivity(intent);
 		
 	}
 

@@ -144,6 +144,14 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
+         <activity
+            android:name="org.zirco.ui.activities.MainActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+             >
+        </activity>
+        
         <activity
             android:name=".activity.RecommendMainActivity"
             android:label="@string/title_activity_recommend_main" >
