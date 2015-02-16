@@ -101,9 +101,9 @@ public class CustomWebView extends WebView {
 		CookieManager.getInstance().setAcceptCookie(Controller.getInstance().getPreferences().getBoolean(Constants.PREFERENCES_BROWSER_ENABLE_COOKIES, true));
 		
 		if (Build.VERSION.SDK_INT <= 7) {
-			settings.setPluginsEnabled(Controller.getInstance().getPreferences().getBoolean(Constants.PREFERENCES_BROWSER_ENABLE_PLUGINS_ECLAIR, true));
+			//settings.setPluginsEnabled(Controller.getInstance().getPreferences().getBoolean(Constants.PREFERENCES_BROWSER_ENABLE_PLUGINS_ECLAIR, true));
 		} else {
-			settings.setPluginState(PluginState.valueOf(Controller.getInstance().getPreferences().getString(Constants.PREFERENCES_BROWSER_ENABLE_PLUGINS, PluginState.ON_DEMAND.toString())));
+			//settings.setPluginState(PluginState.valueOf(Controller.getInstance().getPreferences().getString(Constants.PREFERENCES_BROWSER_ENABLE_PLUGINS, PluginState.ON_DEMAND.toString())));
 		}
 		
 		settings.setSupportZoom(true);

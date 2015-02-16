@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -30,7 +31,7 @@ import com.viewpager.indicator.PageIndicator;
  */
 
 public class SettingPagerFragment extends SherlockFragment{
-	private static final String TAG = "SettingPagerFragment";
+	public static final String TAG = "SettingPagerFragment";
 	
 	private ViewPager mViewPager; // 水平实现滑动效果
 	private PagerAdapter mPageAdapter;	
@@ -50,32 +51,41 @@ public class SettingPagerFragment extends SherlockFragment{
 	//点击回调接口
 	private SettingItemInterface settingInterface;
 	
-//	public SettingPagerFragment(Context context) {
-//		mContext = context;
-//		resArrays= mContext.getResources().getStringArray(R.array.setting_content_item);		
-//		mPageList = new ArrayList<List<String>>();
-//		mGridViews = new ArrayList<GridView>();
-//		mViewPages = new ArrayList<View>();
-//		initPages(resArrays);
-//		initViewAndAdapter();
-//
-//	}
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		initData();
+		
 		View view=inflater.inflate(R.layout.main_setting_panel, container, false);
 		
 		mViewPager = (ViewPager) view.findViewById(R.id.setting_viewpager);
 		mIndicator = (LinePageIndicator)view.findViewById(R.id.setting_indicator);
-		this.
 		mPageAdapter = new SettingPagerAdapter(getPageViews());
 		mViewPager.setAdapter(mPageAdapter);
 		mIndicator.setViewPager(mViewPager);
+		mViewPager.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_appear));// 加载弹出菜单栏的动画效果
 		
 		return view;
 	}
 	
+	@Override
+	public void onStop() {
+		mViewPager.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_disappear));// 退出菜单栏时的动画效果
+		super.onStop();
+	}
+	
+	/**
+	 * 初始化数据源
+	 */
+	void initData(){
+		mContext=this.getActivity();
+		resArrays= mContext.getResources().getStringArray(R.array.setting_content_item);		
+		mPageList = new ArrayList<List<String>>();
+		mGridViews = new ArrayList<GridView>();
+		mViewPages = new ArrayList<View>();
+		initPages(resArrays);
+		initViewAndAdapter();
+	}
 	/**
 	 * 将数据分页
 	 * 

@@ -13,8 +13,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -24,7 +22,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
@@ -38,7 +35,6 @@ import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
-import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.db.BookMarkDao;
 import com.jbl.browser.interfaces.SettingItemInterface;
@@ -47,7 +43,6 @@ import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
 import com.jbl.browser.view.ProgressWebView;
-import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
 
 /**
@@ -60,37 +55,14 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 
 	public final static String TAG = "MainPageFragment";
 
-	/**
-	 * 1.title 1.1 mImageViewSearch 搜索图标 1.2 mEditTextInput 输入网址 1.3 mButtonCode
-	 * 二维码搜索 1.4 mButtonLand 登陆注册 2.webview 2.1 mWebView 3.操作栏 3.1
-	 * mImageViewBack 后退 3.2 mImageViewInto 前进 3.3 mImageViewHome Home 3.4
-	 * mImageViewChange 切换多页模式 3.5 mImageViewOption 选项菜单
-	 */
-	/*
-	 * 定义菜单控件 private ImageView mImageViewSearch; //1.1 mImageViewSearch 搜索图标
-	 * private EditText mEditTextInput; //1.2 mEditTextInput 输入网址 private Button
-	 * mButtonCode; //1.3 mButtonCode 二维码搜索 private Button mButtonLand; //1.4
-	 * mButtonLand 登陆注册
-	 */
-	/*  1.0 ImageView_search  1.1 AutoCompleteTextView 1.2ImageView_Code  
-	 *  1.3 ImageView_Land
-	 *    */
-	
-//	private ImageView mImageView_Search,mImageView_Code,mImageView_Land;
-//	private AutoCompleteTextView mNetAddress;
 	/* 定义webview控件 */
 	public  ProgressWebView mWebView; // 主控件 webview
 	public  WebSettings settings;
 	public BottomMenuFragment toolbarFragment;//底部toolbar
+	public SettingPagerFragment settingFragment;//底部弹出菜单 fragment
 	
 	public String cur_url; // 设置初始网址
 	public String webName=""; // 网页名
-	 
-	
-//	private ViewPager mViewPager; // 水平实现滑动效果
-//	private PagerAdapter mPageAdapter;	
-//	View settingPanel;// 设置主界面
-//	PageIndicator mIndicator;
 	
 	private MultipageAdapter multipageAdapter;//多页效果适配器 
 	private ScheduledExecutorService scheduledExecutorService;
@@ -134,24 +106,12 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		View view = inflater.inflate(R.layout.fragment_main_page, container,false);
 		mWebView = (ProgressWebView) view.findViewById(R.id.mWebView);// webview
 //		//Intent intent = getActivity().getIntent();  //监听webview跳转，实现activity跳转到推荐页面
-
-		
-		/* 标题栏 
-		 * 1.0 ImageView_search  1.1 AutoCompleteTextView 1.2ImageView_Code  
-		 *  1.3 ImageView_Land
-		 *    */		
-//		mImageView_Search=(ImageView)view.findViewById(R.id.mImageView_Search);//搜索图标
-//		mNetAddress=(AutoCompleteTextView)view.findViewById(R.id.net_address);//输入栏
-//		mImageView_Code=(ImageView)view.findViewById(R.id.mImageView_Code);//二维码
-//		mImageView_Land=(ImageView)view.findViewById(R.id.mImageView_Land);//登陆注册
-
-//		mViewPager = (ViewPager) view.findViewById(R.id.setting_viewpager);
-//		mIndicator = (LinePageIndicator)view.findViewById(R.id.setting_indicator);
-//		settingPanel = view.findViewById(R.id.main_setting_panel);
-		
 		
 		toolbarFragment=(BottomMenuFragment)(this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
-		toolbarFragment.setToolbarAction(this);//设置回调接口
+		toolbarFragment.setInterface(this);//设置回调接口
+		settingFragment=new SettingPagerFragment();
+		settingFragment.setInterface(this);//设置回调接口
+		
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
 		// mWebView.setDownloadListener(new myDownloaderListener());
@@ -245,6 +205,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		else
 			Toast.makeText(getActivity(), R.string.add_bookmark_fail, 80).show();
 	}
+	
 	private void initWebView() {
 		// TODO Auto-generated method stub
 		// mWebView.getSettings().setJavaScriptEnabled(true);
@@ -473,14 +434,20 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	@Override
 	public void goMenu() {
  		//init(visibile);
-		Fragment newFragment = new SettingPagerFragment();
-		FragmentTransaction transaction =getFragmentManager().beginTransaction();
-		// Replace whatever is in thefragment_container view with this fragment,
-		// and add the transaction to the backstack
-		transaction.replace(R.id.main_setting_panel,newFragment);
-		transaction.addToBackStack(null);
-		//提交修改
-		transaction.commit();
+	    FragmentTransaction transaction =getFragmentManager().beginTransaction();
+		if(settingFragment.isRemoving()
+				||getFragmentManager().findFragmentByTag(SettingPagerFragment.TAG)==null){
+		    transaction.replace(R.id.main_setting_panel,settingFragment,SettingPagerFragment.TAG);
+		    transaction.addToBackStack(null);
+		}else{
+			transaction.remove(settingFragment);
+		}
+	    transaction.commitAllowingStateLoss();
+	}
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
 	}
 	@Override
 	public void goMultiWindow() {

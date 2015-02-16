@@ -54,7 +54,7 @@ public class BottomMenuFragment extends SherlockFragment implements View.OnClick
 		return view;
 	}
 	
-	public void setToolbarAction(ToolbarItemInterface i){
+	public void setInterface(ToolbarItemInterface i){
 		toolbarInterfaces=i;
 	}
 
