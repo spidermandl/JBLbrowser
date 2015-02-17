@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -64,6 +65,15 @@ public class SettingPagerFragment extends SherlockFragment{
 		mViewPager.setAdapter(mPageAdapter);
 		mIndicator.setViewPager(mViewPager);
 		mViewPager.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_appear));// 加载弹出菜单栏的动画效果
+		
+		view.setOnTouchListener(new View.OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				return true;
+			}
+		});//最外层接管点击事件
 		
 		return view;
 	}

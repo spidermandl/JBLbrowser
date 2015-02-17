@@ -55,11 +55,10 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	public final static String TAG = "MainPageFragment";
 
 	/* 定义webview控件 */
-	public  ProgressWebView mWebView; // 主控件 webview
-	public  WebSettings settings;
+	public ProgressWebView mWebView; // 主控件 webview
+	public WebSettings settings;
 	public BottomMenuFragment toolbarFragment;//底部toolbar
 	public SettingPagerFragment settingFragment;//底部弹出菜单 fragment
-	
 	public TopMenuFragment topActionbarFragment; //顶部actionbar
 	
 	public String cur_url; // 设置初始网址
@@ -68,8 +67,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	private MultipageAdapter multipageAdapter;//多页效果适配器 
 	private ScheduledExecutorService scheduledExecutorService;
 
-	int count;
-	private boolean visibile=true;//标示是否显示菜单栏
 	View popview;//翻页按钮布局
 	PopupWindow popWindow;//悬浮翻页窗口
 	View multipagePanel;//多页布局
@@ -110,6 +107,9 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		
 		toolbarFragment=(BottomMenuFragment)(this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
 		toolbarFragment.setInterface(this);//设置回调接口
+		
+		settingFragment=new SettingPagerFragment();
+		settingFragment.setInterface(this);//设置回调接口
 		
 		topActionbarFragment=(TopMenuFragment)(this.getActivity().getSupportFragmentManager().findFragmentById(R.id.top_menu_fragment));
 		topActionbarFragment.setTopActionbar(this);//设置回调接口

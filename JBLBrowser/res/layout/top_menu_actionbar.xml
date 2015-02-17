@@ -2,21 +2,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-     android:background="@drawable/input_search_nor" >
-   
-    <com.jbl.browser.view.TopImageView android:id="@+id/topMenu_mSearch" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:layout_alignParentLeft="true" 
-        android:src="@drawable/top_search_flag" android:clickable="true"/>
+    android:background="@drawable/input_search_nor" >
 
-    <com.jbl.browser.view.TopEdittextView android:id="@+id/topMenu_mInputAdress" android:layout_width="match_parent" 
-        android:layout_height="wrap_content" android:layout_toRightOf="@+id/topMenu_mSearch" android:background="@null" 
-        android:hint="@string/please_input_and_search" android:layout_marginLeft="2dp"/>
+    <com.jbl.browser.view.TopImageView
+        android:id="@+id/topMenu_mSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:clickable="true"
+        android:src="@drawable/top_search_flag" />
 
-	<com.jbl.browser.view.TopImageView android:id="@+id/topMenu_mCode" android:layout_width="wrap_content"
-	    android:layout_height="wrap_content" android:src="@drawable/searchbox_suggestitem_icon_qrcode" 
-	    android:clickable="true" android:layout_toRightOf="@+id/topMenu_mInputAdress"/>
-	
-	<com.jbl.browser.view.TopImageView android:id="@+id/topMneu_mLand" android:layout_width="wrap_content" 
-	    android:layout_height="wrap_content" android:src="@drawable/right_drawer_attention_normal" 
-	    android:clickable="true" android:layout_toRightOf="@+id/topMenu_mCode"/>
+    <com.jbl.browser.view.TopEdittextView
+        android:id="@+id/topMenu_mInputAdress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_toRightOf="@+id/topMenu_mSearch"
+        android:background="@null"
+        android:hint="@string/please_input_and_search" />
+
+    <com.jbl.browser.view.TopImageView
+        android:id="@+id/topMenu_mCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/topMenu_mInputAdress"
+        android:clickable="true"
+        android:src="@drawable/searchbox_suggestitem_icon_qrcode" />
+
+    <com.jbl.browser.view.TopImageView
+        android:id="@+id/topMneu_mLand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/topMenu_mCode"
+        android:clickable="true"
+        android:src="@drawable/right_drawer_attention_normal" />
+
 </RelativeLayout>

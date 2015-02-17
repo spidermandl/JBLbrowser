@@ -26,22 +26,6 @@ import com.jbl.browser.R;
  */
 public class MainPageActivity extends SherlockActivity {
 
-	
-	/**
-	 * 1.title
-	 *   1.1 mImageViewSearch  搜索图标
-	 *   1.2 mEditTextInput    输入网址
-	 *   1.3 mButtonCode       二维码搜索
-	 *   1.4 mButtonLand       登陆注册
-	 * 2.webview
-	 *   2.1 mWebView
-	 * 3.操作栏
-	 *   3.1 mImageViewBack   后退
-	 *   3.2 mImageViewInto   前进
-	 *   3.3 mImageViewHome   Home
-	 *   3.4 mImageViewChange 切换多页模式
-	 *   3.5 mImageViewOption 选项菜单 
-	 */
 	/*  定义菜单控件  */
 	private ImageView mImageViewSearch; //1.1  mImageViewSearch  搜索图标
 	private EditText mEditTextInput;  //1.2 mEditTextInput   输入网址

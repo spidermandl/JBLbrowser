@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 
+import com.actionbarsherlock.view.Window;
 import com.jbl.browser.R;
 import com.jbl.browser.fragment.MainPageFragment;
 import com.mozillaonline.providers.DownloadManager;
@@ -30,6 +31,7 @@ public class MainFragActivity extends BaseFragActivity {
 	@Override
 	protected void onCreate(Bundle arg0) {
 		//setTheme(R.style.Theme_Sherlock); // Used for theme switching in samples
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_frame);
 		init();
 
