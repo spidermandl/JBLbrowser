@@ -18,7 +18,7 @@ import com.jbl.browser.view.ScaleImageView;
  *
  */
 public class BottomMenuFragment extends SherlockFragment implements View.OnClickListener{
-
+	public final static String TAG = "BottomMenuFragment";
 	ToolbarItemInterface toolbarInterfaces;
 	
 	//定义操作栏控件
@@ -54,7 +54,7 @@ public class BottomMenuFragment extends SherlockFragment implements View.OnClick
 		return view;
 	}
 	
-	public void setToolbarAction(ToolbarItemInterface i){
+	public void setInterface(ToolbarItemInterface i){
 		toolbarInterfaces=i;
 	}
 
