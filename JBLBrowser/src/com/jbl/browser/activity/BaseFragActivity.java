@@ -139,10 +139,10 @@ public abstract class BaseFragActivity extends SherlockFragmentActivity {
     
     @Override
     public void onBackPressed() {
-    	FragmentManager fragManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragManager.beginTransaction();
-        if(transaction.isEmpty())
-        	this.finish();
+//    	FragmentManager fragManager = getSupportFragmentManager();
+//        FragmentTransaction transaction = fragManager.beginTransaction();
+//        if(transaction.isEmpty())
+//        	this.finish();
     	super.onBackPressed();
     }
 }

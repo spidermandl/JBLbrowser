@@ -22,6 +22,7 @@ import com.mozillaonline.providers.downloads.ui.DownloadList;
  *
  */
 public class MainFragActivity extends BaseFragActivity {
+	public final static String TAG="MainFragActivity";
 
 	//下载管理类
 	private DownloadManager mDownloadManager;
@@ -36,7 +37,7 @@ public class MainFragActivity extends BaseFragActivity {
 		init();
 
 		super.onCreate(arg0);
-		navigateTo(MainPageFragment.class, null, true, MainPageFragment.TAG);
+		navigateTo(MainPageFragment.class, null, true, TAG);
 	}
 
 	/**

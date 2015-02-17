@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 public class TopImageView extends ImageView{
 
-int s_Width;
+    int s_Width;
 	
 	public TopImageView(Context context) {
 		super(context);
@@ -32,6 +32,7 @@ int s_Width;
         wm.getDefaultDisplay().getMetrics(dm);
         s_Width = dm.widthPixels;
 	}
+	
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		

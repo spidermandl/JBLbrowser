@@ -27,11 +27,14 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import cn.hugo.android.scanner.CaptureActivity;
+
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.activity.MainFragActivity;
+import com.jbl.browser.activity.SubMenuActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.db.BookMarkDao;
@@ -53,7 +56,6 @@ import com.viewpager.indicator.PageIndicator;
 public class MainPageFragment extends SherlockFragment implements SettingItemInterface,ToolbarItemInterface,TopActionbarInterface{
 
 	public final static String TAG = "MainPageFragment";
-
 	/* 定义webview控件 */
 	public ProgressWebView mWebView; // 主控件 webview
 	public WebSettings settings;
@@ -172,29 +174,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		   getFragmentManager().beginTransaction().remove(bottonMenuFragment).commit();  
 		  }  
 	}
-	/* 点击webview取消菜单栏展示 */
-
-//	private void init(boolean visibile) {
-//		if (visibile) {
-//			SettingPagerFragment settingPager = new SettingPagerFragment(this.getActivity());
-//			settingPager.setInterface(this);//设置回调接口
-//			mPageAdapter = new SettingPagerAdapter(settingPager.getPageViews());
-//			mViewPager.setAdapter(mPageAdapter);
-//			mIndicator.setViewPager(mViewPager);
-//			mViewPager.setVisibility(View.VISIBLE);
-//			settingPanel.setVisibility(View.VISIBLE);
-//			mViewPager.startAnimation(// 加载弹出菜单栏的动画效果
-//					AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_appear));
-//			this.visibile=false;
-//		} else {
-//			mViewPager.setVisibility(View.GONE);
-//			settingPanel.setVisibility(View.GONE);
-//			mViewPager.startAnimation(// 退出菜单栏时的动画效果
-//					AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_disappear));
-//			this.visibile=true;
-//		}
-//
-//	}
+	
 	// 添加书签
 	private void addNewBookMark() {
 		boolean flag=false;
@@ -264,7 +244,11 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	}
 	@Override
 	public void listBookMark() {
-		((BaseFragActivity) getActivity()).navigateTo(BookMarkFragment.class, null, true,BookMarkFragment.TAG);
+		Intent intent=new Intent();
+		intent.setClass(this.getActivity(), SubMenuActivity.class);
+		intent.putExtra(SubMenuActivity.TAG, BookMarkFragment.class);
+		this.startActivity(intent);
+		//((BaseFragActivity) getActivity()).navigateTo(BookMarkFragment.class, null, true,BookMarkFragment.TAG);
 	}
 	@Override
 	public void browserSetting() {
@@ -435,7 +419,9 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	}
 	@Override
 	public void goMenu() {
- 		//init(visibile);
+		try {
+			
+
 	    FragmentTransaction transaction =getFragmentManager().beginTransaction();
 		if(settingFragment.isRemoving()
 				||getFragmentManager().findFragmentByTag(SettingPagerFragment.TAG)==null){
@@ -445,6 +431,10 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			transaction.remove(settingFragment);
 		}
 	    transaction.commitAllowingStateLoss();
+	    this.getActivity().getSupportFragmentManager().executePendingTransactions();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -475,14 +465,14 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	//二维码跳转
 	@Override
 	public void goCode() {
-		// TODO Auto-generated method stub
-		
+		Intent intent = new Intent();
+		intent.setClass(getActivity(), CaptureActivity.class);
+		startActivity(intent);
 	}
 	//登录注册监听
 	@Override
 	public void goLand() {
-		// TODO Auto-generated method stub
-		
+		mWebView.loadUrl(UrlUtils.URL_LOGIN);
 	}
 
 }
