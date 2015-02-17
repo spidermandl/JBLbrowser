@@ -40,6 +40,7 @@ import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.db.BookMarkDao;
 import com.jbl.browser.interfaces.SettingItemInterface;
 import com.jbl.browser.interfaces.ToolbarItemInterface;
+import com.jbl.browser.interfaces.TopActionbarInterface;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
@@ -53,7 +54,7 @@ import com.viewpager.indicator.PageIndicator;
  * @author desmond.duan
  * 
  */
-public class MainPageFragment extends SherlockFragment implements SettingItemInterface,ToolbarItemInterface{
+public class MainPageFragment extends SherlockFragment implements SettingItemInterface,ToolbarItemInterface,TopActionbarInterface{
 
 	public final static String TAG = "MainPageFragment";
 
@@ -79,6 +80,8 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	public  ProgressWebView mWebView; // 主控件 webview
 	public  WebSettings settings;
 	public BottomMenuFragment toolbarFragment;//底部toolbar
+	
+	public TopMenuFragment topActionbarFragment; //顶部actionbar
 	
 	public String cur_url; // 设置初始网址
 	public String webName=""; // 网页名
@@ -230,6 +233,9 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		settingPanel = view.findViewById(R.id.main_setting_panel);
 		toolbarFragment=(BottomMenuFragment)(this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
 		toolbarFragment.setToolbarAction(this);//设置回调接口
+		
+		topActionbarFragment=(TopMenuFragment)(this.getActivity().getSupportFragmentManager().findFragmentById(R.id.top_menu_fragment));
+		topActionbarFragment.setTopActionbar(this);//设置回调接口
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
 		// mWebView.setDownloadListener(new myDownloaderListener());
@@ -604,6 +610,31 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	public void goMultiWindow() {
 		((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
 		Toast.makeText(getActivity(), "已进入多页模式", 1).show();
+		
+	}
+	
+	//点击搜索图标
+	@Override
+	public void goSearch() {
+		// TODO Auto-generated method stub
+		
+	}
+	//输入框点击监听
+	@Override
+	public void goEditInput() {
+		// TODO Auto-generated method stub
+		
+	}
+	//二维码跳转
+	@Override
+	public void goCode() {
+		// TODO Auto-generated method stub
+		
+	}
+	//登录注册监听
+	@Override
+	public void goLand() {
+		// TODO Auto-generated method stub
 		
 	}
 

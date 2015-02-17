@@ -40,12 +40,15 @@
             android:background="#ffd700" android:clickable="true"/>
       
     </LinearLayout> -->
+    <fragment android:id="@+id/top_menu_fragment" android:name="com.jbl.browser.fragment.TopMenuFragment" 
+        android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentTop="true"/>
 
     <com.jbl.browser.view.ProgressWebView
         android:id="@+id/mWebView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_toolbar_fragment" >
+        android:layout_above="@+id/bottom_toolbar_fragment"
+        android:layout_below="@+id/top_menu_fragment" >
     </com.jbl.browser.view.ProgressWebView>
 
     <include
