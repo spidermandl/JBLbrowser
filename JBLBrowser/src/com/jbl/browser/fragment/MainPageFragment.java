@@ -252,11 +252,19 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	}
 	@Override
 	public void browserSetting() {
-		((BaseFragActivity) getActivity()).navigateTo(MenuSetFragment.class, null, true,MenuSetFragment.TAG);
+		Intent intent=new Intent();
+		intent.setClass(this.getActivity(), SubMenuActivity.class);
+		intent.putExtra(SubMenuActivity.TAG, MenuSetFragment.class);
+		this.startActivity(intent);
+		//((BaseFragActivity) getActivity()).navigateTo(MenuSetFragment.class, null, true,MenuSetFragment.TAG);
 	}
 	@Override
 	public void listHistory() {
-		((BaseFragActivity) getActivity()).navigateTo(HistoryFragment.class, null, true,HistoryFragment.TAG);
+		Intent intent=new Intent();
+		intent.setClass(this.getActivity(), SubMenuActivity.class);
+		intent.putExtra(SubMenuActivity.TAG, HistoryFragment.class);
+		this.startActivity(intent);
+		//((BaseFragActivity) getActivity()).navigateTo(HistoryFragment.class, null, true,HistoryFragment.TAG);
 	}
 	@Override
 	public void share() {
@@ -270,8 +278,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
         } catch(android.content.ActivityNotFoundException ex) {
            
         }
-//		mViewPager.setVisibility(View.GONE);
-//		settingPanel.setVisibility(View.GONE);
 		
 	}
 	@Override
@@ -344,16 +350,12 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		default:
 			break;
 		}
-//		mViewPager.setVisibility(View.GONE);
-//		settingPanel.setVisibility(View.GONE);	
 	}
 
 	@Override
 	public void refresh() {     //刷新当前界面
 		// TODO Auto-generated method stub
 		mWebView.reload();
-//		mViewPager.setVisibility(View.GONE);
-//		settingPanel.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -389,8 +391,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		default:
 			break;
 		}
-//		mViewPager.setVisibility(View.GONE);
-//		settingPanel.setVisibility(View.GONE);
 	}
 	
 	@Override
