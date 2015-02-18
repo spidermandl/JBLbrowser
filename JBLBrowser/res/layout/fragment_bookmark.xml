@@ -5,7 +5,7 @@
     android:background="#ffffff" >
 
     <ListView
-        android:id="@+id/list_view_history_today"
+        android:id="@+id/list_view_bookmark"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:divider="@color/list_line"
@@ -17,7 +17,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
-        android:text="@string/no_history"
+        android:text="@string/no_bookmark"
         android:textStyle="bold" />
 
 </FrameLayout>

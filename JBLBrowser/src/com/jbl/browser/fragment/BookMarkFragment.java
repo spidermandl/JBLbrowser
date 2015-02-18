@@ -1,6 +1,5 @@
 package com.jbl.browser.fragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -8,9 +7,7 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -20,10 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.BookMarkAdapter;
@@ -37,7 +31,9 @@ import com.jbl.browser.utils.JBLPreference;
  *
  */
 public class BookMarkFragment extends SherlockFragment implements OnItemLongClickListener, OnItemClickListener{
+	
 	public final static String TAG="BookMarkFragment";
+	
 	//书签listView
 	ListView listview;
 	//书签数据
@@ -56,31 +52,17 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 	}
-	//从数据库中获得数据
-	public List<BookMark> getData(){
-		List<BookMark> list;
-		list=new BookMarkDao(getActivity()).queryAll();
-		return list;
-	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		View view = inflater.inflate(R.layout.bookmark_fragment, container, false);	
-		back=(ImageView)view.findViewById(R.id.back);
+		View view = inflater.inflate(R.layout.fragment_bookmark, container, false);	
 		listview=(ListView)view.findViewById(R.id.list_view_bookmark);
 		noBookmark=(TextView)view.findViewById(R.id.empty);
 		initDataFavorites();
 		listview.setOnItemClickListener(this);
 		listview.setOnItemLongClickListener(this);
-		back.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class);
-			}
-		});
 		return view;
 	}
 	
@@ -89,7 +71,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	 * */
 	private void initDataFavorites() {
 		listview.setVisibility(View.GONE);
-		list=getData();
+		list=new BookMarkDao(getActivity()).queryAll();//从数据库中获得数据
 		if(list.size()==0){//没有书签时屏幕中间显示“没有书签”文字
 			noBookmark.setVisibility(View.VISIBLE);
 		}else{            //有书签时显示书签
@@ -119,7 +101,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 				if(i!=0){
 					Toast.makeText(getActivity(), R.string.delete_bookmark_succeed, 100).show();
 					initDataFavorites();
-					listview.invalidate();
+					bookMarkAdapter.notifyDataSetChanged();
 				}
 				else{
 					Toast.makeText(getActivity(),R.string.delete_bookmark_fail, 100);
@@ -135,6 +117,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		builder.create().show();
 		return false;
 	}
+	
 	//单击跳转到网页
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -142,7 +125,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		// TODO Auto-generated method stub
 		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
 		JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
-		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, null, false,MainPageFragment.TAG);
+        this.getActivity().finish();
 	}
 	
 }

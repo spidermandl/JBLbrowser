@@ -21,6 +21,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
+import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.SettingGridItemAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.jbl.browser.interfaces.SettingItemInterface;
@@ -209,8 +210,7 @@ public class SettingPagerFragment extends SherlockFragment{
 						default:
 							break;
 						}
-						
-						finish();
+						((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 					}
 				});
 			}
@@ -240,7 +240,7 @@ public class SettingPagerFragment extends SherlockFragment{
 						default:
 							break;
 						}
-						finish();
+						((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 					}
 					
 				});
@@ -251,10 +251,4 @@ public class SettingPagerFragment extends SherlockFragment{
 		return mViewPages;
 	}
 	
-	private void finish(){
-		FragmentManager fm = getFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        transaction.remove(SettingPagerFragment.this);
-        transaction.commit();
-	}
 }

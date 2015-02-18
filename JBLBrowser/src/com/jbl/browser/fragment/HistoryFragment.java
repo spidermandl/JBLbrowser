@@ -34,10 +34,11 @@ import com.jbl.browser.utils.StringUtils;
 
 /**
  * 历史记录fragment
- * @author Desmond
+ * @author huyingying
  *
  */
 public class HistoryFragment extends SherlockFragment implements OnItemClickListener, OnItemLongClickListener{
+	
 	public final static String TAG="HistoryFragment";
 	//历史记录listView
 	ListView listview;
@@ -56,31 +57,17 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 	}
-	//从数据库中获得数据
-	public List<History> getData(){
-		List<History> history;
-		history=new HistoryDao(getActivity()).queryAll();
-		return history;
-	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
 		View view = inflater.inflate(R.layout.history_fragment, container, false);
-		back=(ImageView)view.findViewById(R.id.back);
 		listview=(ListView)view.findViewById(R.id.list_view_history_today);
 		noHistory=(TextView)view.findViewById(R.id.empty);
 		initDataHistory();
 		listview.setOnItemClickListener(this);
 		listview.setOnItemLongClickListener(this);
-		back.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class);
-			}
-		});
 		return view;
 	}
 	/**
@@ -88,7 +75,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	 * */
 	private void initDataHistory() {
 		listview.setVisibility(View.GONE);
-		list=getData();
+		list=new HistoryDao(getActivity()).queryAll();//从数据库中获得数据
 		if(list.size()==0){      //没有历史记录时屏幕中间显示“没有历史记录”文字
 			noHistory.setVisibility(View.VISIBLE);
 		}else{                   //有历史记录时显示历史记录

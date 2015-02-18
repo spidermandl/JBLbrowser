@@ -37,7 +37,9 @@ public class HistoryFavourateActivity extends BaseFragActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Theme_Sherlock_Light);
 		super.onCreate(savedInstanceState);
-		
+		/**
+		 * 设置actionbar样式
+		 */
 		final ActionBar ab = this.getSupportActionBar();	
  		ab.setDisplayHomeAsUpEnabled(true);		 	
  		ab.setDisplayUseLogoEnabled(false);		 		
@@ -52,7 +54,10 @@ public class HistoryFavourateActivity extends BaseFragActivity {
         mViewPager = (ViewPager)findViewById(R.id.pager);
 
         mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
-
+        
+        /**
+         * 初始设置各个fragment
+         */
         mTabsAdapter.addTab(mTabHost.newTabSpec(BookMarkFragment.TAG).setIndicator(
         		getResources().getString(R.string.favourate_title)),
                 BookMarkFragment.class, null);
@@ -69,7 +74,7 @@ public class HistoryFavourateActivity extends BaseFragActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case android.R.id.home:
+		case android.R.id.home://返回
 			this.finish();
 			break;
 		default:

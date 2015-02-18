@@ -30,7 +30,7 @@ import com.jbl.browser.bean.SetContent;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
-/*
+/**
  * 菜单设置选项fragment
  */
 public class MenuSetFragment extends SherlockFragment implements OnItemClickListener{

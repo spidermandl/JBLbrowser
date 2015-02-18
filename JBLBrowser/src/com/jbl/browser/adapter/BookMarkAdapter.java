@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.jbl.browser.R;
 import com.jbl.browser.bean.BookMark;
-import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +17,10 @@ import android.widget.TextView;
 public class BookMarkAdapter extends BaseAdapter{
 	List<BookMark> list_bookmark=new ArrayList<BookMark>();
 	 private LayoutInflater mInflater; 
-	 private Activity activity;
-	 public BookMarkAdapter(Activity activity, List<BookMark> list) {  
-	        this.activity=activity;  
-	        mInflater = LayoutInflater.from(activity);  
+	 private Context mContext;
+	 public BookMarkAdapter(Context context, List<BookMark> list) {  
+		    mContext=context;  
+	        mInflater = LayoutInflater.from(context);  
 	        list_bookmark= list;  
 	    } 
 	@Override

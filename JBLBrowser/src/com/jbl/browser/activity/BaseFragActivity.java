@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.jbl.browser.R;
+import com.jbl.browser.fragment.SettingPagerFragment;
 
 /**
  * fragment activity 基类
@@ -144,5 +145,16 @@ public abstract class BaseFragActivity extends SherlockFragmentActivity {
 //        if(transaction.isEmpty())
 //        	this.finish();
     	super.onBackPressed();
+    }
+    
+    /**
+     * 移除fragment
+     * @param frag
+     */
+    public void removeFragment(Fragment frag){
+		FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.remove(frag);
+        transaction.commit();
     }
 }
