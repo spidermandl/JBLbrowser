@@ -33,7 +33,7 @@ import com.jbl.browser.utils.JBLPreference;
 
 /**
  * 书签fragment
- * @author Desmond
+ * @author huyingying
  *
  */
 public class BookMarkFragment extends SherlockFragment implements OnItemLongClickListener, OnItemClickListener{
@@ -84,15 +84,6 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		return view;
 	}
 	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		final ActionBar ab = this.getSherlockActivity().getSupportActionBar();	
- 		ab.setDisplayHomeAsUpEnabled(false);		 	
- 		ab.setDisplayUseLogoEnabled(false);		 		
- 		ab.setDisplayShowHomeEnabled(true);		 		
- 		ab.setDisplayShowTitleEnabled(false);
-		super.onActivityCreated(savedInstanceState);
-	}
 	/**
 	 * 初始化ListView中书签的数据
 	 * */

@@ -38,7 +38,7 @@ import com.jbl.browser.utils.StringUtils;
  *
  */
 public class HistoryFragment extends SherlockFragment implements OnItemClickListener, OnItemLongClickListener{
-	public final static String TAG="BookMarkFragment";
+	public final static String TAG="HistoryFragment";
 	//历史记录listView
 	ListView listview;
 	//历史记录数据
@@ -86,7 +86,6 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	/**
 	 * 初始化ListView中历史记录的数据
 	 * */
-	@SuppressWarnings("deprecation")
 	private void initDataHistory() {
 		listview.setVisibility(View.GONE);
 		list=getData();

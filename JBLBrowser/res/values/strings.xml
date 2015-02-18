@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name"></string>
+    <string name="app_name">脊背龙浏览器</string>
     <string name="and">与</string>
     <string name="acount_propmt_input">请输入游戏内使用的</string>
     <string name="acount_propmt_change">重新安装APP或者变更游戏机种需要使用</string>
     <string name="buying">存在未处理完成的订单，系统正在处理，暂时无法继续购买，请稍后再试！</string>
-    
     <string name="check_network">请先检查通信状况</string>
     <string name="click_retry">点击重试按钮</string>
     <string name="check_con_fail">无法链接到服务器，错误代码：</string>
@@ -79,7 +78,7 @@
     <string name="weibosdk_comment">评论</string>
     <string name="weibosdk_forward">转发</string>
     <string name="weibosdk_fav">收藏</string>
-    
+
     <!-- JBLBrowser -->
     <string name="title_activity_main_page_activity">MainPageActivity</string>
     <string name="hello_world">Hello world!</string>
@@ -87,18 +86,15 @@
     <string name="input_and_search">输入网址或搜索</string>
     <string name="title_activity_text_login">TextLoginActivity</string>
     <string name="title_activity_text_register">TextRegisterActivity</string>
-
     <string name="title_activity_tool_bar_operate">ToolBarOperateActivity</string>
-    <string name="font_size">30sp</string>
-
-    <string name="title_activity_input_view_frag">InputViewFragActivity</string>	<string name="title_activity_recommend_main">RecommendMainActivity</string>
+    <string name="title_activity_input_view_frag">InputViewFragActivity</string>
+    <string name="title_activity_recommend_main">RecommendMainActivity</string>
     <string name="recommend">推荐</string>
     <string name="collect">收藏</string>
     <string name="custom">自定义</string>
     <string name="today">今天</string>
     <string name="yesterday">昨天</string>
     <string name="longtime">更早</string>
-    
     <string name="add_bookmark_succeed">添加书签成功</string>
     <string name="add_bookmark_fail">书签已存在，添加书签失败</string>
     <string name="delete_bookmark_succeed">删除书签成功</string>
@@ -108,22 +104,23 @@
     <string name="no_history">没有历史记录</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
-	<string name="main_share_chooser_title">分享</string>
-    
-    
-    <string name="about">关于</string>    
+    <string name="main_share_chooser_title">分享</string>
+    <string name="about">关于</string>
     <string name="broswer">JBL Broswer</string>
     <string name="version">Version:1.0.0(01)</string>
     <string name="intruduce">使用JBL Broswer让你更好的使用互联网</string>
     <string name="auto_brightness_setting">自动调节亮度</string>
-    <!-- 菜单文字  -->
+    <string name="history_favourate_title">收藏/历史</string>
+    <string name="history_title">历&#160;史</string>
+    <string name="favourate_title">收&#160;藏</string>
+    <!-- 菜单文字 -->
     <string-array name="setting_content_item">
         <item>添加书签</item>
         <item>书签</item>
         <item>设置</item>
         <item>历史</item>
         <item>分享</item>
-		<item>开启无图关闭无图</item>  
+        <item>开启无图关闭无图</item>
         <item>下载管理</item>
         <item>退出</item>
         <item>开启翻页关闭翻页</item>
@@ -136,14 +133,12 @@
         <item>检查更新</item>
         <item>页内查找</item>
         <item>保存网页</item>
-    </string-array> 
-        <string name="please_input_and_search">请输入网址或搜索</string>
- 
-        <string name="quit">程序退出？</string>
- 
-        <string name="confirm_quit">您确定要退出？</string>
- 
-        <string name="bookmark">书签</string>
-        <string name="history">历史记录</string>
+    </string-array>
+
+    <string name="please_input_and_search">请输入网址或搜索</string>
+    <string name="quit">程序退出？</string>
+    <string name="confirm_quit">您确定要退出？</string>
+    <string name="bookmark">书签</string>
+    <string name="history">历史记录</string>
 
 </resources>

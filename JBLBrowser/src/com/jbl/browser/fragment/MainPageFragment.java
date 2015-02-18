@@ -33,6 +33,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
+import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.activity.SubMenuActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
@@ -244,9 +245,13 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	}
 	@Override
 	public void listBookMark() {
+//		Intent intent=new Intent();
+//		intent.setClass(this.getActivity(), SubMenuActivity.class);
+//		intent.putExtra(SubMenuActivity.TAG, BookMarkFragment.class);
+//		this.startActivity(intent);
 		Intent intent=new Intent();
-		intent.setClass(this.getActivity(), SubMenuActivity.class);
-		intent.putExtra(SubMenuActivity.TAG, BookMarkFragment.class);
+		intent.setClass(this.getActivity(), HistoryFavourateActivity.class);
+		intent.putExtra("TAG", BookMarkFragment.TAG);
 		this.startActivity(intent);
 		//((BaseFragActivity) getActivity()).navigateTo(BookMarkFragment.class, null, true,BookMarkFragment.TAG);
 	}
@@ -256,13 +261,18 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		intent.setClass(this.getActivity(), SubMenuActivity.class);
 		intent.putExtra(SubMenuActivity.TAG, MenuSetFragment.class);
 		this.startActivity(intent);
+
 		//((BaseFragActivity) getActivity()).navigateTo(MenuSetFragment.class, null, true,MenuSetFragment.TAG);
 	}
 	@Override
 	public void listHistory() {
+//		Intent intent=new Intent();
+//		intent.setClass(this.getActivity(), SubMenuActivity.class);
+//		intent.putExtra(SubMenuActivity.TAG, HistoryFragment.class);
+//		this.startActivity(intent);
 		Intent intent=new Intent();
-		intent.setClass(this.getActivity(), SubMenuActivity.class);
-		intent.putExtra(SubMenuActivity.TAG, HistoryFragment.class);
+		intent.setClass(this.getActivity(), HistoryFavourateActivity.class);
+		intent.putExtra("TAG", HistoryFragment.TAG);
 		this.startActivity(intent);
 		//((BaseFragActivity) getActivity()).navigateTo(HistoryFragment.class, null, true,HistoryFragment.TAG);
 	}
@@ -420,18 +430,15 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	@Override
 	public void goMenu() {
 		try {
-			
-
-	    FragmentTransaction transaction =getFragmentManager().beginTransaction();
-		if(settingFragment.isRemoving()
-				||getFragmentManager().findFragmentByTag(SettingPagerFragment.TAG)==null){
-		    transaction.replace(R.id.main_setting_panel,settingFragment,SettingPagerFragment.TAG);
-		    transaction.addToBackStack(null);
-		}else{
-			transaction.remove(settingFragment);
-		}
-	    transaction.commitAllowingStateLoss();
-	    this.getActivity().getSupportFragmentManager().executePendingTransactions();
+			FragmentTransaction transaction = getFragmentManager().beginTransaction();
+			if (settingFragment.isRemoving() || getFragmentManager().findFragmentByTag(SettingPagerFragment.TAG) == null) {
+				transaction.replace(R.id.main_setting_panel, settingFragment,SettingPagerFragment.TAG);
+				transaction.addToBackStack(null);
+			} else {
+				transaction.remove(settingFragment);
+			}
+			transaction.commitAllowingStateLoss();
+			this.getActivity().getSupportFragmentManager().executePendingTransactions();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

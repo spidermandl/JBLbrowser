@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -207,6 +209,8 @@ public class SettingPagerFragment extends SherlockFragment{
 						default:
 							break;
 						}
+						
+						finish();
 					}
 				});
 			}
@@ -236,7 +240,7 @@ public class SettingPagerFragment extends SherlockFragment{
 						default:
 							break;
 						}
-						
+						finish();
 					}
 					
 				});
@@ -245,5 +249,12 @@ public class SettingPagerFragment extends SherlockFragment{
 	}
 	public List<View> getPageViews() {
 		return mViewPages;
+	}
+	
+	private void finish(){
+		FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.remove(SettingPagerFragment.this);
+        transaction.commit();
 	}
 }
