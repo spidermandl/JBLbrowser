@@ -166,13 +166,11 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	}
 	
 	@Override
-	public void onDestroyView() {      //销毁内嵌的BottomMenuFragment
-		// TODO Auto-generated method stub
+	public void onDestroyView() {      //销毁内嵌的fragment
+        getFragmentManager().beginTransaction().remove(toolbarFragment).commit();  
+        getFragmentManager().beginTransaction().remove(settingFragment).commit();
+        getFragmentManager().beginTransaction().remove(topActionbarFragment).commit();
 		super.onDestroyView();
-		BottomMenuFragment bottonMenuFragment =(BottomMenuFragment)getFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment);  
-		  if(bottonMenuFragment !=null ){  
-		   getFragmentManager().beginTransaction().remove(bottonMenuFragment).commit();  
-		  }  
 	}
 	
 	// 添加书签
@@ -398,7 +396,6 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			Toast.makeText(getActivity(), "不能后退了！", Toast.LENGTH_SHORT).show();
 		}
 
-		//((BaseFragActivity) this.getActivity()).navigateTo(UrlRedirectFragment.class, null, true, UrlRedirectFragment.TAG);
 	}
 
 	@Override
@@ -453,8 +450,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 	//输入框点击监听
 	@Override
 	public void goEditInput() {
-		// TODO Auto-generated method stub
-		
+		((BaseFragActivity) this.getActivity()).navigateTo(UrlRedirectFragment.class, null, true, UrlRedirectFragment.TAG);
 	}
 	//二维码跳转
 	@Override

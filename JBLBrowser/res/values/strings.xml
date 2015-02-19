@@ -113,6 +113,8 @@
     <string name="history_favourate_title">收藏/历史</string>
     <string name="history_title">历&#160;史</string>
     <string name="favourate_title">收&#160;藏</string>
+    <string name="search_cancel">取&#160;消</string>
+    <string name="search_forward">前&#160;往</string>
     <!-- 菜单文字 -->
     <string-array name="setting_content_item">
         <item>添加书签</item>
