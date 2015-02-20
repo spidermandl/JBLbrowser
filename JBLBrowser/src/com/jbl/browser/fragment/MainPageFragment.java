@@ -53,7 +53,10 @@ import com.viewpager.indicator.PageIndicator;
  * @author desmond.duan
  * 
  */
-public class MainPageFragment extends SherlockFragment implements SettingItemInterface,ToolbarItemInterface,TopActionbarInterface{
+public class MainPageFragment extends SherlockFragment implements 
+                                              SettingItemInterface,
+                                              ToolbarItemInterface,
+                                              TopActionbarInterface{
 
 	public final static String TAG = "MainPageFragment";
 	/* 定义webview控件 */
@@ -427,11 +430,7 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 			// TODO: handle exception
 		}
 	}
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
-		super.onSaveInstanceState(outState);
-	}
+
 	@Override
 	public void goMultiWindow() {
 		/*((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);

@@ -80,7 +80,8 @@ public class MainFragActivity extends BaseFragActivity {
 	// 跳转到下载管理界面
 	public void showDownloadList() {
 		Intent intent = new Intent();
-		intent.setClass(this, DownloadList.class);
+		//intent.setClass(this, DownloadList.class);
+		intent.setClass(this, DownloadManageActivity.class);
 		startActivity(intent);
 	}
 	

@@ -112,6 +112,12 @@
             android:launchMode="standard"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".activity.DownloadManageActivity"
+            android:label="@string/app_name"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+        </activity>
         
         <activity
             android:name=".activity.LoginActivity"

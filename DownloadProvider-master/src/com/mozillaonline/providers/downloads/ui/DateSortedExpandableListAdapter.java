@@ -150,7 +150,8 @@ public class DateSortedExpandableListAdapter implements ExpandableListAdapter {
      * @param cursorIndex Index to query the Cursor.
      * @return corresponding integer from the Cursor.
      */
-    /* package */ int getInt(int cursorIndex) {
+    /* package */ 
+    public int getInt(int cursorIndex) {
         return mCursor.getInt(cursorIndex);
     }
 
@@ -158,7 +159,8 @@ public class DateSortedExpandableListAdapter implements ExpandableListAdapter {
      * Get the long at cursorIndex from the Cursor.  Assumes the Cursor has
      * already been moved to the correct position.
      */
-    /* package */ long getLong(int cursorIndex) {
+    /* package */ 
+    public long getLong(int cursorIndex) {
         return mCursor.getLong(cursorIndex);
     }
 
@@ -233,7 +235,7 @@ public class DateSortedExpandableListAdapter implements ExpandableListAdapter {
      * @param packedPosition Position in packed position representation.
      * @return True on success, false otherwise.
      */
-    boolean moveCursorToPackedChildPosition(long packedPosition) {
+    public boolean moveCursorToPackedChildPosition(long packedPosition) {
         if (ExpandableListView.getPackedPositionType(packedPosition) !=
                 ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
             return false;
@@ -252,7 +254,8 @@ public class DateSortedExpandableListAdapter implements ExpandableListAdapter {
      * @return boolean False if the cursor is closed, so the Cursor was not
      *      moved.  True on success.
      */
-    /* package */ boolean moveCursorToChildPosition(int groupPosition,
+    /* package */ 
+    public boolean moveCursorToChildPosition(int groupPosition,
             int childPosition) {
         if (mCursor.isClosed()) return false;
         groupPosition = groupPositionToBin(groupPosition);
@@ -263,7 +266,8 @@ public class DateSortedExpandableListAdapter implements ExpandableListAdapter {
         return mCursor.moveToPosition(index);
     }
 
-    /* package */ void refreshData() {
+    /* package */ 
+    public void refreshData() {
         if (mCursor.isClosed()) {
             return;
         }
