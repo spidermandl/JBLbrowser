@@ -15,6 +15,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.jbl.browser.R;
+import com.jbl.browser.utils.JBLPreference;
 
 /**
  * 用户输入网址fragment
@@ -66,7 +67,14 @@ public class UrlRedirectFragment extends SherlockFragment implements View.OnClic
 		case R.id.control_search:
 			showSoftInput(false);
 			getFragmentManager().popBackStack();
-			//((BaseFragActivity)this.getActivity()).removeFragment(this);
+			if(mSearch.getEditableText().length()>0){
+				String url=mSearch.getEditableText().toString();
+				if(!url.contains("http://")){
+					url="http://"+url;
+				}
+			    JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, url);
+			
+			}//((BaseFragActivity)this.getActivity()).removeFragment(this);
 			break;
 
 		default:

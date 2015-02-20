@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,56 +17,76 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
+import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.RecommendAdapter;
-import com.jbl.browser.utils.RecommendCollectData;
+import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 
 
-/*
- * 收藏界面
- * 
- * */
-public class RecommendCollectFragment extends Fragment implements OnItemLongClickListener,OnItemClickListener{
+/**
+ * 推荐主页面
+ * zhangjian
+ */
+
+public class RecommendFragment extends SherlockFragment implements OnItemLongClickListener, OnItemClickListener{
+	
+	public static final String TAG="RecommendMainFragment";
+	
 	ListView lv;
 	RecommendAdapter tabAdapter;
 	List<Integer> image=new ArrayList<Integer>(); //网站图标
-	List<String> urlName=new ArrayList<String>(); //网站名字
-	List<String> urlAddress=new ArrayList<String>(); //网站网址
+	List<String> urlName=new ArrayList<String>();// 网站名称
+	List<String> urlAddress=new ArrayList<String>();// 网站网址
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState){
-		View tab1= inflater.inflate(R.layout.fragment_recommend_collect, container,false);
+		View tab1= inflater.inflate(R.layout.fragment_recommend, container,false);
 		lv=(ListView)tab1.findViewById(R.id.lv);
-		initData();   //listview链接数据
-		lv.setOnItemClickListener(this);  //点击监听
-		lv.setOnItemLongClickListener(this);  //长按监听实现删除
-		return tab1;	
-	}
-	/*  添加适配器  */
-	private void initData() {
-		// TODO Auto-generated method stub
-		getData();
+		initData();  //添加数据
 		tabAdapter=new RecommendAdapter(getActivity(), image, urlName, urlAddress);
 		lv.setAdapter(tabAdapter);
+		lv.setOnItemClickListener(this);
+		lv.setOnItemLongClickListener(this);
+		return tab1;	
 	}
- /* 获取数据资源 */
-	private void getData() {
+	/* 添加数据 */
+	private void initData() {
 		// TODO Auto-generated method stub
-		image=RecommendCollectData.image;
-		urlAddress=RecommendCollectData.urlAddress;
-		urlName=RecommendCollectData.urlName;
+		image.add(R.drawable.ic_launcher);
+		image.add(R.drawable.ic_launcher);
+		image.add(R.drawable.ic_launcher);
+		image.add(R.drawable.ic_launcher);
+		image.add(R.drawable.ic_launcher);
+		image.add(R.drawable.ic_launcher);
+		image.add(R.drawable.ic_launcher);
+		
+		urlName.add("百度");
+		urlName.add("搜狗");
+		urlName.add("谷歌");
+		urlName.add("新浪");
+		urlName.add("腾讯");
+		urlName.add("雅虎");
+		urlName.add("搜索");
+		
+		urlAddress.add("Http://www.baidu.com");
+		urlAddress.add("Http://www.sogou.com");
+		urlAddress.add("Http://www.gugoo.com");
+		urlAddress.add("Http://www.xinlang.com");
+		urlAddress.add("Http://www.tengxun.com");
+		urlAddress.add("Http://www.yahuu.com");
+		urlAddress.add("Http://www.sousuo.com");
 	}
-	/* 删除相应数据 */
-	public void delete(int i){
-		RecommendCollectData.image.remove(i);
-		RecommendCollectData.urlName.remove(i);
-		RecommendCollectData.urlAddress.remove(i);
-	}
+
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
+		String webAddress=((TextView)view.findViewById(R.id.tv2)).getText().toString();
+		JBLPreference.getInstance(getActivity()).writeString(JBLPreference.RECOMMEND_KEY, webAddress);
+		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, null, false,MainPageFragment.TAG);
 	}
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
@@ -79,11 +98,10 @@ public class RecommendCollectFragment extends Fragment implements OnItemLongClic
 		builder.setTitle(StringUtils.DELETE_RECOMMEND);
 		builder.setMessage("是否要删除\""+urlName1+"\"这个推荐?");
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {		
-						delete(position);					
+			public void onClick(DialogInterface dialog, int which) {					
 				Toast.makeText(getActivity(), StringUtils.SUCCESS_DELETE, 100).show();
 				initData();
-				lv.invalidate();//重新加载数据，实现刷新
+				lv.invalidate();				
 			}
 		});
 		builder.setNeutralButton("取消",new DialogInterface.OnClickListener() {

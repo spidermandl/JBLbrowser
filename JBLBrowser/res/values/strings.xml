@@ -111,8 +111,10 @@
     <string name="intruduce">使用JBL Broswer让你更好的使用互联网</string>
     <string name="auto_brightness_setting">自动调节亮度</string>
     <string name="history_favourate_title">收藏/历史</string>
+    <string name="recommend_web_title">推荐网页</string>
     <string name="history_title">历&#160;史</string>
     <string name="favourate_title">收&#160;藏</string>
+    <string name="recommend_title">推&#160;荐</string>
     <string name="search_cancel">取&#160;消</string>
     <string name="search_forward">前&#160;往</string>
     <!-- 菜单文字 -->

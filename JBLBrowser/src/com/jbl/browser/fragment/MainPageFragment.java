@@ -202,11 +202,11 @@ public class MainPageFragment extends SherlockFragment implements SettingItemInt
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 		// webView.getSettings().setPluginsEnabled(true);
 		mWebView.getSettings().setPluginState(PluginState.ON);
-		String urlAddress="";   //声明接收从书签和历史记录界面传来的值
-		urlAddress=JBLPreference.getInstance(getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
-		if(urlAddress==""){
+		String urlAddress=JBLPreference.getInstance(getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
+		if(urlAddress==null||urlAddress.length()==0){
 			mWebView.loadUrl(UrlUtils.URL_GET_HOST);
 		}else{
+			JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY,null);
 			mWebView.loadUrl(urlAddress);
 		}
 		//监听物理返回键

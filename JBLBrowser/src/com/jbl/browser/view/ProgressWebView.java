@@ -12,6 +12,7 @@ import com.jbl.browser.utils.UrlUtils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -68,6 +69,21 @@ public class ProgressWebView extends WebView {
 	public String getWebName(){
 		return webName;
 	}
+	
+	@Override
+	public void loadUrl(String url) {
+		if(url.contains("jbl")){
+			/**
+			 * jbl关键字截断
+			 */
+			Intent in=new Intent();
+			in.setClass(mContext,RecommendMainActivity.class);
+			mContext.startActivity(in);
+			return;
+		}
+		super.loadUrl(url);
+	}
+	
 	public class WebChromeClient extends android.webkit.WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
@@ -95,15 +111,17 @@ public class ProgressWebView extends WebView {
 		
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {		
-			if(url.contains("www.baidu.com")){
-				/* 主页百度url拦截*/
-				Intent in=new Intent();
-				in.setClass(mContext,RecommendMainActivity.class);
-				mContext.startActivity(in);
-				return true;
-			}
-			return false;
+			/**
+			 * loadurl方法不会触发此方法的回调
+			 */
+			return super.shouldOverrideUrlLoading(view, url);
 		}
+		
+		@Override
+		public void onPageStarted(WebView view, String url, Bitmap favicon) {
+			super.onPageStarted(view, url, favicon);
+		}
+		
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			// TODO Auto-generated method stub
