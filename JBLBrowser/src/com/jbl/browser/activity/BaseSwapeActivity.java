@@ -15,6 +15,11 @@ import android.widget.TabWidget;
 
 import com.actionbarsherlock.view.MenuItem;
 
+/**
+ * 抽象多个fragment滑动功能
+ * @author Desmond
+ *
+ */
 public abstract class BaseSwapeActivity extends BaseFragActivity {
 	
     protected TabHost mTabHost;//tabhost控件
@@ -29,7 +34,7 @@ public abstract class BaseSwapeActivity extends BaseFragActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case android.R.id.home://返回
+		case android.R.id.home://返回按钮功能
 			this.finish();
 			break;
 		default:
