@@ -15,15 +15,19 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.view.ProgressWebView;
+import com.viewpager.indicator.CirclePageIndicator;
 import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
 public class MultipageFragment extends SherlockFragment{
+	
 	public final static String TAG="MultipageFragment";
+	
 	private ViewPager multiViewPager;//多页效果
-	PageIndicator multipageIndicator;
+	CirclePageIndicator multipageIndicator;
 	private ArrayList<WebView> mViewPages;
 	private LayoutInflater mInflater;
-	 ProgressWebView webView;
+	ProgressWebView webView;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,12 +35,9 @@ public class MultipageFragment extends SherlockFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.multipage_panel, container, false);
+		View view = inflater.inflate(R.layout.fragment_multipage, container, false);
 		multiViewPager=(ViewPager) view.findViewById(R.id.multipage_viewpager);
-		multipageIndicator=(LinePageIndicator)view.findViewById(R.id.multipage_indicator);
-		webView=(ProgressWebView) view.findViewById(R.id.webView);
-		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
-	    webView.requestFocus();
+		multipageIndicator=(CirclePageIndicator)view.findViewById(R.id.multipage_indicator);
 		multiPage();
 		return view;
 	}
@@ -49,7 +50,7 @@ public class MultipageFragment extends SherlockFragment{
 			multipageIndicator.setViewPager(multiViewPager);
 	} 
 	private void addView(ArrayList<WebView> viewList,String url){
-		      webView=new ProgressWebView(getActivity());
+		     webView=new ProgressWebView(getActivity());
 			 webView.loadUrl(url);
 			 viewList.add(webView);
 			 webView.getSettings().setJavaScriptEnabled(true);

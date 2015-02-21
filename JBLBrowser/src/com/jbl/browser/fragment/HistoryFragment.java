@@ -93,9 +93,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 		// TODO Auto-generated method stub
 		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
 		JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
-		Intent intent=new Intent();
-        intent.setClass(getActivity(), MainFragActivity.class);
-        getActivity().startActivity(intent);
+		this.getActivity().finish();
 	}
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
