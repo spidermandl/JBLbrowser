@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
+import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.adapter.BookMarkAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.db.BookMarkDao;
@@ -126,6 +128,9 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
 		JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
         this.getActivity().finish();
+        Intent intent=new Intent();
+        intent.setClass(getActivity(), MainFragActivity.class);
+        getActivity().startActivity(intent);
 	}
 	
 }

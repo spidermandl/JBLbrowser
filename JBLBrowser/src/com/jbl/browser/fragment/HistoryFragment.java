@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
+import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.adapter.HistoryAdapter;
 import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.utils.JBLPreference;
@@ -91,7 +93,9 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 		// TODO Auto-generated method stub
 		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
 		JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
-		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, null, false,MainPageFragment.TAG);
+		Intent intent=new Intent();
+        intent.setClass(getActivity(), MainFragActivity.class);
+        getActivity().startActivity(intent);
 	}
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
