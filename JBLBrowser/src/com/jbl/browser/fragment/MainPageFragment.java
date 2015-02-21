@@ -33,6 +33,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
+import com.jbl.browser.activity.BrowserSettingActivity;
 import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
@@ -254,7 +255,10 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	@Override
 	public void browserSetting() {
-		((BaseFragActivity) getActivity()).navigateTo(MenuSetFragment.class, null, true,MenuSetFragment.TAG);
+		//((BaseFragActivity) getActivity()).navigateTo(MenuSettingFragment.class, null, true,MenuSettingFragment.TAG);
+		Intent intent=new Intent();
+		intent.setClass(this.getActivity(), BrowserSettingActivity.class);
+		this.startActivity(intent);
 	}
 	@Override
 	public void listHistory() {
@@ -280,8 +284,10 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	@Override
 	public void fitlerPicLoading() {
-		operate(JBLPreference.getInstance(getActivity()).readInt(JBLPreference.PIC_CACHE_TYPE),JBLPreference.PIC_CACHE_TYPE,
-				JBLPreference.NO_PICTURE,JBLPreference.YES_PICTURE,StringUtils.OPEN_NO_PICTURE, StringUtils.CLOSE_NO_PICTURE);
+		operate(JBLPreference.getInstance(getActivity()).readInt(
+				JBLPreference.PIC_CACHE_TYPE), JBLPreference.PIC_CACHE_TYPE,
+				JBLPreference.NO_PICTURE, JBLPreference.YES_PICTURE,
+				StringUtils.OPEN_NO_PICTURE, StringUtils.CLOSE_NO_PICTURE);
 	}
 	@Override
 	public void manageDownload() {
@@ -357,17 +363,23 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 
 	@Override
-	public void withoutTrace() {   //无痕浏览
+	public void withoutTrace() { // 无痕浏览
 		// TODO Auto-generated method stub
-		operate(JBLPreference.getInstance(getActivity()).readInt(JBLPreference.HISTORY_CACHE_TYPE),JBLPreference.HISTORY_CACHE_TYPE,
-				JBLPreference.NO_HISTORY,JBLPreference.YES_HISTORY,StringUtils.OPEN_NO_HISTORY, StringUtils.CLOSE_NO_HISTORY);
+		operate(JBLPreference.getInstance(getActivity()).readInt(
+				JBLPreference.HISTORY_CACHE_TYPE),
+				JBLPreference.HISTORY_CACHE_TYPE, JBLPreference.NO_HISTORY,
+				JBLPreference.YES_HISTORY, StringUtils.OPEN_NO_HISTORY,
+				StringUtils.CLOSE_NO_HISTORY);
 	}
 
 	@Override
 	public void fullScreen() {     //全屏浏览
 		// TODO Auto-generated method stub
-		operate(JBLPreference.getInstance(getActivity()).readInt(JBLPreference.FULL_SCREEN_TYPE),JBLPreference.FULL_SCREEN_TYPE,
-				JBLPreference.NO_FULL,JBLPreference.YES_FULL,StringUtils.OPEN_NO_FULL, StringUtils.CLOSE_NO_FULL);
+		operate(JBLPreference.getInstance(getActivity()).readInt(
+				JBLPreference.FULL_SCREEN_TYPE),
+				JBLPreference.FULL_SCREEN_TYPE, JBLPreference.NO_FULL,
+				JBLPreference.YES_FULL, StringUtils.OPEN_NO_FULL,
+				StringUtils.CLOSE_NO_FULL);
 	}
 	
 	public void operate(int type,String strType,int no,int yes,String open,String close){

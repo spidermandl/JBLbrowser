@@ -8,7 +8,6 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -18,10 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
@@ -29,12 +25,14 @@ import com.jbl.browser.adapter.MenuSetAdapter;
 import com.jbl.browser.bean.SetContent;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
-import com.jbl.browser.utils.StringUtils;
+
 /**
  * 菜单设置选项fragment
  */
-public class MenuSetFragment extends SherlockFragment implements OnItemClickListener{
-	public final static String TAG="MenuSetFragment";
+public class MenuSettingFragment extends SherlockFragment implements OnItemClickListener{
+	
+	public final static String TAG="MenuSettingFragment";
+	
 	//菜单设置选项内容
 	ListView listview;
 	//设置数据
@@ -66,23 +64,8 @@ public class MenuSetFragment extends SherlockFragment implements OnItemClickList
 		s4.setSetText(JBLPreference.ABOUT);
 		list.add(s4);
 	}
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onActivityCreated(savedInstanceState);
-		final ActionBar ab = this.getSherlockActivity().getSupportActionBar();
-		// set defaults for logo & home up
-		ab.setDisplayHomeAsUpEnabled(false);
-		ab.setDisplayUseLogoEnabled(false);
-		ab.setDisplayShowHomeEnabled(false);
-		setHasOptionsMenu(true);
-	}
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// TODO Auto-generated method stub
-		//menu.add(0, 1, 0, "Back").setIcon(R.drawable.back_web).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		super.onCreateOptionsMenu(menu, inflater);
-	}
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

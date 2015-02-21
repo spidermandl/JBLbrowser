@@ -6,6 +6,12 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+/**
+ * 动态固定宽高imageview
+ * 后续需要重构
+ * @author Desmond
+ *
+ */
 public class ScaleImageView extends ImageView {
 
 	int s_Width;
