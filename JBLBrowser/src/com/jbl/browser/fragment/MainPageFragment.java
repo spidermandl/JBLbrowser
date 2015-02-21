@@ -26,7 +26,6 @@ import android.webkit.WebSettings.PluginState;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.Toast;
-
 import cn.hugo.android.scanner.CaptureActivity;
 
 import com.actionbarsherlock.app.SherlockFragment;
