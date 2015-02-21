@@ -3,25 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:background="#CCCCCCCC"
-        android:layout_weight="3" >
-        <com.jbl.browser.view.ProgressWebView
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/linear_top" >
-    </com.jbl.browser.view.ProgressWebView>
+        android:layout_weight="3"
+        android:background="#CCCCCCCC" >
+
         <android.support.v4.view.ViewPager
             android:id="@+id/multipage_viewpager"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/multipage_indicator"
-            android:layout_gravity="center" 
-            android:background="#FFFFFFFF"/>
-        <com.viewpager.indicator.LinePageIndicator
+            android:layout_gravity="center"
+            android:background="#FFFFFFFF" />
+
+        <com.viewpager.indicator.CirclePageIndicator
             android:id="@id/multipage_indicator"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -29,4 +26,5 @@
             android:background="#FFFFFFFF"
             android:padding="5dip" />
     </RelativeLayout>
+
 </LinearLayout>
