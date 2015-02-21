@@ -82,21 +82,6 @@ public class MainPageFragment extends SherlockFragment implements
 		super.onCreate(savedInstanceState);		
 	}
 	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		//开启全屏模式
-		if(JBLPreference.getInstance(getActivity()).readInt(JBLPreference.PIC_CACHE_TYPE)==1||
-				JBLPreference.getInstance(getActivity()).readInt(JBLPreference.PIC_CACHE_TYPE)==-1){
-//			getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//	        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-	    //关闭全屏模式
-		}else{
-//			getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-//	        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); 
-		}
-		super.onResume();
-	}
-	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
@@ -390,12 +375,18 @@ public class MainPageFragment extends SherlockFragment implements
 			if(strType==JBLPreference.PIC_CACHE_TYPE){        //当要开启无图模式时
 				mWebView.getSettings().setBlockNetworkImage(true);
 			}
+			if(strType==JBLPreference.FULL_SCREEN_TYPE){     //当要开启无痕浏览模式时，隐藏顶部actionbar
+				getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
+			}
 			break;
 		case 0:
 			JBLPreference.getInstance(getActivity()).writeInt(strType,no);
 			Toast.makeText(getActivity(), close, 100).show();
 			if(strType==JBLPreference.PIC_CACHE_TYPE){         //当要关闭无图模式时
 				mWebView.getSettings().setBlockNetworkImage(false);
+			}
+			if(strType==JBLPreference.FULL_SCREEN_TYPE){      //当要关闭无痕浏览模式时，显示顶部actionbar
+				getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
 			}
 		default:
 			break;
