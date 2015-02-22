@@ -38,8 +38,6 @@ public class SettingPagerFragment extends SherlockFragment{
 	private ViewPager mViewPager; // 水平实现滑动效果
 	private PagerAdapter mPageAdapter;	
 	PageIndicator mIndicator;
-	
-	
 	private static final int PAGE_SIZE = 8; // 每页显示的数据个数
 	private static final int TEST_LIST_SIZE = 43; // 数据总长度
 	int sTotalPages = 1;
@@ -50,6 +48,14 @@ public class SettingPagerFragment extends SherlockFragment{
 	private String[] resArrays;
 	private List<View> mViewPages;
 	private boolean flag=true;//true :开启无图  false:关闭无图
+	/*
+	 * caidantubiao
+	 */
+	private int[] girdview_menu_image = {R.drawable.menu_add_bookmark_selector,R.drawable.menu_combine_selector,R.drawable.menu_setting_selector,
+			R.drawable.menu_nightmode_selector,R.drawable.menu_share_selector,R.drawable.no_pic_mode_selector,R.drawable.menu_download_selector,
+			R.drawable.menu_quit_selector,R.drawable.ic_launcher,R.drawable.menu_wuhen_selector,R.drawable.menu_fullscreen_selector,
+			R.drawable.menu_refresh_selector,R.drawable.menu_feedback_selector,R.drawable.ic_launcher};
+		
 	//点击回调接口
 	private SettingItemInterface settingInterface;
 	

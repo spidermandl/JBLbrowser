@@ -121,10 +121,10 @@
     <string name="search_forward">前&#160;往</string>
     <!-- 菜单文字 -->
     <string-array name="setting_content_item">
-        <item>添加书签</item>
-        <item>书签</item>
+        <item>添加收藏</item>
+        <item>收藏/历史</item>
         <item>设置</item>
-        <item>历史</item>
+        <item>夜间模式</item>
         <item>分享</item>
         <item>开启无图关闭无图</item>
         <item>下载管理</item>
@@ -132,15 +132,10 @@
         <item>开启翻页关闭翻页</item>
         <item>开启无痕关闭无痕</item>
         <item>开启全屏关闭全屏</item>
-        <item>更换壁纸</item>
-        <item>阅读模式</item>
         <item>刷新</item>
         <item>意见反馈</item>
         <item>检查更新</item>
-        <item>页内查找</item>
-        <item>保存网页</item>
     </string-array>
-
     <string name="please_input_and_search">请输入网址或搜索</string>
     <string name="quit">程序退出？</string>
     <string name="confirm_quit">您确定要退出？</string>
