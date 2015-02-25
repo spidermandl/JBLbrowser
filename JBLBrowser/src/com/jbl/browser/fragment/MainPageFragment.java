@@ -151,10 +151,12 @@ public class MainPageFragment extends SherlockFragment implements
 				/*
 				 * mViewPager.setVisibility(View.GONE);
 				 * settingPanel.setVisibility(View.GONE);
-				 */
+				 */ 
 				if(JBLPreference.getInstance(getActivity()).readInt(JBLPreference.FULL_SCREEN_TYPE)==0  //当全屏模式：触摸屏幕不显示上下菜单栏
 						&&toolbarFragment.isVisible()&&topActionbarFragment.isVisible()
 						&&!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
+					createPopShrinkFullScreen();
+					popWindow.showAtLocation(popview, Gravity.RIGHT|Gravity.BOTTOM, 0, 60);
 					getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
 		        	getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
 				}
@@ -442,6 +444,7 @@ public class MainPageFragment extends SherlockFragment implements
 				// TODO Auto-generated method stub
 				getFragmentManager().beginTransaction().show(toolbarFragment).commit();
 	            getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
+	            popWindow.dismiss();
 				}
 			});            
         }
