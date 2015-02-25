@@ -30,15 +30,15 @@
         <ListView android:id="@+id/size_ordered_list"
                   android:layout_width="fill_parent"
                   android:layout_height="fill_parent"/>
-        <TextView 
+        <ImageView 
                   android:id="@+id/empty"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                  android:text="@string/no_downloads"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                 android:src="@drawable/download_page_empty"
                   android:gravity="center"
-                  android:textStyle="bold"/>
+                  android:layout_gravity="center"
+                 />	
     </FrameLayout>
-
     <!-- The selection menu that pops up from the bottom of the screen -->
     <LinearLayout android:id="@+id/selection_menu"
                   android:orientation="horizontal"

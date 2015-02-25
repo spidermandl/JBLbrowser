@@ -86,7 +86,6 @@ public class ProgressWebView extends WebView {
         progressbar.setLayoutParams(lp);
         super.onScrollChanged(l, t, oldl, oldt);
     }
-	
 	public String getCurrentUrl(){
 		return curUrl;
 	}
@@ -160,6 +159,15 @@ public class ProgressWebView extends WebView {
 					}
 				}
 			}
+			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.TURNING_TYPE)==0){  //翻页模式
+				if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
+					if(toolbarFragment!=null&&topActionbarFragment!=null){
+						fragmentManager.beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
+	            	if(popWindow!=null&&popWindow.isShowing()){
+	            		popWindow.dismiss(); }
+					}
+				}
+			}
 			super.onPageStarted(view, url, favicon);
 		}
 		
@@ -186,6 +194,4 @@ public class ProgressWebView extends WebView {
 			super.onPageFinished(view, url);
 		}
 	}
-	
-
 }
