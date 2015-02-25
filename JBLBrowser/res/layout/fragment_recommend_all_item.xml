@@ -4,14 +4,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <LinearLayout android:id="@+id/ll_list_item" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-	    <ImageView android:id="@+id/imv" android:layout_width="@dimen/list_width" android:layout_height="@dimen/list_height" android:src="@drawable/refresh" android:layout_gravity="center" android:scaleType="centerInside"/>
-	    <LinearLayout android:id="@+id/ll_text" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="@dimen/padding_top">
-		    <TextView android:id="@+id/tv1" android:layout_width="fill_parent" android:layout_height="wrap_content" android:lines="1"
+    <LinearLayout android:id="@+id/ll_list_item" android:layout_width="match_parent" android:layout_height="wrap_content" 
+        android:orientation="horizontal">
+	    <ImageView android:id="@+id/mSearch_imv" android:layout_width="@dimen/list_width" android:layout_height="@dimen/list_height" 
+	        android:src="@drawable/refresh"  android:layout_gravity="center" android:scaleType="centerInside"/>
+	    <LinearLayout android:id="@+id/ll_text" android:layout_width="match_parent" android:layout_height="wrap_content" 
+	        android:orientation="vertical" android:layout_marginTop="@dimen/padding_top">
+		    <TextView android:id="@+id/mSearch_tv1" android:layout_width="fill_parent" android:layout_height="wrap_content" android:lines="1"
 		       android:textSize="@dimen/font_size_item_max"   android:textColor="@color/black"/>
-		    <TextView android:id="@+id/tv2" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="@dimen/font_size_item_min" android:layout_marginTop="@dimen/padding_medium"
+		    <TextView android:id="@+id/mSearch_tv2" android:layout_width="fill_parent" android:layout_height="wrap_content" 
+		        android:textSize="@dimen/font_size_item_min" android:layout_marginTop="@dimen/padding_medium"
 		            android:lines="1" android:layout_marginBottom="@dimen/padding_bottom" /> 
 		</LinearLayout>
 	</LinearLayout>
-    <View android:id="@+id/line" android:layout_width="fill_parent" android:layout_height="@dimen/list_line_height" android:background="@color/list_line"/>
+    <View android:id="@+id/line" android:layout_width="fill_parent" android:layout_height="@dimen/list_line_height" 
+        android:background="@color/list_line"/>
 </LinearLayout>

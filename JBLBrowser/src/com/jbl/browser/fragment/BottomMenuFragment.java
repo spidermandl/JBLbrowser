@@ -27,13 +27,11 @@ public class BottomMenuFragment extends SherlockFragment implements View.OnClick
 	private ScaleImageView mHome; // 3.3  Home
 	private ScaleImageView mMultiWindows;// 3.4  切换多页模式
 	private ScaleImageView mMenu;// 3.5  选项菜单
-	
 	@Override
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
 		super.onAttach(activity);
 	}
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
