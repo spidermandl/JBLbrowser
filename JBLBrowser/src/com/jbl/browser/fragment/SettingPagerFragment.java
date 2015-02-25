@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
-
+import android.widget.GridView;
+import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
@@ -48,6 +48,8 @@ public class SettingPagerFragment extends SherlockFragment{
 	private String[] resArrays;
 	private List<View> mViewPages;
 	private boolean flag=true;//true :开启无图  false:关闭无图
+	private View mView;
+	private RelativeLayout mRelativeLayout;
 	/*
 	 * caidantubiao
 	 */
@@ -66,13 +68,24 @@ public class SettingPagerFragment extends SherlockFragment{
 		
 		View view=inflater.inflate(R.layout.main_setting_panel, container, false);
 		
+		mRelativeLayout=(RelativeLayout)view.findViewById(R.id.panel_rl);
 		mViewPager = (ViewPager) view.findViewById(R.id.setting_viewpager);
 		mIndicator = (LinePageIndicator)view.findViewById(R.id.setting_indicator);
 		mPageAdapter = new SettingPagerAdapter(getPageViews());
 		mViewPager.setAdapter(mPageAdapter);
 		mIndicator.setViewPager(mViewPager);
 		mViewPager.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.menu_bar_appear));// 加载弹出菜单栏的动画效果
-		
+		mView=(View)view.findViewById(R.id.fill_pad);
+		mView.setOnTouchListener(new View.OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				mView.setVisibility(View.GONE);
+				mRelativeLayout.setVisibility(View.GONE);
+				return true;
+			}
+		});
 		view.setOnTouchListener(new View.OnTouchListener() {
 			
 			@Override
