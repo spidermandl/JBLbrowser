@@ -8,6 +8,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager.LayoutParams;
@@ -19,10 +21,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.webkit.WebSettings.PluginState;
+import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
@@ -72,9 +78,11 @@ public class MainPageFragment extends SherlockFragment implements
 	private ScheduledExecutorService scheduledExecutorService;
 
 	View popview;//翻页按钮布局
-	PopupWindow popWindow;//悬浮翻页窗口
+	PopupWindow popWindow;//悬浮窗口
 	View multipagePanel;//多页布局
 	PageIndicator multipageIndicator;
+	
+	
 	 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -97,12 +105,14 @@ public class MainPageFragment extends SherlockFragment implements
 		toolbarFragment=(BottomMenuFragment)(this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
 		toolbarFragment.setInterface(this);//设置回调接口
 		
+		
 		settingFragment=new SettingPagerFragment();
 		settingFragment.setInterface(this);//设置回调接口
 		
 		topActionbarFragment=(TopMenuFragment)(this.getActivity().getSupportFragmentManager().findFragmentById(R.id.top_menu_fragment));
 		topActionbarFragment.setTopActionbar(this);//设置回调接口
-
+		
+		
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
 		// mWebView.setDownloadListener(new myDownloaderListener());
@@ -142,11 +152,16 @@ public class MainPageFragment extends SherlockFragment implements
 				 * mViewPager.setVisibility(View.GONE);
 				 * settingPanel.setVisibility(View.GONE);
 				 */
+				if(JBLPreference.getInstance(getActivity()).readInt(JBLPreference.FULL_SCREEN_TYPE)==0  //当全屏模式：触摸屏幕不显示上下菜单栏
+						&&toolbarFragment.isVisible()&&topActionbarFragment.isVisible()
+						&&!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
+					getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
+		        	getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
+				}
 				return false;
 			}
 		});
 		
-
 		/* 设置webview */
 		initWebView();
 		return view;
@@ -365,6 +380,7 @@ public class MainPageFragment extends SherlockFragment implements
 				StringUtils.CLOSE_NO_FULL);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void operate(int type,String strType,int no,int yes,String open,String close){
 		switch (type) {
 		case -1:
@@ -374,8 +390,20 @@ public class MainPageFragment extends SherlockFragment implements
 			if(strType==JBLPreference.PIC_CACHE_TYPE){        //当要开启无图模式时
 				mWebView.getSettings().setBlockNetworkImage(true);
 			}
-			if(strType==JBLPreference.FULL_SCREEN_TYPE){     //当要开启无痕浏览模式时，隐藏顶部actionbar
-				getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
+			if(strType==JBLPreference.FULL_SCREEN_TYPE){     //当要开启全屏浏览模式时，隐藏顶部状态栏、底部菜单栏和顶部搜索栏
+				WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+	            lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+	            getActivity().getWindow().setAttributes(lp);
+	            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);	            
+	            createPopShrinkFullScreen();
+	            mWebView.setToolbarFragment(toolbarFragment);
+	            mWebView.setTopActionbarFragment(topActionbarFragment);
+	            mWebView.setFragmentManager(getFragmentManager());
+	            if(!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
+	            	getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
+		            getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
+	            	popWindow.showAtLocation(popview, Gravity.RIGHT|Gravity.BOTTOM, 0, 60);
+	            }            
 			}
 			break;
 		case 0:
@@ -384,13 +412,39 @@ public class MainPageFragment extends SherlockFragment implements
 			if(strType==JBLPreference.PIC_CACHE_TYPE){         //当要关闭无图模式时
 				mWebView.getSettings().setBlockNetworkImage(false);
 			}
-			if(strType==JBLPreference.FULL_SCREEN_TYPE){      //当要关闭无痕浏览模式时，显示顶部actionbar
-				getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
+			if(strType==JBLPreference.FULL_SCREEN_TYPE){      //当要关闭全屏浏览模式时，显示顶部状态栏、底部菜单栏和顶部搜索栏
+				popWindow.dismiss();
+				mWebView.setToolbarFragment(null);
+	            mWebView.setTopActionbarFragment(null);
+	            mWebView.setFragmentManager(null);
+				WindowManager.LayoutParams attr = getActivity().getWindow().getAttributes();
+	            attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	            getActivity().getWindow().setAttributes(attr);
+	            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+	            getFragmentManager().beginTransaction().show(toolbarFragment).commit();
+            	getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
 			}
 		default:
 			break;
 		}
 	}
+	//显示全屏模式下为显示上下菜单的悬浮按钮
+	public void createPopShrinkFullScreen(){
+        LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		popview=(View)mLayoutInflater.inflate(R.layout.shrink_full_screen, null);
+		popWindow=new PopupWindow(popview,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+		mWebView.setPopWindow(popWindow);
+		mWebView.setPopview(popview);
+		ImageView shrinkFullScreen=(ImageView)popview.findViewById(R.id.shrinkFullScreen);
+        shrinkFullScreen.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				getFragmentManager().beginTransaction().show(toolbarFragment).commit();
+	            getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
+				}
+			});           
+        }
 	
 	@Override
 	public void goBack() {

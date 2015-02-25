@@ -100,7 +100,7 @@ public class BrightnessSettings {
      *  
      * @param act 
      */  
-    public static void showBrightnessSettingsDialog(final Activity act) {  
+    public static void showBrightnessSettingsDialog(final Activity act) {      
         if (act == null) {  
             return;  
         }  
