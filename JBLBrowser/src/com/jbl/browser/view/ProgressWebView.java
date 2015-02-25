@@ -42,7 +42,6 @@ public class ProgressWebView extends WebView {
 	private BottomMenuFragment toolbarFragment;
 	private TopMenuFragment topActionbarFragment;
 	private FragmentManager fragmentManager;
-	
 	public ProgressWebView(Context context) {
 		super(context);
 		init(context);
@@ -55,26 +54,21 @@ public class ProgressWebView extends WebView {
 		super(context, attrs, defStyle);
 		init(context);
 	}
-
 	public void setPopWindow(PopupWindow popWindow) {
 		this.popWindow = popWindow;
 	}
 	public void setPopview(View popview) {
 		this.popview = popview;
 	}
-	
 	public void setToolbarFragment(BottomMenuFragment toolbarFragment) {
 		this.toolbarFragment = toolbarFragment;
 	}
-
 	public void setTopActionbarFragment(TopMenuFragment topActionbarFragment) {
 		this.topActionbarFragment = topActionbarFragment;
 	}
-	
 	public void setFragmentManager(FragmentManager fragmentManager) {
 		this.fragmentManager = fragmentManager;
 	}
-	
 	private void init(Context context){
 		mContext = context;
 		progressbar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
