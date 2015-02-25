@@ -1,8 +1,10 @@
 package com.jbl.browser.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jbl.browser.R;
-import com.jbl.browser.fragment.SettingPagerFragment;
-
+import com.jbl.browser.utils.ImageInfo;
 /**
  * 设置界面中每一个小项布局界面
  * @author Desmond
@@ -20,85 +21,61 @@ import com.jbl.browser.fragment.SettingPagerFragment;
  */
 public class SettingGridItemAdapter extends BaseAdapter  
 {  
-    private LayoutInflater mInflater;  
-    private List<String> mList; 
-    private Context mContext;  
-    private List<Integer> images;
-    /*
-	 * 菜单图标
+	private List<ImageInfo> mList;// 定义一个list对象
+	private Context mContext;// 上下文
+	public static final int APP_PAGE_SIZE = 8;// 每一页装载数据的大小
+	private PackageManager pm;// 定义一个PackageManager对象
+	private int page;
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	/**
+	 * 构造方法
+	 * 
+	 * @param context
+	 *            上下文
+	 * @param list
+	 *            所有APP的集合
+	 * @param page
+	 *            当前页
 	 */
-	private int[] girdview_menu_image =new int[] {R.drawable.menu_add_bookmark_selector,R.drawable.menu_combine_selector,R.drawable.menu_setting_selector,
-			R.drawable.menu_nightmode_selector,R.drawable.menu_share_selector,R.drawable.no_pic_mode_selector,R.drawable.menu_download_selector,
-			R.drawable.menu_quit_selector,R.drawable.menu_scrollbutton,R.drawable.menu_wuhen_selector,R.drawable.menu_fullscreen_selector,
-			R.drawable.menu_refresh_selector,R.drawable.menu_feedback_selector,R.drawable.ic_launcher};
-    public SettingGridItemAdapter(Context context, List<String> list) {  
-        mContext = context;  
-        mInflater = LayoutInflater.from(mContext);  
-        mList = list;  
-    }  
-    @Override  
-    public int getCount()  
-    {  
-        return mList.size();  
-    }  
-    @Override  
-    public Object getItem(int position)  
-    {  
-        return mList.get(position);  
-    }  
-    @Override  
-    public long getItemId(int position)  
-    {  
-        return position;  
-    }  
-    @Override  
-    public View getView(int position, View convertView, ViewGroup parent)  
-    {  
-        ViewHolder holder;  
-        if (convertView == null) {  
-            convertView = mInflater.inflate(R.layout.main_setting_item, null);  
-            holder = new ViewHolder();  
-            holder.icon = (ImageView) convertView.findViewById(R.id.viewpage_test_icon);  
-            holder.text = (TextView) convertView.findViewById(R.id.viewpage_test_text);  
-            convertView.setTag(holder);  
-        } else {  
-            holder = (ViewHolder) convertView.getTag();
-        }  
-        holder.text.setText(mList.get(position));
-       if(position==0){
-    	   holder.icon.setBackgroundResource(R.drawable.menu_add_bookmark_selector);
-       }
-       if(position==1){
-    	   holder.icon.setBackgroundResource(R.drawable.menu_combine_selector);
-       }
-       if(position==2){
-    	   holder.icon.setBackgroundResource(R.drawable.menu_setting_selector);
-       }
-       if(position==3){
-    	   holder.icon.setBackgroundResource(R.drawable.menu_nightmode_selector);
-       }
-       if(position==4){
-    	   holder.icon.setBackgroundResource(R.drawable.menu_share_selector);
-       }
-       if(position==5){
-    	   holder.icon.setBackgroundResource(R.drawable.no_pic_mode_selector);
-       }
-       if(position==6){
-    	   holder.icon.setBackgroundResource(R.drawable.menu_download_selector);
-       }
-       if(position==7){
-    	   holder.icon.setBackgroundResource(R.drawable.menu_quit_selector);
-       }
-       if(position==8){
-    	   holder.icon.setBackgroundResource(R.drawable.ic_launcher);
-       }
-    
-        return convertView;  
- }  
-    public final class ViewHolder  
-    {  
-        public ImageView icon;  
-        public TextView text;  
-  
-    }  
-}  
+	public SettingGridItemAdapter(Context context,  ArrayList<ImageInfo> list, int page) {
+		mContext = context;
+		pm = context.getPackageManager();
+		this.page = page;
+		mList = new ArrayList<ImageInfo>();
+		// 根据当前页计算装载的应用，每页只装载16个
+		int i = page * APP_PAGE_SIZE;// 当前页的其实位置
+		int iEnd = i + APP_PAGE_SIZE;// 所有数据的结束位置
+		while ((i < list.size()) && (i < iEnd)) {
+			mList.add(list.get(i));
+			i++;
+		}
+	}
+	public int getCount() {
+		return mList.size();
+	}
+	public Object getItem(int position) {
+		return mList.get(position);
+	}
+	public long getItemId(int position) {
+		return position;
+	}
+	public View getView(int position, View convertView, ViewGroup parent) {
+		if (convertView == null) {
+			convertView = LayoutInflater.from(mContext).inflate(
+					R.layout.main_setting_item, parent, false);
+		}
+		ImageInfo appInfo = mList.get(position);
+		ImageView appicon = (ImageView) convertView
+				.findViewById(R.id.viewpage_test_icon);
+		TextView appname = (TextView) convertView.findViewById(R.id.viewpage_test_text);
+		appicon.setImageResource(appInfo.imgId);
+		appname.setText(appInfo.imgMsg);
+		return convertView;
+	}
+
+}

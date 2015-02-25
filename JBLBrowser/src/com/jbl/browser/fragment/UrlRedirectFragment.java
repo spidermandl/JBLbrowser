@@ -31,7 +31,8 @@ import com.jbl.browser.utils.JBLPreference;
  * @author Desmond
  *
  */
-public class UrlRedirectFragment extends SherlockFragment implements View.OnClickListener,TextWatcher,OnItemClickListener{
+public class UrlRedirectFragment extends SherlockFragment implements View.OnClickListener,TextWatcher,
+OnItemClickListener {
 
 	public final static String TAG="UrlRedirectFragment";
 	
@@ -182,5 +183,4 @@ public class UrlRedirectFragment extends SherlockFragment implements View.OnClic
         getActivity().startActivity(intent);
 		
 	}
-
 }
