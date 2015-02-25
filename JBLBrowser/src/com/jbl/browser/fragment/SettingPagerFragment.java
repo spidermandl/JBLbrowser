@@ -3,6 +3,8 @@ package com.jbl.browser.fragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -15,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
+
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
@@ -22,6 +25,7 @@ import com.jbl.browser.adapter.SettingGridItemAdapter;
 import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.jbl.browser.interfaces.SettingItemInterface;
 import com.jbl.browser.utils.ImageInfo;
+import com.jbl.browser.utils.JBLPreference;
 import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
 
@@ -42,15 +46,16 @@ public class SettingPagerFragment extends SherlockFragment{
 	private int PageCount;
 	private View mView;
 	private RelativeLayout mRelativeLayout;
+	private Context mContext;
 	//点击回调接口
 	private SettingItemInterface settingInterface;
 	/*
 	 * caidantubiao
 	 */
-	private int[] girdview_menu_image = {R.drawable.menu_add_book_mark,R.drawable.menu_bookmark,R.drawable.menu_settings,
-			R.drawable.menu_bookmark,R.drawable.menu_share,R.drawable.menu_nopic,R.drawable.menu_download,
-			R.drawable.menu_exit,R.drawable.menu_scrollbutton,R.drawable.menu_nofoot,R.drawable.menu_fullscreen,
-			R.drawable.menu_refresh,R.drawable.menu_feedback,R.drawable.menu_nightmode};
+	private int[] girdview_menu_image = {R.drawable.menu_add_bookmark_selector,R.drawable.menu_combine_selector,R.drawable.menu_setting_selector,
+			R.drawable.menu_combine_selector,R.drawable.menu_share_selector,R.drawable.no_pic_mode_selector,R.drawable.menu_download_selector,
+			R.drawable.menu_quit_selector,R.drawable.menu_roll_webview_selector,R.drawable.menu_wuhen_selector,R.drawable.menu_fullscreen_selector,
+			R.drawable.menu_refresh_selector,R.drawable.menu_feedback_selector,R.drawable.menu_nightmode_selector};
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -105,35 +110,33 @@ public class SettingPagerFragment extends SherlockFragment{
 		 list = new ArrayList<ImageInfo>();
 	        resArrays=getResources().getStringArray(R.array.setting_content_item);	
 	        for(int i=0;i<resArrays.length;i++){
-	            list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i]));
-	           /* List<String> l = new ArrayList<String>();
 	            if(i==5){
 					if(JBLPreference.getInstance(mContext).readInt(JBLPreference.PIC_CACHE_TYPE)==0){
-						l.add(list[i].substring(4));
+						list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(4)));
 					}else{
-						l.add(list[i].substring(0,4));
+						list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(0,4)));
 					}
 				}else if(i==8){
 					   if(JBLPreference.getInstance(mContext).readInt(JBLPreference.TURNING_TYPE)==0){
-						   l.add(list[i].substring(4));
+						   list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(4)));
 					   }else{
-						   l.add(list[i].substring(0,4));
+						   list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(0,4)));
 					   }
 				}else if(i==9){
 						if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HISTORY_CACHE_TYPE)==0){
-							l.add(list[i].substring(4));
+							list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(4)));
 						}else{
-							l.add(list[i].substring(0,4));
+							  list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(0,4)));
 					    }
 					 }else if(i==10){
 						 if(JBLPreference.getInstance(mContext).readInt(JBLPreference.FULL_SCREEN_TYPE)==0){
-								l.add(list[i].substring(4));
+							 list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(4)));
 							}else{
-								l.add(list[i].substring(0,4));
+								  list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(0,4)));
 						    }
 					}else{
-							l.add(list[i]);
-						}*/
+						list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i]));
+						}
 	        }
 	}
 	public void setInterface(SettingItemInterface i){
