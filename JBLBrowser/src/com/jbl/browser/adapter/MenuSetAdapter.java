@@ -47,19 +47,17 @@ public class MenuSetAdapter extends BaseAdapter{
            holder = new ViewHolder();  
            holder.line = (View) convertView.findViewById(R.id.line);  
            holder.fontText = (TextView) convertView.findViewById(R.id.set_content);  
-           holder.fongSize = (TextView) convertView.findViewById(R.id.size);  
            convertView.setTag(holder);  
        } else {  
            holder = (ViewHolder) convertView.getTag();
        }
        holder.fontText.setText(list_set.get(position).getSetText());
-       holder.fongSize.setText(list_set.get(position).getTextSize());
 		return convertView;
 	}
 	public class ViewHolder  
    {  
        public View line; 
-       public TextView fontText,fongSize;  
+       public TextView fontText;  
  
    }  
 }

@@ -56,6 +56,11 @@ public class JBLPreference {
 	public static final String MODERATE="适中";
 	public static final String ROTARY_SCREEN="旋转屏幕";
 	public static final String ABOUT="关于";
+	public static final String DEFAULT_BROWSER="默认浏览器";
+	public static final String ABOUT_US="关于我们";
+	public static final String CLEAR_DATA="清除数据";
+	public static final String RESTORE_FACTORY_SETTINGS="恢复出厂设置";
+	
 	
 	// 提供私有的构造方法
 	private JBLPreference() {
