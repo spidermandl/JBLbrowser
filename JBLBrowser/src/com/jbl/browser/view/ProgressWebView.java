@@ -8,21 +8,15 @@ import java.util.Locale;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.AttributeSet;
-import android.view.Gravity;
-import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 
 import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.db.HistoryDao;
-import com.jbl.browser.fragment.BottomMenuFragment;
-import com.jbl.browser.fragment.TopMenuFragment;
+import com.jbl.browser.interfaces.LoadURLInterface;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.UrlUtils;
 
@@ -33,15 +27,16 @@ import com.jbl.browser.utils.UrlUtils;
  */
 public class ProgressWebView extends WebView {
 
+	/**
+	 * 载入url接口
+	 */
+	private LoadURLInterface urlInterface;
+	
 	private Context mContext;
 	private ProgressBar progressbar;
 	private String webName;//当前网页名
 	private String curUrl;//当前网页
-	private PopupWindow popWindow;
-	private View popview;
-	private BottomMenuFragment toolbarFragment;
-	private TopMenuFragment topActionbarFragment;
-	private FragmentManager fragmentManager;
+
 	public ProgressWebView(Context context) {
 		super(context);
 		init(context);
@@ -54,21 +49,7 @@ public class ProgressWebView extends WebView {
 		super(context, attrs, defStyle);
 		init(context);
 	}
-	public void setPopWindow(PopupWindow popWindow) {
-		this.popWindow = popWindow;
-	}
-	public void setPopview(View popview) {
-		this.popview = popview;
-	}
-	public void setToolbarFragment(BottomMenuFragment toolbarFragment) {
-		this.toolbarFragment = toolbarFragment;
-	}
-	public void setTopActionbarFragment(TopMenuFragment topActionbarFragment) {
-		this.topActionbarFragment = topActionbarFragment;
-	}
-	public void setFragmentManager(FragmentManager fragmentManager) {
-		this.fragmentManager = fragmentManager;
-	}
+
 	private void init(Context context){
 		mContext = context;
 		progressbar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
@@ -92,6 +73,10 @@ public class ProgressWebView extends WebView {
 	
 	public String getWebName(){
 		return webName;
+	}
+	
+	public void setInterface(LoadURLInterface i){
+		this.urlInterface=i;
 	}
 	
 	@Override
@@ -149,31 +134,9 @@ public class ProgressWebView extends WebView {
 		
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
-			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.FULL_SCREEN_TYPE)==0){  //全屏模式
-				if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
-					if(toolbarFragment!=null&&topActionbarFragment!=null){
-						fragmentManager.beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
-	            	if(popWindow!=null&&popWindow.isShowing()){
-	            		popWindow.dismiss(); }
-					}
-				}else{                                              //不是主页：不显示上下菜单栏，显示悬浮按钮
-					if(toolbarFragment!=null&&topActionbarFragment!=null){	
-						fragmentManager.beginTransaction().hide(toolbarFragment).hide(topActionbarFragment).commit();
-						if(popWindow!=null){
-							popWindow.showAtLocation(popview, Gravity.RIGHT|Gravity.BOTTOM, 0, 60);
-						}
-					}
-				}
-			}
-			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.TURNING_TYPE)==0){  //翻页模式
-				if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
-					if(toolbarFragment!=null&&topActionbarFragment!=null){
-						fragmentManager.beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
-	            	if(popWindow!=null&&popWindow.isShowing()){
-	            		popWindow.dismiss(); }
-					}
-				}
-			}
+			if(urlInterface!=null)
+				urlInterface.startPage(url);
+			
 			super.onPageStarted(view, url, favicon);
 		}
 		
