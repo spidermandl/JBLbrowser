@@ -396,10 +396,7 @@ public class MainPageFragment extends SherlockFragment implements
 				mWebView.getSettings().setBlockNetworkImage(true);
 			}
 			if(strType==JBLPreference.FULL_SCREEN_TYPE){     //当要开启全屏浏览模式时，隐藏顶部状态栏、底部菜单栏和顶部搜索栏
-				WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-	            lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-	            getActivity().getWindow().setAttributes(lp);
-	            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);	            
+				hideStatusBar();
 	            createPopShrinkFullScreen();
 	            if(!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
 	            	getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
@@ -416,10 +413,7 @@ public class MainPageFragment extends SherlockFragment implements
 			}
 			if(strType==JBLPreference.FULL_SCREEN_TYPE){      //当要关闭全屏浏览模式时，显示顶部状态栏、底部菜单栏和顶部搜索栏
 				popWindow.dismiss();
-				WindowManager.LayoutParams attr = getActivity().getWindow().getAttributes();
-	            attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	            getActivity().getWindow().setAttributes(attr);
-	            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+				showStatusBar();
 	            getFragmentManager().beginTransaction().show(toolbarFragment).commit();
             	getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
 			}
@@ -443,7 +437,20 @@ public class MainPageFragment extends SherlockFragment implements
 				}
 			});            
     }
-	
+	//隐藏状态栏
+	public void hideStatusBar(){
+		WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        getActivity().getWindow().setAttributes(lp);
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+	}
+	//显示状态栏
+	public void showStatusBar(){
+		WindowManager.LayoutParams attr = getActivity().getWindow().getAttributes();
+        attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getActivity().getWindow().setAttributes(attr);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+	}
 	@Override
 	public void goBack() {
 		if (mWebView.canGoBack()) {
@@ -519,8 +526,13 @@ public class MainPageFragment extends SherlockFragment implements
 			if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
 				
 				getFragmentManager().beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
-            	if(popWindow.isShowing()){
-            		popWindow.dismiss();
+				if(popWindow!=null){
+	            	if(popWindow.isShowing()){
+	            		popWindow.dismiss();
+					}
+				}else{                                  //当运行后开启全屏，退出程序，再运行时需重新建popwindow和隐藏状态栏
+					hideStatusBar();
+					createPopShrinkFullScreen();
 				}
 			}else{                                              //不是主页：不显示上下菜单栏，显示悬浮按钮
 				getFragmentManager().beginTransaction().hide(toolbarFragment).hide(topActionbarFragment).commit();
