@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
-import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.adapter.BookMarkAdapter;
 import com.jbl.browser.bean.BookMark;

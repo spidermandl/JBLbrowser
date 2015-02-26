@@ -16,8 +16,6 @@ import com.jbl.browser.R;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.view.ProgressWebView;
 import com.viewpager.indicator.CirclePageIndicator;
-import com.viewpager.indicator.LinePageIndicator;
-import com.viewpager.indicator.PageIndicator;
 public class MultipageFragment extends SherlockFragment{
 	
 	public final static String TAG="MultipageFragment";

@@ -6,13 +6,10 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -21,18 +18,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.R;
-import com.jbl.browser.activity.BaseFragActivity;
-import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.adapter.HistoryAdapter;
 import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.utils.JBLPreference;
-import com.jbl.browser.utils.StringUtils;
 
 /**
  * 历史记录fragment
