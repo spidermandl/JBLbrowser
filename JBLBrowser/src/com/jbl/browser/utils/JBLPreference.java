@@ -62,6 +62,8 @@ public class JBLPreference {
 	public static final String RESTORE_FACTORY_SETTINGS="恢复出厂设置";
 	
 	
+	public static final String IS_FIRST_RUN="是否第一次运行";
+	public static final int NO_FIRST_RUN=1;
 	// 提供私有的构造方法
 	private JBLPreference() {
 	}
