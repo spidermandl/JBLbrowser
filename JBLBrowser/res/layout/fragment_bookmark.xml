@@ -11,13 +11,11 @@
         android:divider="@color/list_line"
         android:dividerHeight="@dimen/list_line_height"
         android:persistentDrawingCache="animation|scrolling" />
-
-    <TextView
-        android:id="@+id/empty"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:text="@string/no_bookmark"
-        android:textStyle="bold" />
+	
+    <ImageView android:id="@+id/cloud_favorite_empty"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/cloud_favorite_empty"/>
 
 </FrameLayout>

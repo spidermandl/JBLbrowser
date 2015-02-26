@@ -100,7 +100,7 @@ public class BrightnessSettings {
      *  
      * @param act 
      */  
-    public static void showBrightnessSettingsDialog(final Activity act) {  
+    public static void showBrightnessSettingsDialog(final Activity act) {      
         if (act == null) {  
             return;  
         }  
@@ -187,7 +187,6 @@ public class BrightnessSettings {
         setSysScreenBrightness(brightness);  
         setActScreenBrightness(act, -MAX_BRIGHTNESS);  
     }  
-  
     /** 可调节的最小亮度值 */  
     public static final int MIN_BRIGHTNESS = 30;  
     /** 可调节的最大亮度值 */  

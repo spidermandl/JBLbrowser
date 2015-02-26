@@ -5,8 +5,8 @@
     android:orientation="vertical" 
     >
     	<Button android:id="@+id/previous_page" android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:background="@drawable/pagesearch_up_flat"/>
+        android:background="@drawable/page_up_selector"/>
     	<Button android:id="@+id/next_page" android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:background="@drawable/pagesearch_down_flat" />
+        android:background="@drawable/page_down_selector" />
 
 </LinearLayout>

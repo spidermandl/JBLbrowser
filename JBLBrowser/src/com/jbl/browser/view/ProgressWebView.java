@@ -4,11 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import com.jbl.browser.activity.RecommendMainActivity;
-import com.jbl.browser.bean.History;
-import com.jbl.browser.db.HistoryDao;
-import com.jbl.browser.utils.JBLPreference;
-import com.jbl.browser.utils.UrlUtils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +13,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.jbl.browser.activity.RecommendMainActivity;
+import com.jbl.browser.bean.History;
+import com.jbl.browser.db.HistoryDao;
+import com.jbl.browser.interfaces.LoadURLInterface;
+import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.UrlUtils;
+
 /**
  * 带进度条的webview
  * @author yyjoy-mac3
@@ -25,11 +27,16 @@ import android.widget.ProgressBar;
  */
 public class ProgressWebView extends WebView {
 
+	/**
+	 * 载入url接口
+	 */
+	private LoadURLInterface urlInterface;
+	
 	private Context mContext;
 	private ProgressBar progressbar;
 	private String webName;//当前网页名
 	private String curUrl;//当前网页
-	
+
 	public ProgressWebView(Context context) {
 		super(context);
 		init(context);
@@ -42,8 +49,7 @@ public class ProgressWebView extends WebView {
 		super(context, attrs, defStyle);
 		init(context);
 	}
-	
-	
+
 	private void init(Context context){
 		mContext = context;
 		progressbar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
@@ -61,13 +67,16 @@ public class ProgressWebView extends WebView {
         progressbar.setLayoutParams(lp);
         super.onScrollChanged(l, t, oldl, oldt);
     }
-	
 	public String getCurrentUrl(){
 		return curUrl;
 	}
 	
 	public String getWebName(){
 		return webName;
+	}
+	
+	public void setInterface(LoadURLInterface i){
+		this.urlInterface=i;
 	}
 	
 	@Override
@@ -103,6 +112,12 @@ public class ProgressWebView extends WebView {
 			super.onReceivedTitle(view, title);
 			webName = title;
 		}
+		@Override
+		public void onReceivedIcon(WebView view, Bitmap icon) {
+			// TODO Auto-generated method stub
+			super.onReceivedIcon(view, icon);
+			
+		}
 		
     }
 	
@@ -119,6 +134,9 @@ public class ProgressWebView extends WebView {
 		
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
+			if(urlInterface!=null)
+				urlInterface.startPage(url);
+			
 			super.onPageStarted(view, url, favicon);
 		}
 		
@@ -141,9 +159,8 @@ public class ProgressWebView extends WebView {
 					}
 				}
 			}
+			
 			super.onPageFinished(view, url);
 		}
 	}
-	
-
 }

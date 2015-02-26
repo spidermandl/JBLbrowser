@@ -6,7 +6,7 @@
         android:id="@+id/viewpage_test_icon"  
         android:layout_width="wrap_content"  
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"   
+        android:layout_centerHorizontal="true" 
      >  
     </ImageView>  
     <TextView  
@@ -15,8 +15,8 @@
         android:layout_height="wrap_content" 
         android:gravity="center"
         android:layout_below="@+id/viewpage_test_icon"
-       android:layout_centerHorizontal="true" 
-       android:textStyle="bold"
+        android:layout_centerHorizontal="true" 
+        android:textStyle="bold"
          >  
     </TextView>  
 </RelativeLayout>  

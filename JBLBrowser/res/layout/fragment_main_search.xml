@@ -37,10 +37,14 @@
         android:text="aaa">
         
     </TextView>        
-    <View android:layout_height="1dp"
+    <View android:id="@+id/mView" 
+        android:layout_height="1dp"
         android:layout_width="match_parent"
         android:background="#FFD3D3D3"
         android:layout_below="@id/url_search"
         android:layout_marginTop="6dip"/>
+    <ListView android:id="@+id/mSearch_RecommnedView" android:layout_width="match_parent" 
+        android:layout_height="match_parent" android:layout_below="@+id/mView" 
+        android:layout_marginTop="6dip"></ListView>
 
 </RelativeLayout>

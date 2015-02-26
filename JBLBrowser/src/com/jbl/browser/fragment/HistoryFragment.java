@@ -42,7 +42,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	//历史记录适配器
 	HistoryAdapter historyAdapter;
 	//无历史记录
-	TextView noHistory;
+	ImageView noHistory;
 	//返回图标
 	ImageView back;
 	@Override
@@ -57,7 +57,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 		
 		View view = inflater.inflate(R.layout.history_fragment, container, false);
 		listview=(ListView)view.findViewById(R.id.list_view_history_today);
-		noHistory=(TextView)view.findViewById(R.id.empty);
+		noHistory=(ImageView)view.findViewById(R.id.cloud_history_empty);
 		initDataHistory();
 		listview.setOnItemClickListener(this);
 		listview.setOnItemLongClickListener(this);
@@ -82,9 +82,13 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
-		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
+		//String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
+		String webAddress=list.get(position).getWebAddress();
 		JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
 		this.getActivity().finish();
+		Intent intent=new Intent();
+        intent.setClass(getActivity(), MainFragActivity.class);
+        getActivity().startActivity(intent);
 	}
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,

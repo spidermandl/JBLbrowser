@@ -48,12 +48,21 @@ public class BookMarkDao {
 		return flag;
 	}
 
-	public int deleteBookMarkByWebAddress(String webAddress) {
+	/*public int deleteBookMarkByWebAddress(String webAddress) {
 		try {
 			DeleteBuilder<BookMark, Integer> deleteBuilder = BookMarkDaoOpe
 					.deleteBuilder();
 			deleteBuilder.where().eq("webAddress", webAddress);
 			return deleteBuilder.delete();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}*/
+	public int deleteBookMarkById(int id){
+		try {
+			return BookMarkDaoOpe.deleteById(id);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,8 +80,18 @@ public class BookMarkDao {
 		}
 		return bookmark;
 	}
-
-	public List<BookMark> queryAll() {
+	public List<BookMark> queryBookMarkAllByisRecommend(boolean isRecommend){
+		List<BookMark> bookmark=null;
+		try {
+			bookmark=BookMarkDaoOpe.queryForEq("isRecommend", isRecommend);
+			return bookmark;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/*public List<BookMark> queryAll() {
 		List<BookMark> bookmark = null;
 		try {
 			bookmark = BookMarkDaoOpe.queryForAll();
@@ -82,5 +101,5 @@ public class BookMarkDao {
 			e.printStackTrace();
 		}
 		return null;
-	}
+	}*/
 }
