@@ -57,6 +57,8 @@ public class JBLPreference {
 	public static final String ROTARY_SCREEN="旋转屏幕";
 	public static final String ABOUT="关于";
 	
+	public static final String IS_FIRST_RUN="是否第一次运行";
+	public static final int NO_FIRST_RUN=1;
 	// 提供私有的构造方法
 	private JBLPreference() {
 	}
