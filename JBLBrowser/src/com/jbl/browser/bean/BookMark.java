@@ -20,7 +20,17 @@ public class BookMark {
 	private Date created_time;
 	@DatabaseField(columnName="update_time",canBeNull = true)
 	private Date update_time;
+	@DatabaseField(columnName="isRecommend",canBeNull=true)
+	private boolean isRecommend;
 	
+	public boolean isRecommend() {
+		return isRecommend;
+	}
+
+	public void setRecommend(boolean isRecommend) {
+		this.isRecommend = isRecommend;
+	}
+
 	public Date getCreated_time() {
 		return created_time;
 	}

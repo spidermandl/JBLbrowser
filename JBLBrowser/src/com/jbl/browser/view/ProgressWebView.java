@@ -134,6 +134,12 @@ public class ProgressWebView extends WebView {
 			super.onReceivedTitle(view, title);
 			webName = title;
 		}
+		@Override
+		public void onReceivedIcon(WebView view, Bitmap icon) {
+			// TODO Auto-generated method stub
+			super.onReceivedIcon(view, icon);
+			
+		}
 		
     }
 	

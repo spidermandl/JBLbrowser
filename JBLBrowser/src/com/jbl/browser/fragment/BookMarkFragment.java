@@ -45,9 +45,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	//网名
 	String webName="";
 	//没有书签
-	TextView noBookmark;
-	//返回图标
-	ImageView back;
+	ImageView noBookmark;
 	BookMarkAdapter bookMarkAdapter;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +59,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		
 		View view = inflater.inflate(R.layout.fragment_bookmark, container, false);	
 		listview=(ListView)view.findViewById(R.id.list_view_bookmark);
-		noBookmark=(TextView)view.findViewById(R.id.empty);
+		noBookmark=(ImageView)view.findViewById(R.id.cloud_favorite_empty);
 		initDataFavorites();
 		listview.setOnItemClickListener(this);
 		listview.setOnItemLongClickListener(this);
@@ -73,7 +71,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	 * */
 	private void initDataFavorites() {
 		listview.setVisibility(View.GONE);
-		list=new BookMarkDao(getActivity()).queryAll();//从数据库中获得数据
+		list=new BookMarkDao(getActivity()).queryBookMarkAllByisRecommend(false);//从数据库中获得数据
 		if(list.size()==0){//没有书签时屏幕中间显示“没有书签”文字
 			noBookmark.setVisibility(View.VISIBLE);
 		}else{            //有书签时显示书签
@@ -86,12 +84,12 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	//长按显示删除确定对话框
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
-			int position, long id) {
+			final int position, long id) {
 		// TODO Auto-generated method stub		
-		final String webAddress;
+		//final String webAddress;
 		final String webName;
 		webName=((TextView)view.findViewById(R.id.url_name)).getText().toString();
-		webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
+		//webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
 		//1获取一个对话框的创建器
 		AlertDialog.Builder builder=new Builder(getActivity());
 		//2所有builder设置一些参数
@@ -99,7 +97,7 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		builder.setMessage("是否要删除\""+webName+"\"这个书签?");
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				int i=new BookMarkDao(getActivity()).deleteBookMarkByWebAddress(webAddress);
+				int i=new BookMarkDao(getActivity()).deleteBookMarkById(list.get(position).getId());
 				if(i!=0){
 					Toast.makeText(getActivity(), R.string.delete_bookmark_succeed, 100).show();
 					initDataFavorites();
@@ -125,7 +123,8 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
-		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
+		//String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
+		String webAddress=list.get(position).getWebAddress();
 		JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
         this.getActivity().finish();
         Intent intent=new Intent();

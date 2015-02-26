@@ -100,8 +100,8 @@
     <string name="delete_bookmark_succeed">删除书签成功</string>
     <string name="delete_bookmark_fail">删除书签失败</string>
     <string name="delete_bookmark">删除书签</string>
-    <string name="no_bookmark">没有书签</string>
-    <string name="no_history">没有历史记录</string>
+    <string name="no_bookmark">暂无收藏</string>
+    <string name="no_history">暂无历史</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
     <string name="main_share_chooser_title">分享</string>
