@@ -446,9 +446,8 @@ public class MainPageFragment extends SherlockFragment implements
 	            getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
 	            popWindow.dismiss();
 				}
-			});           
+			});            
         }
-	
 	@Override
 	public void goBack() {
 		if (mWebView.canGoBack()) {
@@ -458,7 +457,6 @@ public class MainPageFragment extends SherlockFragment implements
 		}
 
 	}
-
 	@Override
 	public void goForward() {
 		if (mWebView.canGoForward()) {
@@ -485,10 +483,8 @@ public class MainPageFragment extends SherlockFragment implements
 			transaction.commitAllowingStateLoss();
 			this.getActivity().getSupportFragmentManager().executePendingTransactions();
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 	}
-
 	@Override
 	public void goMultiWindow() {
 		((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);

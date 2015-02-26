@@ -42,7 +42,6 @@ public class ProgressWebView extends WebView {
 	private BottomMenuFragment toolbarFragment;
 	private TopMenuFragment topActionbarFragment;
 	private FragmentManager fragmentManager;
-	
 	public ProgressWebView(Context context) {
 		super(context);
 		init(context);
@@ -55,26 +54,21 @@ public class ProgressWebView extends WebView {
 		super(context, attrs, defStyle);
 		init(context);
 	}
-
 	public void setPopWindow(PopupWindow popWindow) {
 		this.popWindow = popWindow;
 	}
 	public void setPopview(View popview) {
 		this.popview = popview;
 	}
-	
 	public void setToolbarFragment(BottomMenuFragment toolbarFragment) {
 		this.toolbarFragment = toolbarFragment;
 	}
-
 	public void setTopActionbarFragment(TopMenuFragment topActionbarFragment) {
 		this.topActionbarFragment = topActionbarFragment;
 	}
-	
 	public void setFragmentManager(FragmentManager fragmentManager) {
 		this.fragmentManager = fragmentManager;
 	}
-	
 	private void init(Context context){
 		mContext = context;
 		progressbar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
@@ -92,7 +86,6 @@ public class ProgressWebView extends WebView {
         progressbar.setLayoutParams(lp);
         super.onScrollChanged(l, t, oldl, oldt);
     }
-	
 	public String getCurrentUrl(){
 		return curUrl;
 	}
@@ -172,6 +165,15 @@ public class ProgressWebView extends WebView {
 					}
 				}
 			}
+			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.TURNING_TYPE)==0){  //翻页模式
+				if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
+					if(toolbarFragment!=null&&topActionbarFragment!=null){
+						fragmentManager.beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
+	            	if(popWindow!=null&&popWindow.isShowing()){
+	            		popWindow.dismiss(); }
+					}
+				}
+			}
 			super.onPageStarted(view, url, favicon);
 		}
 		
@@ -198,6 +200,4 @@ public class ProgressWebView extends WebView {
 			super.onPageFinished(view, url);
 		}
 	}
-	
-
 }
