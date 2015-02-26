@@ -513,7 +513,6 @@ public class MainPageFragment extends SherlockFragment implements
 	public void goLand() {
 		mWebView.loadUrl(UrlUtils.URL_LOGIN);
 	}
-	
 	@Override
 	public void startPage(String url) {
 		if(JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FULL_SCREEN_TYPE)==0){  //全屏模式
@@ -537,10 +536,7 @@ public class MainPageFragment extends SherlockFragment implements
             	if(popWindow!=null&&popWindow.isShowing()){
             		popWindow.dismiss();
             	}
-				
 			}
 		}
-		
 	}
-
 }
