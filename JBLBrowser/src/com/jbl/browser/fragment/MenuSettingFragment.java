@@ -14,7 +14,6 @@ import android.view.Window;
 import android.webkit.WebSettings;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,82 +34,21 @@ public class MenuSettingFragment extends SherlockFragment implements OnItemClick
 	public final static String TAG="MenuSettingFragment";
 	
 	//菜单设置选项内容
-	ListView listview;
 	//设置数据
-	List<SetContent> list=new ArrayList<SetContent>();
-	MenuSetAdapter menuSetAdapter;
-	SetContent s1,s2,s3;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 	}
-	/**
-	 *添加数据
-	 */
-	public void init(){
-		SetContent s1=new SetContent();
-		s1.setSetText(JBLPreference.FONT_SIZE);
-		s1.setTextSize(getFontType());
-		list.add(s1);
-		SetContent s2=new SetContent();
-		s2.setSetText(JBLPreference.SCREEN_INTENSITY);
-		s2.setTextSize(JBLPreference.MODERATE);
-		list.add(s2);
-		SetContent s3=new SetContent();
-		s3.setSetText(JBLPreference.DEFAULT_BROWSER);
-		s3.setTextSize(getScreenType());
-		list.add(s3);
-		SetContent s4=new SetContent();
-		s4.setSetText(JBLPreference.ABOUT_US);
-		s4.setTextSize(getScreenType());
-		list.add(s4);
-		SetContent s5=new SetContent();
-		s5.setSetText(JBLPreference.CLEAR_DATA);
-		s5.setTextSize(getScreenType());
-		list.add(s5);
-		SetContent s6=new SetContent();
-		s6.setSetText(JBLPreference.RESTORE_FACTORY_SETTINGS);
-		s6.setTextSize(getScreenType());
-		list.add(s6);
-	}
-	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.menuset_fragment, container, false);
-		listview=(ListView)view.findViewById(R.id.list_view_set);
-		init();
-		menuSetAdapter=new MenuSetAdapter(getActivity(), list);
-		listview.setAdapter(menuSetAdapter);
-		listview.setOnItemClickListener(this);
-		setListViewHeightBasedOnChildren(listview); 
+		 
 		return view;
 	}
-	
-	private void setListViewHeightBasedOnChildren(ListView listview) {
-		// TODO Auto-generated method stub
-		ListAdapter menuSetAdapter=listview.getAdapter();
-		 if (menuSetAdapter == null) {   
-	            return;   
-	        }
-		 int totalHeight = 0;   
-	        for (int i = 0, len = menuSetAdapter.getCount(); i < len; i++) {   
-	            // listAdapter.getCount()返回数据项的数目   
-	            View listItem = menuSetAdapter.getView(i, null, listview);   
-	            // 计算子项View 的宽高   
-	            listItem.measure(0, 0);    
-	            // 统计所有子项的总高度   
-	            totalHeight += listItem.getMeasuredHeight();    
-	        }   
-	   
-	        ViewGroup.LayoutParams params = listview.getLayoutParams();   
-	        params.height = totalHeight+ (listview.getDividerHeight() * (menuSetAdapter.getCount() - 1));   
-	        // listView.getDividerHeight()获取子项间分隔符占用的高度   
-	        // params.height最后得到整个ListView完整显示需要的高度   
-	        listview.setLayoutParams(params);   
-	    }   
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {

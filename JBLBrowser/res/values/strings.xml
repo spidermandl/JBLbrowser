@@ -165,6 +165,19 @@
     <string name="quit">程序退出？</string>
     <string name="confirm_quit">您确定要退出？</string>
     <string name="bookmark">书签</string>
-    <string name="history">历史记录</string>
+    <string name="history">历史记录</string>
+    <string name="font_size">字体大小</string>
+
+    <string name="screen_intensity">屏幕亮度</string>
+
+    <string name="default_browser">　默认浏览器</string>
 
+
+    <string name="about_us">　关于我们</string>
+
+
+    <string name="clear_data">　清除数据</string>
+
+
+    <string name="restore_settings">恢复默认设置</string>
 </resources>
