@@ -30,6 +30,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
 
@@ -51,6 +52,7 @@ import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
 import com.jbl.browser.view.ProgressWebView;
+import com.jbl.browser.view.UserDefinedDialog;
 import com.viewpager.indicator.PageIndicator;
 
 /**
@@ -181,11 +183,12 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	
 	// 添加书签
-	private void addNewBookMark() {
+	private void addNewBookMark(boolean isRecommend) {
 		boolean flag=false;
 		BookMark bookMark =new BookMark();
 		bookMark.setWebName(mWebView.getWebName());
 		bookMark.setWebAddress(mWebView.getCurrentUrl());
+		bookMark.setRecommend(isRecommend);
 		flag=new BookMarkDao(getActivity()).addBookMark(bookMark);
 		if (flag)
 			Toast.makeText(getActivity(), R.string.add_bookmark_succeed, 80).show();
@@ -243,7 +246,38 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	@Override
 	public void addBookMark() {
-		MainPageFragment.this.addNewBookMark();
+		View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_bookmark_dialog, null);
+		final Dialog addBookMark=UserDefinedDialog.getInstance().defineViewDialog(getActivity(), null, view);
+		addBookMark.show();
+		TextView addToBookMark=(TextView)view.findViewById(R.id.add_to_bookmark_tv);
+		TextView addToRecommend=(TextView)view.findViewById(R.id.add_to_recommend_tv);
+		addToBookMark.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				MainPageFragment.this.addNewBookMark(false);
+				addBookMark.dismiss();
+			}
+		});
+		addToRecommend.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				MainPageFragment.this.addNewBookMark(true);
+				addBookMark.dismiss();
+			}
+		});
+		Button addBookMarkCancel=(Button)view.findViewById(R.id.add_bookmark_cancel);
+		addBookMarkCancel.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				addBookMark.dismiss();
+			}
+		});
 //		mViewPager.setVisibility(View.GONE);
 //		settingPanel.setVisibility(View.GONE);
 	}
