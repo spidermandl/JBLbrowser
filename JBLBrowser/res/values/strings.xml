@@ -162,22 +162,19 @@
         <item>凤凰网</item>
     </string-array>
     <string name="please_input_and_search">请输入网址或搜索</string>
-    <string name="quit">程序退出？</string>
+    <string name="quit">提示</string>
     <string name="confirm_quit">您确定要退出？</string>
     <string name="bookmark">书签</string>
-    <string name="history">历史记录</string>
+    <string name="history">历史记录</string>
+    <string name="add_bookmark">添加书签</string>
+    <string name="add_to_bookmark">添至书签</string>
+    <string name="add_to_recommend">添至推荐</string>
+    <string name="add_bookmark_cancel">取消</string>
     <string name="font_size">字体大小</string>
-
     <string name="screen_intensity">屏幕亮度</string>
-
     <string name="default_browser">　默认浏览器</string>
-
-
     <string name="about_us">　关于我们</string>
-
-
     <string name="clear_data">　清除数据</string>
-
-
     <string name="restore_settings">恢复默认设置</string>
 </resources>
+
