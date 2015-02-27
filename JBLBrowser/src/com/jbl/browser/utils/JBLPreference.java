@@ -18,22 +18,39 @@ public class JBLPreference {
 	
 	public static final int INVALID = -1;//无效
 	
-	public static final String PIC_CACHE_TYPE="PIC_CACHE_TYPE";//网页图片缓存模式
-	public static final int NO_PICTURE=1;
-	public static final int YES_PICTURE=0;
+	/**
+	 * 几种webview设置类型
+	 */
+	public static enum BoolType{
+		PIC_CACHE(1), //网页图片缓存模式
+		FULL_SCREEN(2), //网页全屏浏览模式
+		TURNNING(3), //页面翻转模式
+		HISTORY_CACHE(4);//网页无痕浏览模式
+		// 定义私有变量
+		private int nCode;
 
+		// 构造函数，枚举类型只能为私有
+		private BoolType(int _nCode) {
+			this.nCode = _nCode;
+		}
+
+		@Override
+		public String toString() {
+			return String.valueOf("web_bool_type_"+this.nCode);
+		}
+	};
+
+	public static final int NO_PICTURE=1;//关闭图片缓存
+	public static final int YES_PICTURE=0;//开启图片缓存
+
+	public static final int NO_HISTORY=1;//关闭网页无痕浏览
+	public static final int YES_HISTORY=0;//开启网页无痕浏览
 	
-	public static final String HISTORY_CACHE_TYPE="HISTORY_CACHE_TYPE";//网页无痕浏览模式
-	public static final int NO_HISTORY=1;
-	public static final int YES_HISTORY=0;
+	public static final int NO_FULL=1;//关闭网页全屏浏览
+	public static final int YES_FULL=0;//开启网页全屏浏览
 	
-	public static final String FULL_SCREEN_TYPE="FULL_SCREEN_TYPE";//网页全屏浏览模式
-	public static final int NO_FULL=1;
-	public static final int YES_FULL=0;
-	
-	public static final String TURNING_TYPE="TURNING_TYPE";//页面翻转模式
-	public static final int OPEN_TURNING_BUTTON=1;//"开启翻页按钮";
-	public static final int COLSE_TURNING_BUTTON=0;//"关闭翻页按钮";
+	public static final int OPEN_TURNING_BUTTON=1;//开启翻页按钮;
+	public static final int CLOSE_TURNING_BUTTON=0;//关闭翻页按钮;
 	
 	//书签和历史记录传网址到主页fragment关键字
 	public static final String BOOKMARK_HISTORY_KEY="webAddress";
@@ -80,10 +97,25 @@ public class JBLPreference {
 			myPrefs = new JBLPreference();
 			globleContext = ctx.getApplicationContext();
 			myPrefs.initSharedPreferences();
+			init();
+			
 		}
 		return myPrefs;
 	}
-
+	
+	/**
+	 * 初始化缓存
+	 */
+	public static void init(){
+		if(myPrefs.readInt(BoolType.FULL_SCREEN.toString())==INVALID)
+			myPrefs.writeInt(BoolType.FULL_SCREEN.toString(), NO_FULL);
+		if(myPrefs.readInt(BoolType.HISTORY_CACHE.toString())==INVALID)
+			myPrefs.writeInt(BoolType.HISTORY_CACHE.toString(), YES_HISTORY);
+		if(myPrefs.readInt(BoolType.TURNNING.toString())==INVALID)
+			myPrefs.writeInt(BoolType.TURNNING.toString(), CLOSE_TURNING_BUTTON);
+		if(myPrefs.readInt(BoolType.PIC_CACHE.toString())==INVALID)
+			myPrefs.writeInt(BoolType.PIC_CACHE.toString(), YES_PICTURE);
+	}
 	/**
 	 * 初始化SharedPreferences对象
 	 * 

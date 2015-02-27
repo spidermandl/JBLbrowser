@@ -26,6 +26,7 @@ import com.jbl.browser.adapter.SettingPagerAdapter;
 import com.jbl.browser.interfaces.SettingItemInterface;
 import com.jbl.browser.utils.ImageInfo;
 import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.JBLPreference.BoolType;
 import com.viewpager.indicator.LinePageIndicator;
 import com.viewpager.indicator.PageIndicator;
 
@@ -109,35 +110,47 @@ public class SettingPagerFragment extends SherlockFragment{
 		mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 		 list = new ArrayList<ImageInfo>();
 	        resArrays=getResources().getStringArray(R.array.setting_content_item);	
-	        for(int i=0;i<resArrays.length;i++){
-	            if(i==5){
-					if(JBLPreference.getInstance(mContext).readInt(JBLPreference.PIC_CACHE_TYPE)==0){
-						list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(4)));
-					}else{
-						list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(0,4)));
-					}
-				}else if(i==8){
-					   if(JBLPreference.getInstance(mContext).readInt(JBLPreference.TURNING_TYPE)==0){
-						   list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(4)));
-					   }else{
-						   list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(0,4)));
-					   }
-				}else if(i==9){
-						if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HISTORY_CACHE_TYPE)==0){
-							list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(4)));
-						}else{
-							  list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(0,4)));
-					    }
-					 }else if(i==10){
-						 if(JBLPreference.getInstance(mContext).readInt(JBLPreference.FULL_SCREEN_TYPE)==0){
-							 list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(4)));
-							}else{
-								  list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i].substring(0,4)));
-						    }
-					}else{
-						list.add(new ImageInfo(girdview_menu_image[i] , resArrays[i]));
-						}
-	        }
+		for (int i = 0; i < resArrays.length; i++) {
+			if (i == 5) {
+				if (JBLPreference.getInstance(mContext).readInt(
+						BoolType.PIC_CACHE.toString()) == JBLPreference.NO_PICTURE) {
+					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
+							.substring(4)));
+				} else {
+					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
+							.substring(0, 4)));
+				}
+			} else if (i == 8) {
+				if (JBLPreference.getInstance(mContext).readInt(
+						BoolType.TURNNING.toString()) == JBLPreference.OPEN_TURNING_BUTTON) {
+					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
+							.substring(4)));
+				} else {
+					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
+							.substring(0, 4)));
+				}
+			} else if (i == 9) {
+				if (JBLPreference.getInstance(mContext).readInt(
+						BoolType.HISTORY_CACHE.toString()) == JBLPreference.NO_HISTORY) {
+					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
+							.substring(4)));
+				} else {
+					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
+							.substring(0, 4)));
+				}
+			} else if (i == 10) {
+				if (JBLPreference.getInstance(mContext).readInt(
+						BoolType.FULL_SCREEN.toString()) == JBLPreference.YES_FULL) {
+					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
+							.substring(4)));
+				} else {
+					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
+							.substring(0, 4)));
+				}
+			} else {
+				list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]));
+			}
+		}
 	}
 	public void setInterface(SettingItemInterface i){
 		settingInterface=i;

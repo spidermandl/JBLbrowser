@@ -18,6 +18,7 @@ import com.jbl.browser.bean.History;
 import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.interfaces.LoadURLInterface;
 import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.JBLPreference.BoolType;
 import com.jbl.browser.utils.UrlUtils;
 
 /**
@@ -143,8 +144,7 @@ public class ProgressWebView extends WebView {
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			// TODO Auto-generated method stub
-			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HISTORY_CACHE_TYPE)==1||
-					JBLPreference.getInstance(mContext).readInt(JBLPreference.HISTORY_CACHE_TYPE)==-1){   //判断不是无痕浏览，添加历史记录
+			if(JBLPreference.getInstance(mContext).readInt(BoolType.HISTORY_CACHE.toString())==JBLPreference.YES_HISTORY){   //判断不是无痕浏览，添加历史记录
 				if(url!=""){           
 					curUrl=url;
 					String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA)

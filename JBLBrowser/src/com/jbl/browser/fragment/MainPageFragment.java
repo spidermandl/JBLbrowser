@@ -51,6 +51,7 @@ import com.jbl.browser.interfaces.TopActionbarInterface;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
+import com.jbl.browser.utils.JBLPreference.BoolType;
 import com.jbl.browser.view.ProgressWebView;
 import com.jbl.browser.view.UserDefinedDialog;
 import com.viewpager.indicator.PageIndicator;
@@ -154,7 +155,7 @@ public class MainPageFragment extends SherlockFragment implements
 				 * mViewPager.setVisibility(View.GONE);
 				 * settingPanel.setVisibility(View.GONE);
 				 */ 
-				if(JBLPreference.getInstance(getActivity()).readInt(JBLPreference.FULL_SCREEN_TYPE)==0  //当全屏模式：触摸屏幕不显示上下菜单栏
+				if(JBLPreference.getInstance(getActivity()).readInt(BoolType.FULL_SCREEN.toString())==JBLPreference.YES_FULL //当全屏模式：触摸屏幕不显示上下菜单栏
 						&&toolbarFragment.isVisible()&&topActionbarFragment.isVisible()
 						&&!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
 					createPopShrinkFullScreen();
@@ -178,21 +179,9 @@ public class MainPageFragment extends SherlockFragment implements
         getFragmentManager().beginTransaction().remove(topActionbarFragment).commit();
 		super.onDestroyView();
 	}
-	
-	// 添加书签
-	private void addNewBookMark(boolean isRecommend) {
-		boolean flag=false;
-		BookMark bookMark =new BookMark();
-		bookMark.setWebName(mWebView.getWebName());
-		bookMark.setWebAddress(mWebView.getCurrentUrl());
-		bookMark.setRecommend(isRecommend);
-		flag=new BookMarkDao(getActivity()).addBookMark(bookMark);
-		if (flag)
-			Toast.makeText(getActivity(), R.string.add_bookmark_succeed, 80).show();
-		else
-			Toast.makeText(getActivity(), R.string.add_bookmark_fail, 80).show();
-	}
-	
+	/**
+	 * 初始化webview
+	 */
 	private void initWebView() {
 		// TODO Auto-generated method stub
 		// mWebView.getSettings().setJavaScriptEnabled(true);
@@ -241,6 +230,154 @@ public class MainPageFragment extends SherlockFragment implements
 			}
 		});
 	}
+	
+	/**
+	 * 添加书签
+	 */
+	private void addNewBookMark(boolean isRecommend) {
+		boolean flag=false;
+		BookMark bookMark =new BookMark();
+		bookMark.setWebName(mWebView.getWebName());
+		bookMark.setWebAddress(mWebView.getCurrentUrl());
+		bookMark.setRecommend(isRecommend);
+		flag=new BookMarkDao(getActivity()).addBookMark(bookMark);
+		if (flag)
+			Toast.makeText(getActivity(), R.string.add_bookmark_succeed, 80).show();
+		else
+			Toast.makeText(getActivity(), R.string.add_bookmark_fail, 80).show();
+	}
+	
+	/**
+	 * 设置主页网页模式
+	 * @param type  设置类型
+	 */
+	private void webBoolSetting(BoolType type){
+		int value=-1;
+		switch (type) {
+		case FULL_SCREEN:
+			value=JBLPreference.getInstance(getActivity()).readInt(BoolType.FULL_SCREEN.toString());
+			if(value!=JBLPreference.YES_FULL){
+				//当要开启全屏浏览模式时，隐藏顶部状态栏、底部菜单栏和顶部搜索栏
+				hideStatusBar();
+	            createPopShrinkFullScreen();
+	            if(!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
+	            	getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
+		            getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
+	            	popWindow.showAtLocation(popview, Gravity.RIGHT|Gravity.BOTTOM, 0, 60);
+	            } 
+	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.YES_FULL);//写入缓存
+	            Toast.makeText(getActivity(), StringUtils.OPEN_NO_FULL, Toast.LENGTH_SHORT).show();
+			}else{
+				//当要关闭全屏浏览模式时，显示顶部状态栏、底部菜单栏和顶部搜索栏
+				popWindow.dismiss();
+				showStatusBar();
+	            getFragmentManager().beginTransaction().show(toolbarFragment).commit();
+            	getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
+            	Toast.makeText(getActivity(), StringUtils.CLOSE_NO_FULL, Toast.LENGTH_SHORT).show();
+	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.NO_FULL);//写入缓存
+			}
+			break;
+
+		case PIC_CACHE:
+			value=JBLPreference.getInstance(getActivity()).readInt(BoolType.PIC_CACHE.toString());
+			if(value!=JBLPreference.YES_PICTURE){
+				//当要开启无图模式时
+				mWebView.getSettings().setBlockNetworkImage(true);
+	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.YES_PICTURE);//写入缓存
+				Toast.makeText(getActivity(), StringUtils.OPEN_NO_PICTURE, Toast.LENGTH_SHORT).show();
+			}else{
+				//当要关闭无图模式时
+				mWebView.getSettings().setBlockNetworkImage(false);
+	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.NO_HISTORY);//写入缓存
+				Toast.makeText(getActivity(), StringUtils.CLOSE_NO_PICTURE, Toast.LENGTH_SHORT).show();
+			}
+			break;
+			
+		case TURNNING:
+			value=JBLPreference.getInstance(getActivity()).readInt(BoolType.TURNNING.toString());
+			if(value==JBLPreference.OPEN_TURNING_BUTTON){
+				//开启翻页模式
+				createTurningPage();
+	            if(!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
+	            	popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
+	            }     
+	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.OPEN_TURNING_BUTTON);//写入缓存
+	            Toast.makeText(getActivity(), StringUtils.OPEN_TURNING_BUTTON, Toast.LENGTH_SHORT).show();
+			}else{
+				//关闭翻页模式
+				if(popWindow!=null)
+				    popWindow.dismiss();
+	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.CLOSE_TURNING_BUTTON);//写入缓存
+				Toast.makeText(getActivity(), StringUtils.CLOSE_TURNING_BUTTON, Toast.LENGTH_SHORT).show();
+			}
+			break;
+			
+		case HISTORY_CACHE:
+			if(value==JBLPreference.YES_HISTORY){
+				
+			}else{
+				
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	//显示翻页模式
+	private void createTurningPage(){
+		LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		popview=(View)mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
+		popWindow=new PopupWindow(popview,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+		//popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
+		Button previous_page=(Button)popview.findViewById(R.id.previous_page);
+		Button next_page=(Button)popview.findViewById(R.id.next_page);
+		next_page.setOnClickListener(new OnClickListener(){
+			@SuppressLint("NewApi")
+			@Override
+			public void onClick(View v) {
+				mWebView.scrollTo(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
+			}
+		});
+		previous_page.setOnClickListener(new OnClickListener(){
+			@SuppressLint("NewApi")
+			@Override
+			public void onClick(View v) {
+				mWebView.scrollTo(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
+			}
+		});         
+    }
+	//显示全屏模式下为显示上下菜单的悬浮按钮
+	private void createPopShrinkFullScreen(){
+        LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		popview=(View)mLayoutInflater.inflate(R.layout.shrink_full_screen, null);
+		popWindow=new PopupWindow(popview,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+		ImageView shrinkFullScreen=(ImageView)popview.findViewById(R.id.shrinkFullScreen);
+        shrinkFullScreen.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				getFragmentManager().beginTransaction().show(toolbarFragment).commit();
+	            getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
+	            popWindow.dismiss();
+				}
+			});            
+    }
+	//隐藏状态栏
+	public void hideStatusBar(){
+		WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        getActivity().getWindow().setAttributes(lp);
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+	}
+	//显示状态栏
+	public void showStatusBar(){
+		WindowManager.LayoutParams attr = getActivity().getWindow().getAttributes();
+        attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getActivity().getWindow().setAttributes(attr);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+	}
+	
 	@Override
 	public void addBookMark() {
 		View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_bookmark_dialog, null);
@@ -318,10 +455,7 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	@Override
 	public void fitlerPicLoading() {
-		operate(JBLPreference.getInstance(getActivity()).readInt(
-				JBLPreference.PIC_CACHE_TYPE), JBLPreference.PIC_CACHE_TYPE,
-				JBLPreference.NO_PICTURE, JBLPreference.YES_PICTURE,
-				StringUtils.OPEN_NO_PICTURE, StringUtils.CLOSE_NO_PICTURE);
+		webBoolSetting(BoolType.PIC_CACHE);
 	}
 	@Override
 	public void manageDownload() {
@@ -397,128 +531,20 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public void withoutTrace() { // 无痕浏览
 		// TODO Auto-generated method stub
-		operate(JBLPreference.getInstance(getActivity()).readInt(
-				JBLPreference.HISTORY_CACHE_TYPE),
-				JBLPreference.HISTORY_CACHE_TYPE, JBLPreference.NO_HISTORY,
-				JBLPreference.YES_HISTORY, StringUtils.OPEN_NO_HISTORY,
-				StringUtils.CLOSE_NO_HISTORY);
+		webBoolSetting(BoolType.HISTORY_CACHE);
 	}
 	@Override
 	public void fullScreen() {     //全屏浏览
 		// TODO Auto-generated method stub
-		operate(JBLPreference.getInstance(getActivity()).readInt(
-				JBLPreference.FULL_SCREEN_TYPE),
-				JBLPreference.FULL_SCREEN_TYPE, JBLPreference.NO_FULL,
-				JBLPreference.YES_FULL, StringUtils.OPEN_NO_FULL,
-				StringUtils.CLOSE_NO_FULL);
+		webBoolSetting(BoolType.FULL_SCREEN);
 	}
 	@Override
 	public void pageTurningSwitch() {//翻页模式
 		// TODO Auto-generated method stub
-		operate(JBLPreference.getInstance(getActivity()).readInt(
-				JBLPreference.TURNING_TYPE),
-				JBLPreference.TURNING_TYPE, JBLPreference.OPEN_TURNING_BUTTON,
-				JBLPreference.COLSE_TURNING_BUTTON, StringUtils.OPEN_TURNING_BUTTON,
-				StringUtils.COLSE_TURNING_BUTTON);
+		webBoolSetting(BoolType.TURNNING);
 	}
-	@SuppressWarnings("deprecation")
-	public void operate(int type,String strType,int no,int yes,String open,String close){
-		switch (type) {
-		case -1:
-		case 1:
-			JBLPreference.getInstance(getActivity()).writeInt(strType,yes);
-			Toast.makeText(getActivity(), open, 100).show();
-			if(strType==JBLPreference.PIC_CACHE_TYPE){        //当要开启无图模式时
-				mWebView.getSettings().setBlockNetworkImage(true);
-			}
-			if(strType==JBLPreference.FULL_SCREEN_TYPE){     //当要开启全屏浏览模式时，隐藏顶部状态栏、底部菜单栏和顶部搜索栏
-				hideStatusBar();
-	            createPopShrinkFullScreen();
-	            if(!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
-	            	getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
-		            getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
-	            	popWindow.showAtLocation(popview, Gravity.RIGHT|Gravity.BOTTOM, 0, 60);
-	            }            
-			}
-			if(strType==JBLPreference.TURNING_TYPE){     //开启翻页模式
-				createTurningPage();
-	            if(!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
-	            	popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
-	            }            
-			}
-			break;
-		case 0:
-			JBLPreference.getInstance(getActivity()).writeInt(strType,no);
-			Toast.makeText(getActivity(), close, 100).show();
-			if(strType==JBLPreference.PIC_CACHE_TYPE){         //当要关闭无图模式时
-				mWebView.getSettings().setBlockNetworkImage(false);
-			}
-			if(strType==JBLPreference.FULL_SCREEN_TYPE){      //当要关闭全屏浏览模式时，显示顶部状态栏、底部菜单栏和顶部搜索栏
-				popWindow.dismiss();
-				showStatusBar();
-	            getFragmentManager().beginTransaction().show(toolbarFragment).commit();
-            	getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
-			}
-			if(strType==JBLPreference.TURNING_TYPE){      //关闭翻页模式
-				popWindow.dismiss();
-			}
-		default:
-			break;
-		}
-	}
-	//显示翻页模式
-	private void createTurningPage(){
-		LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		popview=(View)mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
-		popWindow=new PopupWindow(popview,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-		//popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
-		Button previous_page=(Button)popview.findViewById(R.id.previous_page);
-		Button next_page=(Button)popview.findViewById(R.id.next_page);
-		next_page.setOnClickListener(new OnClickListener(){
-			@SuppressLint("NewApi")
-			@Override
-			public void onClick(View v) {
-				mWebView.scrollTo(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
-			}
-		});
-		previous_page.setOnClickListener(new OnClickListener(){
-			@SuppressLint("NewApi")
-			@Override
-			public void onClick(View v) {
-				mWebView.scrollTo(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
-			}
-		});         
-    }
-	//显示全屏模式下为显示上下菜单的悬浮按钮
-	private void createPopShrinkFullScreen(){
-        LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		popview=(View)mLayoutInflater.inflate(R.layout.shrink_full_screen, null);
-		popWindow=new PopupWindow(popview,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-		ImageView shrinkFullScreen=(ImageView)popview.findViewById(R.id.shrinkFullScreen);
-        shrinkFullScreen.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				getFragmentManager().beginTransaction().show(toolbarFragment).commit();
-	            getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
-	            popWindow.dismiss();
-				}
-			});            
-    }
-	//隐藏状态栏
-	public void hideStatusBar(){
-		WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-        lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        getActivity().getWindow().setAttributes(lp);
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-	}
-	//显示状态栏
-	public void showStatusBar(){
-		WindowManager.LayoutParams attr = getActivity().getWindow().getAttributes();
-        attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getActivity().getWindow().setAttributes(attr);
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-	}
+
+
 	@Override
 	public void goBack() {
 		if (mWebView.canGoBack()) {
@@ -590,7 +616,7 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	@Override
 	public void startPage(String url) {
-		if(JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FULL_SCREEN_TYPE)==0){  //全屏模式
+		if(JBLPreference.getInstance(this.getActivity()).readInt(BoolType.FULL_SCREEN.toString())==JBLPreference.YES_FULL){  //全屏模式
 			if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
 				
 				getFragmentManager().beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
@@ -609,9 +635,9 @@ public class MainPageFragment extends SherlockFragment implements
 				}
 			}
 		}
-		if(JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.TURNING_TYPE)==0){  //翻页模式
+		if(JBLPreference.getInstance(this.getActivity()).readInt(BoolType.TURNNING.toString())==JBLPreference.OPEN_TURNING_BUTTON){  //翻页模式
 			if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮	
-	       	getFragmentManager().beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
+	       	    getFragmentManager().beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
 				if(popWindow!=null){
 	            	if(popWindow.isShowing()){
 	            		popWindow.dismiss();
