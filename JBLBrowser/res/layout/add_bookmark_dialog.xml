@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="#FFF5F5F5">
+
+    <TextView
+        android:id="@+id/add_bookmark_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/add_bookmark" 
+        android:background="#FFE4E4E4"/>
+
+    <View
+        android:id="@+id/add_bookmark_devide1"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_below="@+id/add_bookmark_select"
+        android:background="#FFD3D3D3"/>
+
+    <ImageView
+        android:id="@+id/add_to_bookmark_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_bookmark_devide1"
+        android:src="@drawable/searchbox_menu_addbookmark"
+        android:paddingTop="8dp"/>
+
+    <TextView
+        android:id="@+id/add_to_bookmark_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_bookmark_devide1"
+        android:layout_toRightOf="@+id/add_to_bookmark_iv"
+        android:paddingBottom="10dp"
+        android:paddingTop="15dp"
+        android:paddingLeft="20dp"
+        android:background="@drawable/add_book_mark_selector"
+        android:text="@string/add_to_bookmark" />
+    <View
+        android:id="@+id/add_bookmark_devide2"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_below="@+id/add_to_bookmark_tv"
+        android:background="#FFD3D3D3" />
+    
+    <ImageView
+        android:id="@+id/add_to_recommend_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_bookmark_devide2"
+        android:src="@drawable/searchbox_menu_addtohome"
+        android:paddingTop="8dp" />
+
+    <TextView
+        android:id="@+id/add_to_recommend_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_bookmark_devide2"
+        android:layout_toRightOf="@+id/add_to_recommend_iv"
+        android:paddingBottom="10dp"
+        android:paddingTop="15dp"
+        android:paddingLeft="20dp"
+        android:background="@drawable/add_book_mark_selector"
+        android:text="@string/add_to_recommend" />
+    <View
+        android:id="@+id/add_bookmark_devide3"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_below="@+id/add_to_recommend_tv"
+        android:background="#FFD3D3D3" />
+    <Button android:id="@+id/add_bookmark_cancel" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="@string/add_bookmark_cancel" android:layout_below="@+id/add_bookmark_devide3" android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+     <View
+        android:id="@+id/add_bookmark_devide4"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_below="@+id/add_bookmark_cancel"
+        android:layout_marginTop="5dp"
+        android:background="#FFD3D3D3" /> 
+    
+
+</RelativeLayout>

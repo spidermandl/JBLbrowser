@@ -4,17 +4,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ffffff" >
+    android:background="#dcdcdc" >
 <ScrollView   
         android:layout_width="match_parent"   
-        android:layout_height="match_parent" > 
-        <LinearLayout   
+        android:layout_height="match_parent" >
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/ll1"   
             android:layout_width="match_parent"   
-            android:layout_height="match_parent" > 
-     <ListView
-         android:id="@+id/list_view_set"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent" />
-     </LinearLayout>  
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#ffffff"
+            android:layout_margin="5sp" >    
+        <TextView android:id="@+id/menuset_tv1" android:layout_width="match_parent"
+            android:layout_height="35dp" android:drawableRight="@drawable/toolbar_forward_normal"
+            android:textSize="20sp" android:gravity="center_vertical" android:text="@string/font_size"
+             android:background="@drawable/barcode_inputbox_bg"/>
+        <TextView android:id="@+id/menuset_tv2" android:layout_width="match_parent"
+            android:layout_height="35dp" android:drawableRight="@drawable/toolbar_forward_normal"
+            android:textSize="20sp" android:gravity="center_vertical" android:text="@string/screen_intensity"
+            />   
+     	</LinearLayout>   	
+        <LinearLayout
+            android:id="@+id/ll2"
+            android:layout_below="@+id/ll1" 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="5sp"
+            android:background="#ffffff"
+            >
+        <RelativeLayout 
+            android:id="@+id/menuset_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView android:id="@+id/menuset_tv3" android:layout_width="match_parent"
+                android:layout_height="35dp" android:background="@drawable/barcode_inputbox_bg"
+                android:textSize="20sp" android:gravity="center_vertical" android:text="@string/default_browser"
+                 />
+            <ImageView android:id="@+id/menuset_imv" android:layout_width="55dp" android:layout_height="35dp"
+                android:background="@drawable/menuset_closed" android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+            <TextView android:id="@+id/menuset_tv4" android:layout_width="match_parent"
+                android:layout_height="35dp" android:drawableRight="@drawable/toolbar_forward_normal"
+                android:textSize="20sp" android:gravity="center_vertical" android:text="@string/about_us"
+                />
+          </LinearLayout>
+          <LinearLayout android:id="@+id/ll3"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:layout_below="@+id/ll2"
+              android:layout_margin="5sp"
+              android:background="#ffffff">
+              <TextView android:id="@+id/menuset_tv5" android:layout_width="match_parent"
+                  android:layout_height="35dp" android:gravity="center" android:textSize="20sp" 
+                  android:text="@string/clear_data" android:background="@drawable/barcode_inputbox_bg"/>
+              <TextView android:id="@+id/menuset_tv6" android:layout_width="match_parent"
+                  android:layout_height="35dp" android:gravity="center" android:textSize="20sp"
+                  android:text="@string/restore_settings"/>
+          </LinearLayout>
+        </RelativeLayout>
   </ScrollView>   
 </LinearLayout>
