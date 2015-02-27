@@ -1,28 +1,26 @@
 package com.jbl.browser.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
-import com.jbl.browser.adapter.MenuSetAdapter;
-import com.jbl.browser.bean.SetContent;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 
@@ -33,9 +31,12 @@ public class MenuSettingFragment extends SherlockFragment implements OnItemClick
 	
 	public final static String TAG="MenuSettingFragment";
 	
-	//菜单设置选项内容
-	//设置数据
-
+	//菜单设置选项内容 1 字体大小 2屏幕亮度 3默认浏览器 4 关于我们 5 清除数据 6恢复默认设置
+	private TextView menuset_tv1,menuset_tv2,menuset_tv3,menuset_tv4,menuset_tv5,menuset_tv6;
+	private ImageView menuset_imv; //滑动开关
+	private RelativeLayout mRelativeLayout; //滑动开关布局点击监听
+	//设置开关
+	private boolean mFlag=false;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -46,7 +47,34 @@ public class MenuSettingFragment extends SherlockFragment implements OnItemClick
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.menuset_fragment, container, false);
-		 
+		menuset_tv1=(TextView)view.findViewById(R.id.menuset_tv1);
+		menuset_tv2=(TextView)view.findViewById(R.id.menuset_tv2);
+		menuset_tv3=(TextView)view.findViewById(R.id.menuset_tv3);
+		menuset_tv4=(TextView)view.findViewById(R.id.menuset_tv4);
+		menuset_tv5=(TextView)view.findViewById(R.id.menuset_tv5);
+		menuset_tv6=(TextView)view.findViewById(R.id.menuset_tv6);
+		menuset_imv=(ImageView)view.findViewById(R.id.menuset_imv);
+		menuset_imv.getParent().requestDisallowInterceptTouchEvent(true);
+		menuset_imv.setOnTouchListener(new View.OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				if(!mFlag){
+					menuset_imv.setBackgroundDrawable(getResources().getDrawable(R.drawable.menuset_closed));
+					mFlag=true;
+					notifyAll();
+				}
+				if(mFlag){
+					menuset_imv.setBackgroundDrawable(getResources().getDrawable(R.drawable.menuset_open));
+					mFlag=false;
+					notifyAll();	
+				}
+				return true;
+			}
+		});
+		mRelativeLayout=(RelativeLayout)view.findViewById(R.id.menuset_ll);
+		
 		return view;
 	}
 	@Override
