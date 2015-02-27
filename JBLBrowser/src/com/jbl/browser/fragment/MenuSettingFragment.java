@@ -34,50 +34,21 @@ public class MenuSettingFragment extends SherlockFragment implements OnItemClick
 	public final static String TAG="MenuSettingFragment";
 	
 	//菜单设置选项内容
-	ListView listview;
 	//设置数据
-	List<SetContent> list=new ArrayList<SetContent>();
-	MenuSetAdapter menuSetAdapter;
-	SetContent s1,s2,s3;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 	}
-	/**
-	 *添加数据
-	 */
-	public void init(){
-		SetContent s1=new SetContent();
-		s1.setSetText(JBLPreference.FONT_SIZE);
-		s1.setTextSize(getFontType());
-		list.add(s1);
-		SetContent s2=new SetContent();
-		s2.setSetText(JBLPreference.SCREEN_INTENSITY);
-		s2.setTextSize(JBLPreference.MODERATE);
-		list.add(s2);
-		SetContent s3=new SetContent();
-		s3.setSetText(JBLPreference.ROTARY_SCREEN);
-		s3.setTextSize(getScreenType());
-		list.add(s3);
-		SetContent s4=new SetContent();
-		s4.setSetText(JBLPreference.ABOUT);
-		list.add(s4);
-	}
-	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.menuset_fragment, container, false);
-		listview=(ListView)view.findViewById(R.id.list_view_set);
-		init();
-		menuSetAdapter=new MenuSetAdapter(getActivity(), list);
-		listview.setAdapter(menuSetAdapter);
-		listview.setOnItemClickListener(this);
+		 
 		return view;
 	}
-	
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {

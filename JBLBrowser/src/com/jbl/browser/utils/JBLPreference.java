@@ -31,6 +31,10 @@ public class JBLPreference {
 	public static final int NO_FULL=1;
 	public static final int YES_FULL=0;
 	
+	public static final String TURNING_TYPE="TURNING_TYPE";//页面翻转模式
+	public static final int OPEN_TURNING_BUTTON=1;//"开启翻页按钮";
+	public static final int COLSE_TURNING_BUTTON=0;//"关闭翻页按钮";
+	
 	//书签和历史记录传网址到主页fragment关键字
 	public static final String BOOKMARK_HISTORY_KEY="webAddress";
 	public static final String RECOMMEND_KEY="urlAddress";
@@ -48,14 +52,17 @@ public class JBLPreference {
 	public static final int DAY_MODEL=0;//"日间模式";
 	public static final int NIGHT_MODEL=1;//"夜间模式";
 	public static final String EXTRA_ID_URL = "EXTRA_ID_URL";
-	public static final String TURNING_TYPE="TURNING_TYPE";//页面翻转模式
-	public static final int OPEN_TURNING_BUTTON=1;//"开启翻页按钮";
-	public static final int COLSE_TURNING_BUTTON=0;//"关闭翻页按钮";
+	
 	public static final String FONT_SIZE="字体大小";
 	public static final String SCREEN_INTENSITY="屏幕亮度";
 	public static final String MODERATE="适中";
 	public static final String ROTARY_SCREEN="旋转屏幕";
 	public static final String ABOUT="关于";
+	public static final String DEFAULT_BROWSER="默认浏览器";
+	public static final String ABOUT_US="关于我们";
+	public static final String CLEAR_DATA="清除数据";
+	public static final String RESTORE_FACTORY_SETTINGS="恢复出厂设置";
+	
 	
 	public static final String IS_FIRST_RUN="是否第一次运行";
 	public static final int NO_FIRST_RUN=1;

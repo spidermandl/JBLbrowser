@@ -85,9 +85,6 @@ public class MainPageFragment extends SherlockFragment implements
 	PopupWindow popWindow;//悬浮窗口
 	View multipagePanel;//多页布局
 	PageIndicator multipageIndicator;
-	
-	
-	 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
@@ -339,7 +336,6 @@ public class MainPageFragment extends SherlockFragment implements
 		.setTitle(R.string.quit)
 		.setMessage(R.string.confirm_quit)
 		.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub				
@@ -356,7 +352,7 @@ public class MainPageFragment extends SherlockFragment implements
 		dialog.show();
 	}
 	
-	@Override
+	/*@Override
 	public void pageTurningSwitch() {
 		switch (JBLPreference.getInstance(getActivity()).readInt(JBLPreference.TURNING_TYPE)) {
 		case JBLPreference.OPEN_TURNING_BUTTON:
@@ -392,13 +388,12 @@ public class MainPageFragment extends SherlockFragment implements
 			break;
 		}
 	}
-
+*/
 	@Override
 	public void refresh() {     //刷新当前界面
 		// TODO Auto-generated method stub
 		mWebView.reload();
 	}
-
 	@Override
 	public void withoutTrace() { // 无痕浏览
 		// TODO Auto-generated method stub
@@ -408,7 +403,6 @@ public class MainPageFragment extends SherlockFragment implements
 				JBLPreference.YES_HISTORY, StringUtils.OPEN_NO_HISTORY,
 				StringUtils.CLOSE_NO_HISTORY);
 	}
-
 	@Override
 	public void fullScreen() {     //全屏浏览
 		// TODO Auto-generated method stub
@@ -418,7 +412,15 @@ public class MainPageFragment extends SherlockFragment implements
 				JBLPreference.YES_FULL, StringUtils.OPEN_NO_FULL,
 				StringUtils.CLOSE_NO_FULL);
 	}
-	
+	@Override
+	public void pageTurningSwitch() {//翻页模式
+		// TODO Auto-generated method stub
+		operate(JBLPreference.getInstance(getActivity()).readInt(
+				JBLPreference.TURNING_TYPE),
+				JBLPreference.TURNING_TYPE, JBLPreference.OPEN_TURNING_BUTTON,
+				JBLPreference.COLSE_TURNING_BUTTON, StringUtils.OPEN_TURNING_BUTTON,
+				StringUtils.COLSE_TURNING_BUTTON);
+	}
 	@SuppressWarnings("deprecation")
 	public void operate(int type,String strType,int no,int yes,String open,String close){
 		switch (type) {
@@ -438,6 +440,12 @@ public class MainPageFragment extends SherlockFragment implements
 	            	popWindow.showAtLocation(popview, Gravity.RIGHT|Gravity.BOTTOM, 0, 60);
 	            }            
 			}
+			if(strType==JBLPreference.TURNING_TYPE){     //开启翻页模式
+				createTurningPage();
+	            if(!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
+	            	popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
+	            }            
+			}
 			break;
 		case 0:
 			JBLPreference.getInstance(getActivity()).writeInt(strType,no);
@@ -451,10 +459,36 @@ public class MainPageFragment extends SherlockFragment implements
 	            getFragmentManager().beginTransaction().show(toolbarFragment).commit();
             	getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
 			}
+			if(strType==JBLPreference.TURNING_TYPE){      //关闭翻页模式
+				popWindow.dismiss();
+			}
 		default:
 			break;
 		}
 	}
+	//显示翻页模式
+	private void createTurningPage(){
+		LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		popview=(View)mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
+		popWindow=new PopupWindow(popview,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+		//popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
+		Button previous_page=(Button)popview.findViewById(R.id.previous_page);
+		Button next_page=(Button)popview.findViewById(R.id.next_page);
+		next_page.setOnClickListener(new OnClickListener(){
+			@SuppressLint("NewApi")
+			@Override
+			public void onClick(View v) {
+				mWebView.scrollTo(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
+			}
+		});
+		previous_page.setOnClickListener(new OnClickListener(){
+			@SuppressLint("NewApi")
+			@Override
+			public void onClick(View v) {
+				mWebView.scrollTo(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
+			}
+		});         
+    }
 	//显示全屏模式下为显示上下菜单的悬浮按钮
 	private void createPopShrinkFullScreen(){
         LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -554,7 +588,6 @@ public class MainPageFragment extends SherlockFragment implements
 	public void goLand() {
 		mWebView.loadUrl(UrlUtils.URL_LOGIN);
 	}
-	
 	@Override
 	public void startPage(String url) {
 		if(JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FULL_SCREEN_TYPE)==0){  //全屏模式
@@ -577,16 +610,23 @@ public class MainPageFragment extends SherlockFragment implements
 			}
 		}
 		if(JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.TURNING_TYPE)==0){  //翻页模式
-			if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
-				
-				getFragmentManager().beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
-            	if(popWindow!=null&&popWindow.isShowing()){
-            		popWindow.dismiss();
-            	}
-				
+			if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮	
+	       	getFragmentManager().beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
+				if(popWindow!=null){
+	            	if(popWindow.isShowing()){
+	            		popWindow.dismiss();
+					}
+				}else{                                  //当运行后开启翻页，退出程序，再运行时需重新建popwindow
+					createTurningPage();
+					popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
+				}
+			}else{                                              //不是主页，显示悬浮按钮
+				if(popWindow!=null){
+					createTurningPage();
+					popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
+				}
 			}
 		}
-		
 	}
-
+	
 }
