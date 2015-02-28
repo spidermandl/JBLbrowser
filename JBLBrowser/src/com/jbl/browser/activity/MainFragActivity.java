@@ -33,8 +33,7 @@ public class MainFragActivity extends BaseFragActivity {
 	private BroadcastReceiver mDownloadReceiver;
 	
 	private int isFirstRun; //0：第一次运行，1：不是第一次运行
-	
-	
+
 	@Override
 	protected void onCreate(Bundle arg0) {
 		//setTheme(R.style.Theme_Sherlock); // Used for theme switching in samples
@@ -49,6 +48,7 @@ public class MainFragActivity extends BaseFragActivity {
 		super.onCreate(arg0);
 		navigateTo(MainPageFragment.class, null, true, TAG);
 	}
+	
 	/**
 	 * 第一次运行程序，将推荐网址记录到数据库表bookmark中
 	 */

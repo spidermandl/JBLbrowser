@@ -81,6 +81,7 @@ public class MainPageFragment extends SherlockFragment implements
 	
 	private MultipageAdapter multipageAdapter;//多页效果适配器 
 	private ScheduledExecutorService scheduledExecutorService;
+	public int isAlreadyLoad=0; //0:没有加载过主页 ，1加载过主页
 
 	View popview;//翻页按钮布局
 	PopupWindow popWindow;//悬浮窗口
@@ -88,7 +89,17 @@ public class MainPageFragment extends SherlockFragment implements
 	PageIndicator multipageIndicator;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		//判断是否加载过主页面的网址
+				if(getIsAlreadyLoad()!=0){
+					mWebView.stopLoading();
+				}
 		super.onCreate(savedInstanceState);		
+	}
+	public int getIsAlreadyLoad() {
+		return isAlreadyLoad;
+	}
+	public void setIsAlreadyLoad(int isAlreadyLoad) {
+		this.isAlreadyLoad = isAlreadyLoad;
 	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
