@@ -131,7 +131,7 @@ public class SettingPagerFragment extends SherlockFragment{
 				}
 			} else if (i == 9) {
 				if (JBLPreference.getInstance(mContext).readInt(
-						BoolType.HISTORY_CACHE.toString()) == JBLPreference.NO_HISTORY) {
+						BoolType.HISTORY_CACHE.toString()) == JBLPreference.OPEN_HISTORY) {
 					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
 							.substring(4)));
 				} else {

@@ -282,20 +282,20 @@ public class MainPageFragment extends SherlockFragment implements
 			value=JBLPreference.getInstance(getActivity()).readInt(BoolType.PIC_CACHE.toString());
 			if(value!=JBLPreference.YES_PICTURE){
 				//当要开启无图模式时
-				mWebView.getSettings().setBlockNetworkImage(true);
+				mWebView.getSettings().setBlockNetworkImage(false);
 	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.YES_PICTURE);//写入缓存
-				Toast.makeText(getActivity(), StringUtils.OPEN_NO_PICTURE, Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), StringUtils.CLOSE_NO_PICTURE, Toast.LENGTH_SHORT).show();
 			}else{
 				//当要关闭无图模式时
-				mWebView.getSettings().setBlockNetworkImage(false);
-	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.NO_HISTORY);//写入缓存
-				Toast.makeText(getActivity(), StringUtils.CLOSE_NO_PICTURE, Toast.LENGTH_SHORT).show();
+				mWebView.getSettings().setBlockNetworkImage(true);
+	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.NO_PICTURE);//写入缓存
+				Toast.makeText(getActivity(), StringUtils.OPEN_NO_PICTURE, Toast.LENGTH_SHORT).show();
 			}
 			break;
 			
 		case TURNNING:
 			value=JBLPreference.getInstance(getActivity()).readInt(BoolType.TURNNING.toString());
-			if(value==JBLPreference.OPEN_TURNING_BUTTON){
+			if(value!=JBLPreference.OPEN_TURNING_BUTTON){
 				//开启翻页模式
 				createTurningPage();
 	            if(!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
@@ -313,10 +313,15 @@ public class MainPageFragment extends SherlockFragment implements
 			break;
 			
 		case HISTORY_CACHE:
-			if(value==JBLPreference.YES_HISTORY){
-				
+			value=JBLPreference.getInstance(getActivity()).readInt(BoolType.HISTORY_CACHE.toString());
+			if(value!=JBLPreference.CLOSE_HISTORY){
+				//关闭无痕
+				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.CLOSE_HISTORY);//写入缓存
+	            Toast.makeText(getActivity(), StringUtils.CLOSE_NO_HISTORY, Toast.LENGTH_SHORT).show();
 			}else{
-				
+				//开启无痕
+				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.OPEN_HISTORY);//写入缓存
+	            Toast.makeText(getActivity(), StringUtils.OPEN_NO_HISTORY, Toast.LENGTH_SHORT).show();
 			}
 			break;
 		default:

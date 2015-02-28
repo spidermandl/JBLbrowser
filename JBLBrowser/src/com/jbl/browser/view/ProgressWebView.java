@@ -144,7 +144,7 @@ public class ProgressWebView extends WebView {
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			// TODO Auto-generated method stub
-			if(JBLPreference.getInstance(mContext).readInt(BoolType.HISTORY_CACHE.toString())==JBLPreference.YES_HISTORY){   //判断不是无痕浏览，添加历史记录
+			if(JBLPreference.getInstance(mContext).readInt(BoolType.HISTORY_CACHE.toString())==JBLPreference.CLOSE_HISTORY){   //判断不是无痕浏览，添加历史记录
 				if(url!=""){           
 					curUrl=url;
 					String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA)

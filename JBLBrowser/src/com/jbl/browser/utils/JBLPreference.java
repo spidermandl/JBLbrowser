@@ -43,8 +43,8 @@ public class JBLPreference {
 	public static final int NO_PICTURE=1;//关闭图片缓存
 	public static final int YES_PICTURE=0;//开启图片缓存
 
-	public static final int NO_HISTORY=1;//关闭网页无痕浏览
-	public static final int YES_HISTORY=0;//开启网页无痕浏览
+	public static final int CLOSE_HISTORY=1;//关闭网页无痕浏览
+	public static final int OPEN_HISTORY=0;//开启网页无痕浏览
 	
 	public static final int NO_FULL=1;//关闭网页全屏浏览
 	public static final int YES_FULL=0;//开启网页全屏浏览
@@ -110,7 +110,7 @@ public class JBLPreference {
 		if(myPrefs.readInt(BoolType.FULL_SCREEN.toString())==INVALID)
 			myPrefs.writeInt(BoolType.FULL_SCREEN.toString(), NO_FULL);
 		if(myPrefs.readInt(BoolType.HISTORY_CACHE.toString())==INVALID)
-			myPrefs.writeInt(BoolType.HISTORY_CACHE.toString(), YES_HISTORY);
+			myPrefs.writeInt(BoolType.HISTORY_CACHE.toString(), CLOSE_HISTORY);
 		if(myPrefs.readInt(BoolType.TURNNING.toString())==INVALID)
 			myPrefs.writeInt(BoolType.TURNNING.toString(), CLOSE_TURNING_BUTTON);
 		if(myPrefs.readInt(BoolType.PIC_CACHE.toString())==INVALID)
