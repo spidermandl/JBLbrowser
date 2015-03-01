@@ -8,8 +8,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager.LayoutParams;
@@ -24,10 +22,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.webkit.WebSettings.PluginState;
-import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -36,7 +33,9 @@ import cn.hugo.android.scanner.CaptureActivity;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.BrowserSettings;
+import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
+import com.jbl.browser.WebWindowManagement;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.activity.BrowserSettingActivity;
 import com.jbl.browser.activity.HistoryFavourateActivity;
@@ -70,37 +69,25 @@ public class MainPageFragment extends SherlockFragment implements
 
 	public final static String TAG = "MainPageFragment";
 	/* 定义webview控件 */
-	public ProgressWebView mWebView; // 主控件 webview
-	public WebSettings settings;
-	public BottomMenuFragment toolbarFragment;//底部toolbar
-	public SettingPagerFragment settingFragment;//底部弹出菜单 fragment
-	public TopMenuFragment topActionbarFragment; //顶部actionbar
+	private ProgressWebView mWebView; // 主控件 webview
+	private WebSettings settings;
+	private BottomMenuFragment toolbarFragment;//底部toolbar
+	private SettingPagerFragment settingFragment;//底部弹出菜单 fragment
+	private TopMenuFragment topActionbarFragment; //顶部actionbar
+	
+	private FrameLayout webFrame;//webview父控件
 	
 	public String cur_url; // 设置初始网址
 	public String webName=""; // 网页名
 	
 	private MultipageAdapter multipageAdapter;//多页效果适配器 
 	private ScheduledExecutorService scheduledExecutorService;
-	public int isAlreadyLoad=0; //0:没有加载过主页 ，1加载过主页
 
 	View popview;//翻页按钮布局
 	PopupWindow popWindow;//悬浮窗口
 	View multipagePanel;//多页布局
 	PageIndicator multipageIndicator;
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		//判断是否加载过主页面的网址
-				if(getIsAlreadyLoad()!=0){
-					mWebView.stopLoading();
-				}
-		super.onCreate(savedInstanceState);		
-	}
-	public int getIsAlreadyLoad() {
-		return isAlreadyLoad;
-	}
-	public void setIsAlreadyLoad(int isAlreadyLoad) {
-		this.isAlreadyLoad = isAlreadyLoad;
-	}
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -112,7 +99,9 @@ public class MainPageFragment extends SherlockFragment implements
 			Bundle savedInstanceState) {
 		//cur_url=UrlUtils.URL_GET_HOST;
 		View view = inflater.inflate(R.layout.fragment_main_page, container,false);
-		mWebView = (ProgressWebView) view.findViewById(R.id.mWebView);// webview
+		mWebView = WebWindowManagement.getInstance().getMainWebView();
+	    webFrame=((FrameLayout) view.findViewById(R.id.web_view_frame));
+	    webFrame.addView(mWebView);// webview
 //		//Intent intent = getActivity().getIntent();  //监听webview跳转，实现activity跳转到推荐页面
 		mWebView.setInterface(this);//设置回调接口
 		
@@ -184,7 +173,10 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	
 	@Override
-	public void onDestroyView() {      //销毁内嵌的fragment
+	public void onDestroyView() {  
+		//移除重复使用的view
+		webFrame.removeView(mWebView);
+		//销毁内嵌的fragment
         getFragmentManager().beginTransaction().remove(toolbarFragment).commit();  
         getFragmentManager().beginTransaction().remove(settingFragment).commit();
         getFragmentManager().beginTransaction().remove(topActionbarFragment).commit();
@@ -253,9 +245,9 @@ public class MainPageFragment extends SherlockFragment implements
 		bookMark.setRecommend(isRecommend);
 		flag=new BookMarkDao(getActivity()).addBookMark(bookMark);
 		if (flag)
-			Toast.makeText(getActivity(), R.string.add_bookmark_succeed, 80).show();
+			Toast.makeText(getActivity(), R.string.add_bookmark_succeed, Toast.LENGTH_SHORT).show();
 		else
-			Toast.makeText(getActivity(), R.string.add_bookmark_fail, 80).show();
+			Toast.makeText(getActivity(), R.string.add_bookmark_fail, Toast.LENGTH_SHORT).show();
 	}
 	
 	/**
@@ -630,6 +622,8 @@ public class MainPageFragment extends SherlockFragment implements
 	public void goLand() {
 		mWebView.loadUrl(UrlUtils.URL_LOGIN);
 	}
+	
+	//载入网页监听
 	@Override
 	public void startPage(String url) {
 		if(JBLPreference.getInstance(this.getActivity()).readInt(BoolType.FULL_SCREEN.toString())==JBLPreference.YES_FULL){  //全屏模式

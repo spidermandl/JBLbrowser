@@ -272,7 +272,6 @@ public class DownloadManageActivity extends BaseFragActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home://返回
-			new MainPageFragment().setIsAlreadyLoad(1);
 			this.finish();
 			break;
 		case R.id.download_menu_sort_by_size:
@@ -398,7 +397,6 @@ public class DownloadManageActivity extends BaseFragActivity implements
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
 				| Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		try {
-			new MainPageFragment().setIsAlreadyLoad(1);
 			startActivity(intent);
 		} catch (ActivityNotFoundException ex) {
 			Toast.makeText(this, R.string.download_no_application_title,

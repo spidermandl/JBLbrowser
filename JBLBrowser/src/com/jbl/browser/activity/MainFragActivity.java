@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 
 import com.actionbarsherlock.view.Window;
+import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.db.BookMarkDao;
@@ -17,7 +18,6 @@ import com.jbl.browser.utils.JBLPreference;
 import com.mozillaonline.providers.DownloadManager;
 import com.mozillaonline.providers.DownloadManager.Request;
 import com.mozillaonline.providers.downloads.DownloadService;
-import com.mozillaonline.providers.downloads.ui.DownloadList;
 
 /**
  * 首页activity，fragment集合
@@ -91,6 +91,12 @@ public class MainFragActivity extends BaseFragActivity {
 		super.onStop();
 	}
 	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		JBLApplication.getInstance().quit();
+	}
 	/**
 	 * 开启下载服务
 	 */
