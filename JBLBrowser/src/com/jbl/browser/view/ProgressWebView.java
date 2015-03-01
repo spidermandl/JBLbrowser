@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
@@ -40,6 +41,8 @@ public class ProgressWebView extends WebView {
 
 	public ProgressWebView(Context context) {
 		super(context);
+		this.setLayoutParams(new ViewGroup.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT ));
 		init(context);
 	}
 	public ProgressWebView(Context context, AttributeSet attrs) {
@@ -54,7 +57,7 @@ public class ProgressWebView extends WebView {
 	private void init(Context context){
 		mContext = context;
 		progressbar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
-        progressbar.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, 3, 0, 0));
+        progressbar.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, 5, 0, 0));
         addView(progressbar);
         setWebChromeClient(new WebChromeClient());
         setWebViewClient(new MyWebViewClient());
@@ -89,6 +92,10 @@ public class ProgressWebView extends WebView {
 			Intent in=new Intent();
 			in.setClass(mContext,RecommendMainActivity.class);
 			mContext.startActivity(in);
+			return;
+		}
+		if (url.equals(this.getCurrentUrl())){
+			//不重复载入网页
 			return;
 		}
 		super.loadUrl(url);
