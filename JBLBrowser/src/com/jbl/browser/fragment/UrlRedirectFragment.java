@@ -1,6 +1,5 @@
 package com.jbl.browser.fragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -24,6 +23,8 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.adapter.SearchAdapter;
+import com.jbl.browser.bean.BookMark;
+import com.jbl.browser.db.BookMarkDao;
 import com.jbl.browser.utils.JBLPreference;
 
 /**
@@ -39,10 +40,14 @@ OnItemClickListener {
 	private SearchAdapter mSearchAdapter;// 下拉菜单适配器
 	private EditText mSearch; //输入网址搜索
 	private TextView mController; //二维码搜索
-	private ListView mListRecommend; //输入框下拉推荐页面
-	List<Integer> image=new ArrayList<Integer>(); //网站图标
-	List<String> urlName=new ArrayList<String>();// 网站名称
-	List<String> urlAddress=new ArrayList<String>();// 网站网址
+	//搜索记录 listView
+	ListView listview;
+	//记录数据
+	List<BookMark> list=null;
+	//搜索网址
+	String webAddress="";
+	//搜索网名
+	String webName="";
 	
 	
 	@Override
@@ -71,41 +76,20 @@ OnItemClickListener {
 		mSearch.setFocusable(true);
 		mSearch.setFocusableInTouchMode(true);
 		mSearch.requestFocus();
-		mListRecommend=(ListView)view.findViewById(R.id.mSearch_RecommnedView);
-		mListRecommend.setOnItemClickListener(this);
+		listview=(ListView)view.findViewById(R.id.mSearch_RecommnedView);
+		listview.setOnItemClickListener(this);
 		initData();	
-		mListRecommend.setAdapter(mSearchAdapter);
 		showSoftInput(true);
 		return view;
 	}
 
+	/**
+	 * 从数据库中读数据
+	 * */
 	private void initData(){
-		mSearchAdapter=new SearchAdapter(getActivity(), image, urlName, urlAddress);
-
-			image.add(R.drawable.ic_launcher);
-			image.add(R.drawable.ic_launcher);
-			image.add(R.drawable.ic_launcher);
-			image.add(R.drawable.ic_launcher);
-			image.add(R.drawable.ic_launcher);
-			image.add(R.drawable.ic_launcher);
-			image.add(R.drawable.ic_launcher);
-			
-			urlName.add("百度");
-			urlName.add("搜狗");
-			urlName.add("谷歌");
-			urlName.add("新浪");
-			urlName.add("腾讯");
-			urlName.add("雅虎");
-			urlName.add("搜索");
-			
-			urlAddress.add("Http://www.baidu.com");
-			urlAddress.add("Http://www.sogou.com");
-			urlAddress.add("Http://www.gugoo.com");
-			urlAddress.add("Http://www.xinlang.com");
-			urlAddress.add("Http://www.tengxun.com");
-			urlAddress.add("Http://www.yahuu.com");
-			urlAddress.add("Http://www.sousuo.com");
-		
+		list=new BookMarkDao(getActivity()).queryBookMarkAllByisRecommend(true);
+		mSearchAdapter=new SearchAdapter(getActivity(), list);
+		listview.setAdapter(mSearchAdapter);
 	}
 	@Override
 	public void onClick(View v) {
@@ -128,7 +112,6 @@ OnItemClickListener {
 		}
 		
 	}
-
 	/**
 	 * 输入文字变化后监听
 	 */
@@ -175,7 +158,7 @@ OnItemClickListener {
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
-		String webAddress=((TextView)view.findViewById(R.id.mSearch_tv2)).getText().toString();
+		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
 		JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
         this.getActivity().finish();
         Intent intent=new Intent();

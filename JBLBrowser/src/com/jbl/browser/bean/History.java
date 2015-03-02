@@ -74,10 +74,4 @@ public class History {
 	public void setWebAddress(String webAddress) {
 		this.webAddress = webAddress;
 	}
-
-
-	
-	
-	
-	
 }
