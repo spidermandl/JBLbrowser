@@ -641,22 +641,22 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public void startPage(String url) {
 		if(JBLPreference.getInstance(this.getActivity()).readInt(BoolType.FULL_SCREEN.toString())==JBLPreference.YES_FULL){  //全屏模式
+			hideStatusBar();              //当运行后开启全屏，退出程序，再运行时需重新建popwindow和隐藏状态栏
+			if(popWindow==null){
+				createPopShrinkFullScreen();
+			}      		
 			if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
-				
 				getFragmentManager().beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
-				if(popWindow!=null){
-	            	if(popWindow.isShowing()){
-	            		popWindow.dismiss();
-					}
-				}else{                                  //当运行后开启全屏，退出程序，再运行时需重新建popwindow和隐藏状态栏
-					hideStatusBar();
-					createPopShrinkFullScreen();
+				if(popWindow.isShowing()){
+            		popWindow.dismiss();
 				}
 			}else{                                              //不是主页：不显示上下菜单栏，显示悬浮按钮
 				getFragmentManager().beginTransaction().hide(toolbarFragment).hide(topActionbarFragment).commit();
-				if(popWindow!=null){
-					popWindow.showAtLocation(popview, Gravity.RIGHT|Gravity.BOTTOM, 0, 60);
-				}
+				popview.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
+					   public void run() {
+						   popWindow.showAtLocation(popview, Gravity.RIGHT|Gravity.BOTTOM, 0, 60);
+						   }
+						});
 			}
 		}
 		if(JBLPreference.getInstance(this.getActivity()).readInt(BoolType.TURNNING.toString())==JBLPreference.OPEN_TURNING_BUTTON){  //翻页模式
