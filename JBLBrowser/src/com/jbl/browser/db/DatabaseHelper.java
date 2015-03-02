@@ -12,6 +12,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.jbl.browser.R;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.bean.UserInfo;
 import com.jbl.browser.bean.BookMark;
@@ -25,7 +26,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	//数据库版本
 	private static final int DATABASE_VERSION=1;
 	private Map<String, Dao> daos = new HashMap<String, Dao>();
-	
+	private Dao<BookMark, Integer> BookMarkDaoOpe;
 	public DatabaseHelper(Context context){
 		super(context, getMyDatabaseName(context), null,DATABASE_VERSION);
 	}
@@ -51,12 +52,42 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, BookMark.class);
 			TableUtils.createTable(connectionSource, History.class);
 			TableUtils.createTable(connectionSource, UserInfo.class);
+			//初始化表bookmark数据
+			BookMarkDaoOpe=getDao(BookMark.class);
+			initData();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 	}
-
+	/**
+	 * 第一次运行程序，将推荐网址记录到数据库表bookmark中
+	 */
+	void initData(){
+		String[] resWebAddress={"http://m.baidu.com/",
+				"http://sina.cn",
+	            "http://3g.163.com",
+	            "http://wap.sohu.com",
+	            "http://3g.qq.com",
+	            "http://m.weibo.cn",
+	            "http://m.taobao.com",
+	            "http://m.kaixin001.com",
+	            "http://mt.renren.com",
+	            "http://i.ifeng.com"};
+		String[] resWebName={"百度","新浪","网易","搜狐","腾讯","新浪微博","手机淘宝","开心网","人人网","凤凰网"};
+		for(int i=0;i<resWebAddress.length;i++){
+			BookMark bookmark=new BookMark();
+			bookmark.setWebAddress(resWebAddress[i]);
+			bookmark.setWebName(resWebName[i]);
+			bookmark.setRecommend(true);
+			try {
+				BookMarkDaoOpe.create(bookmark);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	@Override
 	public void onUpgrade(SQLiteDatabase sqliteDatabase, ConnectionSource connectionSource, int oldVersion,
 			int newVersion) {

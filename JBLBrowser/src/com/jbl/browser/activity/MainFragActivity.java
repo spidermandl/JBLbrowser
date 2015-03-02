@@ -31,8 +31,6 @@ public class MainFragActivity extends BaseFragActivity {
 	private DownloadManager mDownloadManager;
 	//下载模块接收receiver　
 	private BroadcastReceiver mDownloadReceiver;
-	
-	private int isFirstRun; //0：第一次运行，1：不是第一次运行
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -40,29 +38,11 @@ public class MainFragActivity extends BaseFragActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_frame);
 		init();
-		isFirstRun=JBLPreference.getInstance(this).readInt(JBLPreference.IS_FIRST_RUN);
-		if(isFirstRun==0){                    
-			initData();
-			JBLPreference.getInstance(this).writeInt(JBLPreference.IS_FIRST_RUN,JBLPreference.NO_FIRST_RUN);	
-		}
 		super.onCreate(arg0);
 		navigateTo(MainPageFragment.class, null, true, TAG);
 	}
 	
-	/**
-	 * 第一次运行程序，将推荐网址记录到数据库表bookmark中
-	 */
-	void initData(){
-		String[] resWebAddress=getResources().getStringArray(R.array.recommend_web_address);
-		String[] resWebName=getResources().getStringArray(R.array.recommend_web_name);
-		for(int i=0;i<resWebAddress.length;i++){
-			BookMark bookmark=new BookMark();
-			bookmark.setWebAddress(resWebAddress[i]);
-			bookmark.setWebName(resWebName[i]);
-			bookmark.setRecommend(true);
-			new BookMarkDao(this).addBookMark(bookmark);
-		}
-	}
+	
 	/**
 	 * 初始化
 	 */
