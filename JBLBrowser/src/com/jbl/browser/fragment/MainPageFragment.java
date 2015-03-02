@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
@@ -47,6 +48,7 @@ import com.jbl.browser.interfaces.LoadURLInterface;
 import com.jbl.browser.interfaces.SettingItemInterface;
 import com.jbl.browser.interfaces.ToolbarItemInterface;
 import com.jbl.browser.interfaces.TopActionbarInterface;
+import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
@@ -341,6 +343,23 @@ public class MainPageFragment extends SherlockFragment implements
 	            Toast.makeText(getActivity(), StringUtils.OPEN_NO_HISTORY, Toast.LENGTH_SHORT).show();
 			}
 			break;
+		case BRIGHTNESS_TYPE:
+			value=JBLPreference.getInstance(getActivity()).readInt(BoolType.BRIGHTNESS_TYPE.toString());
+			if(value!=JBLPreference.DAY_MODEL){
+				//夜间模式
+				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.DAY_MODEL);
+				BrightnessSettings.showBrightnessSettingsDialog(getActivity());
+				/*LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				popview=(View)mLayoutInflater.inflate(R.layout.pop_seekbar_brightness, null);
+				popWindow=new PopupWindow(popview,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+				popWindow.showAtLocation(popview, Gravity.CENTER, 0, 0);
+				SeekBar seekBar=(SeekBar)popview.findViewById(R.id.ctrl_skbProgress);*/
+			}else{
+				//日间模式
+				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.NIGHT_MODEL);
+
+			}
+			break;
 		default:
 			break;
 		}
@@ -565,7 +584,11 @@ public class MainPageFragment extends SherlockFragment implements
 		// TODO Auto-generated method stub
 		webBoolSetting(BoolType.TURNNING);
 	}
-
+	@Override
+	public void nightBright() {
+		// TODO Auto-generated method stub
+		webBoolSetting(BoolType.BRIGHTNESS_TYPE);
+	}
 
 	@Override
 	public void goBack() {
@@ -678,5 +701,7 @@ public class MainPageFragment extends SherlockFragment implements
 			}
 		}
 	}
+
+	
 	
 }

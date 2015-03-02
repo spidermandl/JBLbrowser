@@ -26,7 +26,7 @@ import com.jbl.browser.R;
 public class BrightnessSettings {  
     private static final String TAG = BrightnessSettings.class.getSimpleName();  
     static Context context;  
-  
+    static int brightness;
     /** 
      * 获得当前系统的亮度模式 
      * SCREEN_BRIGHTNESS_MODE_AUTOMATIC=1 为自动调节屏幕亮度 
@@ -140,10 +140,9 @@ public class BrightnessSettings {
   
             @Override  
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {  
-                int brightness = progress + MIN_BRIGHTNESS; // 实际亮度  
+                brightness = progress + MIN_BRIGHTNESS; // 实际亮度  
                 // 亮度滑块滑动时，实时改变屏幕亮度  
-                setActScreenBrightness(act, brightness); // 改变当前屏幕亮度  
-                setSysScreenBrightness(brightness); // 改变系统屏幕亮度  
+                setActScreenBrightness(act, brightness); // 改变当前屏幕亮度    
             }  
         });  
         // 是否显示手动调节亮度滑块  
@@ -157,7 +156,7 @@ public class BrightnessSettings {
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {  
             public void onClick(DialogInterface dialog, int whichButton) {  
                 // 点击确定按钮，恢复activity亮度设置  
-                setActScreenBrightness(act, -MAX_BRIGHTNESS);  
+                setActScreenBrightness(act, brightness);  
             }  
         });  
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {  

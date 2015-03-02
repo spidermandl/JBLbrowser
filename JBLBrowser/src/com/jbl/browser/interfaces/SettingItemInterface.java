@@ -30,6 +30,8 @@ public interface SettingItemInterface {
 //    阅读模式
 //    刷新
 	void refresh();
+//	  夜间模式
+	void nightBright();
 //    意见反馈
 //    检查更新
 //    页内查找

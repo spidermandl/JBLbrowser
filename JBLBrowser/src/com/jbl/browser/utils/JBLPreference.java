@@ -25,7 +25,8 @@ public class JBLPreference {
 		PIC_CACHE(1), //网页图片缓存模式
 		FULL_SCREEN(2), //网页全屏浏览模式
 		TURNNING(3), //页面翻转模式
-		HISTORY_CACHE(4);//网页无痕浏览模式
+		HISTORY_CACHE(4),//网页无痕浏览模式
+	    BRIGHTNESS_TYPE(5);
 		// 定义私有变量
 		private int nCode;
 
@@ -52,6 +53,9 @@ public class JBLPreference {
 	public static final int OPEN_TURNING_BUTTON=1;//开启翻页按钮;
 	public static final int CLOSE_TURNING_BUTTON=0;//关闭翻页按钮;
 	
+	public static final int DAY_MODEL=1;//"日间模式";
+	public static final int NIGHT_MODEL=0;//"夜间模式";
+	
 	//书签和历史记录传网址到主页fragment关键字
 	public static final String BOOKMARK_HISTORY_KEY="webAddress";
 	public static final String RECOMMEND_KEY="urlAddress";
@@ -64,10 +68,7 @@ public class JBLPreference {
 	public static final int LOCK_VERTAICAL= 1;//"锁定竖屏";
 	public static final int LOCK_HORZON= 2;//"锁定横屏";
 	public static final String DELETE_RECOMMEND="删除推荐";
-	public static final String SUCCESS_DELETE="删除成功";
-	public static final String BRIGHTNESS_TYPE="BRIGHTNESS";//日间 夜间 模式
-	public static final int DAY_MODEL=0;//"日间模式";
-	public static final int NIGHT_MODEL=1;//"夜间模式";
+	public static final String SUCCESS_DELETE="删除成功";	
 	public static final String EXTRA_ID_URL = "EXTRA_ID_URL";
 	
 	public static final String FONT_SIZE="字体大小";
@@ -115,6 +116,8 @@ public class JBLPreference {
 			myPrefs.writeInt(BoolType.TURNNING.toString(), CLOSE_TURNING_BUTTON);
 		if(myPrefs.readInt(BoolType.PIC_CACHE.toString())==INVALID)
 			myPrefs.writeInt(BoolType.PIC_CACHE.toString(), YES_PICTURE);
+		if(myPrefs.readInt(BoolType.BRIGHTNESS_TYPE.toString())==INVALID)
+			myPrefs.writeInt(BoolType.BRIGHTNESS_TYPE.toString(), DAY_MODEL);
 	}
 	/**
 	 * 初始化SharedPreferences对象

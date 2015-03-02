@@ -231,9 +231,13 @@ public class SettingPagerFragment extends SherlockFragment{
 								if(settingInterface!=null)
 									settingInterface.fullScreen();
 								break;
-							case 5://页面刷新
+							case 3://页面刷新
 								if(settingInterface!=null)
 									settingInterface.refresh();
+								break;
+							case 5://夜间模式
+								if(settingInterface!=null)
+									settingInterface.nightBright();
 								break;
 							default:
 								break;
