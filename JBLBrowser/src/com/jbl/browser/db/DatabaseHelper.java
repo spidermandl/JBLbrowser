@@ -65,7 +65,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	 */
 	void initData(){
 		String[] resWebAddress={"http://m.baidu.com/",
-				"http://sina.cn",
+				"http://sina.cn/",
 	            "http://3g.163.com",
 	            "http://wap.sohu.com",
 	            "http://3g.qq.com",
