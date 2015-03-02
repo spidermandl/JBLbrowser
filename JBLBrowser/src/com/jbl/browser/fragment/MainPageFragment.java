@@ -642,6 +642,10 @@ public class MainPageFragment extends SherlockFragment implements
 				getFragmentManager().beginTransaction().hide(toolbarFragment).hide(topActionbarFragment).commit();
 				if(popWindow!=null){
 					popWindow.showAtLocation(popview, Gravity.RIGHT|Gravity.BOTTOM, 0, 60);
+				}else{
+					hideStatusBar();
+					createPopShrinkFullScreen();
+					popWindow.showAtLocation(popview, Gravity.RIGHT|Gravity.BOTTOM, 0, 60);
 				}
 			}
 		}
