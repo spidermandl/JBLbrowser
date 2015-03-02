@@ -82,6 +82,7 @@ OnItemClickListener {
 		mSearch.setFocusableInTouchMode(true);
 		mSearch.requestFocus();
 		listview=(ListView)view.findViewById(R.id.mSearch_RecommnedView);
+		initDataRecommend();
 		listview.setOnItemClickListener(this);			
 		showSoftInput(true);
 		return view;
@@ -89,22 +90,22 @@ OnItemClickListener {
 
 	/**
 	 * 从数据库中读数据
-	 * 通过判断历史记录是否为空，来判断数据源选择
-	 * 当历史记录为空，读取推荐页面，当历史记录非空，则读取历史记录数据
+	 * 当没有输入字符是，下拉菜单显示推荐页面
 	 * */
-	private void initData(){
+	private void initDataRecommend(){
 		list=new BookMarkDao(getActivity()).queryBookMarkAllByisRecommend(true);
-		history=new HistoryDao(getActivity()).queryAll();//从数据库中获得数据
-		if(history.size()==0){
 			//从推荐页面读取数据
 			mSearchAdapter=new SearchAdapter(getActivity(), list,null,false);
-			listview.setAdapter(mSearchAdapter);
-		}else{
-			//从历史界面读取数据
-			mSearchAdapter=new SearchAdapter(getActivity(), null,history,true);
-			listview.setAdapter(mSearchAdapter);
-		}
-		
+			listview.setAdapter(mSearchAdapter);	
+	}
+	/**
+	 * 从数据库中读数据
+	 * 当有输入字符时，显示历史记录
+	 * */
+	private void initDataHistory(){
+		history=new HistoryDao(getActivity()).queryAll();
+		mSearchAdapter=new SearchAdapter(getActivity(), null,history,true);
+		listview.setAdapter(mSearchAdapter);
 	}
 	@Override
 	public void onClick(View v) {
@@ -135,7 +136,7 @@ OnItemClickListener {
 		if(s.length()==0)
 			mController.setText(R.string.search_cancel);
 		else
-			initData();
+			initDataHistory();
 			mSearchAdapter.notifyDataSetChanged();
 		    mController.setText(R.string.search_forward);
 	}
