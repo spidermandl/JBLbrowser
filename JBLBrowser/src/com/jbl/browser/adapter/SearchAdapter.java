@@ -13,27 +13,40 @@ import android.widget.TextView;
 
 import com.jbl.browser.R;
 import com.jbl.browser.bean.BookMark;
+import com.jbl.browser.bean.History;
 
 public class SearchAdapter extends BaseAdapter{
 
-	List<BookMark> list_bookmark=new ArrayList<BookMark>();
+	List<BookMark> list_bookmark=new ArrayList<BookMark>(); //推荐界面数据
+	List<History> list_history=new ArrayList<History>();  //历史记录数据
+	private boolean mFlag=false; //默认值为false 默认历史记录为空 ，读取推荐页面数据
 	 private LayoutInflater mInflater; 
 	 private Context mContext;
-	 public SearchAdapter(Context context, List<BookMark> list) {  
+	 public SearchAdapter(Context context, List<BookMark> list,List<History> history,Boolean mFlag) {  
 		    mContext=context;  
 	        mInflater = LayoutInflater.from(context);  
-	        list_bookmark= list;  
+	        list_bookmark= list;
+	        list_history=history;
+	        this.mFlag=mFlag;
 	    } 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return list_bookmark==null?0:list_bookmark.size();
+		if(!mFlag){
+			return list_bookmark==null?0:list_bookmark.size();
+		}else{
+			return list_history==null?0:list_history.size();
+		}
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return list_bookmark.get(position);
+		if(!mFlag){
+			return list_bookmark.get(position);
+		}else{
+			return list_history.get(position);
+		}
 	}
 
 	@Override
@@ -56,8 +69,13 @@ public class SearchAdapter extends BaseAdapter{
        } else {  
            holder = (ViewHolder) convertView.getTag();
        }
-       holder.urlName.setText(list_bookmark.get(position).getWebName());
-       holder.urlAddress.setText(list_bookmark.get(position).getWebAddress());
+       if(!mFlag){
+    	   holder.urlName.setText(list_bookmark.get(position).getWebName());
+    	   holder.urlAddress.setText(list_bookmark.get(position).getWebAddress());
+       }else{
+    	   holder.urlName.setText(list_history.get(position).getWebName());
+    	   holder.urlAddress.setText(list_history.get(position).getWebAddress());
+       }
 		return convertView;
 	}
 	public class ViewHolder  
