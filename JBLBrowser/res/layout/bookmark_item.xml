@@ -29,7 +29,7 @@
             android:textSize="@dimen/font_size_item_max" />
 
         <TextView
-            android:id="@+id/@+id/url_address"
+            android:id="@+id/url_address"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/padding_bottom"
