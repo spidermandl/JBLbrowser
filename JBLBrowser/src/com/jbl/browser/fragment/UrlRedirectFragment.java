@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -24,7 +25,9 @@ import com.jbl.browser.R;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.adapter.SearchAdapter;
 import com.jbl.browser.bean.BookMark;
+import com.jbl.browser.bean.History;
 import com.jbl.browser.db.BookMarkDao;
+import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.utils.JBLPreference;
 
 /**
@@ -36,14 +39,16 @@ public class UrlRedirectFragment extends SherlockFragment implements View.OnClic
 OnItemClickListener {
 
 	public final static String TAG="UrlRedirectFragment";
-	
+	//SearchAdapter的四个参数 1.上下文 2.推荐界面数据  3.历史记录数据 4.判断数据源
 	private SearchAdapter mSearchAdapter;// 下拉菜单适配器
 	private EditText mSearch; //输入网址搜索
 	private TextView mController; //二维码搜索
 	//搜索记录 listView
 	ListView listview;
-	//记录数据
+	//读取推荐页面记录数据
 	List<BookMark> list=null;
+	//读取历史记录数据
+	List<History> history=null;
 	//搜索网址
 	String webAddress="";
 	//搜索网名
@@ -77,19 +82,29 @@ OnItemClickListener {
 		mSearch.setFocusableInTouchMode(true);
 		mSearch.requestFocus();
 		listview=(ListView)view.findViewById(R.id.mSearch_RecommnedView);
-		listview.setOnItemClickListener(this);
-		initData();	
+		listview.setOnItemClickListener(this);			
 		showSoftInput(true);
 		return view;
 	}
 
 	/**
 	 * 从数据库中读数据
+	 * 通过判断历史记录是否为空，来判断数据源选择
+	 * 当历史记录为空，读取推荐页面，当历史记录非空，则读取历史记录数据
 	 * */
 	private void initData(){
 		list=new BookMarkDao(getActivity()).queryBookMarkAllByisRecommend(true);
-		mSearchAdapter=new SearchAdapter(getActivity(), list);
-		listview.setAdapter(mSearchAdapter);
+		history=new HistoryDao(getActivity()).queryAll();//从数据库中获得数据
+		if(history.size()==0){
+			//从推荐页面读取数据
+			mSearchAdapter=new SearchAdapter(getActivity(), list,null,false);
+			listview.setAdapter(mSearchAdapter);
+		}else{
+			//从历史界面读取数据
+			mSearchAdapter=new SearchAdapter(getActivity(), null,history,true);
+			listview.setAdapter(mSearchAdapter);
+		}
+		
 	}
 	@Override
 	public void onClick(View v) {
@@ -120,6 +135,8 @@ OnItemClickListener {
 		if(s.length()==0)
 			mController.setText(R.string.search_cancel);
 		else
+			initData();
+			mSearchAdapter.notifyDataSetChanged();
 		    mController.setText(R.string.search_forward);
 	}
 
