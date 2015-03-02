@@ -250,6 +250,20 @@ public class MainPageFragment extends SherlockFragment implements
 			Toast.makeText(getActivity(), R.string.add_bookmark_fail, Toast.LENGTH_SHORT).show();
 	}
 	
+
+	/**
+	 * 点击搜索时将搜索网址名称和网址存入数据库
+	 * 在UrlRedirectFragment中调用
+	 * *//*
+	public void addSearchRecord(boolean isRecommend){
+		boolean flag=true;
+		BookMark bookMark =new BookMark();
+		bookMark.setWebName(mWebView.getWebName());
+		bookMark.setWebAddress(mWebView.getCurrentUrl());
+		bookMark.setRecommend(isRecommend);
+		flag=new BookMarkDao(getActivity()).addBookMark(bookMark);
+	}*/
+	
 	/**
 	 * 设置主页网页模式
 	 * @param type  设置类型
