@@ -158,7 +158,7 @@ OnItemClickListener {
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
-		String webAddress=((TextView)view.findViewById(R.id.mSearch_tv2)).getText().toString();
+		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
 		JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
         this.getActivity().finish();
         Intent intent=new Intent();
