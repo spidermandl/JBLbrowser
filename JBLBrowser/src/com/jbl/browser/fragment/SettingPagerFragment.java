@@ -147,7 +147,15 @@ public class SettingPagerFragment extends SherlockFragment{
 					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
 							.substring(0, 4)));
 				}
-			} else {
+			} else if(i==13){
+				  if(JBLPreference.getInstance(mContext).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
+					  list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
+								.substring(4)));
+				  }else {
+						list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
+								.substring(0, 4)));
+					}
+			}else{
 				list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]));
 			}
 		}

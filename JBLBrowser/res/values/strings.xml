@@ -135,7 +135,7 @@
         <item>开启全屏退出全屏</item>
         <item>刷新</item>
         <item>意见反馈</item>
-        <item>夜间模式</item>
+        <item>夜间模式日间模式</item>
     </string-array>
      <string-array name="recommend_web_address">
         <item>http://m.baidu.com/</item>

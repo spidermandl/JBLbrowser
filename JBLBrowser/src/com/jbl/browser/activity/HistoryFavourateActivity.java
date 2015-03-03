@@ -5,6 +5,9 @@ import com.actionbarsherlock.app.ActionBar;
 import com.jbl.browser.R;
 import com.jbl.browser.fragment.BookMarkFragment;
 import com.jbl.browser.fragment.HistoryFragment;
+import com.jbl.browser.utils.BrightnessSettings;
+import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.JBLPreference.BoolType;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -55,6 +58,11 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
         if (tag != null) {
             mTabHost.setCurrentTabByTag(tag);
         }
+     /* //判断是夜间模式需再设置下activity亮度
+      		if(JBLPreference.getInstance(this).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
+      			int brightness=JBLPreference.getInstance(this).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
+      			BrightnessSettings.setActScreenBrightness(this,brightness);
+      		}*/
 	}
 	
 	

@@ -1,5 +1,8 @@
 package com.jbl.browser.fragment;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 
 import android.annotation.SuppressLint;
@@ -8,6 +11,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager.LayoutParams;
@@ -23,6 +27,7 @@ import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -43,7 +48,9 @@ import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.bean.BookMark;
+import com.jbl.browser.bean.History;
 import com.jbl.browser.db.BookMarkDao;
+import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.interfaces.LoadURLInterface;
 import com.jbl.browser.interfaces.SettingItemInterface;
 import com.jbl.browser.interfaces.ToolbarItemInterface;
@@ -100,8 +107,13 @@ public class MainPageFragment extends SherlockFragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		//cur_url=UrlUtils.URL_GET_HOST;
-		View view = inflater.inflate(R.layout.fragment_main_page, container,false);
+		View view = inflater.inflate(R.layout.fragment_main_page, container,false); 
 		mWebView = WebWindowManagement.getInstance().getMainWebView();
+		//判断mWebView是否存在parent view
+		ViewGroup p = (ViewGroup) mWebView.getParent(); 
+         if (p != null) { 
+             p.removeAllViewsInLayout(); 
+         }
 	    webFrame=((FrameLayout) view.findViewById(R.id.web_view_frame));
 	    webFrame.addView(mWebView);// webview
 //		//Intent intent = getActivity().getIntent();  //监听webview跳转，实现activity跳转到推荐页面
@@ -142,9 +154,10 @@ public class MainPageFragment extends SherlockFragment implements
 		default:
 			break;
 		}
-
+		
 		BrowserSettings.getInstance().update();
-
+	
+		
 		/*
 		 * 2.0 WebView touch监听
 		 * 
@@ -165,6 +178,7 @@ public class MainPageFragment extends SherlockFragment implements
 					getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
 		        	getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
 				}
+				
 				return false;
 			}
 		});
@@ -345,19 +359,15 @@ public class MainPageFragment extends SherlockFragment implements
 			break;
 		case BRIGHTNESS_TYPE:
 			value=JBLPreference.getInstance(getActivity()).readInt(BoolType.BRIGHTNESS_TYPE.toString());
-			if(value!=JBLPreference.DAY_MODEL){
+			if(value!=JBLPreference.NIGHT_MODEL){
 				//夜间模式
-				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.DAY_MODEL);
-				BrightnessSettings.showBrightnessSettingsDialog(getActivity());
-				/*LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				popview=(View)mLayoutInflater.inflate(R.layout.pop_seekbar_brightness, null);
-				popWindow=new PopupWindow(popview,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-				popWindow.showAtLocation(popview, Gravity.CENTER, 0, 0);
-				SeekBar seekBar=(SeekBar)popview.findViewById(R.id.ctrl_skbProgress);*/
+				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.NIGHT_MODEL);
+				BrightnessSettings.showPopSeekBrightness(getActivity());
+				
 			}else{
 				//日间模式
-				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.NIGHT_MODEL);
-
+				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.DAY_MODEL);
+				BrightnessSettings.setActScreenBrightness(getActivity(), -1);
 			}
 			break;
 		default:
@@ -585,7 +595,7 @@ public class MainPageFragment extends SherlockFragment implements
 		webBoolSetting(BoolType.TURNNING);
 	}
 	@Override
-	public void nightBright() {
+	public void nightBright() {     //夜间模式
 		// TODO Auto-generated method stub
 		webBoolSetting(BoolType.BRIGHTNESS_TYPE);
 	}
@@ -700,6 +710,32 @@ public class MainPageFragment extends SherlockFragment implements
 				}
 			}
 		}
+		
+	}
+
+	@Override
+	public void stopPage(WebView view,String url) {
+		// TODO Auto-generated method stub
+		if(JBLPreference.getInstance(getActivity()).readInt(BoolType.HISTORY_CACHE.toString())==JBLPreference.CLOSE_HISTORY){   //判断不是无痕浏览，添加历史记录
+			if(url!=""){           
+				String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA)
+						.format(new Date()).toString();
+				String temp=UrlUtils.URL_GET_HOST.substring(0, UrlUtils.URL_GET_HOST.length());
+				if(!url.equals(temp)){      //当加载默认网址时不加入历史记录
+					History history = new History();
+					history.setWebAddress(url);
+					history.setWebName(view.getTitle());
+					// 加载完加入历史记录
+					new HistoryDao(getActivity()).addHistory(history);
+				}
+			}
+		}
+		//以下代码加上后：在主activity界面设置夜间模式后到其他activity中调转回来出现黑屏
+		/*//判断是夜间模式需再设置下activity亮度
+		if(JBLPreference.getInstance(getActivity()).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
+			int brightness=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
+			BrightnessSettings.setActScreenBrightness(getActivity(),brightness);
+		}*/
 	}
 
 	

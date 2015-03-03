@@ -55,6 +55,7 @@ public class JBLPreference {
 	
 	public static final int DAY_MODEL=1;//"日间模式";
 	public static final int NIGHT_MODEL=0;//"夜间模式";
+	public static final String NIGHT_BRIGHTNESS_VALUS="夜间模式亮度值";
 	
 	//书签和历史记录传网址到主页fragment关键字
 	public static final String BOOKMARK_HISTORY_KEY="webAddress";
