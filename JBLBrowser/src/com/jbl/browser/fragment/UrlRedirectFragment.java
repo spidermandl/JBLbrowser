@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,7 +21,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.jbl.browser.R;
-import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.adapter.SearchAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
@@ -35,8 +33,10 @@ import com.jbl.browser.utils.JBLPreference;
  * @author Desmond
  *
  */
-public class UrlRedirectFragment extends SherlockFragment implements View.OnClickListener,TextWatcher,
-OnItemClickListener {
+public class UrlRedirectFragment extends SherlockFragment implements 
+               View.OnClickListener,
+               TextWatcher,
+               OnItemClickListener {
 
 	public final static String TAG="UrlRedirectFragment";
 	//SearchAdapter的四个参数 1.上下文 2.推荐界面数据  3.历史记录数据 4.判断数据源
@@ -188,10 +188,9 @@ OnItemClickListener {
 		// TODO Auto-generated method stub
 		String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
 		JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
-        this.getActivity().finish();
-        Intent intent=new Intent();
-        intent.setClass(getActivity(), MainFragActivity.class);
-        getActivity().startActivity(intent);
+		getFragmentManager().popBackStack();
+		//((BaseFragActivity) this.getActivity()).navigateTo(MainPageFragment.class, null, true, MainPageFragment.TAG);
+		
 		
 	}
 }

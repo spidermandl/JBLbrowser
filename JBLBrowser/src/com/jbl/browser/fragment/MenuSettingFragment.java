@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
-import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.SlipButton;
