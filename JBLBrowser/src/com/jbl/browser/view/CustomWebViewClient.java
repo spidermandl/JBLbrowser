@@ -39,7 +39,7 @@ private MultipageActivity mMultipageActivity;
 		}
 		
 		((CustomWebView) view).notifyPageStarted();
-		mMultipageActivity.onPageStarted(url);
+		
 		
 		super.onPageStarted(view, url, favicon);
 	}

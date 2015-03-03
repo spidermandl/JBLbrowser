@@ -6,13 +6,9 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,13 +20,10 @@ import android.webkit.JsPromptResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebIconDatabase;
 import android.webkit.WebView;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +33,7 @@ import com.jbl.browser.R;
 import com.jbl.browser.utils.AnimationManager;
 import com.jbl.browser.utils.Constants;
 import com.jbl.browser.utils.Controller;
+import com.jbl.browser.utils.UrlUtils;
 import com.jbl.browser.view.CustomWebView;
 import com.jbl.browser.view.CustomWebViewClient;
 
@@ -51,19 +45,13 @@ public class MultipageActivity extends Activity{
 	        ViewGroup.LayoutParams.MATCH_PARENT,
 	       ViewGroup.LayoutParams.MATCH_PARENT);
 	protected LayoutInflater mInflater = null;
-	private LinearLayout mFindBar;
 	private ImageView mPreviousTabView;
 	private ImageView mNextTabView;
-	private AutoCompleteTextView mUrlEditText;
-	private ImageButton mGoButton;	
-	private ProgressBar mProgressBar;	
 	private CustomWebView mCurrentWebView;
 	private List<CustomWebView> mWebViews;
 	private TextView mNewTabButton;
 	private ImageButton mRemoveTabButton;
-	private Drawable mCircularProgress;
 	private boolean mUrlBarVisible;
-	private TextWatcher mUrlTextWatcher;
 	private ViewFlipper mViewFlipper;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,8 +71,6 @@ public class MultipageActivity extends Activity{
     	mWebViews = new ArrayList<CustomWebView>();
     	Controller.getInstance().setWebViewList(mWebViews);
     	mViewFlipper = (ViewFlipper) findViewById(R.id.View_filper);
-    	mFindBar = (LinearLayout) findViewById(R.id.findControls);
-    	mFindBar.setVisibility(View.GONE);
     	mPreviousTabView = (ImageView) findViewById(R.id.PreviousTabView);
     	mPreviousTabView.setOnClickListener(new View.OnClickListener() {			
 			@Override
@@ -101,36 +87,6 @@ public class MultipageActivity extends Activity{
 			}
 		});
     	mNextTabView.setVisibility(View.GONE);
-    	mUrlEditText = (AutoCompleteTextView) findViewById(R.id.UrlText);
-    	mUrlEditText.setThreshold(1);
-    	mUrlEditText.setOnKeyListener(new View.OnKeyListener() {
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {												
-				if (keyCode == KeyEvent.KEYCODE_ENTER) {
-					navigateToUrl();
-					return true;
-				}
-				return false;
-			}
-    	});
-    	mUrlEditText.addTextChangedListener(mUrlTextWatcher);  	
-    	mUrlEditText.setCompoundDrawablePadding(5);	
-    	mGoButton = (ImageButton) findViewById(R.id.GoBtn);    	
-    	mGoButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-            	if (mCurrentWebView.isLoading()) {
-            		mCurrentWebView.stopLoading();
-            	} else if (!mCurrentWebView.isSameUrl(mUrlEditText.getText().toString())) {
-            		navigateToUrl();
-            	} else {
-            		mCurrentWebView.reload();
-            	}
-            }          
-        });
-    	mProgressBar = (ProgressBar) findViewById(R.id.WebViewProgress);
-    	mProgressBar.setMax(100);
-    	/*mPreviousButton = (ImageButton) findViewById(R.id.PreviousBtn);
-    	mNextButton = (ImageButton) findViewById(R.id.NextBtn);*/
 		mNewTabButton = (TextView) findViewById(R.id.NewTabBtn);
 		mNewTabButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -149,7 +105,7 @@ public class MultipageActivity extends Activity{
             		removeCurrentTab();
             }          
         });
-        mCircularProgress = getResources().getDrawable(R.drawable.spinner);
+        getResources().getDrawable(R.drawable.spinner);
         mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       //  buildComponents();                
         mViewFlipper.removeAllViews();   
@@ -286,7 +242,6 @@ public class MultipageActivity extends Activity{
     	}
     	updateUI();
     	updatePreviousNextTabViewsVisibility();
-    	mUrlEditText.clearFocus();
     	if (navigateToHome) {
     		navigateToHome();
     	}
@@ -302,14 +257,14 @@ public class MultipageActivity extends Activity{
     	mCurrentWebView = mWebViews.get(mViewFlipper.getDisplayedChild());
     	updateUI();
     	updatePreviousNextTabViewsVisibility();
-    	mUrlEditText.clearFocus();
+    	
     }
     private void navigateToUrl(String url) {
-    	mUrlEditText.clearFocus();
+    	
     	if ((url != null) &&
     			(url.length() > 0)) {		    	
     		if (url.equals(Constants.URL_ABOUT_START)) {
-    			mCurrentWebView.loadUrl("http://www.baidu.com");	
+    			mCurrentWebView.loadUrl(UrlUtils.URL_GET_HOST);	
     		} else {
     			// If the url is not from GWT mobile view, and is in the mobile view url list, then load it with GWT.
     			if ((!url.startsWith(Constants.URL_GOOGLE_MOBILE_VIEW_NO_FORMAT)) 
@@ -321,9 +276,7 @@ public class MultipageActivity extends Activity{
     		}
     	}
     }        
-    private void navigateToUrl() {
-    	navigateToUrl(mUrlEditText.getText().toString());    	
-    }
+    
     private void navigateToHome() {
     	navigateToUrl(Controller.getInstance().getPreferences().getString(Constants.PREFERENCES_GENERAL_HOME_PAGE,
     			Constants.URL_ABOUT_START));
@@ -340,34 +293,12 @@ public class MultipageActivity extends Activity{
     		clearTitle();
     	}
 	}
-	private void updateGoButton() {		
-		if (mCurrentWebView.isLoading()) {
-			mGoButton.setImageResource(R.drawable.ic_btn_stop);			
-			mUrlEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, mCircularProgress, null);
-			((AnimationDrawable) mCircularProgress).start();
-		} else {
-			if (!mCurrentWebView.isSameUrl(mUrlEditText.getText().toString())) {
-				mGoButton.setImageResource(R.drawable.ic_btn_go);
-			} else {
-				mGoButton.setImageResource(R.drawable.ic_btn_reload);
-			}			
-			
-			mUrlEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);			
-			((AnimationDrawable) mCircularProgress).stop();
-		}
-	}
+	
 	private void updateUI() {
-		mUrlEditText.removeTextChangedListener(mUrlTextWatcher);
-		mUrlEditText.setText(mCurrentWebView.getUrl());
-		mUrlEditText.addTextChangedListener(mUrlTextWatcher);
-		/*mPreviousButton.setEnabled(mCurrentWebView.canGoBack());
-		mNextButton.setEnabled(mCurrentWebView.canGoForward());*/
 		if (mCurrentWebView.getUrl() != null)
 			mRemoveTabButton.setEnabled((mViewFlipper.getChildCount() > 1 || !mCurrentWebView.getUrl().equals(Constants.URL_ABOUT_START)));
 		else
 			mRemoveTabButton.setEnabled(mViewFlipper.getChildCount() > 1);
-		mProgressBar.setProgress(mCurrentWebView.getProgress());
-		updateGoButton();
 		updateTitle();
 	}
 	@Override
@@ -443,14 +374,6 @@ public class MultipageActivity extends Activity{
 			mCurrentWebView.loadAdSweep();
 		}
 		WebIconDatabase.getInstance().retainIconForPageUrl(mCurrentWebView.getUrl());
-	}
-	public void onPageStarted(String url) {
-		mUrlEditText.removeTextChangedListener(mUrlTextWatcher);
-		mUrlEditText.setText(url);
-		mUrlEditText.addTextChangedListener(mUrlTextWatcher);
-		/*mPreviousButton.setEnabled(false);
-		mNextButton.setEnabled(false);*/
-		updateGoButton();
 	}
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
