@@ -27,14 +27,12 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.BrowserSettings;
-import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
 import com.jbl.browser.WebWindowManagement;
 import com.jbl.browser.activity.BaseFragActivity;
@@ -50,9 +48,9 @@ import com.jbl.browser.interfaces.ToolbarItemInterface;
 import com.jbl.browser.interfaces.TopActionbarInterface;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.JBLPreference.BoolType;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
-import com.jbl.browser.utils.JBLPreference.BoolType;
 import com.jbl.browser.view.ProgressWebView;
 import com.jbl.browser.view.UserDefinedDialog;
 import com.viewpager.indicator.PageIndicator;
@@ -315,19 +313,18 @@ public class MainPageFragment extends SherlockFragment implements
 		case TURNNING:
 			value=JBLPreference.getInstance(getActivity()).readInt(BoolType.TURNNING.toString());
 			if(value!=JBLPreference.OPEN_TURNING_BUTTON){
-				//开启翻页模式
-				createTurningPage();
+				//当要开启翻页模式
+	            createTurningPage();
 	            if(!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
 	            	popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
-	            }     
+	            } 
 	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.OPEN_TURNING_BUTTON);//写入缓存
 	            Toast.makeText(getActivity(), StringUtils.OPEN_TURNING_BUTTON, Toast.LENGTH_SHORT).show();
 			}else{
-				//关闭翻页模式
-				if(popWindow!=null)
-				    popWindow.dismiss();
+				//当要关闭翻页模式
+				popWindow.dismiss();
+            	Toast.makeText(getActivity(), StringUtils.CLOSE_TURNING_BUTTON, Toast.LENGTH_SHORT).show();
 	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.CLOSE_TURNING_BUTTON);//写入缓存
-				Toast.makeText(getActivity(), StringUtils.CLOSE_TURNING_BUTTON, Toast.LENGTH_SHORT).show();
 			}
 			break;
 			
@@ -526,44 +523,6 @@ public class MainPageFragment extends SherlockFragment implements
 		.create();
 		dialog.show();
 	}
-	
-	/*@Override
-	public void pageTurningSwitch() {
-		switch (JBLPreference.getInstance(getActivity()).readInt(JBLPreference.TURNING_TYPE)) {
-		case JBLPreference.OPEN_TURNING_BUTTON:
-			JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.TURNING_TYPE, JBLPreference.COLSE_TURNING_BUTTON);
-			Toast.makeText(getActivity(), StringUtils.OPEN_TURNING_BUTTON, 100).show();
-			LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			popview=(View)mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
-			popWindow=new PopupWindow(popview,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-			popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
-			Button previous_page=(Button)popview.findViewById(R.id.previous_page);
-			Button next_page=(Button)popview.findViewById(R.id.next_page);
-			next_page.setOnClickListener(new OnClickListener(){
-				@SuppressLint("NewApi")
-				@Override
-				public void onClick(View v) {
-					mWebView.scrollTo(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
-				}
-			});
-			previous_page.setOnClickListener(new OnClickListener(){
-				@SuppressLint("NewApi")
-				@Override
-				public void onClick(View v) {
-					mWebView.scrollTo(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
-				}
-			});
-			break;
-		case JBLPreference.INVALID:
-		case JBLPreference.COLSE_TURNING_BUTTON:
-			JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.TURNING_TYPE,JBLPreference.OPEN_TURNING_BUTTON);
-			Toast.makeText(getActivity(), StringUtils.COLSE_TURNING_BUTTON, 100).show();
-			popWindow.dismiss();
-		default:
-			break;
-		}
-	}
-*/
 	@Override
 	public void refresh() {     //刷新当前界面
 		// TODO Auto-generated method stub
@@ -682,26 +641,21 @@ public class MainPageFragment extends SherlockFragment implements
 						});
 			}
 		}
-		if(JBLPreference.getInstance(this.getActivity()).readInt(BoolType.TURNNING.toString())==JBLPreference.OPEN_TURNING_BUTTON){  //翻页模式
-			if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮	
-	       	    getFragmentManager().beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
-				if(popWindow!=null){
-	            	if(popWindow.isShowing()){
-	            		popWindow.dismiss();
-					}
-				}else{                                  //当运行后开启翻页，退出程序，再运行时需重新建popwindow
-					createTurningPage();
-					popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
+		if(JBLPreference.getInstance(this.getActivity()).readInt(BoolType.TURNNING.toString())==JBLPreference.OPEN_TURNING_BUTTON){  //全屏模式
+			if(popWindow==null){
+				createTurningPage();;
+			}      		
+			if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
+				if(popWindow.isShowing()){
+            		popWindow.dismiss();
 				}
-			}else{                                              //不是主页，显示悬浮按钮
-				if(popWindow!=null){
-					createTurningPage();
-					popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
-				}
+			}else{                                              //不是主页：不显示上下菜单栏，显示悬浮按钮
+				popview.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
+					   public void run() {
+						   popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
+						   }
+				});
 			}
 		}
 	}
-
-	
-	
 }

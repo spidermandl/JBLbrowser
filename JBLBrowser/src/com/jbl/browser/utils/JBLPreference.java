@@ -50,8 +50,8 @@ public class JBLPreference {
 	public static final int NO_FULL=1;//关闭网页全屏浏览
 	public static final int YES_FULL=0;//开启网页全屏浏览
 	
-	public static final int OPEN_TURNING_BUTTON=1;//开启翻页按钮;
-	public static final int CLOSE_TURNING_BUTTON=0;//关闭翻页按钮;
+	public static final int OPEN_TURNING_BUTTON=0;//开启翻页按钮;
+	public static final int CLOSE_TURNING_BUTTON=1;//关闭翻页按钮;
 	
 	public static final int DAY_MODEL=1;//"日间模式";
 	public static final int NIGHT_MODEL=0;//"夜间模式";
