@@ -109,6 +109,13 @@
             android:screenOrientation="portrait" >
             
         </activity>
+        <activity 
+            android:name=".activity.MultipageActivity"
+            android:label="@string/app_name"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+            
+        </activity>
         <activity
             android:name=".activity.RecommendMainActivity"
             android:label="@string/app_name"

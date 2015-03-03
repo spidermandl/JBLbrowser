@@ -39,6 +39,7 @@ import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.activity.BrowserSettingActivity;
 import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
+import com.jbl.browser.activity.MultipageActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.db.BookMarkDao;
@@ -66,7 +67,6 @@ public class MainPageFragment extends SherlockFragment implements
                                               ToolbarItemInterface,
                                               TopActionbarInterface,
                                               LoadURLInterface{
-
 	public final static String TAG = "MainPageFragment";
 	/* 定义webview控件 */
 	private ProgressWebView mWebView; // 主控件 webview
@@ -74,15 +74,11 @@ public class MainPageFragment extends SherlockFragment implements
 	private BottomMenuFragment toolbarFragment;//底部toolbar
 	private SettingPagerFragment settingFragment;//底部弹出菜单 fragment
 	private TopMenuFragment topActionbarFragment; //顶部actionbar
-	
-	private FrameLayout webFrame;//webview父控件
-	
+	private FrameLayout webFrame;//webview父控件	
 	public String cur_url; // 设置初始网址
-	public String webName=""; // 网页名
-	
+	public String webName=""; // 网页名	
 	private MultipageAdapter multipageAdapter;//多页效果适配器 
 	private ScheduledExecutorService scheduledExecutorService;
-
 	View popview;//翻页按钮布局
 	PopupWindow popWindow;//悬浮窗口
 	View multipagePanel;//多页布局
@@ -588,17 +584,15 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	@Override
 	public void goMultiWindow() {
-		((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
+		//((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
 		//Toast.makeText(getActivity(), "已进入多页模式", 1).show();
-		//Intent intent=new Intent(getActivity(),MainActivity.class);
-		//startActivity(intent);
-		
+		Intent intent=new Intent();
+		intent.setClass(getActivity(), MultipageActivity.class);
+		startActivity(intent);	
 	}
-	
 	//点击搜索图标
 	@Override
 	public void goSearch() {
-		// TODO Auto-generated method stub
 		
 	}
 	//输入框点击监听
@@ -618,7 +612,6 @@ public class MainPageFragment extends SherlockFragment implements
 	public void goLand() {
 		mWebView.loadUrl(UrlUtils.URL_LOGIN);
 	}
-	
 	//载入网页监听
 	@Override
 	public void startPage(String url) {
@@ -653,7 +646,7 @@ public class MainPageFragment extends SherlockFragment implements
 				popview.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
 					   public void run() {
 						   popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
-						   }
+					 }
 				});
 			}
 		}
