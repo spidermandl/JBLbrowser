@@ -21,6 +21,8 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.RecommendAdapter;
+import com.jbl.browser.bean.BookMark;
+import com.jbl.browser.db.BookMarkDao;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 
@@ -36,9 +38,8 @@ public class RecommendFragment extends SherlockFragment implements OnItemLongCli
 	
 	ListView lv;
 	RecommendAdapter tabAdapter;
-	List<Integer> image=new ArrayList<Integer>(); //网站图标
-	List<String> urlName=new ArrayList<String>();// 网站名称
-	List<String> urlAddress=new ArrayList<String>();// 网站网址
+	//读取推荐页面记录数据
+	List<BookMark> list=null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,38 +47,15 @@ public class RecommendFragment extends SherlockFragment implements OnItemLongCli
 		View tab1= inflater.inflate(R.layout.fragment_recommend, container,false);
 		lv=(ListView)tab1.findViewById(R.id.lv);
 		initData();  //添加数据
-		tabAdapter=new RecommendAdapter(getActivity(), image, urlName, urlAddress);
-		lv.setAdapter(tabAdapter);
 		lv.setOnItemClickListener(this);
 		lv.setOnItemLongClickListener(this);
 		return tab1;	
 	}
 	/* 添加数据 */
 	private void initData() {
-		// TODO Auto-generated method stub
-		image.add(R.drawable.ic_launcher);
-		image.add(R.drawable.ic_launcher);
-		image.add(R.drawable.ic_launcher);
-		image.add(R.drawable.ic_launcher);
-		image.add(R.drawable.ic_launcher);
-		image.add(R.drawable.ic_launcher);
-		image.add(R.drawable.ic_launcher);
-		
-		urlName.add("百度");
-		urlName.add("搜狗");
-		urlName.add("谷歌");
-		urlName.add("新浪");
-		urlName.add("腾讯");
-		urlName.add("雅虎");
-		urlName.add("搜索");
-		
-		urlAddress.add("Http://www.baidu.com");
-		urlAddress.add("Http://www.sogou.com");
-		urlAddress.add("Http://www.gugoo.com");
-		urlAddress.add("Http://www.xinlang.com");
-		urlAddress.add("Http://www.tengxun.com");
-		urlAddress.add("Http://www.yahuu.com");
-		urlAddress.add("Http://www.sousuo.com");
+		list=new BookMarkDao(getActivity()).queryBookMarkAllByisRecommend(true);
+		tabAdapter=new RecommendAdapter(getActivity(),list);
+		lv.setAdapter(tabAdapter);
 	}
 
 	@Override
