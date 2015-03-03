@@ -176,5 +176,42 @@
     <string name="about_us">　关于我们</string>
     <string name="clear_data">清除数据</string>
     <string name="restore_settings">恢复默认设置</string>
+     <string name="Constants.SearchUrlGoogle">http://www.google.com/m?hl=en&amp;gl=us&amp;client=ms-null&amp;source=android-browser-key&amp;q=%s</string>
+    <string name="Constants.SearchUrlWikipedia">http://en.wikipedia.org/w/index.php?search=%s&amp;go=Go</string>
+     <string name="Commons.Yes">Yes</string>
+    <string name="Commons.No">No</string>
+    <string name="Main.ShareChooserTitle">Share via</string>
+	
+	<string name="Main.MenuShareLinkUrl">Share link</string>
+	<string name="Main.MenuShareImageUrl">Share image</string>
+	<string name="Main.MenuShareEmailUrl">Share email</string>
+	<string name="Commons.Continue">Continue</string>
+	<string name="Commons.Add">Add</string>
+    <string name="Commons.Clear">Clear</string>
+    <string name="Commons.Delete">Delete</string>
+     <string name="Commons.Ok">Ok</string>
+    <string name="Commons.Cancel">Cancel</string>
+    <string name="Commons.PleaseWait">Please wait</string>
+    <string name="Commons.SDCardErrorTitle">SD Card unavailable</string>
+    <string name="Commons.SDCardErrorNoSDMsg">No SD Card found.</string>
+    <string name="Commons.SDCardErrorSDUnavailable">SD Card is not available.</string>
+    <string name="StartPage.Welcome">Welcome!</string>
+	<string name="StartPage.Bookmarks">Most used bookmarks</string>
+	<string name="StartPage.History">Recent history</string>
+	  <string name="StartPage.Search">Search</string>
+	  <string name="StartPage.SearchButton">Go</string>
+	  <string name="Commons.SslWarning">Security warning</string>
+	<string name="Commons.SslWarningsHeader">There are problems with the security certificate for this site.</string>
+	<string name="Commons.SslUntrusted">This certificate is not from a trusted authority.</string>
+	<string name="Commons.SslIDMismatch">The name of the site does not match the name on the certificate.</string>
+	<string name="Commons.SslExpired">This certificate has expired.</string>
+	<string name="Commons.SslNotYetValid">This certificate is not valid yet.</string>
+	  <string name="ApplicationName">Zirco Browser</string>
+    <string name="ApplicationNameUrl">Zirco - %s</string>
+    <string name="ApplicationDescription">Zirco is an open-source browser for Android.</string>
+    <string name="Main.ToastTabSwitchMessage">页  %s</string>
+    <string name="Main.ToastTabSwitchFullMessage">页  %1$s: %2$s</string>
+    <string name="newwindow">新建窗口</string>
+	
 </resources>
 

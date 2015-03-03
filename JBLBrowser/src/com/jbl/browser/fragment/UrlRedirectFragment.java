@@ -1,5 +1,6 @@
 package com.jbl.browser.fragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -16,7 +17,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -53,7 +53,8 @@ OnItemClickListener {
 	String webAddress="";
 	//搜索网名
 	String webName="";
-	
+	//建立一个新的list 储存数据 实现模糊搜索
+	List<History> newHistory=new ArrayList<History>();
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -83,6 +84,7 @@ OnItemClickListener {
 		mSearch.requestFocus();
 		listview=(ListView)view.findViewById(R.id.mSearch_RecommnedView);
 		initDataRecommend();
+		history=new HistoryDao(getActivity()).queryAll();//对历史记录进行数据填充
 		listview.setOnItemClickListener(this);			
 		showSoftInput(true);
 		return view;
@@ -103,9 +105,9 @@ OnItemClickListener {
 	 * 当有输入字符时，显示历史记录
 	 * */
 	private void initDataHistory(){
-		history=new HistoryDao(getActivity()).queryAll();
-		mSearchAdapter=new SearchAdapter(getActivity(), null,history,true);
+		mSearchAdapter=new SearchAdapter(getActivity(), null,newHistory,true);
 		listview.setAdapter(mSearchAdapter);
+		mSearchAdapter.notifyDataSetChanged();
 	}
 	@Override
 	public void onClick(View v) {
@@ -136,8 +138,15 @@ OnItemClickListener {
 		if(s.length()==0)
 			mController.setText(R.string.search_cancel);
 		else
-			initDataHistory();
-			mSearchAdapter.notifyDataSetChanged();
+			//这里取得历史记录中的网址，与输入框中的字符进行匹配，并且将数据更新到新的list中。
+			for(int i=0;i<history.size();i++){
+				 History user = history.get(i);
+				 user.getWebAddress(); //取得网址
+			if(user.getWebAddress().contains(s)){
+				newHistory.add(history.get(i));
+				}
+			}
+			initDataHistory();//更新历史记录，实现模糊搜索
 		    mController.setText(R.string.search_forward);
 	}
 
@@ -148,10 +157,11 @@ OnItemClickListener {
 		
 	}
 
+	//这里清楚newhietory的数据，保证实施更新
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 		// TODO Auto-generated method stub
-		
+		newHistory.clear();
 	}
 	
 	/**
