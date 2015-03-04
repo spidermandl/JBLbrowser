@@ -148,8 +148,10 @@ public class UserDefinedDialog {
 		if(title != null){
 			builder.setTitle(title);
 		}
-		builder.setView(view);
-		return builder.create();
+		if(view!=null){
+			builder.setView(view);
+		}
+		return builder.show();
 	}
 	
 	/** 
