@@ -385,6 +385,9 @@ public class MainPageFragment extends SherlockFragment implements
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
+				/*
+				 * 判断向下滚动是否已经到网页底部
+				 */
 				 if( mWebView.getContentHeight()* mWebView.getScale() -( mWebView.getHeight()+ mWebView.getScrollY())!=0){     
 					 mWebView.scrollBy(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
 				 }         
@@ -394,6 +397,9 @@ public class MainPageFragment extends SherlockFragment implements
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
+				/*
+				 * 判断向上滚动对否已经到网页顶部
+				 */
 				if (mWebView.getScaleY() != 0){
 				mWebView.scrollBy(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));}
 			}
