@@ -2,8 +2,12 @@ package com.jbl.browser.fragment;
 
 import java.util.ArrayList;
 
+import android.R.color;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -48,7 +52,7 @@ public class SettingPagerFragment extends SherlockFragment{
 	//点击回调接口
 	private SettingItemInterface settingInterface;
 	/*
-	 * caidantubiao
+	 * 菜单图标
 	 */
 	private int[] girdview_menu_image = {R.drawable.menu_add_bookmark_selector,R.drawable.menu_combine_selector,R.drawable.menu_setting_selector,
 			R.drawable.menu_combine_selector,R.drawable.menu_share_selector,R.drawable.no_pic_mode_selector,R.drawable.menu_download_selector,
@@ -170,7 +174,7 @@ public class SettingPagerFragment extends SherlockFragment{
 		 PageCount = (int) Math.ceil(list.size() / APP_PAGE_SIZE);
 			viewLists = new ArrayList<GridView>();
 			for (int i = 0; i < PageCount; i++) {
-				GridView appPage = new GridView(getActivity());
+				GridView appPage = new GridView(getActivity());	
 				final SettingGridItemAdapter adapter =new SettingGridItemAdapter(getActivity(), list, i);
 				appPage.setAdapter(adapter);
 				appPage.setNumColumns(4);
