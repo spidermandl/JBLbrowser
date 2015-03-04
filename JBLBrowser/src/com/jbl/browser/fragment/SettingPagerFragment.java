@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -16,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
+import com.a.j;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
@@ -50,14 +53,14 @@ public class SettingPagerFragment extends SherlockFragment{
 	/*
 	 * caidantubiao
 	 */
-	private int[] girdview_menu_image = {R.drawable.menu_add_bookmark_selector,R.drawable.menu_combine_selector,R.drawable.menu_setting_selector,
+	private int[] girdview_menu_image = {R.drawable.menu_add_bookmark_disable,R.drawable.menu_combine_selector,R.drawable.menu_setting_selector,
 			R.drawable.menu_combine_selector,R.drawable.menu_share_selector,R.drawable.no_pic_mode_selector,R.drawable.menu_download_selector,
 			R.drawable.menu_quit_selector,R.drawable.menu_roll_webview_selector,R.drawable.menu_wuhen_selector,R.drawable.menu_fullscreen_selector,
-			R.drawable.menu_refresh_selector,R.drawable.menu_feedback_selector,R.drawable.menu_nightmode_selector};
+			R.drawable.menu_refresh_selector,R.drawable.menu_feedback_selector,R.drawable.menu_nightmode_selector,R.drawable.menu_add_bookmark_selector};
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+			Bundle savedInstanceState) { 
 		inflater = getLayoutInflater(savedInstanceState);
 		View view=inflater.inflate(R.layout.main_setting_panel, container, false);
 		initPages();
@@ -114,7 +117,13 @@ public class SettingPagerFragment extends SherlockFragment{
 		 list = new ArrayList<ImageInfo>();
 	        resArrays=getResources().getStringArray(R.array.setting_content_item);	
 		for (int i = 0; i < resArrays.length; i++) {
-			if (i == 5) {
+			if(i==0){
+				if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.IS_HOST_URL){
+					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]));
+				}else{
+					list.add(new ImageInfo(girdview_menu_image[14], resArrays[i]));
+				}
+			}else if (i == 5) {
 				if (JBLPreference.getInstance(mContext).readInt(
 						BoolType.PIC_CACHE.toString()) == JBLPreference.NO_PICTURE) {
 					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
@@ -171,6 +180,7 @@ public class SettingPagerFragment extends SherlockFragment{
 			viewLists = new ArrayList<GridView>();
 			for (int i = 0; i < PageCount; i++) {
 				GridView appPage = new GridView(getActivity());
+				//appPage.setSelector(new ColorDrawable(Color.TRANSPARENT));  //取消选中效果
 				final SettingGridItemAdapter adapter =new SettingGridItemAdapter(getActivity(), list, i);
 				appPage.setAdapter(adapter);
 				appPage.setNumColumns(4);
@@ -184,43 +194,51 @@ public class SettingPagerFragment extends SherlockFragment{
 							// TODO Auto-generated method stub
 							switch (position) {
 							case 0: // 添加书签
-								
-								if(settingInterface!=null)
-									settingInterface.addBookMark();
+								if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.ISNOT_HOST_URL){
+									if(settingInterface!=null)
+										settingInterface.addBookMark();
+									((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
+								}
 								break;
 							case 1: // 跳转到书签界面
 								if(settingInterface!=null)
 									settingInterface.listBookMark();
+								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 								break;
 							case 2://跳转到设置界面
 								if(settingInterface!=null)
 									settingInterface.browserSetting();
+								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 								break;
 							case 3: // 跳转到历史记录界面
 								if(settingInterface!=null)
 									settingInterface.listHistory();
+								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 								break;
 							case 4://分享
 								if(settingInterface!=null)
 									settingInterface.share();
+								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 								break;
 							case 5:  //设置无图模式
 								if(settingInterface!=null)
 									settingInterface.fitlerPicLoading();
+								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 								break;
 							case 6: //下载管理
 								if(settingInterface!=null)
 									settingInterface.manageDownload();
+								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 								break;
 							case 7://退出系统
 								if(settingInterface!=null)
 									settingInterface.quit();
-
+								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 								break;
 							default:
 								break;
 							}
-							((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
+							
 						}
 					});
 				}

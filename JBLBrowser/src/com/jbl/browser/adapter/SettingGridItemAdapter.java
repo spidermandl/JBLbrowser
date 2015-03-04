@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import com.jbl.browser.R;
 import com.jbl.browser.utils.ImageInfo;
+import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.StringUtils;
 /**
  * 设置界面中每一个小项布局界面
  * @author Desmond
@@ -75,6 +78,12 @@ public class SettingGridItemAdapter extends BaseAdapter
 		TextView appname = (TextView) convertView.findViewById(R.id.viewpage_test_text);
 		appicon.setImageResource(appInfo.imgId);
 		appname.setText(appInfo.imgMsg);
+		if(appname.getText().equals(StringUtils.ADD_BOOKMARK)){      
+			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.IS_HOST_URL){
+				appname.setTextColor(Color.GRAY);
+				convertView.setFocusable(false);
+			}
+		}
 		return convertView;
 	}
 

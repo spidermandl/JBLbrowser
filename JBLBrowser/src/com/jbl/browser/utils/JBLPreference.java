@@ -57,6 +57,11 @@ public class JBLPreference {
 	public static final int NIGHT_MODEL=0;//"夜间模式";
 	public static final String NIGHT_BRIGHTNESS_VALUS="夜间模式亮度值";
 	
+	public static final String HOST_URL_BOOLEAN="是否为主页";
+	public static final int IS_HOST_URL=1;
+	public static final int ISNOT_HOST_URL=0;
+	
+	
 	//书签和历史记录传网址到主页fragment关键字
 	public static final String BOOKMARK_HISTORY_KEY="webAddress";
 	public static final String RECOMMEND_KEY="urlAddress";

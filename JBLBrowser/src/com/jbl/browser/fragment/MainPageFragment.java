@@ -585,6 +585,13 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public void goMenu() {
 		try {
+			//当进入gridview时判断当前网页地址是不是主页，是非判断结果存到缓存中
+			if(mWebView.getCurrentUrl().equals(UrlUtils.URL_GET_HOST)){
+				JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.HOST_URL_BOOLEAN, JBLPreference.IS_HOST_URL);
+			}else{
+				JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.HOST_URL_BOOLEAN, JBLPreference.ISNOT_HOST_URL);
+			}
+			
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
 			if (settingFragment.isRemoving() || getFragmentManager().findFragmentByTag(SettingPagerFragment.TAG) == null) {
 				transaction.replace(R.id.main_setting_panel, settingFragment,SettingPagerFragment.TAG);

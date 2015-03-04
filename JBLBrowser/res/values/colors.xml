@@ -18,6 +18,7 @@
     
     <color name="toolbar_bg">#FFF5F5F5</color>
     <color name="serach_controll_bg">#FFCCCCCC</color>
+    <color name="gridview_selector">#ff5c5c5c</color>
     
     
     

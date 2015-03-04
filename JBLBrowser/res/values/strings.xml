@@ -166,7 +166,7 @@
     <string name="confirm_quit">您确定要退出？</string>
     <string name="bookmark">书签</string>
     <string name="history">历史记录</string>
-    <string name="add_bookmark">添加书签</string>
+    <string name="add_bookmark">添加收藏</string>
     <string name="add_to_bookmark">添至书签</string>
     <string name="add_to_recommend">添至推荐</string>
     <string name="add_bookmark_cancel">取消</string>

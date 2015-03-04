@@ -62,5 +62,5 @@ public class StringUtils {
 	public static final String CLOSE_NO_HISTORY="关闭无痕浏览";
 	public static final String OPEN_NO_FULL="开启全屏浏览";
 	public static final String CLOSE_NO_FULL="关闭全屏浏览";
-	
+	public static final String ADD_BOOKMARK="添加收藏";
 }

@@ -144,6 +144,7 @@ public class ProgressWebView extends WebView {
 		
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
+			curUrl=url;
 			if(urlInterface!=null)
 				urlInterface.startPage(url);
 			
