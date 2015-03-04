@@ -3,6 +3,7 @@ package com.jbl.browser.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.color;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -72,6 +73,7 @@ public class SettingGridItemAdapter extends BaseAdapter
 			convertView = LayoutInflater.from(mContext).inflate(
 					R.layout.main_setting_item, parent, false);
 		}
+		
 		ImageInfo appInfo = mList.get(position);
 		ImageView appicon = (ImageView) convertView
 				.findViewById(R.id.viewpage_test_icon);
