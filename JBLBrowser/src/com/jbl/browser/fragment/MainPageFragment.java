@@ -41,6 +41,7 @@ import com.jbl.browser.R;
 import com.jbl.browser.WebWindowManagement;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.activity.BrowserSettingActivity;
+import com.jbl.browser.activity.DownloadManageActivity;
 import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.activity.MultipageActivity;
@@ -237,7 +238,9 @@ public class MainPageFragment extends SherlockFragment implements
 			@Override
 			public void onDownloadStart(String url, String userAgent,
 					String contentDisposition, String mimetype, long contentLength) {
-				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.setClass(getActivity(), DownloadManageActivity.class);
+				startActivity(intent);
 				((MainFragActivity)getActivity()).startDownload(url);
 			}
 		});

@@ -211,7 +211,8 @@
     <string name="ApplicationDescription">Zirco is an open-source browser for Android.</string>
     <string name="Main.ToastTabSwitchMessage">页  %s</string>
     <string name="Main.ToastTabSwitchFullMessage">页  %1$s: %2$s</string>
-    <string name="newwindow">新建窗口</string>
+    <string name="newwindow">新建窗口</string>
+    <string name="delete">删除任务</string>
 	
 </resources>
 
