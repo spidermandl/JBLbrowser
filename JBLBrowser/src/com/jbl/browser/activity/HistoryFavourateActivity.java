@@ -58,11 +58,11 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
         if (tag != null) {
             mTabHost.setCurrentTabByTag(tag);
         }
-     /* //判断是夜间模式需再设置下activity亮度
-      		if(JBLPreference.getInstance(this).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
-      			int brightness=JBLPreference.getInstance(this).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
-      			BrightnessSettings.setActScreenBrightness(this,brightness);
-      		}*/
+      //判断是夜间模式需再设置下activity亮度
+      		if(JBLPreference.getInstance(HistoryFavourateActivity.this).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
+      			int brightness=JBLPreference.getInstance(HistoryFavourateActivity.this).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
+      			BrightnessSettings.setActScreenBrightness(HistoryFavourateActivity.this,brightness);
+      		}
 	}
 	
 	
