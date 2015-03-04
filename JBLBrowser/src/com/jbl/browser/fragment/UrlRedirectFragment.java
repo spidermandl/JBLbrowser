@@ -1,6 +1,7 @@
 package com.jbl.browser.fragment;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import android.content.Context;
@@ -83,8 +84,8 @@ public class UrlRedirectFragment extends SherlockFragment implements
 		mSearch.setFocusableInTouchMode(true);
 		mSearch.requestFocus();
 		listview=(ListView)view.findViewById(R.id.mSearch_RecommnedView);
-		initDataRecommend();
-		history=new HistoryDao(getActivity()).queryAll();//对历史记录进行数据填充
+		initDataRecommend();	
+		history=new HistoryDao(getActivity()).queryAll();
 		listview.setOnItemClickListener(this);			
 		showSoftInput(true);
 		return view;

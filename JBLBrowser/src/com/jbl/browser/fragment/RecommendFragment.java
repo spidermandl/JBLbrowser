@@ -1,6 +1,5 @@
 package com.jbl.browser.fragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
