@@ -11,7 +11,8 @@
          android:orientation="vertical"
          android:gravity="center"
          android:layout_alignParentTop="true"
-         android:layout_marginBottom="18dp"
+         android:layout_marginBottom="23dp"
+         android:layout_marginTop="8dp"
           >
     <ImageView  
         android:id="@+id/viewpage_test_icon"  

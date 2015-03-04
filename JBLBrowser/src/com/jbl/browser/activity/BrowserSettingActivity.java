@@ -3,6 +3,9 @@ package com.jbl.browser.activity;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
+import com.jbl.browser.utils.BrightnessSettings;
+import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.JBLPreference.BoolType;
 
 import android.os.Bundle;
 
@@ -29,6 +32,11 @@ public class BrowserSettingActivity extends BaseFragActivity {
  		ab.setTitle(R.string.browser_setting_title);
 		
 		setContentView(R.layout.activity_setting);
+		//判断是夜间模式需再设置下activity亮度
+  		if(JBLPreference.getInstance(BrowserSettingActivity.this).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
+  			int brightness=JBLPreference.getInstance(BrowserSettingActivity.this).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
+  			BrightnessSettings.setActScreenBrightness(BrowserSettingActivity.this,brightness);
+  		}
 	}
 	
 	@Override
