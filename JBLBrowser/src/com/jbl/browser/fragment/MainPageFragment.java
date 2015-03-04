@@ -24,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
@@ -379,6 +380,26 @@ public class MainPageFragment extends SherlockFragment implements
 		popview=(View)mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
 		popWindow=new PopupWindow(popview,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
 		//popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
+		/*popview.setOnTouchListener(new OnTouchListener() {
+			int orgX, orgY;
+			int offsetX, offsetY;
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+			switch (event.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+			orgX = (int) event.getX();
+			orgY = (int) event.getY();
+			break;
+			case MotionEvent.ACTION_MOVE:
+			offsetX = (int) event.getRawX() - orgX;	
+			offsetY = (int) event.getRawY() - orgY;
+			popWindow.update(offsetX, offsetY, -1, -1, true);
+			break;
+			}
+			return true;
+			}
+	});*/
+		
 		Button previous_page=(Button)popview.findViewById(R.id.previous_page);
 		Button next_page=(Button)popview.findViewById(R.id.next_page);
 		next_page.setOnClickListener(new OnClickListener(){
@@ -388,7 +409,7 @@ public class MainPageFragment extends SherlockFragment implements
 				/*
 				 * 判断向下滚动是否已经到网页底部
 				 */
-				 if( mWebView.getContentHeight()* mWebView.getScale() -( mWebView.getHeight()+ mWebView.getScrollY())!=0){     
+				 if( mWebView.getContentHeight()* mWebView.getScale() -( mWebView.getHeight()+ mWebView.getScrollY())!=0){  
 					 mWebView.scrollBy(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
 				 }         
 			}
