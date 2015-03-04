@@ -1,5 +1,8 @@
 package com.jbl.browser.fragment;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 
 import android.annotation.SuppressLint;
@@ -8,9 +11,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager.LayoutParams;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -23,6 +29,7 @@ import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -37,12 +44,15 @@ import com.jbl.browser.R;
 import com.jbl.browser.WebWindowManagement;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.activity.BrowserSettingActivity;
+import com.jbl.browser.activity.DownloadManageActivity;
 import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.activity.MultipageActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.bean.BookMark;
+import com.jbl.browser.bean.History;
 import com.jbl.browser.db.BookMarkDao;
+import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.interfaces.LoadURLInterface;
 import com.jbl.browser.interfaces.SettingItemInterface;
 import com.jbl.browser.interfaces.ToolbarItemInterface;
@@ -94,8 +104,13 @@ public class MainPageFragment extends SherlockFragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		//cur_url=UrlUtils.URL_GET_HOST;
-		View view = inflater.inflate(R.layout.fragment_main_page, container,false);
+		View view = inflater.inflate(R.layout.fragment_main_page, container,false); 
 		mWebView = WebWindowManagement.getInstance().getMainWebView();
+		//判断mWebView是否存在parent view
+		ViewGroup p = (ViewGroup) mWebView.getParent(); 
+         if (p != null) { 
+             p.removeAllViewsInLayout(); 
+         }
 	    webFrame=((FrameLayout) view.findViewById(R.id.web_view_frame));
 	    webFrame.addView(mWebView);// webview
 //		//Intent intent = getActivity().getIntent();  //监听webview跳转，实现activity跳转到推荐页面
@@ -114,7 +129,7 @@ public class MainPageFragment extends SherlockFragment implements
 		
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
-		// mWebView.setDownloadListener(new myDownloaderListener());
+		
 		/*
 		 * 设置webview字体大小
 		 */
@@ -136,9 +151,10 @@ public class MainPageFragment extends SherlockFragment implements
 		default:
 			break;
 		}
-
+		
 		BrowserSettings.getInstance().update();
-
+	
+		
 		/*
 		 * 2.0 WebView touch监听
 		 * 
@@ -159,6 +175,7 @@ public class MainPageFragment extends SherlockFragment implements
 					getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
 		        	getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
 				}
+				
 				return false;
 			}
 		});
@@ -224,7 +241,9 @@ public class MainPageFragment extends SherlockFragment implements
 			@Override
 			public void onDownloadStart(String url, String userAgent,
 					String contentDisposition, String mimetype, long contentLength) {
-				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.setClass(getActivity(), DownloadManageActivity.class);
+				startActivity(intent);
 				((MainFragActivity)getActivity()).startDownload(url);
 			}
 		});
@@ -338,19 +357,15 @@ public class MainPageFragment extends SherlockFragment implements
 			break;
 		case BRIGHTNESS_TYPE:
 			value=JBLPreference.getInstance(getActivity()).readInt(BoolType.BRIGHTNESS_TYPE.toString());
-			if(value!=JBLPreference.DAY_MODEL){
+			if(value!=JBLPreference.NIGHT_MODEL){
 				//夜间模式
-				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.DAY_MODEL);
-				BrightnessSettings.showBrightnessSettingsDialog(getActivity());
-				/*LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				popview=(View)mLayoutInflater.inflate(R.layout.pop_seekbar_brightness, null);
-				popWindow=new PopupWindow(popview,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-				popWindow.showAtLocation(popview, Gravity.CENTER, 0, 0);
-				SeekBar seekBar=(SeekBar)popview.findViewById(R.id.ctrl_skbProgress);*/
+				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.NIGHT_MODEL);
+				BrightnessSettings.showPopSeekBrightness(getActivity());
+				
 			}else{
 				//日间模式
-				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.NIGHT_MODEL);
-
+				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.DAY_MODEL);
+				BrightnessSettings.setActScreenBrightness(getActivity(), -1);
 			}
 			break;
 		default:
@@ -370,14 +385,23 @@ public class MainPageFragment extends SherlockFragment implements
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
-				mWebView.scrollTo(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
+				/*
+				 * 判断向下滚动是否已经到网页底部
+				 */
+				 if( mWebView.getContentHeight()* mWebView.getScale() -( mWebView.getHeight()+ mWebView.getScrollY())!=0){     
+					 mWebView.scrollBy(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
+				 }         
 			}
 		});
 		previous_page.setOnClickListener(new OnClickListener(){
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
-				mWebView.scrollTo(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
+				/*
+				 * 判断向上滚动对否已经到网页顶部
+				 */
+				if (mWebView.getScaleY() != 0){
+				mWebView.scrollBy(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));}
 			}
 		});         
     }
@@ -415,8 +439,8 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public void addBookMark() {
 		View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_bookmark_dialog, null);
-		final Dialog addBookMark=UserDefinedDialog.getInstance().defineViewDialog(getActivity(), null, view);
-		addBookMark.show();
+		final Dialog addBookMark=UserDefinedDialog.getInstance().defineViewDialog(getActivity(), null, null);
+		addBookMark.setContentView(view);  //设置其整个的样式
 		TextView addToBookMark=(TextView)view.findViewById(R.id.add_to_bookmark_tv);
 		TextView addToRecommend=(TextView)view.findViewById(R.id.add_to_recommend_tv);
 		addToBookMark.setOnClickListener(new OnClickListener() {
@@ -540,7 +564,7 @@ public class MainPageFragment extends SherlockFragment implements
 		webBoolSetting(BoolType.TURNNING);
 	}
 	@Override
-	public void nightBright() {
+	public void nightBright() {     //夜间模式
 		// TODO Auto-generated method stub
 		webBoolSetting(BoolType.BRIGHTNESS_TYPE);
 	}
@@ -570,6 +594,13 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public void goMenu() {
 		try {
+			//当进入gridview时判断当前网页地址是不是主页，是非判断结果存到缓存中
+			if(mWebView.getCurrentUrl().equals(UrlUtils.URL_GET_HOST)){
+				JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.HOST_URL_BOOLEAN, JBLPreference.IS_HOST_URL);
+			}else{
+				JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.HOST_URL_BOOLEAN, JBLPreference.ISNOT_HOST_URL);
+			}
+			
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
 			if (settingFragment.isRemoving() || getFragmentManager().findFragmentByTag(SettingPagerFragment.TAG) == null) {
 				transaction.replace(R.id.main_setting_panel, settingFragment,SettingPagerFragment.TAG);
@@ -619,12 +650,15 @@ public class MainPageFragment extends SherlockFragment implements
 			hideStatusBar();              //当运行后开启全屏，退出程序，再运行时需重新建popwindow和隐藏状态栏
 			if(popWindow==null){
 				createPopShrinkFullScreen();
-			}      		
+			}
 			if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
 				getFragmentManager().beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
-				if(popWindow.isShowing()){
-            		popWindow.dismiss();
-				}
+				popview.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
+					   public void run() {
+			            		popWindow.dismiss();
+					 }
+				});
+				
 			}else{                                              //不是主页：不显示上下菜单栏，显示悬浮按钮
 				getFragmentManager().beginTransaction().hide(toolbarFragment).hide(topActionbarFragment).commit();
 				popview.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
@@ -650,5 +684,31 @@ public class MainPageFragment extends SherlockFragment implements
 				});
 			}
 		}
+		
+	}
+
+	@Override
+	public void stopPage(WebView view,String url) {
+		// TODO Auto-generated method stub
+		if(JBLPreference.getInstance(getActivity()).readInt(BoolType.HISTORY_CACHE.toString())==JBLPreference.CLOSE_HISTORY){   //判断不是无痕浏览，添加历史记录
+			if(url!=""){           
+				String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA)
+						.format(new Date()).toString();
+				String temp=UrlUtils.URL_GET_HOST.substring(0, UrlUtils.URL_GET_HOST.length());
+				if(!url.equals(temp)){      //当加载默认网址时不加入历史记录
+					History history = new History();
+					history.setWebAddress(url);
+					history.setWebName(view.getTitle());
+					// 加载完加入历史记录
+					new HistoryDao(getActivity()).addHistory(history);
+				}
+			}
+		}
+		//以下代码加上后：在主activity界面设置夜间模式后到其他activity中调转回来出现黑屏
+		/*//判断是夜间模式需再设置下activity亮度
+		if(JBLPreference.getInstance(getActivity()).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
+			int brightness=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
+			BrightnessSettings.setActScreenBrightness(getActivity(),brightness);
+		}*/
 	}
 }

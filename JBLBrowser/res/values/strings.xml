@@ -135,7 +135,7 @@
         <item>开启全屏退出全屏</item>
         <item>刷新</item>
         <item>意见反馈</item>
-        <item>夜间模式</item>
+        <item>夜间模式日间模式</item>
     </string-array>
      <string-array name="recommend_web_address">
         <item>http://m.baidu.com/</item>
@@ -166,7 +166,7 @@
     <string name="confirm_quit">您确定要退出？</string>
     <string name="bookmark">书签</string>
     <string name="history">历史记录</string>
-    <string name="add_bookmark">添加书签</string>
+    <string name="add_bookmark">添加收藏</string>
     <string name="add_to_bookmark">添至书签</string>
     <string name="add_to_recommend">添至推荐</string>
     <string name="add_bookmark_cancel">取消</string>
@@ -211,7 +211,8 @@
     <string name="ApplicationDescription">Zirco is an open-source browser for Android.</string>
     <string name="Main.ToastTabSwitchMessage">页  %s</string>
     <string name="Main.ToastTabSwitchFullMessage">页  %1$s: %2$s</string>
-    <string name="newwindow">新建窗口</string>
+    <string name="newwindow">新建窗口</string>
+    <string name="delete">删除任务</string>
 	
 </resources>
 

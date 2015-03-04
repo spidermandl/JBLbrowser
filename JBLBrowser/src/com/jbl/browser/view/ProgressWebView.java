@@ -18,6 +18,7 @@ import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.interfaces.LoadURLInterface;
+import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
 import com.jbl.browser.utils.UrlUtils;
@@ -143,6 +144,7 @@ public class ProgressWebView extends WebView {
 		
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
+			curUrl=url;
 			if(urlInterface!=null)
 				urlInterface.startPage(url);
 			
@@ -152,20 +154,8 @@ public class ProgressWebView extends WebView {
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			// TODO Auto-generated method stub
-			if(JBLPreference.getInstance(mContext).readInt(BoolType.HISTORY_CACHE.toString())==JBLPreference.CLOSE_HISTORY){   //判断不是无痕浏览，添加历史记录
-				if(url!=""){           
-					curUrl=url;
-					String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA)
-							.format(new Date()).toString();
-					String temp=UrlUtils.URL_GET_HOST.substring(0, UrlUtils.URL_GET_HOST.length());
-					if(!url.equals(temp)){      //当加载默认网址时不加入历史记录
-						History history = new History();
-						history.setWebAddress(url);
-						history.setWebName(webName);
-						// 加载完加入历史记录
-						new HistoryDao(mContext).addHistory(history);
-					}
-				}
+			if(urlInterface!=null){
+				urlInterface.stopPage(view,url);
 			}
 			
 			super.onPageFinished(view, url);

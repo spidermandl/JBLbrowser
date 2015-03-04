@@ -1,18 +1,20 @@
 package com.jbl.browser.utils;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.SearchManager.OnCancelListener;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.provider.Settings;
+import android.support.v4.view.ViewPager.LayoutParams;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.PopupWindow;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SeekBar;
 import com.jbl.browser.R;
@@ -27,6 +29,8 @@ public class BrightnessSettings {
     private static final String TAG = BrightnessSettings.class.getSimpleName();  
     static Context context;  
     static int brightness;
+    static View popview;
+    static PopupWindow popWindow;
     /** 
      * 获得当前系统的亮度模式 
      * SCREEN_BRIGHTNESS_MODE_AUTOMATIC=1 为自动调节屏幕亮度 
@@ -187,8 +191,50 @@ public class BrightnessSettings {
         setActScreenBrightness(act, -MAX_BRIGHTNESS);  
     }  
     /** 可调节的最小亮度值 */  
-    public static final int MIN_BRIGHTNESS = 30;  
+    public static final int MIN_BRIGHTNESS =5;  
     /** 可调节的最大亮度值 */  
-    public static final int MAX_BRIGHTNESS = 255;  
-  
+    public static final int MAX_BRIGHTNESS =1000;  
+    //显示调节夜间模式亮度悬浮窗
+    public static void showPopSeekBrightness(final Activity act){
+    	 if (act == null) {  
+             return;  
+         } 
+    	 int oldBrightness=JBLPreference.getInstance(act).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
+         LayoutInflater mLayoutInflater=(LayoutInflater)act.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+ 		 popview=(View)mLayoutInflater.inflate(R.layout.pop_seekbar_brightness, null);
+ 		 popWindow=new PopupWindow(popview,LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);   
+         final SeekBar seekbar = (SeekBar)popview.findViewById(R.id.ctrl_skbProgress); // 手动调节亮度  
+         int progress = oldBrightness - MIN_BRIGHTNESS; // SeekBar的值范围：0~995，代表的亮度值是5~1000。  
+         seekbar.setProgress(progress < 0 ? 0 : progress);  
+         seekbar.setMax(MAX_BRIGHTNESS - MIN_BRIGHTNESS); // 最大值：995
+         // 手动调节亮度滑块滑动时  
+         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {  
+             @Override  
+             public void onStopTrackingTouch(SeekBar seekBar) { 
+            	 //将滑动后的亮度值写入缓存
+            	 JBLPreference.getInstance(act).writeInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS, seekBar.getProgress());
+            	 setActScreenBrightness(act, brightness);
+            	 popWindow.dismiss();
+             }  
+   
+             @Override  
+             public void onStartTrackingTouch(SeekBar seekBar) {  
+             }  
+   
+             @Override  
+             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {  
+                 brightness = progress + MIN_BRIGHTNESS; // 实际亮度  
+                 // 亮度滑块滑动时，实时改变屏幕亮度  
+                 setActScreenBrightness(act, brightness); // 改变当前屏幕亮度    
+             }  
+         });  
+         // 显示调节亮度的popSeekBar
+         popWindow.showAtLocation(popview, Gravity.CENTER, 0, 0);
+          
+    }
+    public static void hideSeekBar(){
+    	if(popWindow.isShowing()){
+    		popWindow.dismiss();
+    	}
+    }
 }  

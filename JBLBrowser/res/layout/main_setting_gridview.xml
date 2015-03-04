@@ -2,6 +2,8 @@
     android:layout_width="fill_parent"  
     android:layout_height="wrap_content" 
     android:numColumns="4"
+    android:listSelector="@android:color/transparent"
     android:layout_gravity="center"
-    android:gravity="center">  
+    android:gravity="center"
+    >  
 </GridView> 

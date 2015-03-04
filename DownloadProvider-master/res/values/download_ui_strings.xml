@@ -151,7 +151,7 @@
          Text for button to delete a download that has completed, or to delete multiple download
          entries [CHAR LIMIT=25]
     -->
-    <string name="delete_download">Delete</string>
+    <string name="delete_download">删除任务</string>
     <!-- Text for button to pause a download that is running. -->
     <string name="pause_download">Pause</string>
     <!-- Text for button to resume a paused download. -->
