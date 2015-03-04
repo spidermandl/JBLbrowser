@@ -631,12 +631,15 @@ public class MainPageFragment extends SherlockFragment implements
 			hideStatusBar();              //当运行后开启全屏，退出程序，再运行时需重新建popwindow和隐藏状态栏
 			if(popWindow==null){
 				createPopShrinkFullScreen();
-			}      		
+			}
 			if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
 				getFragmentManager().beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
-				if(popWindow.isShowing()){
-            		popWindow.dismiss();
-				}
+				popview.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
+					   public void run() {
+			            		popWindow.dismiss();
+					 }
+				});
+				
 			}else{                                              //不是主页：不显示上下菜单栏，显示悬浮按钮
 				getFragmentManager().beginTransaction().hide(toolbarFragment).hide(topActionbarFragment).commit();
 				popview.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
