@@ -382,14 +382,17 @@ public class MainPageFragment extends SherlockFragment implements
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
-				mWebView.scrollTo(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
+				 if( mWebView.getContentHeight()* mWebView.getScale() -( mWebView.getHeight()+ mWebView.getScrollY())!=0){     
+					 mWebView.scrollBy(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
+				 }         
 			}
 		});
 		previous_page.setOnClickListener(new OnClickListener(){
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
-				mWebView.scrollTo(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
+				if (mWebView.getScaleY() != 0){
+				mWebView.scrollBy(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));}
 			}
 		});         
     }
