@@ -183,7 +183,8 @@ public class SettingPagerFragment extends SherlockFragment{
 								View view, int position, long id) {
 							// TODO Auto-generated method stub
 							switch (position) {
-							case 0: // 添加书签	
+							case 0: // 添加书签
+								
 								if(settingInterface!=null)
 									settingInterface.addBookMark();
 								break;

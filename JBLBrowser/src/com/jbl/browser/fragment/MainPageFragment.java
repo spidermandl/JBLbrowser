@@ -11,9 +11,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager.LayoutParams;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -125,7 +128,7 @@ public class MainPageFragment extends SherlockFragment implements
 		
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
-		// mWebView.setDownloadListener(new myDownloaderListener());
+		
 		/*
 		 * 设置webview字体大小
 		 */
@@ -424,8 +427,8 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public void addBookMark() {
 		View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_bookmark_dialog, null);
-		final Dialog addBookMark=UserDefinedDialog.getInstance().defineViewDialog(getActivity(), null, view);
-		addBookMark.show();
+		final Dialog addBookMark=UserDefinedDialog.getInstance().defineViewDialog(getActivity(), null, null);
+		addBookMark.setContentView(view);  //设置其整个的样式
 		TextView addToBookMark=(TextView)view.findViewById(R.id.add_to_bookmark_tv);
 		TextView addToRecommend=(TextView)view.findViewById(R.id.add_to_recommend_tv);
 		addToBookMark.setOnClickListener(new OnClickListener() {
