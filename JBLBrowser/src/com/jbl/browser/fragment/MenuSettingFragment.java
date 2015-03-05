@@ -94,7 +94,7 @@ public class MenuSettingFragment extends SherlockFragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				BrightnessSettings bs=new BrightnessSettings();
-				bs.showBrightnessSettingsDialog(getActivity());
+				bs.showPopSeekBrightness(getActivity());
 				Toast.makeText(getActivity(), "您选择了:1", 1).show();
 			}
 		});

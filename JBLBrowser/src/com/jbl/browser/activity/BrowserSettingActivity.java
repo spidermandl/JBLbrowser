@@ -35,7 +35,7 @@ public class BrowserSettingActivity extends BaseFragActivity {
 		//判断是夜间模式需再设置下activity亮度
   		if(JBLPreference.getInstance(BrowserSettingActivity.this).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
   			int brightness=JBLPreference.getInstance(BrowserSettingActivity.this).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
-  			BrightnessSettings.setActScreenBrightness(BrowserSettingActivity.this,brightness);
+  			BrightnessSettings.setBrightness(BrowserSettingActivity.this,brightness);
   		}
 	}
 	

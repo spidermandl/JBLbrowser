@@ -12,6 +12,9 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
 import com.jbl.browser.fragment.MainPageFragment;
+import com.jbl.browser.utils.BrightnessSettings;
+import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.JBLPreference.BoolType;
 import com.mozillaonline.providers.DownloadManager;
 import com.mozillaonline.providers.downloads.ui.DateSortedDownloadAdapter;
 import com.mozillaonline.providers.downloads.ui.DownloadAdapter;
@@ -159,6 +162,11 @@ public class DownloadManageActivity extends BaseFragActivity implements
 
 			ensureSomeGroupIsExpanded();
 		}
+		//判断是夜间模式需再设置下activity亮度
+  		if(JBLPreference.getInstance(DownloadManageActivity.this).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
+  			int brightness=JBLPreference.getInstance(DownloadManageActivity.this).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
+  			BrightnessSettings.setBrightness(DownloadManageActivity.this,brightness);
+  		}
 
 		chooseListToShow();
 	}

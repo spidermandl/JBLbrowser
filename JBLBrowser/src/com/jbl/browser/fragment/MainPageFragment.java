@@ -24,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
@@ -97,6 +98,8 @@ public class MainPageFragment extends SherlockFragment implements
 	PopupWindow popWindow_seekBar;//亮度调节悬浮
 	View multipagePanel;//多页布局
 	PageIndicator multipageIndicator;
+	
+	int offsetX, offsetY;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -177,7 +180,7 @@ public class MainPageFragment extends SherlockFragment implements
 					createPopShrinkFullScreen();
 					popview_full_screen.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
 						   public void run() {
-							   popWindow_full_screen.showAtLocation(popview_full_screen, Gravity.RIGHT|Gravity.BOTTOM, 0, 60);
+							   popWindow_full_screen.showAtLocation(popview_full_screen, Gravity.RIGHT|Gravity.BOTTOM, 0, 0);
 							   }
 							});
 					getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
@@ -302,8 +305,8 @@ public class MainPageFragment extends SherlockFragment implements
 	            createPopShrinkFullScreen();
 	            if(!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
 	            	getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
-		            getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
-	            	popWindow_full_screen.showAtLocation(popview_full_screen, Gravity.RIGHT|Gravity.BOTTOM, 0, 60);
+		            getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();		 
+		            popWindow_full_screen.showAtLocation(popview_full_screen, Gravity.RIGHT|Gravity.BOTTOM, 0, 0);
 	            } 
 	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.YES_FULL);//写入缓存
 	            Toast.makeText(getActivity(), StringUtils.OPEN_NO_FULL, Toast.LENGTH_SHORT).show();
@@ -377,7 +380,7 @@ public class MainPageFragment extends SherlockFragment implements
 			}else{
 				//日间模式
 				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.DAY_MODEL);
-				BrightnessSettings.setActScreenBrightness(getActivity(), -1);
+				BrightnessSettings.setBrightness(getActivity(), -1); 
 			}
 			break;
 		default:
@@ -421,7 +424,10 @@ public class MainPageFragment extends SherlockFragment implements
 	private void createPopShrinkFullScreen(){
         LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		popview_full_screen=(View)mLayoutInflater.inflate(R.layout.shrink_full_screen, null);
-		popWindow_full_screen=new PopupWindow(popview_full_screen,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+		popWindow_full_screen=new PopupWindow(popview_full_screen,80,80);
+		/*popWindow_full_screen.setFocusable(false);
+		popWindow_full_screen.setTouchable(true);
+		popWindow_full_screen.setOutsideTouchable(true);*/
 		ImageView shrinkFullScreen=(ImageView)popview_full_screen.findViewById(R.id.shrinkFullScreen);
         shrinkFullScreen.setOnClickListener(new OnClickListener() {
 			@Override
@@ -435,7 +441,25 @@ public class MainPageFragment extends SherlockFragment implements
 					 }
 				});
 				}
-			});            
+			}); 
+       /* popview_full_screen.setOnTouchListener(new OnTouchListener() {
+			int orgX, orgY;
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					orgX = (int) event.getX();
+					orgY = (int) event.getY();
+					break;
+				case MotionEvent.ACTION_MOVE:
+					offsetX = (int) event.getRawX() - orgX;	
+					offsetY = (int) event.getRawY() - orgY;
+					popWindow_full_screen.update(offsetX, offsetY, -1, -1);
+					break;
+				}
+				return true;
+			}
+	});*/
     }
 	//隐藏状态栏
 	public void hideStatusBar(){
@@ -679,7 +703,7 @@ public class MainPageFragment extends SherlockFragment implements
 				getFragmentManager().beginTransaction().hide(toolbarFragment).hide(topActionbarFragment).commit();
 				popview_full_screen.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
 					   public void run() {
-						   popWindow_full_screen.showAtLocation(popview_full_screen, Gravity.RIGHT|Gravity.BOTTOM, 0, 60);
+						   popWindow_full_screen.showAtLocation(popview_full_screen, Gravity.RIGHT|Gravity.BOTTOM, 0, 0);
 						   }
 						});
 			}
@@ -700,11 +724,11 @@ public class MainPageFragment extends SherlockFragment implements
 				});
 			}
 		}
-		//判断是夜间模式需再设置下activity亮度
-				if(JBLPreference.getInstance(getActivity()).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
-					int brightness=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
-					BrightnessSettings.setActScreenBrightness(getActivity(),brightness);
-				}
+		  //判断是夜间模式需再设置下activity亮度
+  		if(JBLPreference.getInstance(getActivity()).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
+  			int brightness=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
+  			BrightnessSettings.setBrightness(getActivity(),brightness);
+  		}
 	}
 
 	@Override
