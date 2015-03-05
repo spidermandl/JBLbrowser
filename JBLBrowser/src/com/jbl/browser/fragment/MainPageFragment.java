@@ -11,12 +11,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager.LayoutParams;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -41,6 +38,7 @@ import cn.hugo.android.scanner.CaptureActivity;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.BrowserSettings;
+import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
 import com.jbl.browser.WebWindowManagement;
 import com.jbl.browser.activity.BaseFragActivity;
@@ -174,19 +172,22 @@ public class MainPageFragment extends SherlockFragment implements
 				 * mViewPager.setVisibility(View.GONE);
 				 * settingPanel.setVisibility(View.GONE);
 				 */ 
-				if(JBLPreference.getInstance(getActivity()).readInt(BoolType.FULL_SCREEN.toString())==JBLPreference.YES_FULL //当全屏模式：触摸屏幕不显示上下菜单栏
-						&&toolbarFragment.isVisible()&&topActionbarFragment.isVisible()
-						&&!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
+				if (JBLPreference.getInstance(getActivity()).readInt(
+						BoolType.FULL_SCREEN.toString()) == JBLPreference.YES_FULL // 当全屏模式：触摸屏幕不显示上下菜单栏
+						&& toolbarFragment.isVisible()
+						&& topActionbarFragment.isVisible()
+						&& !mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)) {
 					createPopShrinkFullScreen();
 					popview_full_screen.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
 						   public void run() {
 							   popWindow_full_screen.showAtLocation(popview_full_screen, Gravity.RIGHT|Gravity.BOTTOM, 0, 0);
 							   }
+
 							});
 					getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
-		        	getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
+					getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
 				}
-				
+
 				return false;
 			}
 		});
@@ -276,19 +277,6 @@ public class MainPageFragment extends SherlockFragment implements
 			Toast.makeText(getActivity(), R.string.add_bookmark_fail, Toast.LENGTH_SHORT).show();
 	}
 	
-
-	/**
-	 * 点击搜索时将搜索网址名称和网址存入数据库
-	 * 在UrlRedirectFragment中调用
-	 * *//*
-	public void addSearchRecord(boolean isRecommend){
-		boolean flag=true;
-		BookMark bookMark =new BookMark();
-		bookMark.setWebName(mWebView.getWebName());
-		bookMark.setWebAddress(mWebView.getCurrentUrl());
-		bookMark.setRecommend(isRecommend);
-		flag=new BookMarkDao(getActivity()).addBookMark(bookMark);
-	}*/
 	
 	/**
 	 * 设置主页网页模式
@@ -394,6 +382,27 @@ public class MainPageFragment extends SherlockFragment implements
 		popview_page=(View)mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
 		popWindow_page=new PopupWindow(popview_page,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
 		//popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
+
+		/*popview.setOnTouchListener(new OnTouchListener() {
+			int orgX, orgY;
+			int offsetX, offsetY;
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+			switch (event.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+			orgX = (int) event.getX();
+			orgY = (int) event.getY();
+			break;
+			case MotionEvent.ACTION_MOVE:
+			offsetX = (int) event.getRawX() - orgX;	
+			offsetY = (int) event.getRawY() - orgY;
+			popWindow.update(offsetX, offsetY, -1, -1, true);
+			break;
+			}
+			return true;
+			}
+	});*/
+		
 		Button previous_page=(Button)popview_page.findViewById(R.id.previous_page);
 		Button next_page=(Button)popview_page.findViewById(R.id.next_page);
 		next_page.setOnClickListener(new OnClickListener(){
@@ -403,7 +412,7 @@ public class MainPageFragment extends SherlockFragment implements
 				/*
 				 * 判断向下滚动是否已经到网页底部
 				 */
-				 if( mWebView.getContentHeight()* mWebView.getScale() -( mWebView.getHeight()+ mWebView.getScrollY())!=0){     
+				 if( mWebView.getContentHeight()* mWebView.getScale() -( mWebView.getHeight()+ mWebView.getScrollY())!=0){  
 					 mWebView.scrollBy(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
 				 }         
 			}
@@ -570,8 +579,10 @@ public class MainPageFragment extends SherlockFragment implements
 		.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub				
-				getActivity().finish();
+				// TODO Auto-generated method stub		
+				getFragmentManager().beginTransaction().remove(MainPageFragment.this).commit();//必须要加 负责saveinstance 会比fragment transition 先调用
+				getActivity().finish();//会调用saveinstance
+				JBLApplication.getInstance().quit();
 			}
 		}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener(){
 

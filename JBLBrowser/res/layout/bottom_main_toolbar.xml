@@ -44,13 +44,27 @@
         android:src="@drawable/toolbar_menu_selector"
         android:clickable="true"/>
      
-     <com.jbl.browser.view.ScaleImageView
+     <!-- <com.jbl.browser.view.ScaleImageView
         android:id="@+id/toolbar_multipage" 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_devide"
         android:layout_toRightOf="@id/toolbar_menu"
         android:src="@drawable/toolbar_window_selector"
-        android:clickable="true"/>
-
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"/>  -->
+	<com.jbl.browser.view.ScaleTextView
+    android:id="@+id/toolbar_multipage"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/one"
+    android:layout_below="@id/toolbar_devide"
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true"
+    android:clickable="true"
+    android:background="@drawable/toolbar_window_selector"
+    android:gravity="center"
+    android:layout_toRightOf="@id/toolbar_menu"
+    />
 </RelativeLayout>
