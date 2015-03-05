@@ -170,10 +170,10 @@
     <string name="add_to_bookmark">添至书签</string>
     <string name="add_to_recommend">添至推荐</string>
     <string name="add_bookmark_cancel">取消</string>
-    <string name="font_size">　字体大小</string>
-    <string name="screen_intensity">　屏幕亮度</string>
-    <string name="default_browser">　默认浏览器</string>
-    <string name="about_us">　关于我们</string>
+    <string name="font_size">字体大小</string>
+    <string name="screen_intensity">屏幕亮度</string>
+    <string name="default_browser">默认浏览器</string>
+    <string name="about_us">关于我们</string>
     <string name="clear_data">清除数据</string>
     <string name="restore_settings">恢复默认设置</string>
      <string name="Constants.SearchUrlGoogle">http://www.google.com/m?hl=en&amp;gl=us&amp;client=ms-null&amp;source=android-browser-key&amp;q=%s</string>
