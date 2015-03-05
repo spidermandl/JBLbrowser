@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager.LayoutParams;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -339,8 +340,12 @@ public class MainPageFragment extends SherlockFragment implements
 	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.OPEN_TURNING_BUTTON);//写入缓存
 	            Toast.makeText(getActivity(), StringUtils.OPEN_TURNING_BUTTON, Toast.LENGTH_SHORT).show();
 			}else{
-				//当要关闭翻页模式
-				popWindow_page.dismiss();
+				//当要关闭翻页按钮
+				popview_page.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
+					   public void run() {
+			            		popWindow_page.dismiss();
+					 }
+				});
             	Toast.makeText(getActivity(), StringUtils.CLOSE_TURNING_BUTTON, Toast.LENGTH_SHORT).show();
 	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.CLOSE_TURNING_BUTTON);//写入缓存
 			}
@@ -379,55 +384,58 @@ public class MainPageFragment extends SherlockFragment implements
 	//显示翻页模式
 	private void createTurningPage(){
 		LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		popview_page=(View)mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
-		popWindow_page=new PopupWindow(popview_page,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-		//popWindow.showAtLocation(popview, Gravity.RIGHT, 0, 0);
-
-		/*popview.setOnTouchListener(new OnTouchListener() {
-			int orgX, orgY;
-			int offsetX, offsetY;
+		popview_page=mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
+		popWindow_page=new PopupWindow(popview_page,80,240);
+		popview_page.setOnTouchListener(new OnTouchListener() {
+			int mScreenX=10, mScreenY=10;
+		    int mX,mY;
+			@SuppressLint("ClickableViewAccessibility")
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-			switch (event.getAction()) {
-			case MotionEvent.ACTION_DOWN:
-			orgX = (int) event.getX();
-			orgY = (int) event.getY();
-			break;
-			case MotionEvent.ACTION_MOVE:
-			offsetX = (int) event.getRawX() - orgX;	
-			offsetY = (int) event.getRawY() - orgY;
-			popWindow.update(offsetX, offsetY, -1, -1, true);
-			break;
-			}
-			return true;
-			}
-	});*/
-		
+				 if (event.getAction() == MotionEvent.ACTION_DOWN) {
+		                mX=(int) event.getX();
+		                mY=(int) event.getY();
+
+		            } else if(event.getAction()==MotionEvent.EDGE_LEFT){
+		            	
+		            }else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+		                int delX = (int) (event.getX() - mX);
+		                int delY = (int) (event.getY() - mY);
+		                mScreenX+=delX;
+		                mScreenY+=delY;
+		                popWindow_page.update(mScreenX, mScreenY, -1, -1);
+		                /*mX=(int) event.getX();
+		                mY=(int) event.getY();*/
+		            }
+		            return false;
+		        }
+		    });
 		Button previous_page=(Button)popview_page.findViewById(R.id.previous_page);
 		Button next_page=(Button)popview_page.findViewById(R.id.next_page);
 		next_page.setOnClickListener(new OnClickListener(){
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
-				/*
-				 * 判断向下滚动是否已经到网页底部
-				 */
+				  //判断向下滚动是否已经到网页底部
 				 if( mWebView.getContentHeight()* mWebView.getScale() -( mWebView.getHeight()+ mWebView.getScrollY())!=0){  
-					 mWebView.scrollBy(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
-				 }         
+					 mWebView.scrollBy(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));	
+				 }   else{
+					// mWebView.stopLoading();
+		       	 mWebView.canScrollVertically(0);		 
+				 }      
 			}
 		});
 		previous_page.setOnClickListener(new OnClickListener(){
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
-				/*
-				 * 判断向上滚动对否已经到网页顶部
-				 */
+				// 判断向上滚动对否已经到网页顶部 
 				if (mWebView.getScaleY() != 0){
-				mWebView.scrollBy(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));}
+				mWebView.scrollBy(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
+			}else{
+				 mWebView.canScrollVertically(0);
 			}
-		});         
+		}});         
     }
 	//显示全屏模式下为显示上下菜单的悬浮按钮
 	private void createPopShrinkFullScreen(){
@@ -761,4 +769,6 @@ public class MainPageFragment extends SherlockFragment implements
 		}
 		
 	}
+
+	
 }
