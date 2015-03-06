@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 /**
@@ -22,7 +23,7 @@ import com.actionbarsherlock.view.MenuItem;
  */
 public abstract class BaseSwapeActivity extends BaseFragActivity {
 	
-    protected TabHost mTabHost;//tabhost控件
+	protected TabHost mTabHost;//tabhost控件
     protected ViewPager  mViewPager;//滑动控件
     protected TabsAdapter mTabsAdapter;//滑动切换数据源
     
@@ -30,7 +31,7 @@ public abstract class BaseSwapeActivity extends BaseFragActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
