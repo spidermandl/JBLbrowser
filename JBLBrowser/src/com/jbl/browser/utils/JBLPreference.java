@@ -124,6 +124,7 @@ public class JBLPreference {
 			myPrefs.writeInt(BoolType.PIC_CACHE.toString(), YES_PICTURE);
 		if(myPrefs.readInt(BoolType.BRIGHTNESS_TYPE.toString())==INVALID)
 			myPrefs.writeInt(BoolType.BRIGHTNESS_TYPE.toString(), DAY_MODEL);
+		myPrefs.writeInt(NIGHT_BRIGHTNESS_VALUS, 127);
 	}
 	/**
 	 * 初始化SharedPreferences对象
