@@ -151,8 +151,8 @@ public class MainPageFragment extends SherlockFragment implements
 	     getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
 	     width=metric.widthPixels;
 	     height=metric.heightPixels;
-	     mCurrentX_pop_full_screen = metric.widthPixels-80;     // 全屏按钮初始X轴位置
-		 mCurrentY_pop_full_screen =metric.heightPixels-80;   // 全屏按钮初始Y轴位置
+	     mCurrentX_pop_full_screen = metric.widthPixels-width/7;     // 全屏按钮初始X轴位置
+		 mCurrentY_pop_full_screen =metric.heightPixels-width/7;   // 全屏按钮初始Y轴位置
 		 /*JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.pop_full_currentX_value, mCurrentX_pop_full_screen);
 		 JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.pop_full_currentY_value, mCurrentY_pop_full_screen);*/
 	     
@@ -480,7 +480,7 @@ public class MainPageFragment extends SherlockFragment implements
         LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		popview_full_screen=(LinearLayout)mLayoutInflater.inflate(R.layout.shrink_full_screen, null);
 		popview_full_screen.setClickable(true);		
-		popWindow_full_screen=new PopupWindow(popview_full_screen,80,80);
+		popWindow_full_screen=new PopupWindow(popview_full_screen,width/7,width/7);
 		popview_full_screen.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -520,6 +520,18 @@ public class MainPageFragment extends SherlockFragment implements
 		            	upY=(int)event.getY();
 		            	mCurrentX_pop_full_screen=(int)(event.getRawX()+mX);
 		            	mCurrentY_pop_full_screen=(int)(event.getRawY()+mY);
+		            	if(mCurrentX_pop_full_screen>=width-width/7){
+		            		mCurrentX_pop_full_screen=width-width/7;		   
+		            	}
+		            	if(mCurrentX_pop_full_screen<=0){
+		            		mCurrentX_pop_full_screen=0;
+		            	}
+		            	if(mCurrentY_pop_full_screen<=0){
+		            		mCurrentY_pop_full_screen=0;
+		            	}
+		            	if(mCurrentY_pop_full_screen>=height-width/7){
+		            		mCurrentY_pop_full_screen=height-width/7;
+		            	}
 		            	if(Math.abs(upX-downX)>0){
 		            		flag=true;
 		            		popview_full_screen.setPressed(false);
@@ -528,7 +540,8 @@ public class MainPageFragment extends SherlockFragment implements
 		            		flag=false;		
 		            	}
 		            	try {
-							Thread.sleep(100);									            	
+							Thread.sleep(100);	
+							
 			            	popWindow_full_screen.update(mCurrentX_pop_full_screen, mCurrentY_pop_full_screen, -1, -1);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
