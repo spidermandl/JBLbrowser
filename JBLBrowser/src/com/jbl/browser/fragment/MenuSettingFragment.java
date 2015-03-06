@@ -5,6 +5,7 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.text.style.BulletSpan;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -75,7 +76,7 @@ public class MenuSettingFragment extends SherlockFragment {
 				final AlertDialog.Builder builder1=new Builder(getActivity());
 				builder1.setTitle("字体大小");
 				final String[] items=new String[]{"小","中","大"};
-				builder1.create().show();
+				
 				builder1.setSingleChoiceItems(items, 1, new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -109,10 +110,10 @@ public class MenuSettingFragment extends SherlockFragment {
 						
 					}
 				});
+			    builder1.create().show();
 				builder1.create().dismiss();
-				
 			}
-		});
+		});	
 		//屏幕亮度监听
 		mMenuSetIntensity.setOnClickListener(new View.OnClickListener() {
 			
