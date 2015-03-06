@@ -86,7 +86,10 @@ public class JBLPreference {
 	public static final String ABOUT_US="关于我们";
 	public static final String CLEAR_DATA="清除数据";
 	public static final String RESTORE_FACTORY_SETTINGS="恢复出厂设置";
-	
+	/*public static final String pop_page_currentX_value="翻页悬浮窗x轴值";
+	public static final String pop_page_currentY_value="翻页悬浮窗y轴值";*/
+	public static final String pop_full_currentX_value="全屏悬浮窗x轴值";
+	public static final String pop_full_currentY_value="全屏悬浮窗Y轴值";
 	
 	public static final String IS_FIRST_RUN="是否第一次运行";
 	public static final int NO_FIRST_RUN=1;
