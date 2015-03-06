@@ -252,7 +252,7 @@ public class MainPageFragment extends SherlockFragment implements
 
 		// webView.getSettings().setUseWideViewPort(true);
 		// webView.getSettings().setLoadWithOverviewMode(true);
-		
+	
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setAppCacheMaxSize(8 * 1024 * 1024);
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -413,6 +413,7 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 
 	//显示翻页模式
+	@SuppressLint("NewApi")
 	private void createTurningPage(){
 		LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		popview_page=mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
@@ -443,25 +444,36 @@ public class MainPageFragment extends SherlockFragment implements
 			@Override
 			public void onClick(View v) {
 				  //判断向下滚动是否已经到网页底部
-				 if( mWebView.getContentHeight()* mWebView.getScale() -( mWebView.getHeight()+ mWebView.getScrollY())!=0){  
-					 mWebView.scrollBy(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));	
-				 }   else{
-					// mWebView.stopLoading();
-		       	 mWebView.canScrollVertically(0);		 
-				 }      
+				 float fullHeight=mWebView.getContentHeight()* mWebView.getScale();
+				 float contentHeight=mWebView.getHeight()+ mWebView.getScrollY();
+				 int y=mWebView.getHeight();
+				 if( (fullHeight-contentHeight)>0){ 
+					 if((fullHeight-contentHeight)>y){
+				    mWebView.scrollBy(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));}
+					 else{
+						 mWebView.scrollBy(0, (int) (fullHeight-contentHeight));
+					 }	
 			}
-		});
+		}}
+	);
 		previous_page.setOnClickListener(new OnClickListener(){
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
 				// 判断向上滚动对否已经到网页顶部 
-				if (mWebView.getScaleY() != 0){
-				mWebView.scrollBy(0, (int) (mWebView.getScaleY()-mWebView.getHeight()));
+				 float scrollY=mWebView.getScrollY();
+				 int y=mWebView.getHeight();
+				 if(scrollY>0){ 
+					 if(scrollY>y){
+				    mWebView.scrollBy(0,(int) (mWebView.getScaleY()-mWebView.getHeight()));}
+				 else {
+					 mWebView.scrollBy(0, (int) (mWebView.getScaleY()-scrollY));
+				 }
 			}else{
-				 mWebView.canScrollVertically(0);
+				mWebView.scrollBy(0, 0);
 			}
-		}});         
+		}
+	});         
     }
 	//显示全屏模式下为显示上下菜单的悬浮按钮
 	private void createPopShrinkFullScreen(){
