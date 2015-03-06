@@ -102,9 +102,10 @@ public class MainPageFragment extends SherlockFragment implements
 	View multipagePanel;//多页布局
 	PageIndicator multipageIndicator;
 	
+	//翻页按钮初始位置
 	int mCurrentX_pop_page;
 	int mCurrentY_pop_page;
-	
+	//全屏按钮初始位置
 	int mCurrentX_pop_full_screen;
 	int mCurrentY_pop_full_screen;
 	//屏幕高和宽
@@ -435,7 +436,6 @@ public class MainPageFragment extends SherlockFragment implements
 							Thread.sleep(100);
 							 popWindow_page.update(mCurrentX_pop_page, mCurrentY_pop_page, -1, -1);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} 
 		            }else if(event.getAction() == MotionEvent.ACTION_UP){
@@ -455,13 +455,14 @@ public class MainPageFragment extends SherlockFragment implements
 				 int y=mWebView.getHeight();
 				 if( (fullHeight-contentHeight)>0){ 
 					 if((fullHeight-contentHeight)>y){
-				    mWebView.scrollBy(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));}
+				         mWebView.scrollBy(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
+				    }
 					 else{
 						 mWebView.scrollBy(0, (int) (fullHeight-contentHeight));
 					 }	
-			}
-		}}
-	);
+			     }
+		     }
+	   });
 		previous_page.setOnClickListener(new OnClickListener(){
 			@SuppressLint("NewApi")
 			@Override
@@ -471,16 +472,17 @@ public class MainPageFragment extends SherlockFragment implements
 				 int y=mWebView.getHeight();
 				 if(scrollY>0){ 
 					 if(scrollY>y){
-				    mWebView.scrollBy(0,(int) (mWebView.getScaleY()-mWebView.getHeight()));}
-				 else {
-					 mWebView.scrollBy(0, (int) (mWebView.getScaleY()-scrollY));
+				         mWebView.scrollBy(0,(int) (mWebView.getScaleY()-mWebView.getHeight()));
+				    }
+				    else {
+					    mWebView.scrollBy(0, (int) (mWebView.getScaleY()-scrollY));
 				 }
-			}else{
-				mWebView.scrollBy(0, 0);
-			}
-		}
-	});         
-    }
+			  }   else{
+				   mWebView.scrollBy(0, 0);
+			 }
+		  }
+	  });         
+   }
 	//显示全屏模式下为显示上下菜单的悬浮按钮
 	private void createPopShrinkFullScreen(){
         LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
