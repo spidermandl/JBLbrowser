@@ -6,12 +6,15 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -33,6 +36,7 @@ public class MenuSettingFragment extends SherlockFragment {
 	private ToggleButton mMenuSettingbrowse;
 	private RelativeLayout mMenuSetFont,mMenuSetIntensity,mMenuSetBrowser,mMenuSetAbout;
 	private TextView mMenuSetClear,mMentSetSetting;
+	private ScrollView settingScroll;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -50,6 +54,18 @@ public class MenuSettingFragment extends SherlockFragment {
 		mMenuSetClear=(TextView)view.findViewById(R.id.clear_data);
 		mMentSetSetting=(TextView)view.findViewById(R.id.restore_settings);
 		mMenuSettingbrowse=(ToggleButton)view.findViewById(R.id.settings_default);
+		settingScroll=(ScrollView)view.findViewById(R.id.setting_scroll);
+		settingScroll.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				if(event.getAction()==MotionEvent.ACTION_MOVE){
+					BrightnessSettings.hideSeekBar();
+				}
+				return false;
+			}
+		});
 		//字体大小监听
 		mMenuSetFont.setOnClickListener(new View.OnClickListener() {
 			

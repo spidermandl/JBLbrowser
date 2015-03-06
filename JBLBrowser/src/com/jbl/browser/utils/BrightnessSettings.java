@@ -140,16 +140,13 @@ public class BrightnessSettings {
          int progress = oldBrightness; // SeekBar的值范围：0~255 
          seekbar.setMax(sysScreenBrightness);   //可调节的最大亮度和系统调节的亮度一样
          seekbar.setProgress(progress < 0 ? 0 : progress);  
-        
-         
+         setBrightness(act, oldBrightness);    
          // 手动调节亮度滑块滑动时  
          seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {  
              @Override  
              public void onStopTrackingTouch(SeekBar seekBar) { 
             	 //将滑动后的亮度值写入缓存
             	 JBLPreference.getInstance(act).writeInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS, seekBar.getProgress());
-            	 setBrightness(act, brightness); // 改变当前屏幕亮度   
-            	 popWindow.dismiss();
              }  
    
              @Override  

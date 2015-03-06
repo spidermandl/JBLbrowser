@@ -188,7 +188,9 @@ public class MainPageFragment extends SherlockFragment implements
 					getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
 					getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
 				}
-
+				if(JBLPreference.getInstance(getActivity()).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){  
+	            	 BrightnessSettings.hideSeekBar();
+				}
 				return false;
 			}
 		});
@@ -240,7 +242,7 @@ public class MainPageFragment extends SherlockFragment implements
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				// TODO Auto-generated method stub
-				 if (event.getAction() == KeyEvent.ACTION_DOWN) { 
+				 if (event.getAction() == KeyEvent.ACTION_DOWN) {
 					 if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
 						 mWebView.goBack(); //goBack()表示返回WebView的上一页面  
 				         return true;  
