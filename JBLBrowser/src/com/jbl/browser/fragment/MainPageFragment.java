@@ -418,7 +418,7 @@ public class MainPageFragment extends SherlockFragment implements
 		LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		popview_page=mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
 		popWindow_page=new PopupWindow(popview_page,80,240);
-		mCurrentX_pop_page = width;     // 翻页按钮初始X轴位置
+		mCurrentX_pop_page = width-popWindow_page.getWidth();     // 翻页按钮初始X轴位置
 	    mCurrentY_pop_page =height/2-popWindow_page.getHeight()/2;   // 翻页按钮初始Y轴位置
 		popview_page.setOnTouchListener(new OnTouchListener() {
 		    float mX,mY;
@@ -431,7 +431,13 @@ public class MainPageFragment extends SherlockFragment implements
 		            }else if (event.getAction() == MotionEvent.ACTION_MOVE) {
 		            	mCurrentX_pop_page=(int)(event.getRawX()+mX);
 		            	mCurrentY_pop_page=(int)(event.getRawY()+mY);
-		                popWindow_page.update(mCurrentX_pop_page, mCurrentY_pop_page, -1, -1);
+		            	try {
+							Thread.sleep(100);
+							 popWindow_page.update(mCurrentX_pop_page, mCurrentY_pop_page, -1, -1);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} 
 		            }else if(event.getAction() == MotionEvent.ACTION_UP){
 		            }
 		            return true;
@@ -798,9 +804,9 @@ public class MainPageFragment extends SherlockFragment implements
 			}
 		}
 		if(JBLPreference.getInstance(this.getActivity()).readInt(BoolType.TURNNING.toString())==JBLPreference.OPEN_TURNING_BUTTON){  //全屏模式
-			//if(popWindow_page==null){
+			if(popWindow_page==null){
 				createTurningPage();
-			//}      		
+			}      		
 			if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
 				if(popWindow_page.isShowing()){
             		popWindow_page.dismiss();

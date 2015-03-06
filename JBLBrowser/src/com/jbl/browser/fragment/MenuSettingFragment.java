@@ -111,7 +111,7 @@ public class MenuSettingFragment extends SherlockFragment {
 					}
 				});
 			    builder1.create().show();
-				builder1.create().dismiss();
+				
 			}
 		});	
 		//屏幕亮度监听
