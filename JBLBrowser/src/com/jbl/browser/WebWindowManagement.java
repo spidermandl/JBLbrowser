@@ -3,6 +3,9 @@ package com.jbl.browser;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.jbl.browser.view.ProgressWebView;
 
 /**
@@ -56,4 +59,21 @@ public class WebWindowManagement {
 		
 		return queue.element();
 	}
+	
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return queue.size();
+	}
+
+	public Object getItem(int arg0) {
+		// TODO Auto-generated method stub
+		return ((LinkedList<ProgressWebView>)queue).get(arg0);
+	}
+
+	public View getView(int position) {
+		// TODO Auto-generated method stub
+		return ((LinkedList<ProgressWebView>)queue).get(position);
+	}
+
+
 }
