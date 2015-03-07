@@ -23,9 +23,11 @@ import android.widget.ToggleButton;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
+import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
+import com.jbl.browser.utils.StringUtils;
 
 /**
  * 菜单设置选项fragment
@@ -56,6 +58,14 @@ public class MenuSettingFragment extends SherlockFragment {
 		mMenuSetClear=(TextView)view.findViewById(R.id.clear_data);
 		mMentSetSetting=(TextView)view.findViewById(R.id.restore_settings);
 		mMenuSettingbrowse=(ToggleButton)view.findViewById(R.id.settings_default);
+		TextView font_valuse=(TextView)view.findViewById(R.id.font_valuse);
+		int fontValuse=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.FONT_TYPE);
+		if(fontValuse==0)
+			font_valuse.setText(StringUtils.FONT_MIN);
+		if(fontValuse==1)
+			font_valuse.setText(StringUtils.FONT_MID);
+		if(fontValuse==2)
+			font_valuse.setText(StringUtils.FONT_MAX);
 		settingScroll=(ScrollView)view.findViewById(R.id.setting_scroll);
 		settingScroll.setOnTouchListener(new OnTouchListener() {
 			

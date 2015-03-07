@@ -158,16 +158,7 @@ public class MainPageFragment extends SherlockFragment implements
 		 Rect frame = new Rect();
 		 getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
 		 statusBarHeight = frame.top;
-		 /*JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.pop_full_currentX_value, mCurrentX_pop_full_screen);
-		 JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.pop_full_currentY_value, mCurrentY_pop_full_screen);*/
-	     
-	     
-		
-		//获得缓存中悬浮窗口的位置
-		/*mCurrentX_pop_page=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.pop_page_currentX_value);
-		mCurrentY_pop_page=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.pop_page_currentY_value);
-		mCurrentX_pop_full_screen=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.pop_full_currentX_value);
-		mCurrentY_pop_full_screen=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.pop_full_currentY_value);*/
+	     	     
 		/*
 		 * 设置webview字体大小
 		 */

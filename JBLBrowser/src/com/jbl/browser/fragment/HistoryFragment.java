@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.HistoryFavourateActivity;
@@ -24,7 +24,6 @@ import com.jbl.browser.adapter.HistoryAdapter;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.utils.JBLPreference;
-import com.unionpay.upomp.bypay.other.ab;
 
 /**
  * 历史记录fragment
@@ -51,6 +50,8 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	ImageView back;
 	//删除ID
 	public static int deleteId;
+	//选择长按监听之后，再点击返回
+	boolean mFlagSelsct=false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -101,20 +102,34 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 			long id) {
 		// TODO Auto-generated method stub
 		//String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
+		//当mFlagSelsct=false(默认)时，正常执行点击操作，当为true时，返回Item默认颜色。不进行点击操作。
+		if(!mFlagSelsct){
 		String webAddress=list.get(position).getWebAddress();
 		JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
 		this.getActivity().finish();
 		Intent intent=new Intent();
         intent.setClass(getActivity(), MainFragActivity.class);
         getActivity().startActivity(intent);
+		}
+		//长按监听之后再次点击，选项删除
+		else{
+			view.setBackgroundColor(Color.WHITE);//恢复默认颜色
+			//恢复actionbar的返回图标与title
+			HistoryFavourateActivity.ab.setDisplayHomeAsUpEnabled(true);
+			HistoryFavourateActivity.ab.setDisplayShowTitleEnabled(true);
+			mFlagSelsct=false;
+		}
 	}
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
 			int position, long id) {
 		HistoryFavourateActivity.mMenuFlag=false;
-		deleteId=list.get(position).getId();
+		deleteId=list.get(position).getId();//获取删除的ItemID
+		view.setBackgroundColor(Color.LTGRAY);//设置选中背景
+		//删除actionbar的返回图标和title
 		HistoryFavourateActivity.ab.setDisplayHomeAsUpEnabled(false);
 		HistoryFavourateActivity.ab.setDisplayShowTitleEnabled(false);
+		mFlagSelsct=true;//选中开关
 		return true;
 	}
 }

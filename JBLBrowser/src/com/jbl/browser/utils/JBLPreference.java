@@ -128,6 +128,7 @@ public class JBLPreference {
 		if(myPrefs.readInt(BoolType.BRIGHTNESS_TYPE.toString())==INVALID)
 			myPrefs.writeInt(BoolType.BRIGHTNESS_TYPE.toString(), DAY_MODEL);
 		myPrefs.writeInt(NIGHT_BRIGHTNESS_VALUS, 127);
+		myPrefs.writeInt(FONT_TYPE, FONT_MEDIUM);
 	}
 	/**
 	 * 初始化SharedPreferences对象
