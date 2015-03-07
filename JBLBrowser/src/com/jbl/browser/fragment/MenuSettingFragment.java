@@ -76,7 +76,7 @@ public class MenuSettingFragment extends SherlockFragment {
 				final AlertDialog.Builder builder1=new Builder(getActivity());
 				builder1.setTitle("字体大小");
 				final String[] items=new String[]{"小","中","大"};
-				
+	
 				builder1.setSingleChoiceItems(items, 1, new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -85,19 +85,22 @@ public class MenuSettingFragment extends SherlockFragment {
 							JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.FONT_TYPE, JBLPreference.FONT_MIN);
 							fontSize.setText(items[which]);
 							Toast.makeText(getActivity(), "您选择的字体大小为："+items[which], 100).show();
-							//((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,true,MainPageFragment.TAG);
+							//((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
+							//((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
 							break;
 						case 1:
 							fontSize.setText(items[which]);
 							JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.FONT_TYPE, JBLPreference.FONT_MEDIUM);
 							Toast.makeText(getActivity(), "您选择的字体大小为："+items[which], 100).show();
-							//((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,true,MainPageFragment.TAG);
+							//((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
+							//((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
 							break;
 						case 2:	
 							fontSize.setText(items[which]);
 							JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.FONT_TYPE, JBLPreference.FONT_MAX);
 							Toast.makeText(getActivity(), "您选择的字体大小为："+items[which], 100).show();
-							//((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,true,MainPageFragment.TAG);
+							//((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
+							//((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
 							break;
 						default:
 							break;
@@ -149,7 +152,7 @@ public class MenuSettingFragment extends SherlockFragment {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				
 			}
 		});
 		//监听设置默认浏览器滑动开关
