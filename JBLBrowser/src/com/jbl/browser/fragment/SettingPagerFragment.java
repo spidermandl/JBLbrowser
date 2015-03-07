@@ -211,7 +211,7 @@ public class SettingPagerFragment extends SherlockFragment{
 									settingInterface.browserSetting();
 								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 								break;
-							case 3: // 跳转到历史记录界面
+							case 3: // 刷新
 								/*if(settingInterface!=null)
 									settingInterface.listHistory();*/
 								if(settingInterface!=null)
