@@ -1,6 +1,8 @@
 package com.jbl.browser.fragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import android.app.Activity;
@@ -14,8 +16,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+<<<<<<< HEAD
 import android.widget.Toast;
 
+=======
+>>>>>>> 44ea4b68bd034430fb07b04da169fa39fa1cd9f0
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -82,6 +87,16 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 		if(list.size()==0){      //没有历史记录时屏幕中间显示“没有历史记录”文字
 			noHistory.setVisibility(View.VISIBLE);
 		}else{                   //有历史记录时显示历史记录
+			Collections.sort(list,new Comparator<History>() { //倒序排列
+
+				@Override
+				public int compare(History lhs, History rhs) {
+					// TODO Auto-generated method stub
+					if(lhs.getId()<rhs.getId())
+						return 1;
+					return -1;
+				}
+			});
 			noHistory.setVisibility(View.GONE);
 			listview.setVisibility(View.VISIBLE);
 			historyAdapter=new HistoryAdapter(getActivity(), list);
