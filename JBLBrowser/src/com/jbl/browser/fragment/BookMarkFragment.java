@@ -103,7 +103,6 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		//final String webAddress;
 		final String webName;
 		webName=((TextView)view.findViewById(R.id.url_name)).getText().toString();
-		//webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
 		//1获取一个对话框的创建器
 		AlertDialog.Builder builder=new Builder(getActivity());
 		//2所有builder设置一些参数
