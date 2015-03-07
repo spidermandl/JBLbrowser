@@ -36,6 +36,8 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
 	public static final String TAG="HistoryFavourateActivity";
 	//全部删除与单条删除开关
 	public static boolean mMenuFlag=true;
+	//actionbar 定义，在历史界面使用。
+	public static ActionBar ab;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Theme_Sherlock_Light);
@@ -43,7 +45,7 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
 		/**
 		 * 设置actionbar样式
 		 */
-		final ActionBar ab = this.getSupportActionBar();	
+		ab = this.getSupportActionBar();	
  		ab.setDisplayHomeAsUpEnabled(true);		 	
  		ab.setDisplayUseLogoEnabled(false);		 		
  		ab.setDisplayShowHomeEnabled(false);		 		
@@ -103,6 +105,7 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
 						Boolean flag=new HistoryDao(getBaseContext()).clearHistory();	//清空记录	
 						if(flag){
 							RefreshListview();//更新历史界面
+								
 							Toast.makeText(HistoryFavourateActivity.this, "删除成功", 1000).show();
 						}else{
 							Toast.makeText(HistoryFavourateActivity.this, "删除失败", 1000).show();
@@ -154,6 +157,8 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
 			HistoryFragment.listview.setVisibility(View.GONE);
 			HistoryFragment.noHistory.setVisibility(View.VISIBLE);	
 		}
+		ab.setDisplayShowTitleEnabled(true);
+		ab.setDisplayHomeAsUpEnabled(true);
 		HistoryFragment.historyAdapter=new HistoryAdapter(HistoryFavourateActivity.this, HistoryFragment.list);
 		HistoryFragment.historyAdapter.notifyDataSetChanged();
 		HistoryFragment.listview.setAdapter(HistoryFragment.historyAdapter);
