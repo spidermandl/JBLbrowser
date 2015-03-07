@@ -1,6 +1,8 @@
 package com.jbl.browser.activity;
 
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -161,6 +163,16 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
 			HistoryFragment.listview.setVisibility(View.GONE);
 			HistoryFragment.noHistory.setVisibility(View.VISIBLE);	
 		}
+		Collections.sort(HistoryFragment.list,new Comparator<History>() { //倒序排列
+
+			@Override
+			public int compare(History lhs, History rhs) {
+				// TODO Auto-generated method stub
+				if(lhs.getId()<rhs.getId())
+					return 1;
+				return -1;
+			}
+		});
 		ab.setDisplayShowTitleEnabled(true);
 		ab.setDisplayHomeAsUpEnabled(true);
 		HistoryFragment.historyAdapter=new HistoryAdapter(HistoryFavourateActivity.this, HistoryFragment.list);
