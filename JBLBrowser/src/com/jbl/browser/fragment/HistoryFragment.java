@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -101,6 +102,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 			long id) {
 		// TODO Auto-generated method stub
 		//String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
+		
 		String webAddress=list.get(position).getWebAddress();
 		JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
 		this.getActivity().finish();
@@ -113,6 +115,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 			int position, long id) {
 		HistoryFavourateActivity.mMenuFlag=false;
 		deleteId=list.get(position).getId();
+		view.setBackgroundColor(Color.LTGRAY);
 		HistoryFavourateActivity.ab.setDisplayHomeAsUpEnabled(false);
 		HistoryFavourateActivity.ab.setDisplayShowTitleEnabled(false);
 		return true;
