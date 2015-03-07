@@ -1,9 +1,10 @@
 package com.jbl.browser.db;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+
 import android.content.Context;
+
 import com.j256.ormlite.dao.Dao;
 import com.jbl.browser.bean.History;
 /*
@@ -27,6 +28,9 @@ public class HistoryDao {
 		{
 			e.printStackTrace();
 		}
+	}
+	public HistoryDao() {
+		// TODO Auto-generated constructor stub
 	}
 	//添加历史记录
 	public Boolean addHistory(History history){
@@ -70,5 +74,15 @@ public class HistoryDao {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	//删除记录
+	public int deleteHistoryById(int id){
+		try {
+			return HistoryDaoOpe.deleteById(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }

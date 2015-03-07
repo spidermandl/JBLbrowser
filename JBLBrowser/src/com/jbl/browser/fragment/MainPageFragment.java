@@ -11,6 +11,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager.LayoutParams;
@@ -111,7 +112,7 @@ public class MainPageFragment extends SherlockFragment implements
 	//屏幕高和宽
 	int width;  
 	int height;
-
+	int statusBarHeight;//状态栏高度
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -154,6 +155,9 @@ public class MainPageFragment extends SherlockFragment implements
 	     height=metric.heightPixels;
 	     mCurrentX_pop_full_screen = metric.widthPixels-width/7;     // 全屏按钮初始X轴位置
 		 mCurrentY_pop_full_screen =metric.heightPixels-width/7;   // 全屏按钮初始Y轴位置
+		 Rect frame = new Rect();
+		 getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+		 statusBarHeight = frame.top;
 		 /*JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.pop_full_currentX_value, mCurrentX_pop_full_screen);
 		 JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.pop_full_currentY_value, mCurrentY_pop_full_screen);*/
 	     
@@ -432,6 +436,18 @@ public class MainPageFragment extends SherlockFragment implements
 		            }else if (event.getAction() == MotionEvent.ACTION_MOVE) {
 		            	mCurrentX_pop_page=(int)(event.getRawX()+mX);
 		            	mCurrentY_pop_page=(int)(event.getRawY()+mY);
+		            	if(mCurrentX_pop_page>=width-popWindow_page.getWidth()){
+		            		mCurrentX_pop_page=width-popWindow_page.getWidth();		   
+		            	}
+		            	if(mCurrentX_pop_page<=0){
+		            		mCurrentX_pop_page=0;
+		            	}
+		            	if(mCurrentY_pop_page<=statusBarHeight){
+		            		mCurrentY_pop_page=statusBarHeight;                                                                           
+		            	}
+		            	if(mCurrentY_pop_page>=height-popWindow_page.getHeight()){
+		            		mCurrentY_pop_page=height-popWindow_page.getHeight();
+		            	}
 		            	try {
 							Thread.sleep(100);
 							 popWindow_page.update(mCurrentX_pop_page, mCurrentY_pop_page, -1, -1);

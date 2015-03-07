@@ -5,9 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,15 +15,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.actionbarsherlock.app.SherlockFragment;
-import com.jbl.browser.bean.BookMark;
-import com.jbl.browser.bean.History;
 import com.jbl.browser.R;
+import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.adapter.HistoryAdapter;
+import com.jbl.browser.bean.History;
 import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.utils.JBLPreference;
 
@@ -45,11 +39,14 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	/*//历史记录时间段标示
 	TextView tv_history_time;*/
 	//历史记录适配器
-	HistoryAdapter historyAdapter;
+	public HistoryAdapter historyAdapter;
 	//无历史记录
 	ImageView noHistory;
 	//返回图标
 	ImageView back;
+	//删除ID
+	public static int deleteId;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -71,7 +68,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	/**
 	 * 初始化ListView中历史记录的数据
 	 * */
-	private void initDataHistory() {
+	public void initDataHistory() {	
 		listview.setVisibility(View.GONE);
 		list=new HistoryDao(getActivity()).queryAll();//从数据库中获得数据
 		if(list.size()==0){      //没有历史记录时屏幕中间显示“没有历史记录”文字
@@ -108,34 +105,8 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
 			int position, long id) {
-		// TODO Auto-generated method stub
-		final String webAddress;
-		webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
-		//1获取一个对话框的创建器
-		AlertDialog.Builder builder=new Builder(getActivity());
-		//2所有builder设置一些参数
-		builder.setTitle("清空记录");
-		builder.setMessage("是否清空");
-		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				Boolean flag=new HistoryDao(getActivity()).clearHistory();
-				if(flag){
-					Toast.makeText(getActivity(), "清空成功", 100).show();
-					initDataHistory();	
-					listview.invalidate();
-				}
-				else{
-					Toast.makeText(getActivity(), "清空失败", 100).show();
-				}
-			}
-		});
-		builder.setNeutralButton("取消",new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				
-			}
-		});
-		
-		builder.create().show();
-		return false;
+		HistoryFavourateActivity.mMenuFlag=false;
+		deleteId=position;
+		return true;
 	}
 }

@@ -7,6 +7,6 @@
     	<Button android:id="@+id/previous_page" android:layout_width="40dp" android:layout_height="40dp"
         android:background="@drawable/page_up_selector"/>
     	<Button android:id="@+id/next_page" android:layout_width="40dp" android:layout_height="40dp" 
-        android:background="@drawable/page_down_selector" android:layout_marginTop="30dp" />
+        android:background="@drawable/page_down_selector" android:layout_marginTop="42dp" />
 
 </LinearLayout>
