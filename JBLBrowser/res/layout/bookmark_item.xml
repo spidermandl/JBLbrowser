@@ -11,7 +11,7 @@
         android:layout_height="@dimen/list_height"
         android:layout_gravity="center"
         android:scaleType="centerInside"
-        android:src="@drawable/refresh" />
+        android:src="@drawable/browser_fileexplorer_file_icon" />
 
     <LinearLayout
         android:id="@+id/ll_text"
@@ -25,7 +25,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:lines="1"
-            android:textColor="@color/black"
             android:textSize="@dimen/font_size_item_max" />
 
         <TextView
