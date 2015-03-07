@@ -23,6 +23,7 @@ import com.jbl.browser.adapter.HistoryAdapter;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.utils.JBLPreference;
+import com.unionpay.upomp.bypay.other.ab;
 
 /**
  * 历史记录fragment
@@ -111,6 +112,8 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 			int position, long id) {
 		HistoryFavourateActivity.mMenuFlag=false;
 		deleteId=list.get(position).getId();
+		HistoryFavourateActivity.ab.setDisplayHomeAsUpEnabled(false);
+		HistoryFavourateActivity.ab.setDisplayShowTitleEnabled(false);
 		return true;
 	}
 }
