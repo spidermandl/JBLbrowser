@@ -1,5 +1,9 @@
 package com.jbl.browser.fragment;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -38,7 +42,8 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	//书签listView
 	ListView listview;
 	//书签数据
-	List<BookMark> list=null;
+	List<BookMark> list= null;
+
 	//网址
 	String webAddress="";
 	//网名
@@ -69,11 +74,21 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	 * 初始化ListView中书签的数据
 	 * */
 	private void initDataFavorites() {
-		listview.setVisibility(View.GONE);
-		list=new BookMarkDao(getActivity()).queryBookMarkAllByisRecommend(false);//从数据库中获得数据
+		listview.setVisibility(View.GONE);		
+		list=new BookMarkDao(getActivity()).queryBookMarkAllByisRecommend(false);//从数据库中获得数据		
 		if(list.size()==0){//没有书签时屏幕中间显示“没有书签”文字
 			noBookmark.setVisibility(View.VISIBLE);
 		}else{            //有书签时显示书签
+			Collections.sort(list,new Comparator<BookMark>() { //倒序排列
+
+				@Override
+				public int compare(BookMark lhs, BookMark rhs) {
+					// TODO Auto-generated method stub
+					if(lhs.getId()<rhs.getId())
+						return 1;
+					return -1;
+				}
+			});
 			noBookmark.setVisibility(View.GONE);
 			listview.setVisibility(View.VISIBLE);
 			bookMarkAdapter=new BookMarkAdapter(getActivity(), list);
