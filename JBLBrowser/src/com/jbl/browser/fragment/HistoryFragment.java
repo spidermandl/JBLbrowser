@@ -3,6 +3,7 @@ package com.jbl.browser.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,8 +14,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
@@ -30,17 +35,20 @@ import com.jbl.browser.utils.JBLPreference;
  */
 public class HistoryFragment extends SherlockFragment implements OnItemClickListener, OnItemLongClickListener{
 	
+	/**
+	 * 全部变成静态，在activity中调用
+	 * */
 	public final static String TAG="HistoryFragment";
 	//历史记录listView
-	ListView listview;
+	public static ListView listview;
 	//历史记录数据
-	List<History> list=new ArrayList<History>();
+	public static List<History> list=new ArrayList<History>();
 	/*//历史记录时间段标示
 	TextView tv_history_time;*/
 	//历史记录适配器
-	public HistoryAdapter historyAdapter;
+	public static HistoryAdapter historyAdapter;
 	//无历史记录
-	ImageView noHistory;
+	public static ImageView noHistory;
 	//返回图标
 	ImageView back;
 	//删除ID
@@ -49,6 +57,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		 setHasOptionsMenu(true);
 		super.onCreate(savedInstanceState);
 	}
 	
@@ -58,7 +67,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 		
 		View view = inflater.inflate(R.layout.history_fragment, container, false);
 		listview=(ListView)view.findViewById(R.id.list_view_history_today);
-		noHistory=(ImageView)view.findViewById(R.id.cloud_history_empty);
+		noHistory=(ImageView)view.findViewById(R.id.cloud_history_empty);		
 		initDataHistory();
 		listview.setOnItemClickListener(this);
 		listview.setOnItemLongClickListener(this);
@@ -67,7 +76,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	/**
 	 * 初始化ListView中历史记录的数据
 	 * */
-	public void initDataHistory() {	
+	public  void initDataHistory() {	
 		listview.setVisibility(View.GONE);
 		list=new HistoryDao(getActivity()).queryAll();//从数据库中获得数据
 		if(list.size()==0){      //没有历史记录时屏幕中间显示“没有历史记录”文字
@@ -95,7 +104,7 @@ public class HistoryFragment extends SherlockFragment implements OnItemClickList
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
 			int position, long id) {
 		HistoryFavourateActivity.mMenuFlag=false;
-		deleteId=position;
+		deleteId=list.get(position).getId();
 		return true;
 	}
 }
