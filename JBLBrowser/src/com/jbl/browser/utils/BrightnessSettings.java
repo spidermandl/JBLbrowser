@@ -167,8 +167,9 @@ public class BrightnessSettings {
           
     }
     public static void hideSeekBar(){
-    	if(popWindow.isShowing()){
-    		popWindow.dismiss();
-    	}
+    	if(popWindow!=null){
+    		if(popWindow.isShowing()){
+    			popWindow.dismiss();
+    	}}
     }
 }  

@@ -41,6 +41,7 @@ public class MenuSettingFragment extends SherlockFragment {
 	private RelativeLayout mMenuSetFont,mMenuSetIntensity,mMenuSetBrowser,mMenuSetAbout;
 	private TextView mMenuSetClear,mMentSetSetting;
 	private ScrollView settingScroll;
+	private AlertDialog dialog;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -95,20 +96,23 @@ public class MenuSettingFragment extends SherlockFragment {
 							JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.FONT_TYPE, JBLPreference.FONT_MIN);
 							fontSize.setText(items[which]);
 							Toast.makeText(getActivity(), "您选择的字体大小为："+items[which], 100).show();
+							dialog.dismiss();
 							//((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
-							//((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
+						//	((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
 							break;
 						case 1:
 							fontSize.setText(items[which]);
 							JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.FONT_TYPE, JBLPreference.FONT_MEDIUM);
 							Toast.makeText(getActivity(), "您选择的字体大小为："+items[which], 100).show();
+							dialog.dismiss();
 							//((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
-							//((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
+						//	((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
 							break;
 						case 2:	
 							fontSize.setText(items[which]);
 							JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.FONT_TYPE, JBLPreference.FONT_MAX);
 							Toast.makeText(getActivity(), "您选择的字体大小为："+items[which], 100).show();
+							dialog.dismiss();
 							//((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
 							//((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
 							break;
@@ -123,7 +127,8 @@ public class MenuSettingFragment extends SherlockFragment {
 						
 					}
 				});
-			    builder1.create().show();
+				dialog=builder1.create();
+				dialog.show();
 				
 			}
 		});	
