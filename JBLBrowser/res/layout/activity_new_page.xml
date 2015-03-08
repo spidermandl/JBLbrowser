@@ -22,10 +22,24 @@
               android:layout_height="fill_parent"
     >
 
-    <com.jbl.browser.view.coverflow.FancyCoverFlow
-        android:id="@+id/fancyCoverFlow"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <com.jbl.browser.view.WebHorizontalView
+        android:id="@+id/id_horizontalScrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:id="@+id/id_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#FF000000"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+        </LinearLayout>
+    </com.jbl.browser.view.WebHorizontalView>
 
 </LinearLayout>
 
