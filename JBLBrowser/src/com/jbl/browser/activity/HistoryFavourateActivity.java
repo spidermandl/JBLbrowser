@@ -1,11 +1,17 @@
 package com.jbl.browser.activity;
 
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.TabHost;
 import android.widget.Toast;
 
@@ -13,6 +19,8 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
+import com.jbl.browser.adapter.HistoryAdapter;
+import com.jbl.browser.bean.History;
 import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.fragment.BookMarkFragment;
 import com.jbl.browser.fragment.HistoryFragment;
@@ -31,6 +39,8 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
 	public static final String TAG="HistoryFavourateActivity";
 	//全部删除与单条删除开关
 	public static boolean mMenuFlag=true;
+	//actionbar 定义，在历史界面使用。
+	public static ActionBar ab;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Theme_Sherlock_Light);
@@ -38,7 +48,7 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
 		/**
 		 * 设置actionbar样式
 		 */
-		final ActionBar ab = this.getSupportActionBar();	
+		ab = this.getSupportActionBar();	
  		ab.setDisplayHomeAsUpEnabled(true);		 	
  		ab.setDisplayUseLogoEnabled(false);		 		
  		ab.setDisplayShowHomeEnabled(false);		 		
@@ -97,7 +107,8 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
 					public void onClick(DialogInterface dialog, int which) {
 						Boolean flag=new HistoryDao(getBaseContext()).clearHistory();	//清空记录	
 						if(flag){
-							//new HistoryFragment().historyAdapter.notifyDataSetChanged();//刷新listview ，但是有问题。
+							RefreshListview();//更新历史界面
+								
 							Toast.makeText(HistoryFavourateActivity.this, "删除成功", 1000).show();
 						}else{
 							Toast.makeText(HistoryFavourateActivity.this, "删除失败", 1000).show();
@@ -123,7 +134,8 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
 					public void onClick(DialogInterface dialog, int which) {
 						
 						int mFlag=new HistoryDao(getBaseContext()).deleteHistoryById(HistoryFragment.deleteId);//单条删除
-						if(mFlag==0){
+						if(mFlag!=0){
+							RefreshListview();
 							Toast.makeText(HistoryFavourateActivity.this, "删除成功", 1000).show();
 						}else{
 							Toast.makeText(HistoryFavourateActivity.this, "删除失败", 1000).show();
@@ -132,7 +144,10 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
 				});
 				builder.setNeutralButton("取消",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						
+						/*HistoryFragment.listview.setBackgroundColor(Color.WHITE);
+						ab.setDisplayShowTitleEnabled(true);
+						ab.setDisplayHomeAsUpEnabled(true);*/
+						RefreshListview();
 					}
 				});
 				builder.create().show();
@@ -141,6 +156,28 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	
+	//更新历史界面
+	public void RefreshListview(){
+		HistoryFragment.list=new HistoryDao(HistoryFavourateActivity.this).queryAll();
+		if(HistoryFragment.list.size()==0){
+			HistoryFragment.listview.setVisibility(View.GONE);
+			HistoryFragment.noHistory.setVisibility(View.VISIBLE);	
+		}
+		Collections.sort(HistoryFragment.list,new Comparator<History>() { //倒序排列
+
+			@Override
+			public int compare(History lhs, History rhs) {
+				// TODO Auto-generated method stub
+				if(lhs.getId()<rhs.getId())
+					return 1;
+				return -1;
+			}
+		});
+		ab.setDisplayShowTitleEnabled(true);
+		ab.setDisplayHomeAsUpEnabled(true);
+		HistoryFragment.historyAdapter=new HistoryAdapter(HistoryFavourateActivity.this, HistoryFragment.list);
+		HistoryFragment.historyAdapter.notifyDataSetChanged();
+		HistoryFragment.listview.setAdapter(HistoryFragment.historyAdapter);
+		
+	}
 }

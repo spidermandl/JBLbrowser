@@ -19,6 +19,7 @@ import android.widget.PopupWindow;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SeekBar;
 import com.jbl.browser.R;
+import com.jbl.browser.activity.MainFragActivity;
 
 /** 
  * 系统亮度设置 
@@ -157,7 +158,7 @@ public class BrightnessSettings {
              public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {  
                  brightness = progress; // 实际亮度   
                  // 亮度滑块滑动时，实时改变屏幕亮度  
-                 setBrightness(act, brightness); // 改变当前屏幕亮度   
+                 setBrightness(act, brightness); // 改变当前屏幕亮度
                 
              }  
          });  
@@ -166,8 +167,9 @@ public class BrightnessSettings {
           
     }
     public static void hideSeekBar(){
-    	if(popWindow.isShowing()){
-    		popWindow.dismiss();
-    	}
+    	if(popWindow!=null){
+    		if(popWindow.isShowing()){
+    			popWindow.dismiss();
+    	}}
     }
 }  

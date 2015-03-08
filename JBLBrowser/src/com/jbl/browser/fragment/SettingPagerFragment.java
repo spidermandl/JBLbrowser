@@ -55,9 +55,9 @@ public class SettingPagerFragment extends SherlockFragment{
 	 * 菜单图标
 	 */
 	private int[] girdview_menu_image = {R.drawable.menu_add_bookmark_disable,R.drawable.menu_combine_selector,R.drawable.menu_setting_selector,
-			R.drawable.menu_combine_selector,R.drawable.menu_share_selector,R.drawable.no_pic_mode_selector,R.drawable.menu_download_selector,
+			R.drawable.menu_refresh_selector,R.drawable.menu_share_selector,R.drawable.no_pic_mode_selector,R.drawable.menu_download_selector,
 			R.drawable.menu_quit_selector,R.drawable.menu_roll_webview_selector,R.drawable.menu_wuhen_selector,R.drawable.menu_fullscreen_selector,
-			R.drawable.menu_refresh_selector,R.drawable.menu_feedback_selector,R.drawable.menu_nightmode_selector,R.drawable.menu_add_bookmark_selector};
+			R.drawable.menu_feedback_selector,R.drawable.menu_nightmode_selector,R.drawable.menu_add_bookmark_selector};
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -122,7 +122,7 @@ public class SettingPagerFragment extends SherlockFragment{
 				if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.IS_HOST_URL){
 					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]));
 				}else{
-					list.add(new ImageInfo(girdview_menu_image[14], resArrays[i]));
+					list.add(new ImageInfo(girdview_menu_image[13], resArrays[i]));
 				}
 			}else if (i == 5) {
 				if (JBLPreference.getInstance(mContext).readInt(
@@ -160,7 +160,7 @@ public class SettingPagerFragment extends SherlockFragment{
 					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
 							.substring(0, 4)));
 				}
-			} else if(i==13){
+			} else if(i==12){
 				  if(JBLPreference.getInstance(mContext).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
 					  list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
 								.substring(4)));
@@ -211,9 +211,11 @@ public class SettingPagerFragment extends SherlockFragment{
 									settingInterface.browserSetting();
 								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 								break;
-							case 3: // 跳转到历史记录界面
+							case 3: // 刷新
+								/*if(settingInterface!=null)
+									settingInterface.listHistory();*/
 								if(settingInterface!=null)
-									settingInterface.listHistory();
+									settingInterface.refresh();
 								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 								break;
 							case 4://分享
@@ -263,10 +265,10 @@ public class SettingPagerFragment extends SherlockFragment{
 									settingInterface.fullScreen();
 								break;
 							case 3://页面刷新
-								if(settingInterface!=null)
+								/*if(settingInterface!=null)
 									settingInterface.refresh();
-								break;
-							case 5://夜间模式
+								break;*/
+							case 4://夜间模式
 								if(settingInterface!=null)
 									settingInterface.nightBright();
 								break;
