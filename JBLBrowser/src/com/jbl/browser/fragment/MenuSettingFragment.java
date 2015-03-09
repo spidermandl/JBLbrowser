@@ -23,6 +23,7 @@ import android.widget.ToggleButton;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
+import com.jbl.browser.activity.BrowserSettingActivity;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
@@ -97,8 +98,10 @@ public class MenuSettingFragment extends SherlockFragment {
 							fontSize.setText(items[which]);
 							Toast.makeText(getActivity(), "您选择的字体大小为："+items[which], 100).show();
 							dialog.dismiss();
-							//((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
-						//	((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
+							/*((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
+							((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
+							BrowserSettingActivity.ab.setDisplayHomeAsUpEnabled(false);
+							BrowserSettingActivity.ab.setDisplayShowTitleEnabled(false);*/	
 							break;
 						case 1:
 							fontSize.setText(items[which]);

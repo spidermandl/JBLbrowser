@@ -15,7 +15,7 @@ import android.os.Bundle;
  *
  */
 public class BrowserSettingActivity extends BaseFragActivity {
-
+	public static ActionBar ab;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -24,13 +24,12 @@ public class BrowserSettingActivity extends BaseFragActivity {
 		/**
 		 * 设置actionbar样式
 		 */
-		final ActionBar ab = this.getSupportActionBar();	
+		 ab = this.getSupportActionBar();	
  		ab.setDisplayHomeAsUpEnabled(true);		 	
  		ab.setDisplayUseLogoEnabled(false);		 		
  		ab.setDisplayShowHomeEnabled(false);		 		
  		ab.setDisplayShowTitleEnabled(true);
  		ab.setTitle(R.string.browser_setting_title);
-		
 		setContentView(R.layout.activity_setting);
 		//判断是夜间模式需再设置下activity亮度
   		if(JBLPreference.getInstance(BrowserSettingActivity.this).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){

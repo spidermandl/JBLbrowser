@@ -155,6 +155,8 @@ public class MainPageFragment extends SherlockFragment implements
 	     height=metric.heightPixels;
 	     mCurrentX_pop_full_screen = metric.widthPixels-width/7;     // 全屏按钮初始X轴位置
 		 mCurrentY_pop_full_screen =metric.heightPixels-width/7;   // 全屏按钮初始Y轴位置
+		 
+		 //获取状态栏高度
 		 Rect frame = new Rect();
 		 getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
 		 statusBarHeight = frame.top;
@@ -169,21 +171,21 @@ public class MainPageFragment extends SherlockFragment implements
 		switch (fontSize) {
 		case JBLPreference.FONT_MIN:
 			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
+			BrowserSettings.getInstance().update();
 			break;
 		case JBLPreference.INVALID:
         case JBLPreference.FONT_MEDIUM:
 			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
+			BrowserSettings.getInstance().update();
 			break;
         case JBLPreference.FONT_MAX:
 	        BrowserSettings.textSize = WebSettings.TextSize.LARGER;
+	        BrowserSettings.getInstance().update();
 	        break;
 		default:
 			break;
 		}
-		
 		BrowserSettings.getInstance().update();
-	
-		
 		/*
 		 * 2.0 WebView touch监听
 		 * 
@@ -558,7 +560,6 @@ public class MainPageFragment extends SherlockFragment implements
 							
 			            	popWindow_full_screen.update(mCurrentX_pop_full_screen, mCurrentY_pop_full_screen, -1, -1);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}		            	
 		            }else if(event.getAction()==MotionEvent.ACTION_UP){	
@@ -863,9 +864,7 @@ public class MainPageFragment extends SherlockFragment implements
 					new HistoryDao(getActivity()).addHistory(history);
 				}
 			}
-		}
-		
+		}	
 	}
-
 	
 }
