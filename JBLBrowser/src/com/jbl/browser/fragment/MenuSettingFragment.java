@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.text.style.BulletSpan;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -43,6 +44,7 @@ public class MenuSettingFragment extends SherlockFragment {
 	private TextView mMenuSetClear,mMentSetSetting;
 	private ScrollView settingScroll;
 	private AlertDialog dialog;
+	private int width;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -69,17 +71,6 @@ public class MenuSettingFragment extends SherlockFragment {
 		if(fontValuse==2)
 			font_valuse.setText(StringUtils.FONT_MAX);
 		settingScroll=(ScrollView)view.findViewById(R.id.setting_scroll);
-		settingScroll.setOnTouchListener(new OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				// TODO Auto-generated method stub
-				if(event.getAction()==MotionEvent.ACTION_MOVE){
-					BrightnessSettings.hideSeekBar();
-				}
-				return false;
-			}
-		});
 		//字体大小监听
 		mMenuSetFont.setOnClickListener(new View.OnClickListener() {
 			
@@ -98,6 +89,7 @@ public class MenuSettingFragment extends SherlockFragment {
 							fontSize.setText(items[which]);
 							Toast.makeText(getActivity(), "您选择的字体大小为："+items[which], 100).show();
 							dialog.dismiss();
+						   // MainPageFragment.mWebView.reload();
 							/*((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
 							((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
 							*/	
@@ -107,6 +99,7 @@ public class MenuSettingFragment extends SherlockFragment {
 							JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.FONT_TYPE, JBLPreference.FONT_MEDIUM);
 							Toast.makeText(getActivity(), "您选择的字体大小为："+items[which], 100).show();
 							dialog.dismiss();
+						    
 							//((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
 						//	((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
 							break;
@@ -115,6 +108,7 @@ public class MenuSettingFragment extends SherlockFragment {
 							JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.FONT_TYPE, JBLPreference.FONT_MAX);
 							Toast.makeText(getActivity(), "您选择的字体大小为："+items[which], 100).show();
 							dialog.dismiss();
+						   // MainPageFragment.mWebView.reload();
 							//((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
 							//((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
 							break;
@@ -141,7 +135,8 @@ public class MenuSettingFragment extends SherlockFragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				JBLPreference.getInstance(getActivity()).writeInt(BoolType.BRIGHTNESS_TYPE.toString(),JBLPreference.NIGHT_MODEL);
-				BrightnessSettings.showPopSeekBrightness(getActivity());
+				width=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.SCREEN_WIDTH);
+				BrightnessSettings.showPopSeekBrightness(getActivity(),width);
 			}
 		});
 		//关于我们监听

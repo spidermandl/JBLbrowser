@@ -30,7 +30,7 @@ public class WebHorizontalViewAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		return WebWindowManagement.getInstance().replaceWebViewWithIndex(parent, position);
+		return WebWindowManagement.getInstance().replaceWebViewWithIndex(parent, position,false);
 	}
 
 

@@ -6,7 +6,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
@@ -14,8 +13,6 @@ import com.jbl.browser.WebWindowManagement;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.adapter.WebHorizontalViewAdapter;
 import com.jbl.browser.view.WebHorizontalView;
-import com.jbl.browser.view.WebHorizontalView.CurrentImageChangeListener;
-import com.jbl.browser.view.WebHorizontalView.OnItemClickListener;
 import com.viewpager.indicator.CirclePageIndicator;
 public class MultipageFragment extends SherlockFragment{
 	
@@ -49,6 +46,7 @@ public class MultipageFragment extends SherlockFragment{
         // 设置适配器
         mHorizontalScrollView.initDatas(mAdapter);
         mHorizontalScrollView.setViewPager(multiViewPager);
+        mHorizontalScrollView.setIndicator(multipageIndicator);
 		multipageIndicator.setViewPager(multiViewPager);
 		return view;
 	}
