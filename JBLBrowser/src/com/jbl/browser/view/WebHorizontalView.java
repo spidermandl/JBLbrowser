@@ -1,15 +1,11 @@
 package com.jbl.browser.view;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import com.jbl.browser.adapter.WebHorizontalViewAdapter;
 import com.viewpager.indicator.PageIndicator;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -20,7 +16,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
@@ -29,6 +24,7 @@ import android.widget.LinearLayout;
 /**
  * 
  * @author Desmond
+ * 装载webview的水平滑动控件
  *
  */
 public class WebHorizontalView extends HorizontalScrollView {
@@ -44,9 +40,15 @@ public class WebHorizontalView extends HorizontalScrollView {
 
     private static final String TAG = "WebHorizontalScrollView";
     
+    /**
+     * viewpager 翻页监听
+     */
     private final PageListener pageListener = new PageListener();
 	public OnPageChangeListener delegatePageListener;
 
+	/**
+	 * viewpager 外部注入
+	 */
 	private ViewPager pager;
 	
 
@@ -63,18 +65,6 @@ public class WebHorizontalView extends HorizontalScrollView {
      * 子元素的高度
      */
     private int mChildHeight;
-    /**
-     * 当前最后一张图片的index
-     */
-    private int mCurrentIndex;
-    /**
-     * 当前第一张图片的下标
-     */
-    private int mFristIndex;
-    /**
-     * 当前第一个View
-     */
-    private View mFirstView;
     /**
      * 数据适配器
      */
@@ -99,16 +89,9 @@ public class WebHorizontalView extends HorizontalScrollView {
      * 边界空距离
      */
     private int mEdge;
-    
     /**
-     * x方向移动距离
+     * 当前webview的index
      */
-    private float xDistance;
-    /**
-     * x移动前位置
-     */
-    private float xLast;
-
 	private int currentPosition = 0;
 	
 	private float currentPositionOffset = 0f;
@@ -135,7 +118,10 @@ public class WebHorizontalView extends HorizontalScrollView {
         mContainer = (LinearLayout) getChildAt(0);
     }
 
-    
+    /**
+     * 设置控制滚动的viewpager
+     * @param pager
+     */
 	public void setViewPager(ViewPager pager) {
 		this.pager = pager;
 
@@ -147,7 +133,10 @@ public class WebHorizontalView extends HorizontalScrollView {
 
 		notifyDataSetChanged();
 	}
-	
+	/**
+	 * 设置indicator
+	 * @param indicator
+	 */
 	public void setIndicator(PageIndicator indicator){
 		if(indicator!=null)
 			indicator.setOnPageChangeListener(pageListener);
@@ -169,6 +158,7 @@ public class WebHorizontalView extends HorizontalScrollView {
 				}
 
 				currentPosition = pager.getCurrentItem();
+				Log.e("onGlobalLayout", "onGlobalLayout");
 				scrollToChild(currentPosition, 0);
 			}
 		});
@@ -193,11 +183,10 @@ public class WebHorizontalView extends HorizontalScrollView {
             mGap= mScreenWitdh/12;
             mEdge = mScreenWitdh/2;
             // 计算每次加载多少个View
-            mCountOneScreen = (mScreenWitdh / mChildWidth == 0) ? mScreenWitdh
-                    / mChildWidth + 1 : mScreenWitdh / mChildWidth + 2;
+            mCountOneScreen = (mScreenWitdh / mChildWidth == 0) ? 
+            		mScreenWitdh / mChildWidth + 1 : mScreenWitdh / mChildWidth + 2;
 
-            Log.e(TAG, "mCountOneScreen = " + mCountOneScreen
-                    + " ,mChildWidth = " + mChildWidth);
+            Log.e(TAG, "mCountOneScreen = " + mCountOneScreen + " ,mChildWidth = " + mChildWidth);
 
         }
         // 初始化第一屏幕的元素
@@ -215,14 +204,16 @@ public class WebHorizontalView extends HorizontalScrollView {
         mContainer.setPadding(mEdge,0 ,mEdge, 0);
         for (int i = 0; i < count; i++) {
             View view = mAdapter.getView(i, null, mContainer);
+            //设置大小、属性
             view.getLayoutParams().width = mChildWidth;
             view.getLayoutParams().height = mChildHeight;
+            ((ProgressWebView)view).setScrollSetting();
             if(i!=0){
             	((LinearLayout.LayoutParams)view.getLayoutParams()).leftMargin=mGap;
             }
         }
 
-        mCurrentIndex = 0;
+        currentPosition = 0;
         
         this.post(new Runnable() {
 			
@@ -233,63 +224,27 @@ public class WebHorizontalView extends HorizontalScrollView {
 		});
     }
 
-//    @Override
-//    public boolean onInterceptTouchEvent(MotionEvent ev) {
-//
-//    	switch (ev.getAction()) {
-//		case MotionEvent.ACTION_DOWN:
-//			xDistance  = 0f;
-//			xLast = ev.getX();
-//			break;
-//		case MotionEvent.ACTION_MOVE:
-//			final float curX = ev.getX();
-//
-//			xDistance += Math.abs(curX - xLast);
-//			xLast = curX;
-//
-//			/**
-//			 * 当滑动距离大于mChildWidth+mGap时，不做处理
-//			 */
-//			if (xDistance > mChildWidth+mGap) {
-//				return false;
-//			}
-//		}
-//    	return super.onInterceptTouchEvent(ev);
-//    }
-//    
-//    @Override
-//    public boolean onTouchEvent(MotionEvent ev) {
-//        switch (ev.getAction()) {
-//        case MotionEvent.ACTION_MOVE:
-////            // Log.e(TAG, getScrollX() + "");
-////
-////            int scrollX = getScrollX();
-////            // 如果当前scrollX为view的宽度，加载下一张，移除第一张
-////            if (scrollX >= mChildWidth) {
-////                loadNextImg();
-////            }
-////            // 如果当前scrollX = 0， 往前设置一张，移除最后一张
-////            if (scrollX == 0) {
-////                loadPreImg();
-////            }
-//            break;
-//        case MotionEvent.ACTION_UP:
-//        	int X=getScrollX();
-//        	adjustPosition(X+mScreenWitdh/2);
-//        	break;
-//        default:
-//        	break;
-//        }
-//        return super.onTouchEvent(ev);
-//    }
-//
-//    @Override
-//    public void fling(int velocityX) {
-//    	/**
-//    	 * 禁用fling操作
-//    	 */
-//    	super.fling(velocityX/3);
-//    }
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+
+    	/**
+    	 * 拦截任何事件，不做任何处理
+    	 */
+    	return true;
+    }
+    
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+    	/**
+    	 * 拦截任何事件，不做任何处理
+    	 */
+    	return false;
+    }
+
+    /**
+     * 调整当页的位置
+     * @param page
+     */
     private void setPosition(int page){
     	adjustPosition(mEdge+(mGap+mChildWidth)*page);
     }
@@ -302,16 +257,15 @@ public class WebHorizontalView extends HorizontalScrollView {
     private void adjustPosition(int X){
     	float temp = (float)(X-mEdge-mChildWidth/2)/(float)(mChildWidth+mGap);
     	temp=temp<0?0:temp;
-    	mCurrentIndex = (temp-(int)temp<0.5)?(int)temp:(int)temp+1;
-    	if(mCurrentIndex==0){
+    	currentPosition = (temp-(int)temp<0.5)?(int)temp:(int)temp+1;
+    	if(currentPosition==0){
     		scrollTo(mEdge+mChildWidth/2-mScreenWitdh/2, 0);
     		return;
     	}
-    	smoothScrollTo((mCurrentIndex)*(mChildWidth+mGap)+mEdge+mChildWidth/2-mScreenWitdh/2, 0);
+    	smoothScrollTo((currentPosition)*(mChildWidth+mGap)+mEdge+mChildWidth/2-mScreenWitdh/2, 0);
     }
 
-    
-    
+   
     private class PageListener implements OnPageChangeListener {
 
 		@Override
@@ -320,6 +274,7 @@ public class WebHorizontalView extends HorizontalScrollView {
 			currentPosition = position;
 			currentPositionOffset = positionOffset;
 
+			Log.e("onPageScrolled", position+" "+positionOffset);
 			scrollToChild(position, (int) (positionOffset * mChildWidth));
 
 			invalidate();
@@ -332,8 +287,9 @@ public class WebHorizontalView extends HorizontalScrollView {
 		@Override
 		public void onPageScrollStateChanged(int state) {
 			if (state == ViewPager.SCROLL_STATE_IDLE) {
-				scrollToChild(pager.getCurrentItem(), 0);
-				setPosition(pager.getCurrentItem());
+				Log.e("onPageScrollStateChanged", "onPageScrollStateChanged");
+				//scrollToChild(pager.getCurrentItem(), 0);
+				//setPosition(pager.getCurrentItem());
 			}
 
 			if (delegatePageListener != null) {
@@ -350,6 +306,11 @@ public class WebHorizontalView extends HorizontalScrollView {
 
 	}
     
+    /**
+     * scrollview滑动
+     * @param position
+     * @param offset
+     */
 	private void scrollToChild(int position, int offset) {
 
 		if (mAdapter.getCount() == 0) {

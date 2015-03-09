@@ -14,6 +14,12 @@ import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.adapter.WebHorizontalViewAdapter;
 import com.jbl.browser.view.WebHorizontalView;
 import com.viewpager.indicator.CirclePageIndicator;
+
+/**
+ * 多页操作界面
+ * @author Desmond
+ *
+ */
 public class MultipageFragment extends SherlockFragment{
 	
 	public final static String TAG="MultipageFragment";
@@ -44,10 +50,11 @@ public class MultipageFragment extends SherlockFragment{
         mAdapter = new WebHorizontalViewAdapter();
 
         // 设置适配器
+        multipageIndicator.setViewPager(multiViewPager);
         mHorizontalScrollView.initDatas(mAdapter);
         mHorizontalScrollView.setViewPager(multiViewPager);
         mHorizontalScrollView.setIndicator(multipageIndicator);
-		multipageIndicator.setViewPager(multiViewPager);
+		
 		return view;
 	}
 

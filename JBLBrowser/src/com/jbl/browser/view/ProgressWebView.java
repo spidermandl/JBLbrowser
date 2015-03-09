@@ -1,27 +1,20 @@
 package com.jbl.browser.view;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebSettings.PluginState;
 import android.widget.ProgressBar;
 
 import com.jbl.browser.activity.RecommendMainActivity;
-import com.jbl.browser.bean.History;
-import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.interfaces.LoadURLInterface;
-import com.jbl.browser.utils.BrightnessSettings;
-import com.jbl.browser.utils.JBLPreference;
-import com.jbl.browser.utils.JBLPreference.BoolType;
-import com.jbl.browser.utils.UrlUtils;
 
 /**
  * 带进度条的webview
@@ -37,6 +30,7 @@ public class ProgressWebView extends WebView {
 	
 	private Context mContext;
 	private ProgressBar progressbar;
+	private ViewGroup.LayoutParams defaultLayoutParams;
 	private String webName;//当前网页名
 	private String curUrl;//当前网页
 
@@ -57,8 +51,9 @@ public class ProgressWebView extends WebView {
 
 	private void init(Context context){
 		mContext = context;
+		defaultLayoutParams=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		progressbar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
-        progressbar.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, 5, 0, 0));
+        progressbar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 5));
         addView(progressbar);
         setWebChromeClient(new WebChromeClient());
         setWebViewClient(new MyWebViewClient());
@@ -74,6 +69,49 @@ public class ProgressWebView extends WebView {
     }
 	public String getCurrentUrl(){
 		return curUrl;
+	}
+	
+	/**
+	 * 主页页面设置属性
+	 */
+	public void setDefaultSetting(){
+		progressbar.setVisibility(View.VISIBLE);
+		setVerticalScrollBarEnabled(true);
+		setHorizontalScrollBarEnabled(true);
+		getLayoutParams().width=ViewGroup.LayoutParams.MATCH_PARENT;
+		getLayoutParams().height=ViewGroup.LayoutParams.MATCH_PARENT;
+	    //setLayoutParams(defaultLayoutParams);
+		getSettings().setSupportZoom(true);
+		getSettings().setJavaScriptEnabled(true);
+		getSettings().setAppCacheMaxSize(8 * 1024 * 1024);
+		getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+		// webView.getSettings().setPluginsEnabled(true);
+		getSettings().setPluginState(PluginState.ON);
+
+		//监听物理返回键
+		setOnKeyListener(new OnKeyListener() {
+			
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				// TODO Auto-generated method stub
+				 if (event.getAction() == KeyEvent.ACTION_DOWN) {
+					 if (keyCode == KeyEvent.KEYCODE_BACK && canGoBack()) {
+						 goBack(); //goBack()表示返回WebView的上一页面  
+				         return true;  
+					 }
+				 }
+				return false;
+			}
+		});
+	}
+	
+	/**
+	 * 滑动页面webview属性
+	 */
+	public void setScrollSetting(){
+		setVerticalScrollBarEnabled(false);
+		setHorizontalScrollBarEnabled(false);
+		progressbar.setVisibility(View.INVISIBLE);
 	}
 	
 	public String getWebName(){

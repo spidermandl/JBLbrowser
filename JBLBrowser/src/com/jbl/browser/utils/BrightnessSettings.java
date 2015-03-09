@@ -1,26 +1,19 @@
 package com.jbl.browser.utils;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.drawable.PaintDrawable;
 import android.net.Uri;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.view.ViewGroup.LayoutParams;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.PopupWindow;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SeekBar;
 import com.jbl.browser.R;
-import com.jbl.browser.activity.MainFragActivity;
 
 /** 
  * 系统亮度设置 

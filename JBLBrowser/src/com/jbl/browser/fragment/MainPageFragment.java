@@ -134,23 +134,20 @@ public class MainPageFragment extends SherlockFragment implements
 
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
-		 DisplayMetrics metric = new DisplayMetrics();
-	     getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
-	     width=metric.widthPixels;
-	     JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.SCREEN_WIDTH, width);
-	     height=metric.heightPixels;
-	     mCurrentX_pop_full_screen = metric.widthPixels-width/7;     // 全屏按钮初始X轴位置
-		 mCurrentY_pop_full_screen =metric.heightPixels-width/7;   // 全屏按钮初始Y轴位置
-		 Rect frame = new Rect();
-		 getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
-		 statusBarHeight = frame.top;
+		DisplayMetrics metric = new DisplayMetrics();
+		getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
+		width = metric.widthPixels;
+		JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.SCREEN_WIDTH, width);
+		height = metric.heightPixels;
+		mCurrentX_pop_full_screen = metric.widthPixels - width / 7; // 全屏按钮初始X轴位置
+		mCurrentY_pop_full_screen = metric.heightPixels - width / 7; // 全屏按钮初始Y轴位置
+		Rect frame = new Rect();
+		getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+		statusBarHeight = frame.top;
 	     	     
 		/*
 		 * 设置webview字体大小
 		 */
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.getSettings().setSupportZoom(true);
-
 		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
 		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
 		switch (fontSize) {
@@ -223,43 +220,13 @@ public class MainPageFragment extends SherlockFragment implements
 	 * 初始化webview
 	 */
 	private void initWebView() {
-		// TODO Auto-generated method stub
-		// mWebView.getSettings().setJavaScriptEnabled(true);
-		// mWebView.getSettings().setSupportZoom(true);
-		// mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-		// mWebView.requestFocus();
-		// mWebView.setScrollBarStyle(View.GONE);
-
-		// webView.getSettings().setUseWideViewPort(true);
-		// webView.getSettings().setLoadWithOverviewMode(true);
-
-		mWebView.getSettings().setSupportZoom(true);
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.getSettings().setAppCacheMaxSize(8 * 1024 * 1024);
-		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-		// webView.getSettings().setPluginsEnabled(true);
-		mWebView.getSettings().setPluginState(PluginState.ON);
+		mWebView.setDefaultSetting();
 		String urlAddress=JBLPreference.getInstance(getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
 		if(urlAddress==null||urlAddress.length()==0){
 			mWebView.loadUrl(UrlUtils.URL_GET_HOST);
 		}else{
 			mWebView.loadUrl(urlAddress);
 		}
-		//监听物理返回键
-		mWebView.setOnKeyListener(new OnKeyListener() {
-			
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				// TODO Auto-generated method stub
-				 if (event.getAction() == KeyEvent.ACTION_DOWN) {
-					 if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
-						 mWebView.goBack(); //goBack()表示返回WebView的上一页面  
-				         return true;  
-					 }
-				 }
-				return false;
-			}
-		});
 		//添加下载监听
 		mWebView.setDownloadListener(new DownloadListener() {
 			
@@ -756,7 +723,7 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	@Override
 	public void goMultiWindow() {
-		((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, false,MultipageFragment.TAG);
+		((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
 		//Toast.makeText(getActivity(), "已进入多页模式", 1).show();
 		//移除重复使用的view
 		webFrame.removeView(mWebView);
