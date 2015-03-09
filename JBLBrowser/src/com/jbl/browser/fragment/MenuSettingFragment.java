@@ -82,14 +82,17 @@ public class MenuSettingFragment extends SherlockFragment {
 							fontSize.setText(items[which]);
 							Toast.makeText(getActivity(), "您选择的字体大小为："+items[which], 100).show();
 							dialog.dismiss();
-							//((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
-						//	((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
+						   // MainPageFragment.mWebView.reload();
+							/*((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
+							((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
+							*/	
 							break;
 						case 1:
 							fontSize.setText(items[which]);
 							JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.FONT_TYPE, JBLPreference.FONT_MEDIUM);
 							Toast.makeText(getActivity(), "您选择的字体大小为："+items[which], 100).show();
 							dialog.dismiss();
+						    
 							//((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
 						//	((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
 							break;
@@ -98,6 +101,7 @@ public class MenuSettingFragment extends SherlockFragment {
 							JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.FONT_TYPE, JBLPreference.FONT_MAX);
 							Toast.makeText(getActivity(), "您选择的字体大小为："+items[which], 100).show();
 							dialog.dismiss();
+						   // MainPageFragment.mWebView.reload();
 							//((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
 							//((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
 							break;

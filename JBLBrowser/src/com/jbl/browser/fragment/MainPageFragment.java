@@ -25,10 +25,12 @@ import android.view.View.OnKeyListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
+import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -78,7 +80,7 @@ public class MainPageFragment extends SherlockFragment implements
                                               LoadURLInterface{
 	public final static String TAG = "MainPageFragment";
 	/* 定义webview控件 */
-	private ProgressWebView mWebView; // 主控件 webview
+	public  ProgressWebView mWebView; // 主控件 webview
 	private BottomMenuFragment toolbarFragment;//底部toolbar
 	private SettingPagerFragment settingFragment;//底部弹出菜单 fragment
 	private TopMenuFragment topActionbarFragment; //顶部actionbar
@@ -135,39 +137,18 @@ public class MainPageFragment extends SherlockFragment implements
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
 		DisplayMetrics metric = new DisplayMetrics();
-		getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
-		width = metric.widthPixels;
-		JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.SCREEN_WIDTH, width);
-		height = metric.heightPixels;
-		mCurrentX_pop_full_screen = metric.widthPixels - width / 7; // 全屏按钮初始X轴位置
-		mCurrentY_pop_full_screen = metric.heightPixels - width / 7; // 全屏按钮初始Y轴位置
+	    getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
+	    width=metric.widthPixels;
+	    JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.SCREEN_WIDTH, width);
+	    height=metric.heightPixels;
+	    mCurrentX_pop_full_screen = metric.widthPixels-width/7;     // 全屏按钮初始X轴位置
+		mCurrentY_pop_full_screen =metric.heightPixels-width/7;   // 全屏按钮初始Y轴位置
+		 
+		//获取状态栏高度
 		Rect frame = new Rect();
 		getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
 		statusBarHeight = frame.top;
 	     	     
-		/*
-		 * 设置webview字体大小
-		 */
-		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
-		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
-		switch (fontSize) {
-		case JBLPreference.FONT_MIN:
-			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
-			break;
-		case JBLPreference.INVALID:
-		case JBLPreference.FONT_MEDIUM:
-			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
-			break;
-		case JBLPreference.FONT_MAX:
-			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
-			break;
-		default:
-			break;
-		}
-
-		BrowserSettings.getInstance().update();
-	
-		
 		/*
 		 * 2.0 WebView touch监听
 		 * 
@@ -205,7 +186,6 @@ public class MainPageFragment extends SherlockFragment implements
 		initWebView();
 		return view;
 	}
-	
 	@Override
 	public void onDestroyView() {  
 		//移除重复使用的view
@@ -221,6 +201,30 @@ public class MainPageFragment extends SherlockFragment implements
 	 */
 	private void initWebView() {
 		mWebView.setDefaultSetting();
+		/*
+		 * 设置webview字体大小
+		 */
+		mWebView.getSettings().setJavaScriptEnabled(true);
+		mWebView.getSettings().setSupportZoom(true);
+  		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
+		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
+		switch (fontSize) {
+		case JBLPreference.FONT_MIN:
+			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
+			break;
+		case JBLPreference.INVALID:
+		case JBLPreference.FONT_MEDIUM:
+			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
+			break;
+		case JBLPreference.FONT_MAX:
+			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
+			break;
+		default:
+			break;
+		}
+		BrowserSettings.getInstance().update();
+		mWebView.getSettings().setTextSize(TextSize.LARGER);
+		
 		String urlAddress=JBLPreference.getInstance(getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
 		if(urlAddress==null||urlAddress.length()==0){
 			mWebView.loadUrl(UrlUtils.URL_GET_HOST);
@@ -366,7 +370,7 @@ public class MainPageFragment extends SherlockFragment implements
 		popview_page=mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
 		popWindow_page=new PopupWindow(popview_page,80,240);
 		mCurrentX_pop_page = width-popWindow_page.getWidth();     // 翻页按钮初始X轴位置
-	    mCurrentY_pop_page =height/2-popWindow_page.getHeight()/2;   // 翻页按钮初始Y轴位置
+	    mCurrentY_pop_page =(height)/2-popWindow_page.getHeight()/2;   // 翻页按钮初始Y轴位置
 		popview_page.setOnTouchListener(new OnTouchListener() {
 		    float mX,mY;
 			@SuppressLint("ClickableViewAccessibility")
@@ -510,7 +514,6 @@ public class MainPageFragment extends SherlockFragment implements
 							
 			            	popWindow_full_screen.update(mCurrentX_pop_full_screen, mCurrentY_pop_full_screen, -1, -1);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}		            	
 		            }else if(event.getAction()==MotionEvent.ACTION_UP){	
@@ -800,6 +803,28 @@ public class MainPageFragment extends SherlockFragment implements
   			int brightness=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
   			BrightnessSettings.setBrightness(getActivity(),brightness);
   		}
+  		/*
+		 * 设置webview字体大小
+		 */
+		mWebView.getSettings().setJavaScriptEnabled(true);
+		mWebView.getSettings().setSupportZoom(true);
+  		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
+		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
+		switch (fontSize) {
+		case JBLPreference.FONT_MIN:
+			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
+			break;
+		case JBLPreference.INVALID:
+		case JBLPreference.FONT_MEDIUM:
+			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
+			break;
+		case JBLPreference.FONT_MAX:
+			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
+			break;
+		default:
+			break;
+		}
+		BrowserSettings.getInstance().update();
 	}
 
 	@Override
@@ -818,9 +843,26 @@ public class MainPageFragment extends SherlockFragment implements
 					new HistoryDao(getActivity()).addHistory(history);
 				}
 			}
+		}	
+		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
+		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
+		switch (fontSize) {
+		case JBLPreference.FONT_MIN:
+			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
+			break;
+		case JBLPreference.INVALID:
+		case JBLPreference.FONT_MEDIUM:
+			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
+			break;
+		case JBLPreference.FONT_MAX:
+			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
+			break;
+		default:
+			break;
 		}
+		BrowserSettings.getInstance().update();
 		
-	}
 
+	}
 	
 }
