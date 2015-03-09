@@ -163,16 +163,13 @@ public class MainPageFragment extends SherlockFragment implements
 		switch (fontSize) {
 		case JBLPreference.FONT_MIN:
 			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
-			BrowserSettings.getInstance().update();
 			break;
 		case JBLPreference.INVALID:
         case JBLPreference.FONT_MEDIUM:
 			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
-			BrowserSettings.getInstance().update();
 			break;
         case JBLPreference.FONT_MAX:
 	        BrowserSettings.textSize = WebSettings.TextSize.LARGER;
-	        BrowserSettings.getInstance().update();
 	        break;
 		default:
 			break;
@@ -218,7 +215,6 @@ public class MainPageFragment extends SherlockFragment implements
 		initWebView();
 		return view;
 	}
-	
 	@Override
 	public void onDestroyView() {  
 		//移除重复使用的view
@@ -242,7 +238,6 @@ public class MainPageFragment extends SherlockFragment implements
 
 		// webView.getSettings().setUseWideViewPort(true);
 		// webView.getSettings().setLoadWithOverviewMode(true);
-	
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setAppCacheMaxSize(8 * 1024 * 1024);
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
