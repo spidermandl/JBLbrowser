@@ -52,7 +52,7 @@ import com.jbl.browser.activity.BrowserSettingActivity;
 import com.jbl.browser.activity.DownloadManageActivity;
 import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
-import com.jbl.browser.activity.MultipageActivity;
+import com.jbl.browser.activity.NewPageActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
@@ -90,8 +90,6 @@ public class MainPageFragment extends SherlockFragment implements
 	private SettingPagerFragment settingFragment;//底部弹出菜单 fragment
 	private TopMenuFragment topActionbarFragment; //顶部actionbar
 	private FrameLayout webFrame;//webview父控件	
-	public String cur_url; // 设置初始网址
-	public String webName=""; // 网页名	
 	private MultipageAdapter multipageAdapter;//多页效果适配器 
 	private ScheduledExecutorService scheduledExecutorService;
 	View popview_page;//翻页按钮布局
@@ -101,7 +99,6 @@ public class MainPageFragment extends SherlockFragment implements
 	View popview_seekBar;//亮度调节布局
 	PopupWindow popWindow_seekBar;//亮度调节悬浮
 	View multipagePanel;//多页布局
-	PageIndicator multipageIndicator;
 	
 	//翻页按钮初始位置
 	int mCurrentX_pop_page;
@@ -122,18 +119,13 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		//cur_url=UrlUtils.URL_GET_HOST;
 		View view = inflater.inflate(R.layout.fragment_main_page, container,false); 
-		mWebView = WebWindowManagement.getInstance().getMainWebView();
-		//判断mWebView是否存在parent view
-		ViewGroup p = (ViewGroup) mWebView.getParent(); 
-         if (p != null) { 
-             p.removeAllViewsInLayout(); 
-         }
 	    webFrame=((FrameLayout) view.findViewById(R.id.web_view_frame));
-	    webFrame.addView(mWebView);// webview
+		mWebView = WebWindowManagement.getInstance().replaceMainWebView(webFrame);
 //		//Intent intent = getActivity().getIntent();  //监听webview跳转，实现activity跳转到推荐页面
 		mWebView.setInterface(this);//设置回调接口
+		
+		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 1);
 		
 		toolbarFragment=(BottomMenuFragment)(this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
 		toolbarFragment.setInterface(this);//设置回调接口
@@ -260,7 +252,6 @@ public class MainPageFragment extends SherlockFragment implements
 		if(urlAddress==null||urlAddress.length()==0){
 			mWebView.loadUrl(UrlUtils.URL_GET_HOST);
 		}else{
-			JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY,null);
 			mWebView.loadUrl(urlAddress);
 		}
 		//监听物理返回键
@@ -278,6 +269,7 @@ public class MainPageFragment extends SherlockFragment implements
 				return false;
 			}
 		});
+		//添加下载监听
 		mWebView.setDownloadListener(new DownloadListener() {
 			
 			@Override
@@ -321,7 +313,7 @@ public class MainPageFragment extends SherlockFragment implements
 				//当要开启全屏浏览模式时，隐藏顶部状态栏、底部菜单栏和顶部搜索栏
 				hideStatusBar();
 				createPopShrinkFullScreen();
-	            if(!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
+	            if(!UrlUtils.URL_GET_HOST.equals(mWebView.getUrl())){
 	            	getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
 		            getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();	
 		            popWindow_full_screen.showAtLocation(popview_full_screen, Gravity.NO_GRAVITY, mCurrentX_pop_full_screen, mCurrentY_pop_full_screen);
@@ -772,11 +764,14 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	@Override
 	public void goMultiWindow() {
-		//((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
+		((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, false,MultipageFragment.TAG);
 		//Toast.makeText(getActivity(), "已进入多页模式", 1).show();
-		Intent intent=new Intent();
-		intent.setClass(getActivity(), MultipageActivity.class);
-		startActivity(intent);	
+		//移除重复使用的view
+		webFrame.removeView(mWebView);
+//		Intent intent=new Intent();
+//		//intent.setClass(getActivity(), MultipageActivity.class);
+//		intent.setClass(getActivity(), NewPageActivity.class);
+//		startActivity(intent);	
 	}
 	//点击搜索图标
 	@Override
