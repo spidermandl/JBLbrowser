@@ -14,9 +14,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager.LayoutParams;
 import android.util.DisplayMetrics;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -34,14 +32,12 @@ import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
 
-import com.a.e;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.JBLApplication;
@@ -52,7 +48,6 @@ import com.jbl.browser.activity.BrowserSettingActivity;
 import com.jbl.browser.activity.DownloadManageActivity;
 import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
-import com.jbl.browser.activity.NewPageActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
@@ -69,7 +64,6 @@ import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
 import com.jbl.browser.view.ProgressWebView;
 import com.jbl.browser.view.UserDefinedDialog;
-import com.viewpager.indicator.PageIndicator;
 
 /**
  * 浏览器主页
@@ -85,7 +79,6 @@ public class MainPageFragment extends SherlockFragment implements
 	public final static String TAG = "MainPageFragment";
 	/* 定义webview控件 */
 	private ProgressWebView mWebView; // 主控件 webview
-	private WebSettings settings;
 	private BottomMenuFragment toolbarFragment;//底部toolbar
 	private SettingPagerFragment settingFragment;//底部弹出菜单 fragment
 	private TopMenuFragment topActionbarFragment; //顶部actionbar
@@ -119,60 +112,56 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_main_page, container,false); 
-	    webFrame=((FrameLayout) view.findViewById(R.id.web_view_frame));
+		View view = inflater.inflate(R.layout.fragment_main_page, container,
+				false);
+		webFrame = ((FrameLayout) view.findViewById(R.id.web_view_frame));
 		mWebView = WebWindowManagement.getInstance().replaceMainWebView(webFrame);
-//		//Intent intent = getActivity().getIntent();  //监听webview跳转，实现activity跳转到推荐页面
-		mWebView.setInterface(this);//设置回调接口
-		
-		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 1);
-		
-		toolbarFragment=(BottomMenuFragment)(this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
-		toolbarFragment.setInterface(this);//设置回调接口
-		
-		
-		settingFragment=new SettingPagerFragment();
-		settingFragment.setInterface(this);//设置回调接口
-		
-		topActionbarFragment=(TopMenuFragment)(this.getActivity().getSupportFragmentManager().findFragmentById(R.id.top_menu_fragment));
-		topActionbarFragment.setTopActionbar(this);//设置回调接口
-		
-		
+		// //Intent intent = getActivity().getIntent();
+		// //监听webview跳转，实现activity跳转到推荐页面
+		mWebView.setInterface(this);// 设置回调接口
+
+		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 1,false);
+		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 2,false);
+
+		toolbarFragment = (BottomMenuFragment) (this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
+		toolbarFragment.setInterface(this);// 设置回调接口
+
+		settingFragment = new SettingPagerFragment();
+		settingFragment.setInterface(this);// 设置回调接口
+
+		topActionbarFragment = (TopMenuFragment) (this.getActivity().getSupportFragmentManager().findFragmentById(R.id.top_menu_fragment));
+		topActionbarFragment.setTopActionbar(this);// 设置回调接口
+
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
-		
-		 DisplayMetrics metric = new DisplayMetrics();
-	     getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
-	     width=metric.widthPixels;
-	     height=metric.heightPixels;
-	     mCurrentX_pop_full_screen = metric.widthPixels-width/7;     // 全屏按钮初始X轴位置
-		 mCurrentY_pop_full_screen =metric.heightPixels-width/7;   // 全屏按钮初始Y轴位置
-		 Rect frame = new Rect();
-		 getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
-		 statusBarHeight = frame.top;
-	     	     
-		/*
-		 * 设置webview字体大小
-		 */
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.getSettings().setSupportZoom(true);
+
+		DisplayMetrics metric = new DisplayMetrics();
+		getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
+		width = metric.widthPixels;
+		height = metric.heightPixels;
+		mCurrentX_pop_full_screen = metric.widthPixels - width / 7; // 全屏按钮初始X轴位置
+		mCurrentY_pop_full_screen = metric.heightPixels - width / 7; // 全屏按钮初始Y轴位置
+		Rect frame = new Rect();
+		getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+		statusBarHeight = frame.top;
+
 		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
-		int fontSize=JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
+		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
 		switch (fontSize) {
 		case JBLPreference.FONT_MIN:
 			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
 			break;
 		case JBLPreference.INVALID:
-        case JBLPreference.FONT_MEDIUM:
+		case JBLPreference.FONT_MEDIUM:
 			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
 			break;
-        case JBLPreference.FONT_MAX:
-	        BrowserSettings.textSize = WebSettings.TextSize.LARGER;
-	        break;
+		case JBLPreference.FONT_MAX:
+			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
+			break;
 		default:
 			break;
 		}
-		
+
 		BrowserSettings.getInstance().update();
 	
 		
@@ -240,7 +229,8 @@ public class MainPageFragment extends SherlockFragment implements
 
 		// webView.getSettings().setUseWideViewPort(true);
 		// webView.getSettings().setLoadWithOverviewMode(true);
-	
+
+		mWebView.getSettings().setSupportZoom(true);
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setAppCacheMaxSize(8 * 1024 * 1024);
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
