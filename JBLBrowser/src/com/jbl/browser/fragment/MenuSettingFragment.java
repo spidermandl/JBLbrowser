@@ -100,8 +100,7 @@ public class MenuSettingFragment extends SherlockFragment {
 							dialog.dismiss();
 							/*((BaseFragActivity)(MenuSettingFragment.this.getActivity())).removeFragment(MenuSettingFragment.this);
 							((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,false,MainPageFragment.TAG);
-							BrowserSettingActivity.ab.setDisplayHomeAsUpEnabled(false);
-							BrowserSettingActivity.ab.setDisplayShowTitleEnabled(false);*/	
+							*/	
 							break;
 						case 1:
 							fontSize.setText(items[which]);

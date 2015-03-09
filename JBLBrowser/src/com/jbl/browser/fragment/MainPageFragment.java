@@ -403,7 +403,7 @@ public class MainPageFragment extends SherlockFragment implements
 		popview_page=mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
 		popWindow_page=new PopupWindow(popview_page,80,240);
 		mCurrentX_pop_page = width-popWindow_page.getWidth();     // 翻页按钮初始X轴位置
-	    mCurrentY_pop_page =height/2-popWindow_page.getHeight()/2;   // 翻页按钮初始Y轴位置
+	    mCurrentY_pop_page =(height)/2-popWindow_page.getHeight()/2;   // 翻页按钮初始Y轴位置
 		popview_page.setOnTouchListener(new OnTouchListener() {
 		    float mX,mY;
 			@SuppressLint("ClickableViewAccessibility")
