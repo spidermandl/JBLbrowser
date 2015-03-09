@@ -4,10 +4,11 @@ import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.PaintDrawable;
 import android.net.Uri;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
-import android.support.v4.view.ViewPager.LayoutParams;
+import android.view.ViewGroup.LayoutParams;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -124,7 +125,7 @@ public class BrightnessSettings {
         resolver.notifyChange(uri, null); 
     }  
     //显示调节夜间模式亮度悬浮窗
-    public static void showPopSeekBrightness(final Activity act){
+    public static void showPopSeekBrightness(final Activity act,int width){
     	 if (act == null) {  
              return;  
          } 
@@ -136,12 +137,22 @@ public class BrightnessSettings {
     	 int sysScreenBrightness=getScreenBrightness(act);
          LayoutInflater mLayoutInflater=(LayoutInflater)act.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
  		 popview=(View)mLayoutInflater.inflate(R.layout.pop_seekbar_brightness, null);
- 		 popWindow=new PopupWindow(popview,LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);   
-         final SeekBar seekbar = (SeekBar)popview.findViewById(R.id.ctrl_skbProgress); // 手动调节亮度  
+ 		 popWindow=new PopupWindow(popview,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);   
+         //点击屏幕其他部分和返回键都能实现使其消失
+ 		 popWindow.setFocusable(true);
+         popWindow.setBackgroundDrawable(new PaintDrawable());
+ 		 popWindow.setOutsideTouchable(true);		 
+ 		
+ 		 final SeekBar seekbar = (SeekBar)popview.findViewById(R.id.ctrl_skbProgress); // 手动调节亮度  
          int progress = oldBrightness; // SeekBar的值范围：0~255 
+         //根据屏幕宽度来调节seekbar宽带
+         LayoutParams lp=seekbar.getLayoutParams();
+         lp.width=width*3/5;
+         seekbar.setLayoutParams(lp);
          seekbar.setMax(sysScreenBrightness);   //可调节的最大亮度和系统调节的亮度一样
          seekbar.setProgress(progress < 0 ? 0 : progress);  
-         setBrightness(act, oldBrightness);    
+         setBrightness(act, oldBrightness);  
+         
          // 手动调节亮度滑块滑动时  
          seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {  
              @Override  

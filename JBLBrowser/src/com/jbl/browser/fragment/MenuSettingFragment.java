@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.text.style.BulletSpan;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,6 +43,7 @@ public class MenuSettingFragment extends SherlockFragment {
 	private TextView mMenuSetClear,mMentSetSetting;
 	private ScrollView settingScroll;
 	private AlertDialog dialog;
+	private int width;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -68,17 +70,6 @@ public class MenuSettingFragment extends SherlockFragment {
 		if(fontValuse==2)
 			font_valuse.setText(StringUtils.FONT_MAX);
 		settingScroll=(ScrollView)view.findViewById(R.id.setting_scroll);
-		settingScroll.setOnTouchListener(new OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				// TODO Auto-generated method stub
-				if(event.getAction()==MotionEvent.ACTION_MOVE){
-					BrightnessSettings.hideSeekBar();
-				}
-				return false;
-			}
-		});
 		//字体大小监听
 		mMenuSetFont.setOnClickListener(new View.OnClickListener() {
 			
@@ -139,7 +130,8 @@ public class MenuSettingFragment extends SherlockFragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				JBLPreference.getInstance(getActivity()).writeInt(BoolType.BRIGHTNESS_TYPE.toString(),JBLPreference.NIGHT_MODEL);
-				BrightnessSettings.showPopSeekBrightness(getActivity());
+				width=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.SCREEN_WIDTH);
+				BrightnessSettings.showPopSeekBrightness(getActivity(),width);
 			}
 		});
 		//关于我们监听

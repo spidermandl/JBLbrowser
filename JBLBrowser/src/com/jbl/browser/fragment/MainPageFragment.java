@@ -144,6 +144,7 @@ public class MainPageFragment extends SherlockFragment implements
 		 DisplayMetrics metric = new DisplayMetrics();
 	     getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
 	     width=metric.widthPixels;
+	     JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.SCREEN_WIDTH, width);
 	     height=metric.heightPixels;
 	     mCurrentX_pop_full_screen = metric.widthPixels-width/7;     // 全屏按钮初始X轴位置
 		 mCurrentY_pop_full_screen =metric.heightPixels-width/7;   // 全屏按钮初始Y轴位置
@@ -204,9 +205,6 @@ public class MainPageFragment extends SherlockFragment implements
 							});
 					getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
 					getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
-				}
-				if(JBLPreference.getInstance(getActivity()).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){  
-	            	 BrightnessSettings.hideSeekBar();
 				}
 				return false;
 			}
@@ -387,7 +385,7 @@ public class MainPageFragment extends SherlockFragment implements
 			if(value!=JBLPreference.NIGHT_MODEL){
 				//夜间模式
 				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.NIGHT_MODEL);
-				BrightnessSettings.showPopSeekBrightness(getActivity());
+				BrightnessSettings.showPopSeekBrightness(getActivity(),width);
 				
 			}else{
 				//日间模式
