@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.jbl.browser.adapter.WebHorizontalViewAdapter;
+import com.viewpager.indicator.PageIndicator;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -30,15 +31,7 @@ import android.widget.LinearLayout;
  * @author Desmond
  *
  */
-public class WebHorizontalView extends HorizontalScrollView implements
-        OnClickListener {
-
-    /**
-     * 图片滚动时的回调接口
-     */
-    public interface CurrentImageChangeListener {
-        void onCurrentImgChanged(int position, View viewIndicator);
-    }
+public class WebHorizontalView extends HorizontalScrollView {
 
     /**
      * 条目点击时的回调
@@ -48,9 +41,6 @@ public class WebHorizontalView extends HorizontalScrollView implements
         void onClick(View view, int pos);
     }
 
-    private CurrentImageChangeListener mListener;
-
-    private OnItemClickListener mOnClickListener;
 
     private static final String TAG = "WebHorizontalScrollView";
     
@@ -127,10 +117,6 @@ public class WebHorizontalView extends HorizontalScrollView implements
 
 	private int lastScrollX = 0;
 	
-    /**
-     * 保存View与位置的键值对
-     */
-    private Map<View, Integer> mViewPos = new HashMap<View, Integer>();
 
     public WebHorizontalView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -157,105 +143,38 @@ public class WebHorizontalView extends HorizontalScrollView implements
 			throw new IllegalStateException("ViewPager does not have adapter instance.");
 		}
 
-		pager.setOnPageChangeListener(pageListener);
+		//pager.setOnPageChangeListener(pageListener);
 
 		notifyDataSetChanged();
 	}
 	
+	public void setIndicator(PageIndicator indicator){
+		if(indicator!=null)
+			indicator.setOnPageChangeListener(pageListener);
+	}
 	
 	public void notifyDataSetChanged() {
 
-//		getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-//
-//			@SuppressWarnings("deprecation")
-//			@SuppressLint("NewApi")
-//			@Override
-//			public void onGlobalLayout() {
-//
-//				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-//					getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//				} else {
-//					getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//				}
-//
-//				currentPosition = pager.getCurrentItem();
-//				scrollToChild(currentPosition, 0);
-//			}
-//		});
+		getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+
+			@SuppressWarnings("deprecation")
+			@SuppressLint("NewApi")
+			@Override
+			public void onGlobalLayout() {
+
+				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+					getViewTreeObserver().removeGlobalOnLayoutListener(this);
+				} else {
+					getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				}
+
+				currentPosition = pager.getCurrentItem();
+				scrollToChild(currentPosition, 0);
+			}
+		});
 
 	}
-    /**
-     * 加载下一张图片
-     */
-    protected void loadNextImg() {
-        // 数组边界值计算
-        if (mCurrentIndex == mAdapter.getCount() - 1) {
-            return;
-        }
-        // 移除第一张图片，且将水平滚动位置置0
-        scrollTo(0, 0);
-        mViewPos.remove(mContainer.getChildAt(0));
-        //mContainer.removeViewAt(0);
 
-        // 获取下一张图片，并且设置onclick事件，且加入容器中
-        View view = mAdapter.getView(++mCurrentIndex, null, mContainer);
-        view.setOnClickListener(this);
-        mViewPos.put(view, mCurrentIndex);
-
-        // 当前第一张图片小标
-        mFristIndex++;
-        // 如果设置了滚动监听则触发
-        if (mListener != null) {
-            notifyCurrentImgChanged();
-        }
-
-    }
-
-    /**
-     * 加载前一张图片
-     */
-    protected void loadPreImg() {
-        // 如果当前已经是第一张，则返回
-        if (mFristIndex == 0)
-            return;
-        // 获得当前应该显示为第一张图片的下标
-        int index = mCurrentIndex - mCountOneScreen;
-        if (index >= 0) {
-            // mContainer = (LinearLayout) getChildAt(0);
-            // 移除最后一张
-            int oldViewPos = mContainer.getChildCount() - 1;
-            mViewPos.remove(mContainer.getChildAt(oldViewPos));
-            //mContainer.removeViewAt(oldViewPos);
-
-            // 将此View放入第一个位置
-            View view = mAdapter.getView(index, null, mContainer);
-            mViewPos.put(view, index);
-            view.setOnClickListener(this);
-            // 水平滚动位置向左移动view的宽度个像素
-            scrollTo(mChildWidth, 0);
-            // 当前位置--，当前第一个显示的下标--
-            mCurrentIndex--;
-            mFristIndex--;
-            // 回调
-            if (mListener != null) {
-                notifyCurrentImgChanged();
-
-            }
-        }
-    }
-
-    /**
-     * 滑动时的回调
-     */
-    public void notifyCurrentImgChanged() {
-        // 先清除所有的背景色，点击时会设置为蓝色
-        for (int i = 0; i < mContainer.getChildCount(); i++) {
-            mContainer.getChildAt(i).setBackgroundColor(Color.WHITE);
-        }
-
-        mListener.onCurrentImgChanged(mFristIndex, mContainer.getChildAt(0));
-
-    }
 
     /**
      * 初始化数据，设置数据适配器
@@ -266,7 +185,6 @@ public class WebHorizontalView extends HorizontalScrollView implements
         this.mAdapter = mAdapter;
         mContainer = (LinearLayout) getChildAt(0);
         mContainer.removeAllViews();
-        mViewPos.clear();
 
         // 强制计算当前View的宽和高
         if (mChildWidth == 0 && mChildHeight == 0) {
@@ -302,16 +220,17 @@ public class WebHorizontalView extends HorizontalScrollView implements
             if(i!=0){
             	((LinearLayout.LayoutParams)view.getLayoutParams()).leftMargin=mGap;
             }
-            view.setOnClickListener(this);
-            mViewPos.put(view, i);
         }
 
         mCurrentIndex = 0;
-        if (mListener != null) {
-            notifyCurrentImgChanged();
-        }
-
-        adjustPosition(0);
+        
+        this.post(new Runnable() {
+			
+			@Override
+			public void run() {
+		        adjustPosition(0);
+			}
+		});
     }
 
 //    @Override
@@ -371,6 +290,9 @@ public class WebHorizontalView extends HorizontalScrollView implements
 //    	 */
 //    	super.fling(velocityX/3);
 //    }
+    private void setPosition(int page){
+    	adjustPosition(mEdge+(mGap+mChildWidth)*page);
+    }
     /**
      * 调整位置
      * @param X
@@ -385,26 +307,7 @@ public class WebHorizontalView extends HorizontalScrollView implements
     		scrollTo(mEdge+mChildWidth/2-mScreenWitdh/2, 0);
     		return;
     	}
-    	scrollTo((mCurrentIndex)*(mChildWidth+mGap)+mEdge+mChildWidth/2-mScreenWitdh/2, 0);
-    }
-    
-    @Override
-    public void onClick(View v) {
-        if (mOnClickListener != null) {
-            for (int i = 0; i < mContainer.getChildCount(); i++) {
-                mContainer.getChildAt(i).setBackgroundColor(Color.WHITE);
-            }
-            mOnClickListener.onClick(v, mViewPos.get(v));
-        }
-    }
-
-    public void setOnItemClickListener(OnItemClickListener mOnClickListener) {
-        this.mOnClickListener = mOnClickListener;
-    }
-
-    public void setCurrentImageChangeListener(
-            CurrentImageChangeListener mListener) {
-        this.mListener = mListener;
+    	smoothScrollTo((mCurrentIndex)*(mChildWidth+mGap)+mEdge+mChildWidth/2-mScreenWitdh/2, 0);
     }
 
     
@@ -414,93 +317,94 @@ public class WebHorizontalView extends HorizontalScrollView implements
 		@Override
 		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-//			currentPosition = position;
-//			currentPositionOffset = positionOffset;
-//
-//			scrollToChild(position, (int) (positionOffset * mChildWidth));
-//
-//			invalidate();
-//
-//			if (delegatePageListener != null) {
-//				delegatePageListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
-//			}
+			currentPosition = position;
+			currentPositionOffset = positionOffset;
+
+			scrollToChild(position, (int) (positionOffset * mChildWidth));
+
+			invalidate();
+
+			if (delegatePageListener != null) {
+				delegatePageListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+			}
 		}
 
 		@Override
 		public void onPageScrollStateChanged(int state) {
-//			if (state == ViewPager.SCROLL_STATE_IDLE) {
-//				scrollToChild(pager.getCurrentItem(), 0);
-//			}
-//
-//			if (delegatePageListener != null) {
-//				delegatePageListener.onPageScrollStateChanged(state);
-//			}
+			if (state == ViewPager.SCROLL_STATE_IDLE) {
+				scrollToChild(pager.getCurrentItem(), 0);
+				setPosition(pager.getCurrentItem());
+			}
+
+			if (delegatePageListener != null) {
+				delegatePageListener.onPageScrollStateChanged(state);
+			}
 		}
 
 		@Override
 		public void onPageSelected(int position) {
-//			if (delegatePageListener != null) {
-//				delegatePageListener.onPageSelected(position);
-//			}
+			if (delegatePageListener != null) {
+				delegatePageListener.onPageSelected(position);
+			}
 		}
 
 	}
     
 	private void scrollToChild(int position, int offset) {
 
-//		if (mAdapter.getCount() == 0) {
-//			return;
-//		}
-//
-//		int newScrollX = mEdge+(mChildWidth+mGap)*position-mScreenWitdh/2 + offset;
-//
-//		if (position > 0 || offset > 0) {
-//			newScrollX -= scrollOffset;
-//		}
-//
-//		if (newScrollX != lastScrollX) {
-//			lastScrollX = newScrollX;
-//			scrollTo(newScrollX, 0);
-//		}
+		if (mAdapter.getCount() == 0) {
+			return;
+		}
+
+		int newScrollX = mEdge+mChildWidth/2+(mChildWidth+mGap)*position-mScreenWitdh/2 + offset;
+
+		if (position > 0 || offset > 0) {
+			newScrollX -= scrollOffset;
+		}
+
+		if (newScrollX != lastScrollX) {
+			lastScrollX = newScrollX;
+			this.smoothScrollTo(newScrollX, 0);
+		}
 
 	}
 	
-//	@Override
-//	public Parcelable onSaveInstanceState() {
-//		Parcelable superState = super.onSaveInstanceState();
-//		SavedState savedState = new SavedState(superState);
-//		savedState.currentPosition = currentPosition;
-//		return savedState;
-//	}
-//
-//	static class SavedState extends BaseSavedState {
-//		int currentPosition;
-//
-//		public SavedState(Parcelable superState) {
-//			super(superState);
-//		}
-//
-//		private SavedState(Parcel in) {
-//			super(in);
-//			currentPosition = in.readInt();
-//		}
-//
-//		@Override
-//		public void writeToParcel(Parcel dest, int flags) {
-//			super.writeToParcel(dest, flags);
-//			dest.writeInt(currentPosition);
-//		}
-//
-//		public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
-//			@Override
-//			public SavedState createFromParcel(Parcel in) {
-//				return new SavedState(in);
-//			}
-//
-//			@Override
-//			public SavedState[] newArray(int size) {
-//				return new SavedState[size];
-//			}
-//		};
-//	}
+	@Override
+	public Parcelable onSaveInstanceState() {
+		Parcelable superState = super.onSaveInstanceState();
+		SavedState savedState = new SavedState(superState);
+		savedState.currentPosition = currentPosition;
+		return savedState;
+	}
+
+	static class SavedState extends BaseSavedState {
+		int currentPosition;
+
+		public SavedState(Parcelable superState) {
+			super(superState);
+		}
+
+		private SavedState(Parcel in) {
+			super(in);
+			currentPosition = in.readInt();
+		}
+
+		@Override
+		public void writeToParcel(Parcel dest, int flags) {
+			super.writeToParcel(dest, flags);
+			dest.writeInt(currentPosition);
+		}
+
+		public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+			@Override
+			public SavedState createFromParcel(Parcel in) {
+				return new SavedState(in);
+			}
+
+			@Override
+			public SavedState[] newArray(int size) {
+				return new SavedState[size];
+			}
+		};
+	}
 }

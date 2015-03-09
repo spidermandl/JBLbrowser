@@ -40,15 +40,22 @@ public class WebWindowManagement {
 	 * @return
 	 */
 	public ProgressWebView replaceMainWebView(ViewGroup parent){
-		return replaceWebViewWithIndex(parent,0);
+		return replaceWebViewWithIndex(parent,0,false);
 	}
 	
 	/**
-	 * 获得web页面
-	 * @param index 页面索引位置
+	 * 
+	 * @param index 
 	 * @return
 	 */
-	public ProgressWebView replaceWebViewWithIndex(ViewGroup parent,int index){
+	/**
+	 * 获得web页面
+	 * @param parent parent中放入webview
+	 * @param index 页面索引位置
+	 * @param isSort 是否将索引位置放到队列头
+	 * @return
+	 */
+	public ProgressWebView replaceWebViewWithIndex(ViewGroup parent,int index,boolean isSort){
 		
 		while(index>=queue.size()){
 			ProgressWebView webView=new ProgressWebView(JBLApplication.getInstance());
@@ -58,13 +65,19 @@ public class WebWindowManagement {
 			if(parent!=null)
 				parent.addView(webView);
 			queue.add(pair);
+			isSort=true;
+		}
+		WebPair pair;
+		if(isSort){
+		    for(int i=0;i<index;i++){
+			    queue.add(queue.remove());
+		    }
+		    pair=queue.element();
+		}else{
+			pair=((LinkedList<WebPair>)queue).get(index);
 		}
 		
-		for(int i=0;i<index;i++){
-			queue.add(queue.remove());
-		}
 		
-		WebPair pair=queue.element();
 		if(pair.parent!=null)
 			pair.parent.removeView(pair.webView);
 	
