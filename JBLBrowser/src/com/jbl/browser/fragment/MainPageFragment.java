@@ -231,7 +231,8 @@ public class MainPageFragment extends SherlockFragment implements
 		}else{
 			mWebView.loadUrl(urlAddress);
 		}
-		//监听物理返回键
+		//在progressWebView中已经有监听。
+		/*//监听物理返回键
 		mWebView.setOnKeyListener(new OnKeyListener() {
 			
 			@Override
@@ -247,7 +248,7 @@ public class MainPageFragment extends SherlockFragment implements
 				 }
 				return false;
 			}
-		});
+		});*/
 
 		//添加下载监听
 		mWebView.setDownloadListener(new DownloadListener() {
