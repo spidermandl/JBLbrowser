@@ -3,11 +3,9 @@ package com.jbl.browser;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.zxing.common.StringUtils;
 import com.jbl.browser.view.ProgressWebView;
 
 /**
