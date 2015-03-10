@@ -1,12 +1,9 @@
 package com.jbl.browser.activity;
 
 
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -18,7 +15,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
 import com.jbl.browser.adapter.HistoryAdapter;
-import com.jbl.browser.bean.History;
 import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.fragment.BookMarkFragment;
 import com.jbl.browser.fragment.HistoryFragment;

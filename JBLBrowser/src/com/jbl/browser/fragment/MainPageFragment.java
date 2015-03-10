@@ -280,6 +280,8 @@ public class MainPageFragment extends SherlockFragment implements
 					 if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
 						 mWebView.goBack(); //goBack()表示返回WebView的上一页面  
 				         return true;  
+					 }else{
+						 System.exit(0);//直接退出fragment，不会出现白色界面
 					 }
 				 }
 				return false;
