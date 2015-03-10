@@ -148,7 +148,28 @@ public class MainPageFragment extends SherlockFragment implements
 		Rect frame = new Rect();
 		getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
 		statusBarHeight = frame.top;
-	     	     
+		/*
+		 * 设置webview字体大小
+		 */
+		mWebView.getSettings().setJavaScriptEnabled(true);
+		mWebView.getSettings().setSupportZoom(true);
+  		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
+		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
+		switch (fontSize) {
+		case JBLPreference.FONT_MIN:
+			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
+			break;
+		case JBLPreference.INVALID:
+		case JBLPreference.FONT_MEDIUM:
+			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
+			break;
+		case JBLPreference.FONT_MAX:
+			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
+			break;
+		default:
+			break;
+		}
+		BrowserSettings.getInstance().update();     
 		/*
 		 * 2.0 WebView touch监听
 		 * 
@@ -201,30 +222,6 @@ public class MainPageFragment extends SherlockFragment implements
 	 */
 	private void initWebView() {
 		mWebView.setDefaultSetting();
-		/*
-		 * 设置webview字体大小
-		 */
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.getSettings().setSupportZoom(true);
-  		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
-		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
-		switch (fontSize) {
-		case JBLPreference.FONT_MIN:
-			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
-			break;
-		case JBLPreference.INVALID:
-		case JBLPreference.FONT_MEDIUM:
-			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
-			break;
-		case JBLPreference.FONT_MAX:
-			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
-			break;
-		default:
-			break;
-		}
-		BrowserSettings.getInstance().update();
-		mWebView.getSettings().setTextSize(TextSize.LARGER);
-		
 		String urlAddress=JBLPreference.getInstance(getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
 		if(urlAddress==null||urlAddress.length()==0){
 			mWebView.loadUrl(UrlUtils.URL_GET_HOST);
@@ -862,24 +859,6 @@ public class MainPageFragment extends SherlockFragment implements
 				}
 			}
 		}	
-		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
-		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
-		switch (fontSize) {
-		case JBLPreference.FONT_MIN:
-			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
-			break;
-		case JBLPreference.INVALID:
-		case JBLPreference.FONT_MEDIUM:
-			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
-			break;
-		case JBLPreference.FONT_MAX:
-			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
-			break;
-		default:
-			break;
-		}
-		BrowserSettings.getInstance().update();
-		
 
 	}
 	
