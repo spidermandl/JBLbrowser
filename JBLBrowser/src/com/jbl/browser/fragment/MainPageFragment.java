@@ -16,21 +16,16 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.PluginState;
-import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -151,8 +146,6 @@ public class MainPageFragment extends SherlockFragment implements
 		/*
 		 * 设置webview字体大小
 		 */
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.getSettings().setSupportZoom(true);
   		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
 		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
 		switch (fontSize) {
@@ -817,11 +810,6 @@ public class MainPageFragment extends SherlockFragment implements
   			int brightness=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
   			BrightnessSettings.setBrightness(getActivity(),brightness);
   		}
-  		/*
-		 * 设置webview字体大小
-		 */
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.getSettings().setSupportZoom(true);
   		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
 		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
 		switch (fontSize) {

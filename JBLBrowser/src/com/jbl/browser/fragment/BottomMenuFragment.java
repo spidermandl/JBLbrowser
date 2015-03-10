@@ -27,7 +27,7 @@ public class BottomMenuFragment extends SherlockFragment implements View.OnClick
 	private ScaleImageView mBack; // 3.1  后退
 	private ScaleImageView mForward; // 3.2  前进
 	private ScaleImageView mHome; // 3.3  Home
-	private TextView mMultiWindows;// 3.4  切换多页模式
+	private ScaleImageView mMultiWindows;// 3.4  切换多页模式
 	private ScaleImageView mMenu;// 3.5  选项菜单
 	@Override
 	public void onAttach(Activity activity) {
@@ -43,7 +43,7 @@ public class BottomMenuFragment extends SherlockFragment implements View.OnClick
 		mForward = (ScaleImageView) view.findViewById(R.id.toolbar_forward); // 3.2
         mHome = (ScaleImageView) view.findViewById(R.id.toolbar_home); // 3.3
         mMenu = (ScaleImageView) view.findViewById(R.id.toolbar_menu); // 3.4
-        mMultiWindows = (TextView) view.findViewById(R.id.toolbar_multipage); // 3.5
+        mMultiWindows = (ScaleImageView) view.findViewById(R.id.toolbar_multipage); // 3.5
         
         mBack.setOnClickListener(this);
         mForward.setOnClickListener(this);

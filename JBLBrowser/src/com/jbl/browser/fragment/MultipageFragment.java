@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
@@ -13,7 +15,6 @@ import com.jbl.browser.WebWindowManagement;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.adapter.WebHorizontalViewAdapter;
-import com.jbl.browser.interfaces.MultiageToolbarItemInterface;
 import com.jbl.browser.view.WebHorizontalView;
 import com.viewpager.indicator.CirclePageIndicator;
 
@@ -22,7 +23,7 @@ import com.viewpager.indicator.CirclePageIndicator;
  * @author Desmond
  *
  */
-public class MultipageFragment extends SherlockFragment implements MultiageToolbarItemInterface{
+public class MultipageFragment extends SherlockFragment implements OnClickListener{
 	
 	public final static String TAG="MultipageFragment";
 	
@@ -32,6 +33,8 @@ public class MultipageFragment extends SherlockFragment implements MultiageToolb
 	
 	private WebHorizontalView mHorizontalScrollView;
 	private WebHorizontalViewAdapter mAdapter;
+	
+	private TextView newWindow;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,15 +59,22 @@ public class MultipageFragment extends SherlockFragment implements MultiageToolb
         mHorizontalScrollView.initDatas(mAdapter);
         mHorizontalScrollView.setViewPager(multiViewPager);
         mHorizontalScrollView.setIndicator(multipageIndicator);
+        
+        newWindow = (TextView)view.findViewById(R.id.new_window);
+        newWindow.setOnClickListener(this);
 		return view;
 	}
+
+//	@Override
+//	public void multipageWindow() {
+//		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,true, MainPageFragment.TAG);
+//		
+//	}
 	@Override
-	public void newWindow() {
-		
-	}
-	@Override
-	public void multipageWindow() {
-		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,true, MainPageFragment.TAG);
+	public void onClick(View v) {
+		WebWindowManagement.getInstance().replaceWebViewWithIndex(
+				null, WebWindowManagement.getInstance().getCount(), true);
+		getFragmentManager().popBackStack();
 		
 	}
 

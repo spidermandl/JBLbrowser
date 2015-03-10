@@ -1,46 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:layout_height="fill_parent" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#CCCCCCCC" >
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/multipage_viewpager"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/multipage_indicator"
-            android:layout_gravity="center"
-            android:background="#FFFFFFFF" />
-
-        <com.viewpager.indicator.CirclePageIndicator
-            android:id="@id/multipage_indicator"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:padding="5dip" />
-    </RelativeLayout>
-
-    <com.jbl.browser.view.WebHorizontalView
-        android:id="@+id/id_horizontalScrollView"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:background="@android:color/white"
-        android:scrollbars="none" >
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/multi_page_bottom_bar" >
 
-        <LinearLayout
-            android:id="@+id/id_gallery"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FF000000"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-        </LinearLayout>
-    </com.jbl.browser.view.WebHorizontalView>
+            android:background="#CCCCCCCC" >
 
-</FrameLayout>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/multipage_viewpager"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/multipage_indicator"
+                android:layout_gravity="center"
+                android:background="#FFFFFFFF" />
+
+            <com.viewpager.indicator.CirclePageIndicator
+                android:id="@id/multipage_indicator"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:padding="5dip" />
+        </RelativeLayout>
+
+        <com.jbl.browser.view.WebHorizontalView
+            android:id="@+id/id_horizontalScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/white"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:id="@+id/id_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FF000000"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+            </LinearLayout>
+        </com.jbl.browser.view.WebHorizontalView>
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@id/multi_page_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/toolbar_bg" 
+        android:layout_alignParentBottom="true">
+
+        <com.jbl.browser.view.ScaleImageView
+            android:id="@+id/multi_page_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/toolbar_window_selector"
+            android:layout_alignParentRight="true"
+            android:clickable="true"/>
+        
+        <TextView
+            android:id="@+id/new_window"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_new_window_selector"
+            android:layout_toLeftOf="@id/multi_page_num"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@id/multi_page_num"
+            android:layout_alignBottom="@id/multi_page_num"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/new_window" />
+    </RelativeLayout>
+
+</RelativeLayout>
