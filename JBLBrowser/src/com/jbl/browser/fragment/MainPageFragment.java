@@ -231,6 +231,25 @@ public class MainPageFragment extends SherlockFragment implements
 		}else{
 			mWebView.loadUrl(urlAddress);
 		}
+		//在progressWebView中已经有监听。
+		/*//监听物理返回键
+		mWebView.setOnKeyListener(new OnKeyListener() {
+			
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				// TODO Auto-generated method stub
+				 if (event.getAction() == KeyEvent.ACTION_DOWN) {
+					 if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
+						 mWebView.goBack(); //goBack()表示返回WebView的上一页面  
+				         return true;  
+					 }else{
+						 System.exit(0);//直接退出fragment，不会出现白色界面
+					 }
+				 }
+				return false;
+			}
+		});*/
+
 		//添加下载监听
 		mWebView.setDownloadListener(new DownloadListener() {
 			

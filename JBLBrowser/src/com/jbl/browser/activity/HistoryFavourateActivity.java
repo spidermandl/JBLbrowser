@@ -1,18 +1,20 @@
 package com.jbl.browser.activity;
 
 
+
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.ActionMode;
