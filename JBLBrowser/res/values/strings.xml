@@ -120,6 +120,9 @@
     <string name="search_cancel">取&#160;消</string>
     <string name="search_forward">前&#160;往</string>
     <string name="delete_history">删除历史记录</string>
+    
+    <string name="action_setting">多选</string>
+    <string name="select_item">已选择:</string>
     <!-- 菜单文字 -->
     <string-array name="setting_content_item">
         <item>添加收藏</item>

@@ -20,6 +20,7 @@
     <color name="serach_controll_bg">#FFCCCCCC</color>
     <color name="gridview_selector">#ff5c5c5c</color>
     
-    
+    <color name="read_bgcolor">#ffeeeeee</color>
+    <color name="list_select">#F5FFFA</color>
     
 </resources>
