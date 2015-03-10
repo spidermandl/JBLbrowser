@@ -8,9 +8,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
+import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebSettings.PluginState;
 import android.widget.ProgressBar;
 
 import com.jbl.browser.activity.RecommendMainActivity;
@@ -98,6 +98,8 @@ public class ProgressWebView extends WebView {
 					 if (keyCode == KeyEvent.KEYCODE_BACK && canGoBack()) {
 						 goBack(); //goBack()表示返回WebView的上一页面  
 				         return true;  
+					 }else{
+						 System.exit(0);
 					 }
 				 }
 				return false;
