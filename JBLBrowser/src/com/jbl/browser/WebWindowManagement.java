@@ -73,6 +73,7 @@ public class WebWindowManagement {
 			    queue.add(queue.remove());
 		    }
 		    pair=queue.element();
+		    queue.add(queue.remove());//重新添加被删除的主页
 		}else{
 			pair=((LinkedList<WebPair>)queue).get(index);
 		}

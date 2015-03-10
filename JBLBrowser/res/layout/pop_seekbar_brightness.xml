@@ -11,7 +11,7 @@
     <ImageView android:id="@+id/low_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/bdreader_seekbar_less_brightness_pressed"
+        android:src="@drawable/brightness_decrease"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         />
@@ -32,7 +32,7 @@
 	 <ImageView android:id="@+id/high_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/bdreader_seekbar_more_brightness_pressed"
+        android:src="@drawable/brightness_increase"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         />
