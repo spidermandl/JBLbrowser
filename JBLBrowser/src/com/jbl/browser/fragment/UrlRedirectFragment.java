@@ -97,9 +97,9 @@ public class UrlRedirectFragment extends SherlockFragment implements
 	 * */
 	private void initDataRecommend(){
 		list=new BookMarkDao(getActivity()).queryBookMarkAllByisRecommend(true);
-			//从推荐页面读取数据
-			mSearchAdapter=new SearchAdapter(getActivity(), list,null,false);
-			listview.setAdapter(mSearchAdapter);	
+	    //从推荐页面读取数据
+		mSearchAdapter=new SearchAdapter(getActivity(), list,null,false);
+		listview.setAdapter(mSearchAdapter);	
 	}
 	/**
 	 * 从数据库中读数据

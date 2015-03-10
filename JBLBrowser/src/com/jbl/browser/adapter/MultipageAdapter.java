@@ -19,11 +19,11 @@ import com.viewpager.indicator.IconPagerAdapter;
 public class MultipageAdapter extends PagerAdapter  implements IconPagerAdapter
 {  
     private static final String TAG = "MultipageAdapter";  
-    private ArrayList<WebView> mViewPages;  
+    private ArrayList<View> mViewPages;  
     public MultipageAdapter(){
 	  
   }
-    public MultipageAdapter(ArrayList<WebView> viewPages) {  
+    public MultipageAdapter(ArrayList<View> viewPages) {  
         mViewPages = viewPages;  
     }  
     @Override  

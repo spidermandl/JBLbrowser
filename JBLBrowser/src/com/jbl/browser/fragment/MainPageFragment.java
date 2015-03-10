@@ -14,9 +14,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager.LayoutParams;
 import android.util.DisplayMetrics;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -27,21 +25,21 @@ import android.view.View.OnKeyListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
+import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
 
-import com.a.e;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.BrowserSettings;
 import com.jbl.browser.JBLApplication;
@@ -52,7 +50,6 @@ import com.jbl.browser.activity.BrowserSettingActivity;
 import com.jbl.browser.activity.DownloadManageActivity;
 import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
-import com.jbl.browser.activity.MultipageActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
@@ -69,7 +66,6 @@ import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
 import com.jbl.browser.view.ProgressWebView;
 import com.jbl.browser.view.UserDefinedDialog;
-import com.viewpager.indicator.PageIndicator;
 
 /**
  * 浏览器主页
@@ -84,14 +80,11 @@ public class MainPageFragment extends SherlockFragment implements
                                               LoadURLInterface{
 	public final static String TAG = "MainPageFragment";
 	/* 定义webview控件 */
-	private ProgressWebView mWebView; // 主控件 webview
-	private WebSettings settings;
+	public  ProgressWebView mWebView; // 主控件 webview
 	private BottomMenuFragment toolbarFragment;//底部toolbar
 	private SettingPagerFragment settingFragment;//底部弹出菜单 fragment
 	private TopMenuFragment topActionbarFragment; //顶部actionbar
 	private FrameLayout webFrame;//webview父控件	
-	public String cur_url; // 设置初始网址
-	public String webName=""; // 网页名	
 	private MultipageAdapter multipageAdapter;//多页效果适配器 
 	private ScheduledExecutorService scheduledExecutorService;
 	View popview_page;//翻页按钮布局
@@ -101,7 +94,6 @@ public class MainPageFragment extends SherlockFragment implements
 	View popview_seekBar;//亮度调节布局
 	PopupWindow popWindow_seekBar;//亮度调节悬浮
 	View multipagePanel;//多页布局
-	PageIndicator multipageIndicator;
 	
 	//翻页按钮初始位置
 	int mCurrentX_pop_page;
@@ -122,77 +114,41 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		//cur_url=UrlUtils.URL_GET_HOST;
-		View view = inflater.inflate(R.layout.fragment_main_page, container,false); 
-		mWebView = WebWindowManagement.getInstance().getMainWebView();
-		//判断mWebView是否存在parent view
-		ViewGroup p = (ViewGroup) mWebView.getParent(); 
-         if (p != null) { 
-             p.removeAllViewsInLayout(); 
-         }
-	    webFrame=((FrameLayout) view.findViewById(R.id.web_view_frame));
-	    webFrame.addView(mWebView);// webview
-//		//Intent intent = getActivity().getIntent();  //监听webview跳转，实现activity跳转到推荐页面
-		mWebView.setInterface(this);//设置回调接口
-		
-		toolbarFragment=(BottomMenuFragment)(this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
-		toolbarFragment.setInterface(this);//设置回调接口
-		
-		
-		settingFragment=new SettingPagerFragment();
-		settingFragment.setInterface(this);//设置回调接口
-		
-		topActionbarFragment=(TopMenuFragment)(this.getActivity().getSupportFragmentManager().findFragmentById(R.id.top_menu_fragment));
-		topActionbarFragment.setTopActionbar(this);//设置回调接口
-		
-		
+		View view = inflater.inflate(R.layout.fragment_main_page, container,
+				false);
+		webFrame = ((FrameLayout) view.findViewById(R.id.web_view_frame));
+		mWebView = WebWindowManagement.getInstance().replaceMainWebView(webFrame);
+		// //Intent intent = getActivity().getIntent();
+		// //监听webview跳转，实现activity跳转到推荐页面
+		mWebView.setInterface(this);// 设置回调接口
+
+		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 1,false);
+		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 2,false);
+
+		toolbarFragment = (BottomMenuFragment) (this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
+		toolbarFragment.setInterface(this);// 设置回调接口
+
+		settingFragment = new SettingPagerFragment();
+		settingFragment.setInterface(this);// 设置回调接口
+
+		topActionbarFragment = (TopMenuFragment) (this.getActivity().getSupportFragmentManager().findFragmentById(R.id.top_menu_fragment));
+		topActionbarFragment.setTopActionbar(this);// 设置回调接口
+
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
-		
-		 DisplayMetrics metric = new DisplayMetrics();
-	     getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
-	     width=metric.widthPixels;
-	     height=metric.heightPixels;
-	     mCurrentX_pop_full_screen = metric.widthPixels-width/7;     // 全屏按钮初始X轴位置
-		 mCurrentY_pop_full_screen =metric.heightPixels-width/7;   // 全屏按钮初始Y轴位置
-		 Rect frame = new Rect();
-		 getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
-		 statusBarHeight = frame.top;
-		 /*JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.pop_full_currentX_value, mCurrentX_pop_full_screen);
-		 JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.pop_full_currentY_value, mCurrentY_pop_full_screen);*/
-	     
-	     
-		
-		//获得缓存中悬浮窗口的位置
-		/*mCurrentX_pop_page=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.pop_page_currentX_value);
-		mCurrentY_pop_page=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.pop_page_currentY_value);
-		mCurrentX_pop_full_screen=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.pop_full_currentX_value);
-		mCurrentY_pop_full_screen=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.pop_full_currentY_value);*/
-		/*
-		 * 设置webview字体大小
-		 */
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.getSettings().setSupportZoom(true);
-		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
-		int fontSize=JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
-		switch (fontSize) {
-		case JBLPreference.FONT_MIN:
-			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
-			break;
-		case JBLPreference.INVALID:
-        case JBLPreference.FONT_MEDIUM:
-			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
-			break;
-        case JBLPreference.FONT_MAX:
-	        BrowserSettings.textSize = WebSettings.TextSize.LARGER;
-	        break;
-		default:
-			break;
-		}
-		
-		BrowserSettings.getInstance().update();
-	
-		
+		DisplayMetrics metric = new DisplayMetrics();
+	    getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
+	    width=metric.widthPixels;
+	    JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.SCREEN_WIDTH, width);
+	    height=metric.heightPixels;
+	    mCurrentX_pop_full_screen = metric.widthPixels-width/7;     // 全屏按钮初始X轴位置
+		mCurrentY_pop_full_screen =metric.heightPixels-width/7;   // 全屏按钮初始Y轴位置
+		 
+		//获取状态栏高度
+		Rect frame = new Rect();
+		getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+		statusBarHeight = frame.top;
+	     	     
 		/*
 		 * 2.0 WebView touch监听
 		 * 
@@ -222,9 +178,6 @@ public class MainPageFragment extends SherlockFragment implements
 					getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
 					getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
 				}
-				if(JBLPreference.getInstance(getActivity()).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){  
-	            	 BrightnessSettings.hideSeekBar();
-				}
 				return false;
 			}
 		});
@@ -233,7 +186,6 @@ public class MainPageFragment extends SherlockFragment implements
 		initWebView();
 		return view;
 	}
-	
 	@Override
 	public void onDestroyView() {  
 		//移除重复使用的view
@@ -248,26 +200,35 @@ public class MainPageFragment extends SherlockFragment implements
 	 * 初始化webview
 	 */
 	private void initWebView() {
-		// TODO Auto-generated method stub
-		// mWebView.getSettings().setJavaScriptEnabled(true);
-		// mWebView.getSettings().setSupportZoom(true);
-		// mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-		// mWebView.requestFocus();
-		// mWebView.setScrollBarStyle(View.GONE);
-
-		// webView.getSettings().setUseWideViewPort(true);
-		// webView.getSettings().setLoadWithOverviewMode(true);
-	
+		mWebView.setDefaultSetting();
+		/*
+		 * 设置webview字体大小
+		 */
 		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.getSettings().setAppCacheMaxSize(8 * 1024 * 1024);
-		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-		// webView.getSettings().setPluginsEnabled(true);
-		mWebView.getSettings().setPluginState(PluginState.ON);
+		mWebView.getSettings().setSupportZoom(true);
+  		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
+		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
+		switch (fontSize) {
+		case JBLPreference.FONT_MIN:
+			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
+			break;
+		case JBLPreference.INVALID:
+		case JBLPreference.FONT_MEDIUM:
+			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
+			break;
+		case JBLPreference.FONT_MAX:
+			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
+			break;
+		default:
+			break;
+		}
+		BrowserSettings.getInstance().update();
+		mWebView.getSettings().setTextSize(TextSize.LARGER);
+		
 		String urlAddress=JBLPreference.getInstance(getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
 		if(urlAddress==null||urlAddress.length()==0){
 			mWebView.loadUrl(UrlUtils.URL_GET_HOST);
 		}else{
-			JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY,null);
 			mWebView.loadUrl(urlAddress);
 		}
 		//监听物理返回键
@@ -287,6 +248,8 @@ public class MainPageFragment extends SherlockFragment implements
 				return false;
 			}
 		});
+
+		//添加下载监听
 		mWebView.setDownloadListener(new DownloadListener() {
 			
 			@Override
@@ -330,7 +293,7 @@ public class MainPageFragment extends SherlockFragment implements
 				//当要开启全屏浏览模式时，隐藏顶部状态栏、底部菜单栏和顶部搜索栏
 				hideStatusBar();
 				createPopShrinkFullScreen();
-	            if(!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
+	            if(!UrlUtils.URL_GET_HOST.equals(mWebView.getUrl())){
 	            	getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
 		            getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();	
 		            popWindow_full_screen.showAtLocation(popview_full_screen, Gravity.NO_GRAVITY, mCurrentX_pop_full_screen, mCurrentY_pop_full_screen);
@@ -406,7 +369,7 @@ public class MainPageFragment extends SherlockFragment implements
 			if(value!=JBLPreference.NIGHT_MODEL){
 				//夜间模式
 				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.NIGHT_MODEL);
-				BrightnessSettings.showPopSeekBrightness(getActivity());
+				BrightnessSettings.showPopSeekBrightness(getActivity(),width);
 				
 			}else{
 				//日间模式
@@ -423,9 +386,9 @@ public class MainPageFragment extends SherlockFragment implements
 	private void createTurningPage(){
 		LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		popview_page=mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
-		popWindow_page=new PopupWindow(popview_page,android.view.ViewGroup.LayoutParams.WRAP_CONTENT,android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-		mCurrentX_pop_page = width-popWindow_page.getWidth()*2;     // 翻页按钮初始X轴位置
-	    mCurrentY_pop_page =height/2-popWindow_page.getHeight()/2;   // 翻页按钮初始Y轴位置
+		popWindow_page=new PopupWindow(popview_page,80,240);
+		mCurrentX_pop_page = width-popWindow_page.getWidth();     // 翻页按钮初始X轴位置
+	    mCurrentY_pop_page =(height)/2-popWindow_page.getHeight()/2;   // 翻页按钮初始Y轴位置
 		popview_page.setOnTouchListener(new OnTouchListener() {
 		    float mX,mY;
 			@SuppressLint("ClickableViewAccessibility")
@@ -569,7 +532,6 @@ public class MainPageFragment extends SherlockFragment implements
 							
 			            	popWindow_full_screen.update(mCurrentX_pop_full_screen, mCurrentY_pop_full_screen, -1, -1);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}		            	
 		            }else if(event.getAction()==MotionEvent.ACTION_UP){	
@@ -782,11 +744,14 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	@Override
 	public void goMultiWindow() {
-		//((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
+		((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
 		//Toast.makeText(getActivity(), "已进入多页模式", 1).show();
-		Intent intent=new Intent();
-		intent.setClass(getActivity(), MultipageActivity.class);
-		startActivity(intent);	
+		//移除重复使用的view
+		webFrame.removeView(mWebView);
+//		Intent intent=new Intent();
+//		//intent.setClass(getActivity(), MultipageActivity.class);
+//		intent.setClass(getActivity(), NewPageActivity.class);
+//		startActivity(intent);	
 	}
 	//点击搜索图标
 	@Override
@@ -856,6 +821,28 @@ public class MainPageFragment extends SherlockFragment implements
   			int brightness=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
   			BrightnessSettings.setBrightness(getActivity(),brightness);
   		}
+  		/*
+		 * 设置webview字体大小
+		 */
+		mWebView.getSettings().setJavaScriptEnabled(true);
+		mWebView.getSettings().setSupportZoom(true);
+  		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
+		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
+		switch (fontSize) {
+		case JBLPreference.FONT_MIN:
+			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
+			break;
+		case JBLPreference.INVALID:
+		case JBLPreference.FONT_MEDIUM:
+			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
+			break;
+		case JBLPreference.FONT_MAX:
+			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
+			break;
+		default:
+			break;
+		}
+		BrowserSettings.getInstance().update();
 	}
 
 	@Override
@@ -874,9 +861,26 @@ public class MainPageFragment extends SherlockFragment implements
 					new HistoryDao(getActivity()).addHistory(history);
 				}
 			}
+		}	
+		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
+		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
+		switch (fontSize) {
+		case JBLPreference.FONT_MIN:
+			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
+			break;
+		case JBLPreference.INVALID:
+		case JBLPreference.FONT_MEDIUM:
+			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
+			break;
+		case JBLPreference.FONT_MAX:
+			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
+			break;
+		default:
+			break;
 		}
+		BrowserSettings.getInstance().update();
 		
-	}
 
+	}
 	
 }

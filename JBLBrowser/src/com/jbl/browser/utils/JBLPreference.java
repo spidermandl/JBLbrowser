@@ -60,6 +60,7 @@ public class JBLPreference {
 	public static final String HOST_URL_BOOLEAN="是否为主页";
 	public static final int IS_HOST_URL=1;
 	public static final int ISNOT_HOST_URL=0;
+	public static final String SCREEN_WIDTH="屏幕宽度";
 	
 	
 	//书签和历史记录传网址到主页fragment关键字
@@ -128,6 +129,7 @@ public class JBLPreference {
 		if(myPrefs.readInt(BoolType.BRIGHTNESS_TYPE.toString())==INVALID)
 			myPrefs.writeInt(BoolType.BRIGHTNESS_TYPE.toString(), DAY_MODEL);
 		myPrefs.writeInt(NIGHT_BRIGHTNESS_VALUS, 127);
+		myPrefs.writeInt(FONT_TYPE, FONT_MEDIUM);
 	}
 	/**
 	 * 初始化SharedPreferences对象

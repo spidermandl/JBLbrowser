@@ -3,6 +3,8 @@ package com.jbl.browser;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import com.jbl.browser.utils.JBLPreference;
+
 import android.app.ActivityManager;
 import android.app.Application;
 import android.os.Build;
@@ -31,6 +33,8 @@ public class JBLApplication extends Application {
 	 * 推出进程
 	 */
 	public void quit(){
+		clearDataBeforeQuit();
+		
 		ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE); 
     	if (Build.VERSION.SDK_INT < 8){
     		am.restartPackage(getPackageName());
@@ -52,5 +56,12 @@ public class JBLApplication extends Application {
 			}	
     		//am.killBackgroundProcesses("com.diary.goal.setting"); 
     	}
+	}
+	
+	/**
+	 * 退出进程前清除数据
+	 */
+	public void clearDataBeforeQuit(){
+		JBLPreference.getInstance(this).writeString(JBLPreference.BOOKMARK_HISTORY_KEY,null);
 	}
 }

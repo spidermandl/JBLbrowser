@@ -16,7 +16,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.HistoryFavourateActivity;

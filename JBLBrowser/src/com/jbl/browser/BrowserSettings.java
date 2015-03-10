@@ -137,39 +137,39 @@ public class BrowserSettings extends Observable {
             BrowserSettings b = (BrowserSettings)o;
             WebSettings s = mSettings;
 
-            //s.setLayoutAlgorithm(b.layoutAlgorithm);
-            /*if (b.userAgent == 0) {
+            s.setLayoutAlgorithm(b.layoutAlgorithm);
+            if (b.userAgent == 0) {
                 // use the default ua string
                 s.setUserAgentString(null);
             } else if (b.userAgent == 1) {
                 s.setUserAgentString(DESKTOP_USERAGENT);
             } else if (b.userAgent == 2) {
                 s.setUserAgentString(IPHONE_USERAGENT);
-            }*/
-            //s.setUseWideViewPort(b.useWideViewPort);
-            //s.setLoadsImagesAutomatically(b.loadsImagesAutomatically);
-            //s.setJavaScriptEnabled(b.javaScriptEnabled);
-            //s.setPluginState(b.pluginState);
-            /*s.setJavaScriptCanOpenWindowsAutomatically(
+            }
+            s.setUseWideViewPort(b.useWideViewPort);
+            s.setLoadsImagesAutomatically(b.loadsImagesAutomatically);
+            s.setJavaScriptEnabled(b.javaScriptEnabled);
+            s.setPluginState(b.pluginState);
+            s.setJavaScriptCanOpenWindowsAutomatically(
                     b.javaScriptCanOpenWindowsAutomatically);
-            s.setDefaultTextEncodingName(b.defaultTextEncodingName);*/
-            //s.setMinimumFontSize(b.minimumFontSize);
-            //s.setMinimumLogicalFontSize(b.minimumLogicalFontSize);
-            //s.setDefaultFontSize(b.defaultFontSize);
-            //s.setDefaultFixedFontSize(b.defaultFixedFontSize);
-            //s.setNavDump(b.navDump);
+            s.setDefaultTextEncodingName(b.defaultTextEncodingName);
+            s.setMinimumFontSize(b.minimumFontSize);
+            s.setMinimumLogicalFontSize(b.minimumLogicalFontSize);
+            s.setDefaultFontSize(b.defaultFontSize);
+            s.setDefaultFixedFontSize(b.defaultFixedFontSize);
+           // s.setNavDump(b.navDump);
             s.setTextSize(b.textSize);
-            //s.setDefaultZoom(b.zoomDensity);
-            //s.setLightTouchEnabled(b.lightTouch);
-            //s.setSaveFormData(b.saveFormData);
-            //s.setSavePassword(b.rememberPasswords);
-            //s.setLoadWithOverviewMode(b.loadsPageInOverviewMode);
-          //  s.setPageCacheCapacity(pageCacheCapacity);
+            s.setDefaultZoom(b.zoomDensity);
+            s.setLightTouchEnabled(b.lightTouch);
+            s.setSaveFormData(b.saveFormData);
+            s.setSavePassword(b.rememberPasswords);
+            s.setLoadWithOverviewMode(b.loadsPageInOverviewMode);
+           //s.setPageCacheCapacity(pageCacheCapacity);
 
             // WebView inside Browser doesn't want initial focus to be set.
-            //s.setNeedInitialFocus(false);
+            s.setNeedInitialFocus(false);
             // Browser supports multiple windows
-            //s.setSupportMultipleWindows(true);
+            s.setSupportMultipleWindows(true);
            
         }
     }
