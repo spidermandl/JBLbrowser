@@ -19,6 +19,7 @@ import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
+import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
@@ -30,7 +31,6 @@ import com.jbl.browser.utils.StringUtils;
 public class MenuSettingFragment extends SherlockFragment {
 	
 	public final static String TAG="MenuSettingFragment";
-	
 	//菜单设置选项内容 1 字体大小 2屏幕亮度 3默认浏览器 4 关于我们 5 清除数据 6恢复默认设置
 	private ToggleButton mMenuSettingbrowse;
 	private RelativeLayout mMenuSetFont,mMenuSetIntensity,mMenuSetBrowser,mMenuSetAbout;
@@ -108,7 +108,7 @@ public class MenuSettingFragment extends SherlockFragment {
 						default:
 							break;
 						}
-						
+						new MainPageFragment().initmWebViewSize();//动态改变字体大小
 					}
 				});
 				builder1.setNegativeButton("取消",new DialogInterface.OnClickListener() {
@@ -130,11 +130,11 @@ public class MenuSettingFragment extends SherlockFragment {
 				JBLPreference.getInstance(getActivity()).writeInt(BoolType.BRIGHTNESS_TYPE.toString(),JBLPreference.NIGHT_MODEL);
 				width=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.SCREEN_WIDTH);
 				BrightnessSettings.showPopSeekBrightness(getActivity(),width);
+				
 			}
 		});
 		//关于我们监听
-		mMenuSetAbout.setOnClickListener(new View.OnClickListener() {
-			
+		mMenuSetAbout.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
