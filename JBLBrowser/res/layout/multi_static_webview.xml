@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jbl.browser.view.BriefWindowFrame xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+    
+    <RelativeLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/static_webview_container">
+        
+    </RelativeLayout>
+
+    <ImageView 
+        android:id="@+id/delete_webview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/multiwindow_close_icon_high_end"
+        android:layout_alignRight="@id/static_webview_container"
+        android:layout_alignTop="@id/static_webview_container"/>
+</com.jbl.browser.view.BriefWindowFrame>
