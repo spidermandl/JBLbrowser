@@ -106,21 +106,22 @@ public class BookMarkFragment extends SherlockFragment {
 			listview.setVisibility(View.VISIBLE);
 			bookMarkAdapter=new BookMarkAdapter(getActivity(), list,listview);
 			listview.setAdapter(bookMarkAdapter);
-			mCallback=new ModeCallback();
-			listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);	
-			listview.setMultiChoiceModeListener(mCallback);
-			listview.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
-					String webAddress=list.get(position).getWebAddress();
-					JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
-					getActivity().finish();
-				    Intent intent=new Intent();
-				    intent.setClass(getActivity(), MainFragActivity.class);
-				    startActivity(intent);
-				} 
-			});
-		}		
+			
+		}	
+		mCallback=new ModeCallback();
+		listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);	
+		listview.setMultiChoiceModeListener(mCallback);
+		listview.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+				String webAddress=list.get(position).getWebAddress();
+				JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
+				getActivity().finish();
+			    Intent intent=new Intent();
+			    intent.setClass(getActivity(), MainFragActivity.class);
+			    startActivity(intent);
+			} 
+		});
 	}
 	
 
@@ -178,20 +179,13 @@ public class BookMarkFragment extends SherlockFragment {
 	        				for(int i=0;i<select_position.size();i++){
 	        					new BookMarkDao(getActivity()).deleteBookMarkById(list.get(select_position.get(i)).getId());
 	        				}
-	        				//int i=new BookMarkDao(getActivity()).deleteBookMarkById(list.get(position).getId());
-	        				//if(i!=0){
 	        					Toast.makeText(getActivity(), R.string.delete_bookmark_succeed, 100).show();
 	        					initDataFavorites();
-	        					bookMarkAdapter.notifyDataSetChanged();
-	        				/*}
-	        				else{
-	        					Toast.makeText(getActivity(),R.string.delete_bookmark_fail, 100);
-	        				}*/
 	        			}
 	        		});
 	        		builder.setNeutralButton("取消",new DialogInterface.OnClickListener() {
 	        			public void onClick(DialogInterface dialog, int which) {
-	        				
+	        				initDataFavorites();
 	        			}
 	        		});
 	        		
