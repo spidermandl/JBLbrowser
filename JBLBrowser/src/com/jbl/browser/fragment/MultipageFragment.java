@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.WebWindowManagement;
+import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.adapter.WebHorizontalViewAdapter;
+import com.jbl.browser.interfaces.MultiageToolbarItemInterface;
 import com.jbl.browser.view.WebHorizontalView;
 import com.viewpager.indicator.CirclePageIndicator;
 
@@ -20,7 +22,7 @@ import com.viewpager.indicator.CirclePageIndicator;
  * @author Desmond
  *
  */
-public class MultipageFragment extends SherlockFragment{
+public class MultipageFragment extends SherlockFragment implements MultiageToolbarItemInterface{
 	
 	public final static String TAG="MultipageFragment";
 	
@@ -54,8 +56,16 @@ public class MultipageFragment extends SherlockFragment{
         mHorizontalScrollView.initDatas(mAdapter);
         mHorizontalScrollView.setViewPager(multiViewPager);
         mHorizontalScrollView.setIndicator(multipageIndicator);
-		
 		return view;
+	}
+	@Override
+	public void newWindow() {
+		
+	}
+	@Override
+	public void multipageWindow() {
+		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class,null,true, MainPageFragment.TAG);
+		
 	}
 
 }
