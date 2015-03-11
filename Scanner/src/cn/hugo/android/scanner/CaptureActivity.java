@@ -353,7 +353,7 @@ public final class CaptureActivity extends Activity implements
     }
     
     public  void showResult(final String result){
-	 String strPattern="http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
+	 String strPattern="[a-zA-z]+://[^\\s]*";
   	 Pattern p = Pattern  
        .compile(strPattern);  
   	 Matcher m = p.matcher(result.trim());   

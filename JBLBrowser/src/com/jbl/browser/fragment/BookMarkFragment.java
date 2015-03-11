@@ -57,7 +57,6 @@ public class BookMarkFragment extends SherlockFragment {
 	BookMarkAdapter bookMarkAdapter;
 	
 	ModeCallback mCallback;
-	private List<Integer> select_position=new ArrayList<Integer>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -79,9 +78,6 @@ public class BookMarkFragment extends SherlockFragment {
 		return view;
 	}
 	
-/*	public void setInterface(ListViewInterface i){
-		this.listViewInterface=i;
-	}*/
 	/**
 	 * 初始化ListView中书签的数据
 	 * */
@@ -106,22 +102,21 @@ public class BookMarkFragment extends SherlockFragment {
 			listview.setVisibility(View.VISIBLE);
 			bookMarkAdapter=new BookMarkAdapter(getActivity(), list,listview);
 			listview.setAdapter(bookMarkAdapter);
-			
+			listview.setOnItemClickListener(new OnItemClickListener() {
+				public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+					String webAddress=list.get(position).getWebAddress();
+					JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
+					getActivity().finish();
+				    Intent intent=new Intent();
+				    intent.setClass(getActivity(), MainFragActivity.class);
+				    startActivity(intent);
+				} 
+			});
 		}	
 		mCallback=new ModeCallback();
 		listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);	
-		listview.setMultiChoiceModeListener(mCallback);
-		listview.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
-				String webAddress=list.get(position).getWebAddress();
-				JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
-				getActivity().finish();
-			    Intent intent=new Intent();
-			    intent.setClass(getActivity(), MainFragActivity.class);
-			    startActivity(intent);
-			} 
-		});
+		listview.setMultiChoiceModeListener(mCallback);		
 	}
 	
 
@@ -139,10 +134,6 @@ public class BookMarkFragment extends SherlockFragment {
 		@Override
         public void onItemCheckedStateChanged(ActionMode mode,
                 int position, long id, boolean checked) {
-        	if(listview.isItemChecked(position))
-        		select_position.add(position);
-        	else
-        		select_position.remove(select_position.indexOf(position));
             updateSeletedCount();
             mode.invalidate();
             bookMarkAdapter.notifyDataSetChanged();
@@ -173,17 +164,18 @@ public class BookMarkFragment extends SherlockFragment {
 					AlertDialog.Builder builder=new Builder(getActivity());
 	        		//2所有builder设置一些参数
 	        		builder.setTitle(R.string.delete_bookmark);
-	        		builder.setMessage("删除选定的收藏项？");
-	        		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+	        		builder.setMessage(R.string.delete_item);
+	        		builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 	        			public void onClick(DialogInterface dialog, int which) {
-	        				for(int i=0;i<select_position.size();i++){
-	        					new BookMarkDao(getActivity()).deleteBookMarkById(list.get(select_position.get(i)).getId());
+	        				long[] checkedItemIds=listview.getCheckedItemIds();
+	        				for(int i=0;i<checkedItemIds.length;i++){
+	        					new BookMarkDao(getActivity()).deleteBookMarkById(list.get((int)checkedItemIds[i]).getId());
 	        				}
-	        					Toast.makeText(getActivity(), R.string.delete_bookmark_succeed, 100).show();
-	        					initDataFavorites();
+	        				Toast.makeText(getActivity(), R.string.delete_succeed, 100).show();
+	        				initDataFavorites();
 	        			}
 	        		});
-	        		builder.setNeutralButton("取消",new DialogInterface.OnClickListener() {
+	        		builder.setNeutralButton(R.string.cancel,new DialogInterface.OnClickListener() {
 	        			public void onClick(DialogInterface dialog, int which) {
 	        				initDataFavorites();
 	        			}

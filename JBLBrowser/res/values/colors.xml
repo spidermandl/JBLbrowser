@@ -17,6 +17,8 @@
     <color name="list_line">#eeeeee</color>
     
     <color name="toolbar_bg">#FFF5F5F5</color>
+     <color name="main_button">#FFFFFFFF</color>
+     
     <color name="serach_controll_bg">#FFCCCCCC</color>
     <color name="gridview_selector">#ff5c5c5c</color>
     
