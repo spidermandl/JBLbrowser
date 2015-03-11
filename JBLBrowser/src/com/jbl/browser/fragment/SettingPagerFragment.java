@@ -1,8 +1,8 @@
 package com.jbl.browser.fragment;
 
 import java.util.ArrayList;
-
 import android.R.color;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,7 +18,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-
 import com.a.j;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
@@ -188,12 +187,13 @@ public class SettingPagerFragment extends SherlockFragment{
 	public void setInterface(SettingItemInterface i){
 		settingInterface=i;
 	}
+	@SuppressLint("ResourceAsColor")
 	private void initViewAndAdapter() {
 		 PageCount = (int) Math.ceil(list.size() / APP_PAGE_SIZE);
 			viewLists = new ArrayList<GridView>();
 			for (int i = 0; i < PageCount; i++) {
 				GridView appPage = new GridView(getActivity());
-				//appPage.setSelector(new ColorDrawable(Color.TRANSPARENT));  //取消选中效果
+				appPage.setSelector(R.drawable.menu_selector);
 				final SettingGridItemAdapter adapter =new SettingGridItemAdapter(getActivity(), list, i);
 				appPage.setAdapter(adapter);
 				appPage.setNumColumns(4);
