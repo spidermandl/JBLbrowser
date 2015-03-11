@@ -257,7 +257,7 @@ public class MainPageFragment extends SherlockFragment implements
 		case JBLPreference.FONT_MAX:
 			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
 			break;
-		default:
+		default: 
 			break;
 		}
 		BrowserSettings.getInstance().update();
@@ -563,14 +563,11 @@ public class MainPageFragment extends SherlockFragment implements
 					} else {
 						flag = false;
 					}
-					try {
-						Thread.sleep(100);
+					;
 
 						popWindow_full_screen.update(mCurrentX_pop_full_screen,
 								mCurrentY_pop_full_screen, -1, -1);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					
 				} else if (event.getAction() == MotionEvent.ACTION_UP) {
 					if (!flag)
 						popview_full_screen.setPressed(true);
