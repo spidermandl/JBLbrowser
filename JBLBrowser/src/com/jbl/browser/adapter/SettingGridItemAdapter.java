@@ -86,6 +86,18 @@ public class SettingGridItemAdapter extends BaseAdapter
 				convertView.setFocusable(false);
 			}
 		}
+		if(appname.getText().equals(StringUtils.TURNING_BUTTON_OPEN)){
+			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.IS_HOST_URL){
+				appname.setTextColor(Color.GRAY);
+				convertView.setFocusable(false);
+			}
+		}
+		if(appname.getText().equals(StringUtils.TURNING_BUTTON_CLOSE)){
+			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.IS_HOST_URL){
+				appname.setTextColor(Color.GRAY);
+				convertView.setFocusable(false);
+			}
+		}
 		return convertView;
 	}
 
