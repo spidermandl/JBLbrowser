@@ -16,21 +16,16 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.PluginState;
-import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -197,20 +192,15 @@ public class MainPageFragment extends SherlockFragment implements
 		super.onDestroyView();
 	}
 	/**
-	 * 初始化webview
-	 */
-	private void initWebView() {
-		mWebView.setDefaultSetting();
-		/*
-		 * 设置webview字体大小
-		 */
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.getSettings().setSupportZoom(true);
-  		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
+	 * 动态改变字体大小
+	 * */
+	@SuppressLint("SetJavaScriptEnabled")
+	public void initmWebViewSize(){
+		
 		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
 		switch (fontSize) {
 		case JBLPreference.FONT_MIN:
-			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
+			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;	
 			break;
 		case JBLPreference.INVALID:
 		case JBLPreference.FONT_MEDIUM:
@@ -223,8 +213,35 @@ public class MainPageFragment extends SherlockFragment implements
 			break;
 		}
 		BrowserSettings.getInstance().update();
-		mWebView.getSettings().setTextSize(TextSize.LARGER);
-		
+	}
+	/**
+	 * 初始化webview
+	 */
+	public void initWebView() {
+		mWebView.setDefaultSetting();
+		/*
+		 * 设置webview字体大小
+		 */
+		mWebView.getSettings().setJavaScriptEnabled(true);
+		mWebView.getSettings().setSupportZoom(true);
+  		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
+		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
+		switch (fontSize) {
+		case JBLPreference.FONT_MIN:
+			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;	
+			break;
+		case JBLPreference.INVALID:
+		case JBLPreference.FONT_MEDIUM:
+			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
+			break;
+		case JBLPreference.FONT_MAX:
+			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
+			break;
+		default:
+			break;
+		}
+		BrowserSettings.getInstance().update();
+
 		String urlAddress=JBLPreference.getInstance(getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
 		if(urlAddress==null||urlAddress.length()==0){
 			mWebView.loadUrl(UrlUtils.URL_GET_HOST);
