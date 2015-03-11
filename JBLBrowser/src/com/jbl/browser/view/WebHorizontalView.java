@@ -1,6 +1,7 @@
 package com.jbl.browser.view;
 
 
+import com.jbl.browser.R;
 import com.jbl.browser.adapter.WebHorizontalViewAdapter;
 import com.viewpager.indicator.PageIndicator;
 
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 /**
@@ -207,15 +209,6 @@ public class WebHorizontalView extends HorizontalScrollView {
             //设置大小、属性
             view.getLayoutParams().width = mChildWidth;
             view.getLayoutParams().height = mChildHeight;
-            view.setOnTouchListener(new OnTouchListener() {
-				
-				@Override
-				public boolean onTouch(View v, MotionEvent event) {
-				    
-					return true;
-				}
-			});
-            
             ((ProgressWebView)view).setScrollSetting();
             if(i!=0){
             	((LinearLayout.LayoutParams)view.getLayoutParams()).leftMargin=mGap;

@@ -73,7 +73,6 @@ public class SettingGridItemAdapter extends BaseAdapter
 			convertView = LayoutInflater.from(mContext).inflate(
 					R.layout.main_setting_item, parent, false);
 		}
-		
 		ImageInfo appInfo = mList.get(position);
 		ImageView appicon = (ImageView) convertView
 				.findViewById(R.id.viewpage_test_icon);
@@ -81,6 +80,18 @@ public class SettingGridItemAdapter extends BaseAdapter
 		appicon.setImageResource(appInfo.imgId);
 		appname.setText(appInfo.imgMsg);
 		if(appname.getText().equals(StringUtils.ADD_BOOKMARK)){      
+			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.IS_HOST_URL){
+				appname.setTextColor(Color.GRAY);
+				convertView.setFocusable(false);
+			}
+		}
+		if(appname.getText().equals(StringUtils.TURNING_BUTTON_OPEN)){
+			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.IS_HOST_URL){
+				appname.setTextColor(Color.GRAY);
+				convertView.setFocusable(false);
+			}
+		}
+		if(appname.getText().equals(StringUtils.TURNING_BUTTON_CLOSE)){
 			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.IS_HOST_URL){
 				appname.setTextColor(Color.GRAY);
 				convertView.setFocusable(false);
