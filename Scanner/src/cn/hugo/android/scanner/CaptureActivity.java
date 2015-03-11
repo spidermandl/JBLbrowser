@@ -4,10 +4,16 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Collection;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -15,6 +21,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
@@ -135,8 +142,11 @@ public final class CaptureActivity extends Activity implements
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case PARSE_BARCODE_SUC: // 解析图片成功
-                    Toast.makeText(activityReference.get(),
-                            "解析成功，结果为：" + msg.obj, Toast.LENGTH_SHORT).show();
+                	CaptureActivity c=new CaptureActivity();
+                	c.showResult(msg.obj.toString());
+                	
+                   /* Toast.makeText(activityReference.get(),
+                            "解析成功，结果为：" + msg.obj, Toast.LENGTH_SHORT).show();*/
 
                     break;
                 case PARSE_BARCODE_FAIL:// 解析图片失败
@@ -341,7 +351,39 @@ public final class CaptureActivity extends Activity implements
         }
 
     }
+    
+    public  void showResult(final String result){
+	 String strPattern="http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
+  	 Pattern p = Pattern  
+       .compile(strPattern);  
+  	 Matcher m = p.matcher(result.trim());   
+  	 if(m.matches()){
+  		
+  	 }else{
+  		 Dialog dialog=new AlertDialog.Builder(CaptureActivity.this)
+  			.setTitle(R.string.result)
+  			.setMessage(result)
+  			.setPositiveButton(R.string.copy, new DialogInterface.OnClickListener() {
+  				@SuppressLint("NewApi")
+					@SuppressWarnings("deprecation")
+					@Override
+  				public void onClick(DialogInterface dialog, int which) {
+  					ClipboardManager cmb = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE); 
+  					cmb.setText(result.trim());  
+  					CaptureActivity.this.finish();
+  				}
+  			}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener(){
 
+  				@Override
+  				public void onClick(DialogInterface dialog, int which) {
+  					// TODO Auto-generated method stub
+  					restartPreviewAfterDelay(0L);
+  				}			
+  			})
+  			.create();
+  		 dialog.show();
+  	 }
+}
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -386,10 +428,10 @@ public final class CaptureActivity extends Activity implements
         viewfinderView.drawResultBitmap(barcode);
 
         beepManager.playBeepSoundAndVibrate();
-
-        Toast.makeText(this,
+       showResult(ResultParser.parseResult(rawResult).toString());
+        /*Toast.makeText(this,
                 "识别结果:" + ResultParser.parseResult(rawResult).toString(),
-                Toast.LENGTH_SHORT).show();
+                Toast.LENGTH_SHORT).show();*/
 
     }
 
