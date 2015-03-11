@@ -281,7 +281,7 @@ public class SettingPagerFragment extends SherlockFragment{
 									settingInterface.fullScreen();
 								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 								break;
-							case 3://页面刷新
+							case 3://意见反馈
 								/*if(settingInterface!=null)
 									settingInterface.refresh();
 								break;*/

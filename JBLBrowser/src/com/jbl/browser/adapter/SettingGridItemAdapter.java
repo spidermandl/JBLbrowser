@@ -73,7 +73,6 @@ public class SettingGridItemAdapter extends BaseAdapter
 			convertView = LayoutInflater.from(mContext).inflate(
 					R.layout.main_setting_item, parent, false);
 		}
-		
 		ImageInfo appInfo = mList.get(position);
 		ImageView appicon = (ImageView) convertView
 				.findViewById(R.id.viewpage_test_icon);
