@@ -143,7 +143,26 @@ public class MainPageFragment extends SherlockFragment implements
 		Rect frame = new Rect();
 		getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
 		statusBarHeight = frame.top;
-	     	     
+		/*
+		 * 设置webview字体大小
+		 */
+  		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
+		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
+		switch (fontSize) {
+		case JBLPreference.FONT_MIN:
+			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
+			break;
+		case JBLPreference.INVALID:
+		case JBLPreference.FONT_MEDIUM:
+			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
+			break;
+		case JBLPreference.FONT_MAX:
+			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
+			break;
+		default:
+			break;
+		}
+		BrowserSettings.getInstance().update();     
 		/*
 		 * 2.0 WebView touch监听
 		 * 
@@ -219,6 +238,7 @@ public class MainPageFragment extends SherlockFragment implements
 	 */
 	public void initWebView() {
 		mWebView.setDefaultSetting();
+
 		/*
 		 * 设置webview字体大小
 		 */
@@ -241,7 +261,6 @@ public class MainPageFragment extends SherlockFragment implements
 			break;
 		}
 		BrowserSettings.getInstance().update();
-
 		String urlAddress=JBLPreference.getInstance(getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
 		if(urlAddress==null||urlAddress.length()==0){
 			mWebView.loadUrl(UrlUtils.URL_GET_HOST);
@@ -400,7 +419,6 @@ public class MainPageFragment extends SherlockFragment implements
 		}
 	}
 	//显示翻页模式
-	@SuppressLint("NewApi")
 	private void createTurningPage(){
 		LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		popview_page=mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
@@ -408,78 +426,79 @@ public class MainPageFragment extends SherlockFragment implements
 		mCurrentX_pop_page = width-popWindow_page.getWidth();     // 翻页按钮初始X轴位置
 	    mCurrentY_pop_page =(height)/2-popWindow_page.getHeight()/2;   // 翻页按钮初始Y轴位置
 		popview_page.setOnTouchListener(new OnTouchListener() {
-		    float mX,mY;
-			@SuppressLint("ClickableViewAccessibility")
+			float mX, mY;
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-		                mX=mCurrentX_pop_page-event.getRawX();
-		                mY=mCurrentY_pop_page-event.getRawY();
-		            }else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-		            	mCurrentX_pop_page=(int)(event.getRawX()+mX);
-		            	mCurrentY_pop_page=(int)(event.getRawY()+mY);
-		            	if(mCurrentX_pop_page>=width-popWindow_page.getWidth()){
-		            		mCurrentX_pop_page=width-popWindow_page.getWidth();		   
-		            	}
-		            	if(mCurrentX_pop_page<=0){
-		            		mCurrentX_pop_page=0;
-		            	}
-		            	if(mCurrentY_pop_page<=statusBarHeight){
-		            		mCurrentY_pop_page=statusBarHeight;                                                                           
-		            	}
-		            	if(mCurrentY_pop_page>=height-popWindow_page.getHeight()){
-		            		mCurrentY_pop_page=height-popWindow_page.getHeight();
-		            	}
-		            	try {
-							Thread.sleep(100);
-							 popWindow_page.update(mCurrentX_pop_page, mCurrentY_pop_page, -1, -1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						} 
-		            }else if(event.getAction() == MotionEvent.ACTION_UP){
-		            }
-		            return true;
-		        }
-		    });
-		Button previous_page=(Button)popview_page.findViewById(R.id.previous_page);
-		Button next_page=(Button)popview_page.findViewById(R.id.next_page);
-		next_page.setOnClickListener(new OnClickListener(){
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					mX = mCurrentX_pop_page - event.getRawX();
+					mY = mCurrentY_pop_page - event.getRawY();
+				} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+					mCurrentX_pop_page = (int) (event.getRawX() + mX);
+					mCurrentY_pop_page = (int) (event.getRawY() + mY);
+					if (mCurrentX_pop_page >= width - popWindow_page.getWidth()) {
+						mCurrentX_pop_page = width - popWindow_page.getWidth();
+					}
+					if (mCurrentX_pop_page <= 0) {
+						mCurrentX_pop_page = 0;
+					}
+					if (mCurrentY_pop_page <= statusBarHeight) {
+						mCurrentY_pop_page = statusBarHeight;
+					}
+					if (mCurrentY_pop_page >= height- popWindow_page.getHeight()) {
+						mCurrentY_pop_page = height- popWindow_page.getHeight();
+					}
+					try {
+						Thread.sleep(100);
+						popWindow_page.update(mCurrentX_pop_page,mCurrentY_pop_page, -1, -1);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				} else if (event.getAction() == MotionEvent.ACTION_UP) {
+				}
+				return true;
+			}
+		});
+		Button previous_page = (Button) popview_page.findViewById(R.id.previous_page);
+		Button next_page = (Button) popview_page.findViewById(R.id.next_page);
+		next_page.setOnClickListener(new OnClickListener() {
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
-				  //判断向下滚动是否已经到网页底部
-				 float fullHeight=mWebView.getContentHeight()* mWebView.getScale();
-				 float contentHeight=mWebView.getHeight()+ mWebView.getScrollY();
-				 int y=mWebView.getHeight();
-				 if( (fullHeight-contentHeight)>0){ 
-					 if((fullHeight-contentHeight)>y){
-				         mWebView.scrollBy(0,(int) (mWebView.getHeight()+mWebView.getScaleY()));
-				    }
-					 else{
-						 mWebView.scrollBy(0, (int) (fullHeight-contentHeight));
-					 }	
-			     }
-		     }
-	   });
-		previous_page.setOnClickListener(new OnClickListener(){
+				// 判断向下滚动是否已经到网页底部
+				float fullHeight = mWebView.getContentHeight()* mWebView.getScale();
+				float contentHeight = mWebView.getHeight()+ mWebView.getScrollY();
+				int y = mWebView.getHeight();
+				if ((fullHeight - contentHeight) > 0) {
+					if ((fullHeight - contentHeight) > y) {
+						mWebView.scrollBy(0,(int) (mWebView.getHeight() + mWebView.getScaleY()));
+					} else {
+						mWebView.scrollBy(0, (int) (fullHeight - contentHeight));
+					}
+				}
+			}
+		});
+		previous_page.setOnClickListener(new OnClickListener() {
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
-				// 判断向上滚动对否已经到网页顶部 
-				 float scrollY=mWebView.getScrollY();
-				 int y=mWebView.getHeight();
-				 if(scrollY>0){ 
-					 if(scrollY>y){
-				         mWebView.scrollBy(0,(int) (mWebView.getScaleY()-mWebView.getHeight()));
-				    }
-				    else {
-					    mWebView.scrollBy(0, (int) (mWebView.getScaleY()-scrollY));
-				 }
-			  }   else{
-				   mWebView.scrollBy(0, 0);
-			 }
-		  }
-	  });         
+				// 判断向上滚动对否已经到网页顶部
+				float scrollY = mWebView.getScrollY();
+				int y = mWebView.getHeight();
+				if (scrollY > 0) {
+					if (scrollY > y) {
+						mWebView.scrollBy(0,
+								(int) (mWebView.getScaleY() - mWebView
+										.getHeight()));
+					} else {
+						mWebView.scrollBy(0,
+								(int) (mWebView.getScaleY() - scrollY));
+					}
+				} else {
+					mWebView.scrollBy(0, 0);
+				}
+			}
+		});       
    }
 	//显示全屏模式下为显示上下菜单的悬浮按钮
 	private void createPopShrinkFullScreen(){
@@ -515,66 +534,69 @@ public class MainPageFragment extends SherlockFragment implements
 			@SuppressLint("ClickableViewAccessibility")
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					   downX=(int)event.getX();
-					   downY=(int)event.getY();
-		                mX=mCurrentX_pop_full_screen-event.getRawX();
-		                mY=mCurrentY_pop_full_screen-event.getRawY();
-		                
-		            }else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-		            	upX=(int)event.getX();
-		            	upY=(int)event.getY();
-		            	mCurrentX_pop_full_screen=(int)(event.getRawX()+mX);
-		            	mCurrentY_pop_full_screen=(int)(event.getRawY()+mY);
-		            	if(mCurrentX_pop_full_screen>=width-width/7){
-		            		mCurrentX_pop_full_screen=width-width/7;		   
-		            	}
-		            	if(mCurrentX_pop_full_screen<=0){
-		            		mCurrentX_pop_full_screen=0;
-		            	}
-		            	if(mCurrentY_pop_full_screen<=0){
-		            		mCurrentY_pop_full_screen=0;
-		            	}
-		            	if(mCurrentY_pop_full_screen>=height-width/7){
-		            		mCurrentY_pop_full_screen=height-width/7;
-		            	}
-		            	if(Math.abs(upX-downX)>0){
-		            		flag=true;
-		            		popview_full_screen.setPressed(false);
-		            		}
-		            	else{
-		            		flag=false;		
-		            	}
-		            	try {
-							Thread.sleep(100);	
-							
-			            	popWindow_full_screen.update(mCurrentX_pop_full_screen, mCurrentY_pop_full_screen, -1, -1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}		            	
-		            }else if(event.getAction()==MotionEvent.ACTION_UP){	
-		            	if(!flag)
-		            		popview_full_screen.setPressed(true);
-		            	JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.pop_full_currentX_value, mCurrentX_pop_full_screen);
-		        		JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.pop_full_currentY_value, mCurrentY_pop_full_screen);
-		        		
-		            }
-				 
-				   
-		            return flag;
-		        }
-		    });
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					downX = (int) event.getX();
+					downY = (int) event.getY();
+					mX = mCurrentX_pop_full_screen - event.getRawX();
+					mY = mCurrentY_pop_full_screen - event.getRawY();
+
+				} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+					upX = (int) event.getX();
+					upY = (int) event.getY();
+					mCurrentX_pop_full_screen = (int) (event.getRawX() + mX);
+					mCurrentY_pop_full_screen = (int) (event.getRawY() + mY);
+					if (mCurrentX_pop_full_screen >= width - width / 7) {
+						mCurrentX_pop_full_screen = width - width / 7;
+					}
+					if (mCurrentX_pop_full_screen <= 0) {
+						mCurrentX_pop_full_screen = 0;
+					}
+					if (mCurrentY_pop_full_screen <= 0) {
+						mCurrentY_pop_full_screen = 0;
+					}
+					if (mCurrentY_pop_full_screen >= height - width / 7) {
+						mCurrentY_pop_full_screen = height - width / 7;
+					}
+					if (Math.abs(upX - downX) > 0) {
+						flag = true;
+						popview_full_screen.setPressed(false);
+					} else {
+						flag = false;
+					}
+					try {
+						Thread.sleep(100);
+
+						popWindow_full_screen.update(mCurrentX_pop_full_screen,
+								mCurrentY_pop_full_screen, -1, -1);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				} else if (event.getAction() == MotionEvent.ACTION_UP) {
+					if (!flag)
+						popview_full_screen.setPressed(true);
+					JBLPreference.getInstance(getActivity()).writeInt(
+							JBLPreference.pop_full_currentX_value,
+							mCurrentX_pop_full_screen);
+					JBLPreference.getInstance(getActivity()).writeInt(
+							JBLPreference.pop_full_currentY_value,
+							mCurrentY_pop_full_screen);
+
+				}
+
+				return flag;
+			}
+		});
        popview_full_screen.setEnabled(true);
     }
 	//隐藏状态栏
-	public void hideStatusBar(){
+	private void hideStatusBar(){
 		WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
         getActivity().getWindow().setAttributes(lp);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 	}
 	//显示状态栏
-	public void showStatusBar(){
+	private void showStatusBar(){
 		WindowManager.LayoutParams attr = getActivity().getWindow().getAttributes();
         attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getActivity().getWindow().setAttributes(attr);
@@ -763,13 +785,8 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public void goMultiWindow() {
 		((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
-		//Toast.makeText(getActivity(), "已进入多页模式", 1).show();
 		//移除重复使用的view
 		webFrame.removeView(mWebView);
-//		Intent intent=new Intent();
-//		//intent.setClass(getActivity(), MultipageActivity.class);
-//		intent.setClass(getActivity(), NewPageActivity.class);
-//		startActivity(intent);	
 	}
 	//点击搜索图标
 	@Override
@@ -839,11 +856,6 @@ public class MainPageFragment extends SherlockFragment implements
   			int brightness=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
   			BrightnessSettings.setBrightness(getActivity(),brightness);
   		}
-  		/*
-		 * 设置webview字体大小
-		 */
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.getSettings().setSupportZoom(true);
   		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
 		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
 		switch (fontSize) {
@@ -880,24 +892,6 @@ public class MainPageFragment extends SherlockFragment implements
 				}
 			}
 		}	
-		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
-		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
-		switch (fontSize) {
-		case JBLPreference.FONT_MIN:
-			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
-			break;
-		case JBLPreference.INVALID:
-		case JBLPreference.FONT_MEDIUM:
-			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
-			break;
-		case JBLPreference.FONT_MAX:
-			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
-			break;
-		default:
-			break;
-		}
-		BrowserSettings.getInstance().update();
-		
 
 	}
 	

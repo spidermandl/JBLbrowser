@@ -5,20 +5,40 @@ package com.jbl.browser.activity;
 import java.util.Collections;
 import java.util.Comparator;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
+
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.ActionMode;
+import android.view.LayoutInflater;
+import android.view.Window;
+
+import android.view.MenuInflater;
+import android.view.ViewGroup;
+
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
+
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
+import com.jbl.browser.adapter.BookMarkAdapter;
 import com.jbl.browser.adapter.HistoryAdapter;
+import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.fragment.BookMarkFragment;
@@ -27,19 +47,23 @@ import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
 
+import android.widget.ListView;
+
 /**
  * 
  * @author Desmond
  * 浏览器收藏 历史功能
  *
  */
-public class HistoryFavourateActivity extends BaseSwapeActivity {
+@SuppressLint("NewApi")
+public class HistoryFavourateActivity extends BaseSwapeActivity /*implements ListViewInterface */{
 
 	public static final String TAG="HistoryFavourateActivity";
 	//全部删除与单条删除开关
 	public static boolean mMenuFlag=true;
 	//actionbar 定义，在历史界面使用。
 	public static ActionBar ab;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Theme_Sherlock_Light);
@@ -53,7 +77,7 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
  		ab.setDisplayShowHomeEnabled(false);		 		
  		ab.setDisplayShowTitleEnabled(true);
  		ab.setTitle(R.string.history_favourate_title);
-		
+ 		
 		setContentView(R.layout.activity_favourate_history);
         mTabHost = (TabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup();
@@ -82,13 +106,15 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
       			BrightnessSettings.setBrightness(HistoryFavourateActivity.this,brightness);
       		}
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
+		
 		menu.add(0, 1, 0, "delete").setIcon(R.drawable.menu_delete)
 			.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return super.onCreateOptionsMenu(menu);
+
 	}
 
 	@Override
@@ -179,4 +205,5 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
 		HistoryFragment.listview.setAdapter(HistoryFragment.historyAdapter);
 		
 	}
+
 }

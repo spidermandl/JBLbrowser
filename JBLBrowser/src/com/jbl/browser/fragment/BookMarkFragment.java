@@ -1,22 +1,26 @@
 package com.jbl.browser.fragment;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,7 +39,7 @@ import com.jbl.browser.utils.JBLPreference;
  * @author huyingying
  *
  */
-public class BookMarkFragment extends SherlockFragment implements OnItemLongClickListener, OnItemClickListener{
+public class BookMarkFragment extends SherlockFragment {
 	
 	public final static String TAG="BookMarkFragment";
 	
@@ -51,9 +55,14 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 	//没有书签
 	ImageView noBookmark;
 	BookMarkAdapter bookMarkAdapter;
+	
+	ModeCallback mCallback;
+	private List<Integer> select_position=new ArrayList<Integer>();
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+
 		super.onCreate(savedInstanceState);
 	}
 
@@ -63,16 +72,20 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 		
 		View view = inflater.inflate(R.layout.fragment_bookmark, container, false);	
 		listview=(ListView)view.findViewById(R.id.list_view_bookmark);
+		
 		noBookmark=(ImageView)view.findViewById(R.id.cloud_favorite_empty);
 		initDataFavorites();
-		listview.setOnItemClickListener(this);
-		listview.setOnItemLongClickListener(this);
+
 		return view;
 	}
 	
+/*	public void setInterface(ListViewInterface i){
+		this.listViewInterface=i;
+	}*/
 	/**
 	 * 初始化ListView中书签的数据
 	 * */
+	@SuppressLint("NewApi")
 	private void initDataFavorites() {
 		listview.setVisibility(View.GONE);		
 		list=new BookMarkDao(getActivity()).queryBookMarkAllByisRecommend(false);//从数据库中获得数据		
@@ -91,58 +104,122 @@ public class BookMarkFragment extends SherlockFragment implements OnItemLongClic
 			});
 			noBookmark.setVisibility(View.GONE);
 			listview.setVisibility(View.VISIBLE);
-			bookMarkAdapter=new BookMarkAdapter(getActivity(), list);
+			bookMarkAdapter=new BookMarkAdapter(getActivity(), list,listview);
 			listview.setAdapter(bookMarkAdapter);
+			mCallback=new ModeCallback();
+			listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);	
+			listview.setMultiChoiceModeListener(mCallback);
+			listview.setOnItemClickListener(new OnItemClickListener() {
+				public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+					String webAddress=list.get(position).getWebAddress();
+					JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
+					getActivity().finish();
+				    Intent intent=new Intent();
+				    intent.setClass(getActivity(), MainFragActivity.class);
+				    startActivity(intent);
+				} 
+			});
 		}		
 	}
-	//长按显示删除确定对话框
-	@Override
-	public boolean onItemLongClick(AdapterView<?> parent, View view,
-			final int position, long id) {
-		// TODO Auto-generated method stub		
-		//final String webAddress;
-		final String webName;
-		webName=((TextView)view.findViewById(R.id.url_name)).getText().toString();
-		//1获取一个对话框的创建器
-		AlertDialog.Builder builder=new Builder(getActivity());
-		//2所有builder设置一些参数
-		builder.setTitle(R.string.delete_bookmark);
-		builder.setMessage("是否要删除\""+webName+"\"这个书签?");
-		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				int i=new BookMarkDao(getActivity()).deleteBookMarkById(list.get(position).getId());
-				if(i!=0){
-					Toast.makeText(getActivity(), R.string.delete_bookmark_succeed, 100).show();
-					initDataFavorites();
-					bookMarkAdapter.notifyDataSetChanged();
-				}
-				else{
-					Toast.makeText(getActivity(),R.string.delete_bookmark_fail, 100);
-				}
-			}
-		});
-		builder.setNeutralButton("取消",new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
+	
+
+	@SuppressLint("NewApi")
+	private class ModeCallback implements ListView.MultiChoiceModeListener {
+        private View mMultiSelectActionBarView;
+        private TextView mSelectedCount;
+        private ImageView deleteIcon;
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+        	listview.clearChoices();
+        }
+
+        @SuppressLint("NewApi")
+		@Override
+        public void onItemCheckedStateChanged(ActionMode mode,
+                int position, long id, boolean checked) {
+        	if(listview.isItemChecked(position))
+        		select_position.add(position);
+        	else
+        		select_position.remove(select_position.indexOf(position));
+            updateSeletedCount();
+            mode.invalidate();
+            bookMarkAdapter.notifyDataSetChanged();
+        }
+        
+        @SuppressLint("NewApi")
+		public void updateSeletedCount(){
+        	mSelectedCount.setText(Integer.toString(listview.getCheckedItemCount()));
+        }
+
+		@Override
+		public boolean onCreateActionMode(ActionMode mode,
+				android.view.Menu menu) {
+			 // actionmode的菜单处理
+            if (mMultiSelectActionBarView == null) {
+                mMultiSelectActionBarView = LayoutInflater.from(getActivity())
+                    .inflate(R.layout.list_multi_select_actionbar, null);
+                mSelectedCount =
+                    (TextView)mMultiSelectActionBarView.findViewById(R.id.selected_conv_count);
+                deleteIcon=(ImageView)mMultiSelectActionBarView.findViewById(R.id.delete_icon);
+            }
+            mode.setCustomView(mMultiSelectActionBarView);
+            deleteIcon.setOnClickListener(new OnClickListener() {
 				
-			}
-		});
-		
-		builder.create().show();
-		return false;
-	}
-	
-	//单击跳转到网页
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		// TODO Auto-generated method stub
-		//String webAddress=((TextView)view.findViewById(R.id.url_address)).getText().toString();
-		String webAddress=list.get(position).getWebAddress();
-		JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, webAddress);
-        this.getActivity().finish();
-        Intent intent=new Intent();
-        intent.setClass(getActivity(), MainFragActivity.class);
-        getActivity().startActivity(intent);
-	}
-	
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					AlertDialog.Builder builder=new Builder(getActivity());
+	        		//2所有builder设置一些参数
+	        		builder.setTitle(R.string.delete_bookmark);
+	        		builder.setMessage("删除选定的收藏项？");
+	        		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+	        			public void onClick(DialogInterface dialog, int which) {
+	        				for(int i=0;i<select_position.size();i++){
+	        					new BookMarkDao(getActivity()).deleteBookMarkById(list.get(select_position.get(i)).getId());
+	        				}
+	        				//int i=new BookMarkDao(getActivity()).deleteBookMarkById(list.get(position).getId());
+	        				//if(i!=0){
+	        					Toast.makeText(getActivity(), R.string.delete_bookmark_succeed, 100).show();
+	        					initDataFavorites();
+	        					bookMarkAdapter.notifyDataSetChanged();
+	        				/*}
+	        				else{
+	        					Toast.makeText(getActivity(),R.string.delete_bookmark_fail, 100);
+	        				}*/
+	        			}
+	        		});
+	        		builder.setNeutralButton("取消",new DialogInterface.OnClickListener() {
+	        			public void onClick(DialogInterface dialog, int which) {
+	        				
+	        			}
+	        		});
+	        		
+	        		builder.create().show();
+				}
+			});
+            return true;
+		}
+
+		@SuppressLint("NewApi")
+		@Override
+		public boolean onPrepareActionMode(ActionMode mode,
+				android.view.Menu menu) {
+			 if (mMultiSelectActionBarView == null) {
+	                ViewGroup v = (ViewGroup)LayoutInflater.from(getActivity())
+	                    .inflate(R.layout.list_multi_select_actionbar, null);
+	                mode.setCustomView(v);
+	                mSelectedCount = (TextView)v.findViewById(R.id.selected_conv_count);
+	                deleteIcon=(ImageView)mMultiSelectActionBarView.findViewById(R.id.delete_icon);
+	            }            
+	            return true;
+		}
+
+		@Override
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+    }
 }

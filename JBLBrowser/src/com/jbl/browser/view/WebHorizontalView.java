@@ -203,10 +203,19 @@ public class WebHorizontalView extends HorizontalScrollView {
         int count= mAdapter.getCount()<mCountOneScreen?mAdapter.getCount():mCountOneScreen;
         mContainer.setPadding(mEdge,0 ,mEdge, 0);
         for (int i = 0; i < count; i++) {
-            View view = mAdapter.getView(i, null, mContainer);
+            final View view = mAdapter.getView(i, null, mContainer);
             //设置大小、属性
             view.getLayoutParams().width = mChildWidth;
             view.getLayoutParams().height = mChildHeight;
+            view.setOnTouchListener(new OnTouchListener() {
+				
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+				    
+					return true;
+				}
+			});
+            
             ((ProgressWebView)view).setScrollSetting();
             if(i!=0){
             	((LinearLayout.LayoutParams)view.getLayoutParams()).leftMargin=mGap;
