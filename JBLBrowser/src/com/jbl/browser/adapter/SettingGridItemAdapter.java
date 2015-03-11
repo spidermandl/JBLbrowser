@@ -36,6 +36,7 @@ public class SettingGridItemAdapter extends BaseAdapter
 	public void setPage(int page) {
 		this.page = page;
 	}
+
 	/**
 	 * 构造方法
 	 * 
@@ -73,6 +74,7 @@ public class SettingGridItemAdapter extends BaseAdapter
 			convertView = LayoutInflater.from(mContext).inflate(
 					R.layout.main_setting_item, parent, false);
 		}
+		
 		ImageInfo appInfo = mList.get(position);
 		ImageView appicon = (ImageView) convertView
 				.findViewById(R.id.viewpage_test_icon);
@@ -95,6 +97,7 @@ public class SettingGridItemAdapter extends BaseAdapter
 			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.IS_HOST_URL){
 				appname.setTextColor(Color.GRAY);
 				convertView.setFocusable(false);
+				convertView.setSelected(false);
 			}
 		}
 		return convertView;
