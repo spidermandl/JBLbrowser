@@ -6,6 +6,8 @@ import java.util.Queue;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
 
 import com.google.zxing.common.StringUtils;
 import com.jbl.browser.view.ProgressWebView;
@@ -22,7 +24,6 @@ public class WebWindowManagement {
 	 * 显示的主页面永远在队列第一个
 	 */
 	Queue<WebPair> queue;
-	
 	public static WebWindowManagement instance=null;
 	
 	private WebWindowManagement(){

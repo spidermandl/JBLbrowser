@@ -146,8 +146,8 @@ public class MainPageFragment extends SherlockFragment implements
 		/*
 		 * 设置webview字体大小
 		 */
-  		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
 		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
+		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
 		switch (fontSize) {
 		case JBLPreference.FONT_MIN:
 			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;

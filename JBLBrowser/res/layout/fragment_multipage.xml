@@ -4,11 +4,11 @@
     android:layout_height="fill_parent" >
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_above="@+id/multi_page_bottom_bar" >
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -20,8 +20,15 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/multipage_indicator"
                 android:layout_gravity="center"
-                android:background="#FFFFFFFF" />
-
+                android:background="#FFFFFFFF" /> 
+                <ImageView 
+                    android:id="@+id/multipge_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/multiwindow_close_icon_high_end"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"/>
+                
             <com.viewpager.indicator.CirclePageIndicator
                 android:id="@id/multipage_indicator"
                 android:layout_width="fill_parent"
