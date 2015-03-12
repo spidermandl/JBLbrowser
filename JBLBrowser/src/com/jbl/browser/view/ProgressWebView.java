@@ -91,7 +91,7 @@ public class ProgressWebView extends WebView {
 		getSettings().setPluginState(PluginState.ON);
 
 		blockTouch=false;
-		//监听物理返回键
+		/*//监听物理返回键
 		setOnKeyListener(new OnKeyListener() {
 			
 			@Override
@@ -107,7 +107,7 @@ public class ProgressWebView extends WebView {
 				 }
 				return false;
 			}
-		});
+		});*/
 	}
 	
 	@Override
