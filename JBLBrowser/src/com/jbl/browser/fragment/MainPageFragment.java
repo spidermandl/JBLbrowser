@@ -121,9 +121,10 @@ public class MainPageFragment extends SherlockFragment implements
 		// //监听webview跳转，实现activity跳转到推荐页面
 		mWebView.setInterface(this);// 设置回调接口
 
-		/*WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 1,false);
-		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 2,false);*/
+	   /*  WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 1,false);
 
+		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 2,false);
+*/
 		toolbarFragment = (BottomMenuFragment) (this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
 		toolbarFragment.setInterface(this);// 设置回调接口
 
@@ -762,8 +763,8 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public void goMultiWindow() {
 		((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
-		/*//移除重复使用的view
-		webFrame.removeView(mWebView);*/
+		//移除重复使用的view
+		webFrame.removeView(mWebView);
 	}
 	//点击搜索图标
 	@Override
