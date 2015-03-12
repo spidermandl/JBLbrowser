@@ -28,6 +28,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
+import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.adapter.HistoryAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
@@ -74,7 +75,10 @@ public class HistoryFragment extends SherlockFragment implements deleteHistory{
 		listview=(ListView)view.findViewById(R.id.list_view_history_today);
 		noHistory=(ImageView)view.findViewById(R.id.cloud_history_empty);		
 		initDataHistory();
-		((HistoryFavourateActivity)this.getActivity()).setInterface(this);  //设置回调接口
+		if(this.getActivity().equals(HistoryFavourateActivity.class))     //历史书签的activity
+			((HistoryFavourateActivity)this.getActivity()).setInterface(this);  //设置回调接口
+		else                                                             //推荐activity
+			((RecommendMainActivity)this.getActivity()).setInterface(this);  //设置回调接口
 		return view;
 	}
 	/**

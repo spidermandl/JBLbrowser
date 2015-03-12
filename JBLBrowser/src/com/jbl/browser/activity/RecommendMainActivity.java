@@ -5,10 +5,13 @@ import android.support.v4.view.ViewPager;
 import android.widget.TabHost;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
 import com.jbl.browser.fragment.BookMarkFragment;
 import com.jbl.browser.fragment.HistoryFragment;
 import com.jbl.browser.fragment.RecommendFragment;
+import com.jbl.browser.interfaces.deleteHistory;
 import com.jbl.browser.utils.SysApplication;
 
 /**
@@ -18,7 +21,7 @@ import com.jbl.browser.utils.SysApplication;
 public class RecommendMainActivity extends BaseSwapeActivity {
 	
 	public static final String TAG="RecommendMainActivity";
-
+	public deleteHistory clearHistory;            //清除记录接口
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Theme_Sherlock_Light);
@@ -60,7 +63,28 @@ public class RecommendMainActivity extends BaseSwapeActivity {
             mTabHost.setCurrentTabByTag(tag);
         }
 	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		if(mTabHost.getCurrentTabTag().equals(HistoryFragment.TAG)){
+			menu.add(0, 1, 0, "delete").setIcon(R.drawable.menu_delete)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+			}
+		return super.onCreateOptionsMenu(menu);
+	}
 
-
+	public void setInterface(deleteHistory i){
+		this.clearHistory=i;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		if(item.getItemId()==1){
+			//Toast.makeText(this,R.string.delete_bookmark_fail, 100).show();
+			if(clearHistory!=null)
+				clearHistory.clear();
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 }

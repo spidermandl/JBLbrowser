@@ -33,7 +33,7 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
 	public static boolean mMenuFlag=true;
 	//actionbar 定义，在历史界面使用。
 	public static ActionBar ab;
-	public deleteHistory clearHistory;
+	public deleteHistory clearHistory;            //清除记录接口
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Theme_Sherlock_Light);
