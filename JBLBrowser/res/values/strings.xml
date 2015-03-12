@@ -98,6 +98,7 @@
     <string name="add_bookmark_succeed">添加书签成功</string>
     <string name="add_bookmark_fail">书签已存在，添加书签失败</string>
     <string name="delete_succeed">删除成功</string>
+    <string name="delete_failed">删除失败</string>
     <string name="delete_bookmark_fail">删除书签失败</string>
     <string name="delete_bookmark">删除书签</string>
     <string name="no_bookmark">暂无收藏</string>
@@ -216,5 +217,6 @@
     <string name="delete_item">删除选定的收藏项？</string>
     <string name="delete_item_history">删除选定的历史项？</string>
     <string name="clear_history">清空记录</string>
+    <string name="confirm_clear">是否清空</string>
 	
 </resources>
