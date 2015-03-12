@@ -118,7 +118,7 @@ public class MainPageFragment extends SherlockFragment implements
 		mWebView.setInterface(this);// 设置回调接口
 
 		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 1,false);
-		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 2,false);
+		//WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 2,false);
 
 		toolbarFragment = (BottomMenuFragment) (this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
 		toolbarFragment.setInterface(this);// 设置回调接口

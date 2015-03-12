@@ -26,11 +26,13 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
+import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.adapter.HistoryAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.db.HistoryDao;
+import com.jbl.browser.interfaces.deleteHistory;
 import com.jbl.browser.utils.JBLPreference;
 
 /**
@@ -38,7 +40,7 @@ import com.jbl.browser.utils.JBLPreference;
  * @author huyingying
  *
  */
-public class HistoryFragment extends SherlockFragment {
+public class HistoryFragment extends SherlockFragment implements deleteHistory{
 	
 	
 	public final static String TAG="HistoryFragment";
@@ -56,7 +58,7 @@ public class HistoryFragment extends SherlockFragment {
 	ImageView back;
 
 	ModeCallback mCallback;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -72,6 +74,7 @@ public class HistoryFragment extends SherlockFragment {
 		listview=(ListView)view.findViewById(R.id.list_view_history_today);
 		noHistory=(ImageView)view.findViewById(R.id.cloud_history_empty);		
 		initDataHistory();
+		((HistoryFavourateActivity)this.getActivity()).setInterface(this);
 		return view;
 	}
 	/**
@@ -203,6 +206,34 @@ public class HistoryFragment extends SherlockFragment {
 		}
 
     }
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		//删除全部历史记录
+		AlertDialog.Builder builder=new Builder(getActivity());
+		//2所有builder设置一些参数
+		builder.setTitle(R.string.clear_history);
+		builder.setMessage("是否清空");
+		builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				Boolean flag=new HistoryDao(getActivity()).clearHistory();	//清空记录	
+				if(flag){
+					initDataHistory();
+					Toast.makeText(getActivity(), "删除成功", 1000).show();
+				}else{
+					Toast.makeText(getActivity(), "删除失败", 1000).show();
+				}
+					
+				}
+			});
+			builder.setNeutralButton(R.string.cancel,new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					
+				}
+			});
+			
+			builder.create().show();
+	}
 	
 
 }
