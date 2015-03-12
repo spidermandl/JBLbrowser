@@ -62,18 +62,13 @@ public class WebWindowManagement {
 			if(parent!=null)
 				parent.addView(webView);
 			queue.add(pair);
-			isSort=true;
+			isSort=false;
 		}
-		WebPair pair;
-		if(isSort){
-		    for(int i=0;i<index;i++){
-			    queue.add(queue.remove());
-		    } 
-		    pair=queue.element();
-		}else{
-			pair=((LinkedList<WebPair>)queue).get(index);
+		WebPair pair=((LinkedList<WebPair>)queue).get(index);
+		if(isSort){//排到队尾
+			queue.remove(pair);
+			queue.add(pair);
 		}
-		
 		
 		if(pair.parent!=null)
 			pair.parent.removeView(pair.webView);

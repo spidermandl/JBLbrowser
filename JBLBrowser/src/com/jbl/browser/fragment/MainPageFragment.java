@@ -35,7 +35,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-import cn.hugo.android.scanner.CaptureActivity;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.BrowserSettings;
@@ -122,9 +121,8 @@ public class MainPageFragment extends SherlockFragment implements
 		mWebView.setInterface(this);// 设置回调接口
 
 	   /*  WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 1,false);
-
-		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 2,false);
-*/
+		 WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 2,false);
+        */
 		toolbarFragment = (BottomMenuFragment) (this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
 		toolbarFragment.setInterface(this);// 设置回调接口
 
