@@ -22,7 +22,6 @@ import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -75,6 +74,10 @@ public class WebHorizontalView extends HorizontalScrollView {
      */
     private WebHorizontalViewAdapter mAdapter;
     /**
+     * 索引点
+     */
+    private PageIndicator mIndicator;
+    /**
      * 每屏幕最多显示的个数
      */
     private int mCountOneScreen;
@@ -109,6 +112,7 @@ public class WebHorizontalView extends HorizontalScrollView {
 	private LayoutInflater mInflater;
 	
 	private View.OnClickListener deleteWebviewListener;
+	
 
     public WebHorizontalView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -124,8 +128,11 @@ public class WebHorizontalView extends HorizontalScrollView {
 			@Override
 			public void onClick(View v) {
 				View view=WebWindowManagement.getInstance().deleteWebViewWithIndex(currentPosition);
-				if(view!=null)
+				if(view!=null){
 					mContainer.removeView(view);
+					updateView();
+					mIndicator.notifyDataSetChanged();
+				}
 				
 			}
 		};
@@ -147,7 +154,7 @@ public class WebHorizontalView extends HorizontalScrollView {
 		if (pager.getAdapter() == null) {
 			throw new IllegalStateException("ViewPager does not have adapter instance.");
 		}
-
+		
 		//pager.setOnPageChangeListener(pageListener);
 
 		notifyDataSetChanged();
@@ -157,8 +164,9 @@ public class WebHorizontalView extends HorizontalScrollView {
 	 * @param indicator
 	 */
 	public void setIndicator(PageIndicator indicator){
-		if(indicator!=null)
-			indicator.setOnPageChangeListener(pageListener);
+		mIndicator=indicator;
+		if(mIndicator!=null)
+			mIndicator.setOnPageChangeListener(pageListener);
 	}
 	
 	public void notifyDataSetChanged() {
@@ -175,10 +183,8 @@ public class WebHorizontalView extends HorizontalScrollView {
 				} else {
 					getViewTreeObserver().removeOnGlobalLayoutListener(this);
 				}
-
-				currentPosition = pager.getCurrentItem();
 				Log.e("onGlobalLayout", "onGlobalLayout");
-				scrollToChild(currentPosition, 0);
+				setPosition(currentPosition);
 			}
 		});
 
@@ -219,7 +225,7 @@ public class WebHorizontalView extends HorizontalScrollView {
      */
     public void initFirstScreenChildren(int mCountOneScreen) {
     
-        int count= mAdapter.getCount()<mCountOneScreen?mAdapter.getCount():mCountOneScreen;
+        int count= mAdapter.getCount();
         mContainer.setPadding(mEdge,0 ,mEdge, 0);
         for (int i = 0; i < count; i++) {
         	View view=mInflater.inflate(R.layout.multi_static_webview, null, false);
@@ -235,17 +241,45 @@ public class WebHorizontalView extends HorizontalScrollView {
             }
         }
 
-        currentPosition = 0;
+        currentPosition = mAdapter.getCount()-1;
         
         this.post(new Runnable() {
 			
 			@Override
 			public void run() {
-		        adjustPosition(0);
+		        setPosition(currentPosition);
 			}
 		});
     }
 
+    /**
+     * 刷新界面
+     */
+    private void updateView(){
+        View[] views=new View[mAdapter.getCount()];
+        for(int i=0;i<views.length;i++){
+        	views[i]=mContainer.getChildAt(i);
+        }
+        mContainer.removeAllViews();
+        for (int i = 0; i < views.length; i++) {
+        	mContainer.addView(views[i]);
+            if(i!=0){
+            	((LinearLayout.LayoutParams)views[i].getLayoutParams()).leftMargin=mGap;
+            }else{
+            	((LinearLayout.LayoutParams)views[i].getLayoutParams()).leftMargin=0;
+            }
+        }
+
+        currentPosition = mAdapter.getCount()-1;
+        
+        this.post(new Runnable() {
+			
+			@Override
+			public void run() {
+		        setPosition(currentPosition);
+			}
+		});
+    }
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 

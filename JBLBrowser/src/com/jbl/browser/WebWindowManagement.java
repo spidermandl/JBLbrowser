@@ -37,7 +37,7 @@ public class WebWindowManagement {
 	 * @return
 	 */
 	public ProgressWebView replaceMainWebView(ViewGroup parent){
-		return replaceWebViewWithIndex(parent,0,false);
+		return replaceWebViewWithIndex(parent,queue.size()>0?queue.size()-1:0,false);
 	}
 	
 	/**
