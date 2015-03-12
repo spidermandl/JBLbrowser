@@ -119,9 +119,9 @@ public class MainPageFragment extends SherlockFragment implements
 		// //监听webview跳转，实现activity跳转到推荐页面
 		mWebView.setInterface(this);// 设置回调接口
 
-		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 1,false);
+		/*WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 1,false);
 		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 2,false);
-
+*/
 		toolbarFragment = (BottomMenuFragment) (this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
 		toolbarFragment.setInterface(this);// 设置回调接口
 
@@ -256,9 +256,9 @@ public class MainPageFragment extends SherlockFragment implements
 						 mWebView.goBack(); //goBack()表示返回WebView的上一页面  
 				         return true;  
 					 }else{
-						 getFragmentManager().beginTransaction().remove(MainPageFragment.this).commit();//必须要加 负责saveinstance 会比fragment transition 先调用
-							getActivity().finish();//会调用saveinstance
-							JBLApplication.getInstance().quit();//直接退出fragment，不会出现白色界面
+		            	JBLApplication.getInstance().quit();//直接退出fragment，不会出现白色界面
+							System.exit(0);
+							
 					 }
 				 }
 				return false;
@@ -761,8 +761,8 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public void goMultiWindow() {
 		((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
-		/*//移除重复使用的view
-		webFrame.removeView(mWebView);*/
+		//移除重复使用的view
+		webFrame.removeView(mWebView);
 	}
 	//点击搜索图标
 	@Override
