@@ -2,54 +2,21 @@ package com.jbl.browser.activity;
 
 
 
-import java.util.Collections;
-import java.util.Comparator;
-
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
-
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
-
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.ActionMode;
-import android.view.LayoutInflater;
-import android.view.Window;
-
-import android.view.MenuInflater;
-import android.view.ViewGroup;
-
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TabHost;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
-
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
-import com.jbl.browser.adapter.BookMarkAdapter;
-import com.jbl.browser.adapter.HistoryAdapter;
-import com.jbl.browser.bean.BookMark;
-import com.jbl.browser.bean.History;
-import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.fragment.BookMarkFragment;
 import com.jbl.browser.fragment.HistoryFragment;
-import com.jbl.browser.interfaces.LoadURLInterface;
 import com.jbl.browser.interfaces.deleteHistory;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
-
-import android.widget.ListView;
 
 /**
  * 
