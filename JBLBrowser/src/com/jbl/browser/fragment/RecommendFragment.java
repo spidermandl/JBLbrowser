@@ -61,7 +61,7 @@ public class RecommendFragment extends SherlockFragment implements OnItemLongCli
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
-		String webAddress=((TextView)view.findViewById(R.id.tv2)).getText().toString();
+		String webAddress=((TextView)view.findViewById(R.id.mSearch_tv2)).getText().toString();
 		JBLPreference.getInstance(getActivity()).writeString(JBLPreference.RECOMMEND_KEY, webAddress);
 		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, null, false,MainPageFragment.TAG);
 	}
@@ -70,7 +70,7 @@ public class RecommendFragment extends SherlockFragment implements OnItemLongCli
 			final int position, long id) {
 		// TODO Auto-generated method stub	
 		final String urlName1;
-		urlName1=((TextView)view.findViewById(R.id.tv1)).getText().toString();
+		urlName1=((TextView)view.findViewById(R.id.mSearch_tv1)).getText().toString();
 		AlertDialog.Builder builder=new Builder(getActivity());
 		builder.setTitle(StringUtils.DELETE_RECOMMEND);
 		builder.setMessage("是否要删除\""+urlName1+"\"这个推荐?");

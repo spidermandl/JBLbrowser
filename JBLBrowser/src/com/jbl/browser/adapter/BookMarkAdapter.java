@@ -42,7 +42,11 @@ public class BookMarkAdapter extends BaseAdapter{
 		// TODO Auto-generated method stub
 		return list_bookmark.get(position);
 	}
-
+	@Override
+    public boolean hasStableIds() {
+          // TODO Auto-generated method stub
+          return true ;
+   }
 	@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub

@@ -20,7 +20,6 @@ public class WebWindowManagement {
 	 * 显示的主页面永远在队列第一个
 	 */
 	Queue<WebPair> queue;
-	
 	public static WebWindowManagement instance=null;
 	
 	private WebWindowManagement(){
@@ -69,7 +68,7 @@ public class WebWindowManagement {
 		if(isSort){
 		    for(int i=0;i<index;i++){
 			    queue.add(queue.remove());
-		    }
+		    } 
 		    pair=queue.element();
 		}else{
 			pair=((LinkedList<WebPair>)queue).get(index);
@@ -87,6 +86,16 @@ public class WebWindowManagement {
 		return pair.webView;
 	}
 	
+	/**
+	 * 删除 webview
+	 * 返回webview的父节点
+	 * @param index
+	 */
+	public View deleteWebViewWithIndex(int index){
+		if(index>=queue.size())
+			return null;
+		return ((LinkedList<WebPair>)queue).remove(index).parent;
+	}
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return queue.size();

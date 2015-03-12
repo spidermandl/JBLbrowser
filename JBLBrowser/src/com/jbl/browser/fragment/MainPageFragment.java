@@ -16,10 +16,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
@@ -45,6 +47,7 @@ import com.jbl.browser.activity.BrowserSettingActivity;
 import com.jbl.browser.activity.DownloadManageActivity;
 import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
+import com.jbl.browser.activity.ScannerManageActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
@@ -58,6 +61,7 @@ import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
 import com.jbl.browser.utils.StringUtils;
+import com.jbl.browser.utils.SysApplication;
 import com.jbl.browser.utils.UrlUtils;
 import com.jbl.browser.view.ProgressWebView;
 import com.jbl.browser.view.UserDefinedDialog;
@@ -117,9 +121,10 @@ public class MainPageFragment extends SherlockFragment implements
 		// //监听webview跳转，实现activity跳转到推荐页面
 		mWebView.setInterface(this);// 设置回调接口
 
-		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 1,false);
-		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 2,false);
+	   /*  WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 1,false);
 
+		WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 2,false);
+*/
 		toolbarFragment = (BottomMenuFragment) (this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
 		toolbarFragment.setInterface(this);// 设置回调接口
 
@@ -146,8 +151,8 @@ public class MainPageFragment extends SherlockFragment implements
 		/*
 		 * 设置webview字体大小
 		 */
-  		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
 		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
+		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
 		switch (fontSize) {
 		case JBLPreference.FONT_MIN:
 			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
@@ -238,29 +243,6 @@ public class MainPageFragment extends SherlockFragment implements
 	 */
 	public void initWebView() {
 		mWebView.setDefaultSetting();
-
-		/*
-		 * 设置webview字体大小
-		 */
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.getSettings().setSupportZoom(true);
-  		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
-		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
-		switch (fontSize) {
-		case JBLPreference.FONT_MIN:
-			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;	
-			break;
-		case JBLPreference.INVALID:
-		case JBLPreference.FONT_MEDIUM:
-			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
-			break;
-		case JBLPreference.FONT_MAX:
-			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
-			break;
-		default:
-			break;
-		}
-		BrowserSettings.getInstance().update();
 		String urlAddress=JBLPreference.getInstance(getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
 		if(urlAddress==null||urlAddress.length()==0){
 			mWebView.loadUrl(UrlUtils.URL_GET_HOST);
@@ -268,23 +250,22 @@ public class MainPageFragment extends SherlockFragment implements
 			mWebView.loadUrl(urlAddress);
 		}
 		//在progressWebView中已经有监听。
-		/*//监听物理返回键
+		//监听物理返回键
 		mWebView.setOnKeyListener(new OnKeyListener() {
-			
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				// TODO Auto-generated method stub
-				 if (event.getAction() == KeyEvent.ACTION_DOWN) {
+				if (event.getAction() == KeyEvent.ACTION_DOWN) {
 					 if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
 						 mWebView.goBack(); //goBack()表示返回WebView的上一页面  
 				         return true;  
 					 }else{
-						 System.exit(0);//直接退出fragment，不会出现白色界面
+						JBLApplication.getInstance().clearDataBeforeQuit();//直接退出fragment，不会出现白色界面
+						SysApplication.getInstance().exit();//退出整个程序
 					 }
 				 }
 				return false;
 			}
-		});*/
+		});
 
 		//添加下载监听
 		mWebView.setDownloadListener(new DownloadListener() {
@@ -563,14 +544,11 @@ public class MainPageFragment extends SherlockFragment implements
 					} else {
 						flag = false;
 					}
-					try {
-						Thread.sleep(100);
+					;
 
 						popWindow_full_screen.update(mCurrentX_pop_full_screen,
 								mCurrentY_pop_full_screen, -1, -1);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					
 				} else if (event.getAction() == MotionEvent.ACTION_UP) {
 					if (!flag)
 						popview_full_screen.setPressed(true);
@@ -802,7 +780,7 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public void goCode() {
 		Intent intent = new Intent();
-		intent.setClass(getActivity(), CaptureActivity.class);
+		intent.setClass(getActivity(), ScannerManageActivity.class);
 		startActivity(intent);
 	}
 	//登录注册监听
@@ -856,23 +834,7 @@ public class MainPageFragment extends SherlockFragment implements
   			int brightness=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
   			BrightnessSettings.setBrightness(getActivity(),brightness);
   		}
-  		BrowserSettings.getInstance().addObserver(mWebView.getSettings());
-		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);
-		switch (fontSize) {
-		case JBLPreference.FONT_MIN:
-			BrowserSettings.textSize = WebSettings.TextSize.SMALLER;
-			break;
-		case JBLPreference.INVALID:
-		case JBLPreference.FONT_MEDIUM:
-			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
-			break;
-		case JBLPreference.FONT_MAX:
-			BrowserSettings.textSize = WebSettings.TextSize.LARGER;
-			break;
-		default:
-			break;
-		}
-		BrowserSettings.getInstance().update();
+  		
 	}
 
 	@Override

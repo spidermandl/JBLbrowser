@@ -1,8 +1,8 @@
 package com.jbl.browser.fragment;
 
 import java.util.ArrayList;
-
 import android.R.color;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,7 +18,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-
 import com.a.j;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
@@ -56,8 +55,8 @@ public class SettingPagerFragment extends SherlockFragment{
 	 */
 	private int[] girdview_menu_image = {R.drawable.menu_add_bookmark_disable,R.drawable.menu_combine_selector,R.drawable.menu_setting_selector,
 			R.drawable.menu_refresh_selector,R.drawable.menu_share_selector,R.drawable.no_pic_mode_selector,R.drawable.menu_download_selector,
-			R.drawable.menu_quit_selector,R.drawable.menu_roll_webview_selector,R.drawable.menu_wuhen_selector,R.drawable.menu_fullscreen_selector,
-			R.drawable.menu_feedback_selector,R.drawable.menu_nightmode_selector,R.drawable.menu_add_bookmark_selector};
+			R.drawable.menu_quit_selector,R.drawable.menu_roll_webview_disable,R.drawable.menu_wuhen_selector,R.drawable.menu_fullscreen_selector,
+			R.drawable.menu_feedback_selector,R.drawable.menu_nightmode_selector,R.drawable.menu_add_bookmark_selector,R.drawable.menu_roll_webview_selector};
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -134,15 +133,27 @@ public class SettingPagerFragment extends SherlockFragment{
 							.substring(0, 4)));
 				}
 			} else if (i == 8) {
+				if((JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.IS_HOST_URL)){
+					if (JBLPreference.getInstance(mContext).readInt(
+							BoolType.TURNNING.toString()) == JBLPreference.OPEN_TURNING_BUTTON) {
+						list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
+								.substring(4)));
+					} else {
+						list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
+								.substring(0, 4)));
+					}
+			}else{
 				if (JBLPreference.getInstance(mContext).readInt(
 						BoolType.TURNNING.toString()) == JBLPreference.OPEN_TURNING_BUTTON) {
-					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
+					list.add(new ImageInfo(girdview_menu_image[14], resArrays[i]
 							.substring(4)));
 				} else {
-					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
+					list.add(new ImageInfo(girdview_menu_image[14], resArrays[i]
 							.substring(0, 4)));
 				}
-			} else if (i == 9) {
+				
+			}
+		} else if (i == 9) {
 				if (JBLPreference.getInstance(mContext).readInt(
 						BoolType.HISTORY_CACHE.toString()) == JBLPreference.OPEN_HISTORY) {
 					list.add(new ImageInfo(girdview_menu_image[i], resArrays[i]
@@ -176,12 +187,13 @@ public class SettingPagerFragment extends SherlockFragment{
 	public void setInterface(SettingItemInterface i){
 		settingInterface=i;
 	}
+	@SuppressLint("ResourceAsColor")
 	private void initViewAndAdapter() {
 		 PageCount = (int) Math.ceil(list.size() / APP_PAGE_SIZE);
 			viewLists = new ArrayList<GridView>();
 			for (int i = 0; i < PageCount; i++) {
 				GridView appPage = new GridView(getActivity());
-				//appPage.setSelector(new ColorDrawable(Color.TRANSPARENT));  //取消选中效果
+				appPage.setSelector(R.drawable.menu_selector);
 				final SettingGridItemAdapter adapter =new SettingGridItemAdapter(getActivity(), list, i);
 				appPage.setAdapter(adapter);
 				appPage.setNumColumns(4);
@@ -253,29 +265,35 @@ public class SettingPagerFragment extends SherlockFragment{
 								View view, int position, long id) {
 							switch (position) {
 							case 0://页面翻转
+								if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.ISNOT_HOST_URL){
 								if(settingInterface!=null)
 									settingInterface.pageTurningSwitch();
+								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
+								}
 								break;
 							case 1://网页无痕浏览模式
 								if(settingInterface!=null)
 									settingInterface.withoutTrace();
+								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 								break;
 							case 2://网页全屏浏览模式
 								if(settingInterface!=null)
 									settingInterface.fullScreen();
+								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 								break;
-							case 3://页面刷新
+							case 3://意见反馈
 								/*if(settingInterface!=null)
 									settingInterface.refresh();
 								break;*/
 							case 4://夜间模式
 								if(settingInterface!=null)
 									settingInterface.nightBright();
+								((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 								break;
 							default:
 								break;
 							}
-							((BaseFragActivity)(SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
+							
 						}
 						
 					});

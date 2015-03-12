@@ -1,21 +1,21 @@
 package com.jbl.browser.fragment;
 import java.util.ArrayList;
-import android.annotation.SuppressLint;
+
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.WebWindowManagement;
-import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.adapter.WebHorizontalViewAdapter;
 import com.jbl.browser.view.ScaleImageView;
-import com.jbl.browser.view.ScaleTextView;
 import com.jbl.browser.view.WebHorizontalView;
 import com.viewpager.indicator.CirclePageIndicator;
 
@@ -74,7 +74,7 @@ public class MultipageFragment extends SherlockFragment implements OnClickListen
 		switch (v.getId()) {
 		case R.id.new_window:
 			WebWindowManagement.getInstance().replaceWebViewWithIndex(
-					null, WebWindowManagement.getInstance().getCount(), true);
+					null, WebWindowManagement.getInstance().getCount(), false);
 			getFragmentManager().popBackStack();
 			break;
 		case R.id.multi_page_num:
