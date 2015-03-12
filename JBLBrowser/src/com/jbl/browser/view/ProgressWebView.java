@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -33,6 +34,7 @@ public class ProgressWebView extends WebView {
 	private ViewGroup.LayoutParams defaultLayoutParams;
 	private String webName;//当前网页名
 	private String curUrl;//当前网页
+	private boolean blockTouch=false;
 
 	public ProgressWebView(Context context) {
 		super(context);
@@ -88,6 +90,7 @@ public class ProgressWebView extends WebView {
 		// webView.getSettings().setPluginsEnabled(true);
 		getSettings().setPluginState(PluginState.ON);
 
+		blockTouch=false;
 		//监听物理返回键
 		setOnKeyListener(new OnKeyListener() {
 			
@@ -107,6 +110,12 @@ public class ProgressWebView extends WebView {
 		});
 	}
 	
+	@Override
+	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		if(blockTouch)
+			return true;
+		return super.onInterceptTouchEvent(ev);
+	}
 	/**
 	 * 滑动页面webview属性
 	 */
@@ -114,6 +123,7 @@ public class ProgressWebView extends WebView {
 		setVerticalScrollBarEnabled(false);
 		setHorizontalScrollBarEnabled(false);
 		progressbar.setVisibility(View.INVISIBLE);
+		blockTouch=true;
 	}
 	
 	public String getWebName(){
