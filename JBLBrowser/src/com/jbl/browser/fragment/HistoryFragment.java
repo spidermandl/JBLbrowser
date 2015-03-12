@@ -74,7 +74,7 @@ public class HistoryFragment extends SherlockFragment implements deleteHistory{
 		listview=(ListView)view.findViewById(R.id.list_view_history_today);
 		noHistory=(ImageView)view.findViewById(R.id.cloud_history_empty);		
 		initDataHistory();
-		((HistoryFavourateActivity)this.getActivity()).setInterface(this);
+		((HistoryFavourateActivity)this.getActivity()).setInterface(this);  //设置回调接口
 		return view;
 	}
 	/**
@@ -213,15 +213,15 @@ public class HistoryFragment extends SherlockFragment implements deleteHistory{
 		AlertDialog.Builder builder=new Builder(getActivity());
 		//2所有builder设置一些参数
 		builder.setTitle(R.string.clear_history);
-		builder.setMessage("是否清空");
+		builder.setMessage(R.string.confirm_clear);
 		builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				Boolean flag=new HistoryDao(getActivity()).clearHistory();	//清空记录	
 				if(flag){
 					initDataHistory();
-					Toast.makeText(getActivity(), "删除成功", 1000).show();
+					Toast.makeText(getActivity(), R.string.delete_succeed, 1000).show();
 				}else{
-					Toast.makeText(getActivity(), "删除失败", 1000).show();
+					Toast.makeText(getActivity(), R.string.delete_failed, 1000).show();
 				}
 					
 				}
