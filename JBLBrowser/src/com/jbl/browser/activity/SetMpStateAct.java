@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 
 import com.jbl.browser.R;
 import com.jbl.browser.tools.BusinessTool;
+import com.jbl.browser.utils.SysApplication;
 import com.jbl.browser.view.TitleView;
 
 public class SetMpStateAct extends Activity {
@@ -23,6 +24,7 @@ public class SetMpStateAct extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		SysApplication.getInstance().addActivity(this);//添加到activity队列中
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
