@@ -30,7 +30,6 @@ public class SysApplication extends Application{
     public void addActivity(Activity activity) { 
         mList.add(activity); 
     } 
- 
     public void exit() { 
         try { 
             for (Activity activity : mList) { 

@@ -75,7 +75,7 @@ public class HistoryFragment extends SherlockFragment implements deleteHistory{
 		listview=(ListView)view.findViewById(R.id.list_view_history_today);
 		noHistory=(ImageView)view.findViewById(R.id.cloud_history_empty);		
 		initDataHistory();
-		if(this.getActivity().equals(HistoryFavourateActivity.class))     //历史书签的activity
+		if(this.getActivity().getClass().equals(HistoryFavourateActivity.class))     //历史书签的activity
 			((HistoryFavourateActivity)this.getActivity()).setInterface(this);  //设置回调接口
 		else                                                             //推荐activity
 			((RecommendMainActivity)this.getActivity()).setInterface(this);  //设置回调接口
