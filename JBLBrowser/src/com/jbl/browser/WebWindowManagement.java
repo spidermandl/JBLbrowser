@@ -68,7 +68,7 @@ public class WebWindowManagement {
 		if(isSort){
 		    for(int i=0;i<index;i++){
 			    queue.add(queue.remove());
-		    }
+		    } 
 		    pair=queue.element();
 		}else{
 			pair=((LinkedList<WebPair>)queue).get(index);

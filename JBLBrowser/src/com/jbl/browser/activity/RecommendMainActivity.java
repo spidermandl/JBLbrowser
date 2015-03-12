@@ -9,6 +9,7 @@ import com.jbl.browser.R;
 import com.jbl.browser.fragment.BookMarkFragment;
 import com.jbl.browser.fragment.HistoryFragment;
 import com.jbl.browser.fragment.RecommendFragment;
+import com.jbl.browser.utils.SysApplication;
 
 /**
  * 推荐页面主activity，默认显示recommendFragment
@@ -22,6 +23,7 @@ public class RecommendMainActivity extends BaseSwapeActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Theme_Sherlock_Light);
 		super.onCreate(savedInstanceState);
+		SysApplication.getInstance().addActivity(this);//添加到activity队列中
 		/**
 		 * 设置actionbar样式
 		 */
