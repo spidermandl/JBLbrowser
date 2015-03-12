@@ -3,13 +3,9 @@ package com.jbl.browser;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageView;
 
-import com.google.zxing.common.StringUtils;
 import com.jbl.browser.view.ProgressWebView;
 
 /**
@@ -90,6 +86,16 @@ public class WebWindowManagement {
 		return pair.webView;
 	}
 	
+	/**
+	 * 删除 webview
+	 * 返回webview的父节点
+	 * @param index
+	 */
+	public View deleteWebViewWithIndex(int index){
+		if(index>=queue.size())
+			return null;
+		return ((LinkedList<WebPair>)queue).remove(index).parent;
+	}
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return queue.size();

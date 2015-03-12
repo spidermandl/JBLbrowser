@@ -43,6 +43,8 @@ import com.jbl.browser.bean.History;
 import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.fragment.BookMarkFragment;
 import com.jbl.browser.fragment.HistoryFragment;
+import com.jbl.browser.interfaces.LoadURLInterface;
+import com.jbl.browser.interfaces.deleteHistory;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
@@ -56,14 +58,14 @@ import android.widget.ListView;
  *
  */
 @SuppressLint("NewApi")
-public class HistoryFavourateActivity extends BaseSwapeActivity /*implements ListViewInterface */{
+public class HistoryFavourateActivity extends BaseSwapeActivity {
 
 	public static final String TAG="HistoryFavourateActivity";
 	//全部删除与单条删除开关
 	public static boolean mMenuFlag=true;
 	//actionbar 定义，在历史界面使用。
 	public static ActionBar ab;
-	
+	public deleteHistory clearHistory;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Theme_Sherlock_Light);
@@ -117,35 +119,16 @@ public class HistoryFavourateActivity extends BaseSwapeActivity /*implements Lis
 		return super.onCreateOptionsMenu(menu);
 
 	}
-
+	public void setInterface(deleteHistory i){
+		this.clearHistory=i;
+	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		if(item.getItemId()==1){
 			//Toast.makeText(this,R.string.delete_bookmark_fail, 100).show();
-			//删除全部历史记录
-			AlertDialog.Builder builder=new Builder(this);
-			//2所有builder设置一些参数
-			builder.setTitle("清空记录");
-			builder.setMessage("是否清空");
-			builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					Boolean flag=new HistoryDao(getBaseContext()).clearHistory();	//清空记录	
-					if(flag){
-					Toast.makeText(HistoryFavourateActivity.this, "删除成功", 1000).show();
-					}else{
-						Toast.makeText(HistoryFavourateActivity.this, "删除失败", 1000).show();
-					}
-						
-					}
-				});
-				builder.setNeutralButton("取消",new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						
-					}
-				});
-				
-				builder.create().show();
+			if(clearHistory!=null)
+				clearHistory.clear();
 		}
 		return super.onOptionsItemSelected(item);
 	}

@@ -2,6 +2,7 @@ package com.jbl.browser.view;
 
 
 import com.jbl.browser.R;
+import com.jbl.browser.WebWindowManagement;
 import com.jbl.browser.adapter.WebHorizontalViewAdapter;
 import com.viewpager.indicator.PageIndicator;
 
@@ -15,6 +16,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -22,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 /**
  * 
@@ -102,16 +105,30 @@ public class WebHorizontalView extends HorizontalScrollView {
 
 	private int lastScrollX = 0;
 	
+	
+	private LayoutInflater mInflater;
+	
+	private View.OnClickListener deleteWebviewListener;
 
     public WebHorizontalView(Context context, AttributeSet attrs) {
         super(context, attrs);
         // 获得屏幕宽度
-        WindowManager wm = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
         mScreenWitdh = outMetrics.widthPixels;
         mScreenHeight = outMetrics.heightPixels;
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        deleteWebviewListener=new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				View view=WebWindowManagement.getInstance().deleteWebViewWithIndex(currentPosition);
+				if(view!=null)
+					mContainer.removeView(view);
+				
+			}
+		};
     }
 
     @Override
@@ -205,11 +222,14 @@ public class WebHorizontalView extends HorizontalScrollView {
         int count= mAdapter.getCount()<mCountOneScreen?mAdapter.getCount():mCountOneScreen;
         mContainer.setPadding(mEdge,0 ,mEdge, 0);
         for (int i = 0; i < count; i++) {
-            final View view = mAdapter.getView(i, null, mContainer);
+        	View view=mInflater.inflate(R.layout.multi_static_webview, null, false);
+        	view.findViewById(R.id.delete_webview).setOnClickListener(deleteWebviewListener);
+        	mContainer.addView(view);
+            View webview = mAdapter.getView(i, null, (RelativeLayout)view.findViewById(R.id.static_webview_container));
             //设置大小、属性
-            view.getLayoutParams().width = mChildWidth;
-            view.getLayoutParams().height = mChildHeight;
-            ((ProgressWebView)view).setScrollSetting();
+            webview.getLayoutParams().width = mChildWidth;
+            webview.getLayoutParams().height = mChildHeight;
+            ((ProgressWebView)webview).setScrollSetting();
             if(i!=0){
             	((LinearLayout.LayoutParams)view.getLayoutParams()).leftMargin=mGap;
             }
@@ -230,15 +250,15 @@ public class WebHorizontalView extends HorizontalScrollView {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 
     	/**
-    	 * 拦截任何事件，不做任何处理
+    	 * 事件分发给子控件
     	 */
-    	return true;
+    	return super.onInterceptTouchEvent(ev);
     }
     
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
     	/**
-    	 * 拦截任何事件，不做任何处理
+    	 * 不吸收任何事件
     	 */
     	return false;
     }
