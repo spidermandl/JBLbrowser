@@ -120,7 +120,6 @@
     <string name="search_cancel">取&#160;消</string>
     <string name="search_forward">前&#160;往</string>
     <string name="delete_history">删除历史记录</string>
-    
     <string name="action_setting">多选</string>
     <string name="select_item">已选择:</string>
     <!-- 菜单文字 -->
@@ -128,7 +127,7 @@
         <item>添加收藏</item>
         <item>收藏/历史</item>
         <item>设置</item>
-         <item>刷新</item>
+        <item>刷新</item>
         <item>分享</item>
         <item>开启无图关闭无图</item>
         <item>下载管理</item>
@@ -139,7 +138,7 @@
         <item>意见反馈</item>
         <item>夜间模式日间模式</item>
     </string-array>
-     <string-array name="recommend_web_address">
+    <string-array name="recommend_web_address">
         <item>http://m.baidu.com/</item>
         <item>http://sina.cn</item>
         <item>http://3g.163.com</item>
@@ -151,7 +150,7 @@
         <item>http://mt.renren.com</item>
         <item>http://i.ifeng.com</item>
     </string-array>
-     <string-array name="recommend_web_name">
+    <string-array name="recommend_web_name">
         <item>百度</item>
         <item>新浪</item>
         <item>网易</item>
@@ -163,6 +162,7 @@
         <item>人人网</item>
         <item>凤凰网</item>
     </string-array>
+
     <string name="please_input_and_search">请输入网址或搜索</string>
     <string name="quit">提示</string>
     <string name="confirm_quit">您确定要退出？</string>
@@ -178,46 +178,40 @@
     <string name="about_us">关于我们</string>
     <string name="clear_data">清除数据</string>
     <string name="restore_settings">恢复默认设置</string>
-     <string name="Constants.SearchUrlGoogle">http://www.google.com/m?hl=en&amp;gl=us&amp;client=ms-null&amp;source=android-browser-key&amp;q=%s</string>
+    <string name="Constants.SearchUrlGoogle">http://www.google.com/m?hl=en&amp;gl=us&amp;client=ms-null&amp;source=android-browser-key&amp;q=%s</string>
     <string name="Constants.SearchUrlWikipedia">http://en.wikipedia.org/w/index.php?search=%s&amp;go=Go</string>
-     <string name="Commons.Yes">Yes</string>
+    <string name="Commons.Yes">Yes</string>
     <string name="Commons.No">No</string>
     <string name="Main.ShareChooserTitle">Share via</string>
-	
-	<string name="Main.MenuShareLinkUrl">Share link</string>
-	<string name="Main.MenuShareImageUrl">Share image</string>
-	<string name="Main.MenuShareEmailUrl">Share email</string>
-	<string name="Commons.Continue">Continue</string>
-	<string name="Commons.Add">Add</string>
+    <string name="Main.MenuShareLinkUrl">Share link</string>
+    <string name="Main.MenuShareImageUrl">Share image</string>
+    <string name="Main.MenuShareEmailUrl">Share email</string>
+    <string name="Commons.Continue">Continue</string>
+    <string name="Commons.Add">Add</string>
     <string name="Commons.Clear">Clear</string>
     <string name="Commons.Delete">Delete</string>
-     <string name="Commons.Ok">Ok</string>
     <string name="Commons.Cancel">Cancel</string>
     <string name="Commons.PleaseWait">Please wait</string>
     <string name="Commons.SDCardErrorTitle">SD Card unavailable</string>
     <string name="Commons.SDCardErrorNoSDMsg">No SD Card found.</string>
     <string name="Commons.SDCardErrorSDUnavailable">SD Card is not available.</string>
     <string name="StartPage.Welcome">Welcome!</string>
-	<string name="StartPage.Bookmarks">Most used bookmarks</string>
-	<string name="StartPage.History">Recent history</string>
-	  <string name="StartPage.Search">Search</string>
-	  <string name="StartPage.SearchButton">Go</string>
-	  <string name="Commons.SslWarning">Security warning</string>
-	<string name="Commons.SslWarningsHeader">There are problems with the security certificate for this site.</string>
-	<string name="Commons.SslUntrusted">This certificate is not from a trusted authority.</string>
-	<string name="Commons.SslIDMismatch">The name of the site does not match the name on the certificate.</string>
-	<string name="Commons.SslExpired">This certificate has expired.</string>
-	<string name="Commons.SslNotYetValid">This certificate is not valid yet.</string>
-	  <string name="ApplicationName">Zirco Browser</string>
+    <string name="StartPage.Bookmarks">Most used bookmarks</string>
+    <string name="StartPage.History">Recent history</string>
+    <string name="StartPage.Search">Search</string>
+    <string name="StartPage.SearchButton">Go</string>
+    <string name="Commons.SslWarning">Security warning</string>
+    <string name="Commons.SslWarningsHeader">There are problems with the security certificate for this site.</string>
+    <string name="Commons.SslUntrusted">This certificate is not from a trusted authority.</string>
+    <string name="Commons.SslIDMismatch">The name of the site does not match the name on the certificate.</string>
+    <string name="Commons.SslExpired">This certificate has expired.</string>
+    <string name="Commons.SslNotYetValid">This certificate is not valid yet.</string>
+    <string name="ApplicationName">Zirco Browser</string>
     <string name="ApplicationNameUrl">Zirco - %s</string>
     <string name="ApplicationDescription">Zirco is an open-source browser for Android.</string>
     <string name="Main.ToastTabSwitchMessage">页  %s</string>
     <string name="Main.ToastTabSwitchFullMessage">页  %1$s: %2$s</string>
-    <string name="newwindow">新建窗口</string>
     <string name="delete">删除任务</string>
-
-    <string name="one">1</string>	
-
     <string name="new_window">新建窗口</string>
-</resources>
 
+</resources>
