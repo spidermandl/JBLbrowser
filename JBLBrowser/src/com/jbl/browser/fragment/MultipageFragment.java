@@ -74,7 +74,7 @@ public class MultipageFragment extends SherlockFragment implements OnClickListen
 		switch (v.getId()) {
 		case R.id.new_window:
 			WebWindowManagement.getInstance().replaceWebViewWithIndex(
-					null, WebWindowManagement.getInstance().getCount(), true);
+					null, WebWindowManagement.getInstance().getCount(), false);
 			getFragmentManager().popBackStack();
 			break;
 		case R.id.multi_page_num:
