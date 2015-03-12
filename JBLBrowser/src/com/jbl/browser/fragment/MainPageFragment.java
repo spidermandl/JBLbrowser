@@ -47,6 +47,7 @@ import com.jbl.browser.activity.BrowserSettingActivity;
 import com.jbl.browser.activity.DownloadManageActivity;
 import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
+import com.jbl.browser.activity.ScannerManageActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
@@ -779,7 +780,7 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public void goCode() {
 		Intent intent = new Intent();
-		intent.setClass(getActivity(), CaptureActivity.class);
+		intent.setClass(getActivity(), ScannerManageActivity.class);
 		startActivity(intent);
 	}
 	//登录注册监听

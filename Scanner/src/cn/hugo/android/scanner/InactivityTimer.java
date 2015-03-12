@@ -33,7 +33,7 @@ import cn.hugo.android.scanner.common.Runnable;
  * 
  * 该活动监控器全程监控扫描活跃状态，与CaptureActivity生命周期相同
  */
-final class InactivityTimer {
+public final class InactivityTimer {
 
 	private static final String TAG = InactivityTimer.class.getSimpleName();
 
@@ -63,7 +63,7 @@ final class InactivityTimer {
 	/**
 	 * 首先终止之前的监控任务，然后新起一个监控任务
 	 */
-	synchronized void onActivity() {
+	public synchronized void onActivity() {
 		cancel();
 		inactivityTask = new InactivityAsyncTask();
 		Runnable.execAsync(inactivityTask);
