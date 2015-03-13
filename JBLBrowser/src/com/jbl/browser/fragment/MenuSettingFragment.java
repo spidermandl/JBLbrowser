@@ -101,7 +101,7 @@ public class MenuSettingFragment extends SherlockFragment {
 							break;
 						}
 						if(JBLPreference.getInstance(context).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.ISNOT_HOST_URL){
-						new MainPageFragment().initmWebViewSize();//动态改变字体大小
+						new MainPageFragment().initmWebViewSize();//不是主页时动态改变字体大小
 						}
 					}
 				});
