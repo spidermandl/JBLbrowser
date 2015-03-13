@@ -260,6 +260,7 @@ public class WebHorizontalView extends HorizontalScrollView {
         for(int i=0;i<views.length;i++){
         	views[i]=mContainer.getChildAt(i);
         }
+        
         mContainer.removeAllViews();
         for (int i = 0; i < views.length; i++) {
         	mContainer.addView(views[i]);
