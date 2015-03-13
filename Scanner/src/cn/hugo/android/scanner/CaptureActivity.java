@@ -4,16 +4,10 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Collection;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -21,7 +15,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
@@ -127,7 +120,34 @@ public  class CaptureActivity extends Activity implements
      * 图片的路径
      */
     private String photoPath;
+    private MyHandle myHandler=new MyHandle(this);
+    
+    public class MyHandle extends Handler {
+        private WeakReference<Activity> activityReference;
+        public MyHandle(Activity activity) {
+            activityReference = new WeakReference<Activity>(activity);
 
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+        	switch (msg.what) {
+            case PARSE_BARCODE_SUC: // 解析图片成功
+            	Toast.makeText(activityReference.get(),
+                        "解析成功，结果为：" + msg.obj, Toast.LENGTH_SHORT).show();
+
+                break;
+            case PARSE_BARCODE_FAIL:// 解析图片失败
+                Toast.makeText(activityReference.get(), "解析图片失败",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+            super.handleMessage(msg);
+        }
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -260,15 +280,6 @@ public  class CaptureActivity extends Activity implements
         }
         return super.onKeyDown(keyCode, event);
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-
-    }
-    
-   
-
-
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         if (holder == null) {
@@ -438,5 +449,62 @@ public  class CaptureActivity extends Activity implements
         }
 
     }
+    @Override
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, intent);
+		if (resultCode == RESULT_OK) {
+            final ProgressDialog progressDialog;
+            switch (requestCode) {
+                case REQUEST_CODE:
+
+                    // 获取选中图片的路径
+                    Cursor cursor = getContentResolver().query(
+                            intent.getData(), null, null, null, null);
+                    if (cursor.moveToFirst()) {
+                        photoPath = cursor.getString(cursor
+                                .getColumnIndex(MediaStore.Images.Media.DATA));
+                    }
+                    cursor.close();
+
+                    progressDialog = new ProgressDialog(this);
+                    progressDialog.setMessage("正在扫描...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+
+                    new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            Bitmap img = BitmapUtils
+                                    .getCompressedBitmap(photoPath);
+
+                            BitmapDecoder decoder = new BitmapDecoder(
+                                    CaptureActivity.this);
+                            Result result = decoder.getRawResult(img);
+
+                            if (result != null) {
+                                Message m = myHandler.obtainMessage();
+                                m.what = PARSE_BARCODE_SUC;
+                                m.obj = ResultParser.parseResult(result)
+                                        .toString();
+                                myHandler.sendMessage(m);
+                            } else {
+                                Message m = myHandler.obtainMessage();
+                                m.what = PARSE_BARCODE_FAIL;
+                                myHandler.sendMessage(m);
+                            }
+
+                            progressDialog.dismiss();
+
+                        }
+                    }).start();
+
+                    break;
+
+            }
+        }
+	}
 
 }

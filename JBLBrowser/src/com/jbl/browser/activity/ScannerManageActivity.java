@@ -15,28 +15,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.ClipboardManager;
-import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
-import cn.hugo.android.scanner.MyHandle;
 import cn.hugo.android.scanner.R;
-import cn.hugo.android.scanner.camera.CameraManager;
 import cn.hugo.android.scanner.common.BitmapUtils;
 import cn.hugo.android.scanner.decode.BitmapDecoder;
-import cn.hugo.android.scanner.view.ViewfinderView;
 
 import com.google.zxing.Result;
 import com.google.zxing.client.result.ResultParser;
 import com.jbl.browser.utils.JBLPreference;
-public class ScannerManageActivity extends CaptureActivity implements
-	SurfaceHolder.Callback, View.OnClickListener{
+public class ScannerManageActivity extends CaptureActivity{
 	 private static final int PARSE_BARCODE_FAIL = 300;
 	 private static final int PARSE_BARCODE_SUC = 200;
 	 private static final int REQUEST_CODE = 100;
@@ -44,61 +38,29 @@ public class ScannerManageActivity extends CaptureActivity implements
 	 /**
 	     * 图片的路径
 	     */
-	    private String photoPath;
+	 private String photoPath;
 	 private Handler mHandle=new MyHandleSon(this);
-	 class MyHandleSon extends MyHandle{
-
-		public MyHandleSon(Activity activity) {
-			super(activity);
-			// TODO Auto-generated constructor stub
-		}
+	 class MyHandleSon extends Handler{
+		 private WeakReference<Activity> activityReference;
+	     public MyHandleSon(Activity activity) {
+	         activityReference = new WeakReference<Activity>(activity);
+	     }
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
-			super.handleMessage(msg);
 			switch (msg.what) {
             case PARSE_BARCODE_SUC: // 解析图片成功
-            	
             	ScannerManageActivity.this.showResult(msg.obj.toString());
-              /*  Toast.makeText(activityReference.get(),
-                        "解析成功，结果为：" + msg.obj, Toast.LENGTH_SHORT).show();*/
-
                 break;
             case PARSE_BARCODE_FAIL:// 解析图片失败
                 Toast.makeText(ScannerManageActivity.this, "解析图片失败",
                         Toast.LENGTH_SHORT).show();
                 break;
-            default:
+            default: 
                 break;
         }
 		}
 	 }
-	    
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-	}
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-	}
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-	}
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-	}
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		// TODO Auto-generated method stub
-		return super.onKeyDown(keyCode, event);
-	}
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		// TODO Auto-generated method stub
@@ -156,78 +118,12 @@ public class ScannerManageActivity extends CaptureActivity implements
             }
         }
 	}
-	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
-		// TODO Auto-generated method stub
-		super.surfaceChanged(holder, format, width, height);
-	}
-	@Override
-	public void surfaceCreated(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-		super.surfaceCreated(holder);
-	}
-	@Override
-	public void surfaceDestroyed(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-		super.surfaceDestroyed(holder);
-	}
+	
 	@Override
 	public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
 		// TODO Auto-generated method stub
 		super.handleDecode(rawResult, barcode, scaleFactor);
         showResult(ResultParser.parseResult(rawResult).toString());
-	}
-	@Override
-	public void restartPreviewAfterDelay(long delayMS) {
-		// TODO Auto-generated method stub
-		super.restartPreviewAfterDelay(delayMS);
-	}
-	@Override
-	public ViewfinderView getViewfinderView() {
-		// TODO Auto-generated method stub
-		return super.getViewfinderView();
-	}
-	@Override
-	public Handler getHandler() {
-		// TODO Auto-generated method stub
-		return super.getHandler();
-	}
-	@Override
-	public CameraManager getCameraManager() {
-		// TODO Auto-generated method stub
-		return super.getCameraManager();
-	}
-	@Override
-	public void resetStatusView() {
-		// TODO Auto-generated method stub
-		super.resetStatusView();
-	}
-	@Override
-	public void drawViewfinder() {
-		// TODO Auto-generated method stub
-		super.drawViewfinder();
-	}
-	@Override
-	public void initCamera(SurfaceHolder surfaceHolder) {
-		// TODO Auto-generated method stub
-		super.initCamera(surfaceHolder);
-	}
-	@Override
-	public void decodeOrStoreSavedBitmap(Bitmap bitmap, Result result) {
-		// TODO Auto-generated method stub
-		super.decodeOrStoreSavedBitmap(bitmap, result);
-	}
-	
-	@Override
-	public void displayFrameworkBugMessageAndExit() {
-		// TODO Auto-generated method stub
-		super.displayFrameworkBugMessageAndExit();
-	}
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		super.onClick(v);
 	}
 	
 	 public  void showResult(final String result){
