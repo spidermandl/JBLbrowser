@@ -485,30 +485,9 @@ public class MainPageFragment extends SherlockFragment implements
 		popview_full_screen=(LinearLayout)mLayoutInflater.inflate(R.layout.shrink_full_screen, null);
 		popview_full_screen.setClickable(true);		
 		popWindow_full_screen=new PopupWindow(popview_full_screen,width/7,width/7);
-		popview_full_screen.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				getFragmentManager().beginTransaction().show(toolbarFragment).commit();
-	            getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
-	            popview_full_screen.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
-					   public void run() {
-			            		popWindow_full_screen.dismiss();
-					 }
-				});
-				}
-			});
-		popview_full_screen.setOnLongClickListener(new OnLongClickListener() {
-			
-			@Override
-			public boolean onLongClick(View v) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-		});
        popview_full_screen.setOnTouchListener(new OnTouchListener() {
     	    float mX,mY;
-    	    boolean flag;
+    	    boolean flag=false;
     	    int downX,upX,downY,upY;
 			@SuppressLint("ClickableViewAccessibility")
 			@Override
@@ -538,31 +517,37 @@ public class MainPageFragment extends SherlockFragment implements
 					}
 					if (Math.abs(upX - downX) > 0) {
 						flag = true;
-						popview_full_screen.setPressed(false);
-					} else {
-						flag = false;
+						popview_full_screen.setPressed(false);	
+						
 					}
-					;
-
-						popWindow_full_screen.update(mCurrentX_pop_full_screen,
-								mCurrentY_pop_full_screen, -1, -1);
+					popWindow_full_screen.update(mCurrentX_pop_full_screen,
+							mCurrentY_pop_full_screen, -1, -1);	
 					
 				} else if (event.getAction() == MotionEvent.ACTION_UP) {
-					if (!flag)
+					if(flag){
 						popview_full_screen.setPressed(true);
-					JBLPreference.getInstance(getActivity()).writeInt(
-							JBLPreference.pop_full_currentX_value,
-							mCurrentX_pop_full_screen);
-					JBLPreference.getInstance(getActivity()).writeInt(
-							JBLPreference.pop_full_currentY_value,
-							mCurrentY_pop_full_screen);
+						JBLPreference.getInstance(getActivity()).writeInt(
+								JBLPreference.pop_full_currentX_value,
+								mCurrentX_pop_full_screen);
+						JBLPreference.getInstance(getActivity()).writeInt(
+								JBLPreference.pop_full_currentY_value,
+								mCurrentY_pop_full_screen);
 
+					}else{
+						getFragmentManager().beginTransaction().show(toolbarFragment).commit();
+			            getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
+			            popview_full_screen.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
+							   public void run() {
+					            		popWindow_full_screen.dismiss();
+							 }
+						});
+					}
+					flag=false;
 				}
 
 				return flag;
 			}
 		});
-       popview_full_screen.setEnabled(true);
     }
 	//隐藏状态栏
 	private void hideStatusBar(){
