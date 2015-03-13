@@ -19,8 +19,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.ClipboardManager;
-import android.view.SurfaceHolder;
-import android.view.View;
 import android.widget.Toast;
 import cn.hugo.android.scanner.CaptureActivity;
 import cn.hugo.android.scanner.R;
@@ -31,6 +29,7 @@ import com.google.zxing.Result;
 import com.google.zxing.client.result.ResultParser;
 import com.jbl.browser.utils.JBLPreference;
 public class ScannerManageActivity extends CaptureActivity{
+
 	 private static final int PARSE_BARCODE_FAIL = 300;
 	 private static final int PARSE_BARCODE_SUC = 200;
 	 private static final int REQUEST_CODE = 100;
@@ -38,6 +37,7 @@ public class ScannerManageActivity extends CaptureActivity{
 	 /**
 	     * 图片的路径
 	     */
+
 	 private String photoPath;
 	 private Handler mHandle=new MyHandleSon(this);
 	 class MyHandleSon extends Handler{
