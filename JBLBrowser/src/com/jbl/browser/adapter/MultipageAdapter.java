@@ -1,13 +1,11 @@
 package com.jbl.browser.adapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.webkit.WebView;
 
 import com.viewpager.indicator.IconPagerAdapter;
 
@@ -42,7 +40,8 @@ public class MultipageAdapter extends PagerAdapter  implements IconPagerAdapter
     public void destroyItem(View v, int position, Object object)  
     {  
         // TODO Auto-generated method stub  
-        ((ViewPager) v).removeView(mViewPages.get(position));  
+    	if(position<mViewPages.size())
+    		((ViewPager) v).removeView(mViewPages.get(position));  
     }  
   
     @Override  
@@ -84,4 +83,14 @@ public class MultipageAdapter extends PagerAdapter  implements IconPagerAdapter
 		// TODO Auto-generated method stub
 		return 0;
 	}  
+	/**
+	 * 删除item
+	 * @param index
+	 */
+	public void removeItem(int index){
+		if (index<mViewPages.size()) {
+			mViewPages.remove(index);
+			notifyDataSetChanged();
+		}
+	}
 }  

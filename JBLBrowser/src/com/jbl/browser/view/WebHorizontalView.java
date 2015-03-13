@@ -3,6 +3,7 @@ package com.jbl.browser.view;
 
 import com.jbl.browser.R;
 import com.jbl.browser.WebWindowManagement;
+import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.adapter.WebHorizontalViewAdapter;
 import com.viewpager.indicator.PageIndicator;
 
@@ -111,6 +112,9 @@ public class WebHorizontalView extends HorizontalScrollView {
 	
 	private LayoutInflater mInflater;
 	
+	/**
+	 * 删除webview事件
+	 */
 	private View.OnClickListener deleteWebviewListener;
 	
 
@@ -131,7 +135,12 @@ public class WebHorizontalView extends HorizontalScrollView {
 				if(view!=null){
 					mContainer.removeView(view);
 					updateView();
-					mIndicator.notifyDataSetChanged();
+					((MultipageAdapter)pager.getAdapter()).removeItem(currentPosition);
+					currentPosition=currentPosition<mAdapter.getCount()?currentPosition:currentPosition-1;
+					setPosition(currentPosition);	
+					mIndicator.setCurrentItem(currentPosition);
+				}else{
+					
 				}
 				
 			}
@@ -322,7 +331,10 @@ public class WebHorizontalView extends HorizontalScrollView {
     	smoothScrollTo((currentPosition)*(mChildWidth+mGap)+mEdge+mChildWidth/2-mScreenWitdh/2, 0);
     }
 
-   
+   /**
+    * 翻页监听器
+    *
+    */
     private class PageListener implements OnPageChangeListener {
 
 		@Override

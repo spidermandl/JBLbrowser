@@ -87,7 +87,7 @@ public class WebWindowManagement {
 	 * @param index
 	 */
 	public View deleteWebViewWithIndex(int index){
-		if(index>=queue.size())
+		if(index>=queue.size()||queue.size()==1)//越界或容量为1
 			return null;
 		return ((LinkedList<WebPair>)queue).remove(index).parent;
 	}
