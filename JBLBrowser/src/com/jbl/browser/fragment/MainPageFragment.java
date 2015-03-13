@@ -832,7 +832,10 @@ public class MainPageFragment extends SherlockFragment implements
   			int brightness=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
   			BrightnessSettings.setBrightness(getActivity(),brightness);
   		}
-  		
+  		if(url.equals(UrlUtils.URL_GET_HOST)){
+  			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
+  			BrowserSettings.getInstance().update();
+  		}
 	}
 
 	@Override

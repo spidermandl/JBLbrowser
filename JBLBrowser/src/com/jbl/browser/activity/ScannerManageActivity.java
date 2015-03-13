@@ -59,8 +59,8 @@ public class ScannerManageActivity extends CaptureActivity{
             default: 
                 break;
         }
-		}
-	 }
+	}
+ }
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		// TODO Auto-generated method stub
@@ -118,14 +118,12 @@ public class ScannerManageActivity extends CaptureActivity{
             }
         }
 	}
-	
 	@Override
 	public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
 		// TODO Auto-generated method stub
 		super.handleDecode(rawResult, barcode, scaleFactor);
         showResult(ResultParser.parseResult(rawResult).toString());
 	}
-	
 	 public  void showResult(final String result){
 		 String strPattern="[a-zA-z]+://[^\\s]*";
 	  	 Pattern p = Pattern  
