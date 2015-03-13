@@ -188,7 +188,6 @@ public class HistoryFragment extends SherlockFragment implements deleteHistory{
 			});
             return true;
 		}
-
 		@SuppressLint("NewApi")
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode,
@@ -202,13 +201,11 @@ public class HistoryFragment extends SherlockFragment implements deleteHistory{
 	            }            
 	            return true;
 		}
-
 		@Override
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			// TODO Auto-generated method stub
 			return false;
 		}
-
     }
 	@Override
 	public void clear() {
@@ -235,9 +232,6 @@ public class HistoryFragment extends SherlockFragment implements deleteHistory{
 					
 				}
 			});
-			
 			builder.create().show();
 	}
-	
-
 }
