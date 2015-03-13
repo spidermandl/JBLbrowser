@@ -1,7 +1,6 @@
 package com.jbl.browser.activity;
 
 
-import java.lang.ref.WeakReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +34,7 @@ import cn.hugo.android.scanner.view.ViewfinderView;
 import com.google.zxing.Result;
 import com.google.zxing.client.result.ResultParser;
 import com.jbl.browser.utils.JBLPreference;
+
 public class ScannerManageActivity extends CaptureActivity implements
 	SurfaceHolder.Callback, View.OnClickListener{
 	 private static final int PARSE_BARCODE_FAIL = 300;
@@ -42,9 +42,9 @@ public class ScannerManageActivity extends CaptureActivity implements
 	 private static final int REQUEST_CODE = 100;
 	 private Result lastResult;
 	 /**
-	     * 图片的路径
-	     */
-	    private String photoPath;
+	  * 图片的路径
+	  */
+	 private String photoPath;
 	 private Handler mHandle=new MyHandleSon(this);
 	 class MyHandleSon extends MyHandle{
 
