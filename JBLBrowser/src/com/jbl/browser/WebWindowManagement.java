@@ -21,6 +21,7 @@ public class WebWindowManagement {
 	 */
 	Queue<WebPair> queue;
 	public static WebWindowManagement instance=null;
+	private int currentIndex=0;
 	
 	private WebWindowManagement(){
 		queue=new LinkedList<WebPair>();
@@ -37,7 +38,7 @@ public class WebWindowManagement {
 	 * @return
 	 */
 	public ProgressWebView replaceMainWebView(ViewGroup parent){
-		return replaceWebViewWithIndex(parent,queue.size()>0?queue.size()-1:0,false);
+		return replaceWebViewWithIndex(parent,currentIndex,true);
 	}
 	
 	/**
@@ -62,12 +63,10 @@ public class WebWindowManagement {
 			if(parent!=null)
 				parent.addView(webView);
 			queue.add(pair);
-			isSort=false;
 		}
 		WebPair pair=((LinkedList<WebPair>)queue).get(index);
 		if(isSort){//排到队尾
-			queue.remove(pair);
-			queue.add(pair);
+			currentIndex=index;
 		}
 		
 		if(pair.parent!=null)
@@ -89,8 +88,28 @@ public class WebWindowManagement {
 	public View deleteWebViewWithIndex(int index){
 		if(index>=queue.size()||queue.size()==1)//越界或容量为1
 			return null;
-		return ((LinkedList<WebPair>)queue).remove(index).parent;
+		
+		View parent = ((LinkedList<WebPair>)queue).remove(index).parent;
+		if(currentIndex>= queue.size())
+			currentIndex-=1;
+		return parent;
 	}
+	/**
+	 * 返回当前使用webview的index号
+	 * @return
+	 */
+	public int getCurrentWebviewIndex(){
+		return currentIndex;
+	}
+	
+	/**
+	 * 设置当前使用webview的index号
+	 * @param index
+	 */
+	public void setCurrentWebviewIndex(int index){
+		currentIndex=index;
+	}
+	
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return queue.size();

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:menu="http://schemas.android.com/apk/res/com.jbl.browser" 
     android:layout_width="match_parent"
     android:layout_height="fill_parent" >
 
@@ -56,13 +57,13 @@
         android:background="@color/toolbar_bg" 
         android:layout_alignParentBottom="true">
 
-        <com.jbl.browser.view.ScaleImageView
+        <com.jbl.browser.view.MenuItemView
             android:id="@+id/multi_page_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/toolbar_window_selector"
             android:layout_alignParentRight="true"
-            android:clickable="true"/>
+            android:clickable="true"
+            menu:type="3"/>
         
         <TextView
             android:id="@+id/new_window"

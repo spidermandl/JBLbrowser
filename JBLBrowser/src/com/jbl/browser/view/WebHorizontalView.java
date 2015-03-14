@@ -34,15 +34,6 @@ import android.widget.RelativeLayout;
  */
 public class WebHorizontalView extends HorizontalScrollView {
 
-    /**
-     * 条目点击时的回调
-     * 
-     */
-    public interface OnItemClickListener {
-        void onClick(View view, int pos);
-    }
-
-
     private static final String TAG = "WebHorizontalScrollView";
     
     /**
@@ -116,6 +107,13 @@ public class WebHorizontalView extends HorizontalScrollView {
 	 * 删除webview事件
 	 */
 	private View.OnClickListener deleteWebviewListener;
+	
+	/**
+	 * action down是否在page内,
+	 * 如果在，值为page index
+	 * 如果不再，值为－1
+	 */
+	private int isInPage=-1;
 	
 
     public WebHorizontalView(Context context, AttributeSet attrs) {
@@ -194,6 +192,7 @@ public class WebHorizontalView extends HorizontalScrollView {
 				}
 				Log.e("onGlobalLayout", "onGlobalLayout");
 				setPosition(currentPosition);
+				mIndicator.setCurrentItem(currentPosition);
 			}
 		});
 
@@ -250,7 +249,7 @@ public class WebHorizontalView extends HorizontalScrollView {
             }
         }
 
-        currentPosition = mAdapter.getCount()-1;
+        currentPosition = WebWindowManagement.getInstance().getCurrentWebviewIndex();
         
         this.post(new Runnable() {
 			
@@ -280,7 +279,7 @@ public class WebHorizontalView extends HorizontalScrollView {
             }
         }
 
-        currentPosition = mAdapter.getCount()-1;
+        currentPosition = WebWindowManagement.getInstance().getCurrentWebviewIndex();
         
         this.post(new Runnable() {
 			
@@ -301,6 +300,26 @@ public class WebHorizontalView extends HorizontalScrollView {
     
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+    	if(ev.getAction()==MotionEvent.ACTION_DOWN){
+    		float x=ev.getX();
+    		if(x<=mScreenWitdh/2-mChildWidth/2-mGap){
+    			if(currentPosition==0){
+    				isInPage=-1;
+    			}else{
+    				isInPage=currentPosition-1;
+    			}
+    		}else if(x>mScreenWitdh/2-mChildWidth/2&&x<mScreenWitdh/2+mChildWidth/2){
+    			isInPage=currentPosition;
+    		}else if(x>mScreenWitdh/2+mChildWidth/2+mGap){
+    			if(currentPosition==mAdapter.getCount()-1){
+    				isInPage=-1;
+    			}else{
+    				isInPage=currentPosition+1;
+    			}
+    		}else{
+    			isInPage=-1;
+    		}
+    	}
     	/**
     	 * 不吸收任何事件
     	 */
@@ -331,6 +350,13 @@ public class WebHorizontalView extends HorizontalScrollView {
     	smoothScrollTo((currentPosition)*(mChildWidth+mGap)+mEdge+mChildWidth/2-mScreenWitdh/2, 0);
     }
 
+    /**
+     * 返回选中page index
+     * @return
+     */
+    public int isClickInWebView(){
+    	return isInPage;
+    }
    /**
     * 翻页监听器
     *

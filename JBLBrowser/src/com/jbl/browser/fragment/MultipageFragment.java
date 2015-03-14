@@ -15,7 +15,6 @@ import com.jbl.browser.R;
 import com.jbl.browser.WebWindowManagement;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.adapter.WebHorizontalViewAdapter;
-import com.jbl.browser.view.ScaleImageView;
 import com.jbl.browser.view.WebHorizontalView;
 import com.viewpager.indicator.CirclePageIndicator;
 
@@ -36,7 +35,7 @@ public class MultipageFragment extends SherlockFragment implements OnClickListen
 	private WebHorizontalViewAdapter mAdapter;
 	
 	private TextView newWindow;
-	private ScaleImageView multiPageNum;
+	private ImageView multiPageNum;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,19 @@ public class MultipageFragment extends SherlockFragment implements OnClickListen
 		multipageIndicator=(CirclePageIndicator)view.findViewById(R.id.multipage_indicator);
 		mViewPages=new ArrayList<View>();
 		for(int i=0;i<WebWindowManagement.getInstance().getCount();i++){
-			mViewPages.add(inflater.inflate(R.layout.multipage_bg, container,false));
+			View v=inflater.inflate(R.layout.multipage_bg, container,false);
+			v.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					int index=mHorizontalScrollView.isClickInWebView();
+					if(index>=0){
+					     WebWindowManagement.getInstance().setCurrentWebviewIndex(index);
+					     getFragmentManager().popBackStack();
+					}
+				}
+			});
+			mViewPages.add(v);
 		}
 		multiViewPager.setAdapter(new MultipageAdapter(mViewPages));
         mHorizontalScrollView = (WebHorizontalView) view.findViewById(R.id.id_horizontalScrollView);
@@ -64,7 +75,7 @@ public class MultipageFragment extends SherlockFragment implements OnClickListen
         
         newWindow = (TextView)view.findViewById(R.id.new_window);
         newWindow.setOnClickListener(this);
-        multiPageNum=(ScaleImageView)view.findViewById(R.id.multi_page_num);
+        multiPageNum=(ImageView)view.findViewById(R.id.multi_page_num);
         multiPageNum.setOnClickListener(this);
 		return view;
 	}
@@ -74,7 +85,7 @@ public class MultipageFragment extends SherlockFragment implements OnClickListen
 		switch (v.getId()) {
 		case R.id.new_window:
 			WebWindowManagement.getInstance().replaceWebViewWithIndex(
-					null, WebWindowManagement.getInstance().getCount(), false);
+					null, WebWindowManagement.getInstance().getCount(), true);
 			getFragmentManager().popBackStack();
 			break;
 		case R.id.multi_page_num:

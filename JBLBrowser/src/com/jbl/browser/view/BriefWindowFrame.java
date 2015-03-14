@@ -34,6 +34,7 @@ public class BriefWindowFrame extends RelativeLayout {
 	
 	private void init(Context context){
 		ctx=context;
+		this.setClickable(true);
 
 	}
 	

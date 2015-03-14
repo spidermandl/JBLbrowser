@@ -7,6 +7,9 @@ import com.jbl.browser.WebWindowManagement;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Paint.FontMetrics;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
@@ -29,7 +32,12 @@ public class MenuItemView extends ImageView {
 	 * 当前属性
 	 */
 	private int type;
+	/**
+	 * 屏幕宽度
+	 */
 	private int s_Width;
+	
+	private Paint mPaint;
 	
 	public MenuItemView(Context context) {
 		super(context);
@@ -52,14 +60,19 @@ public class MenuItemView extends ImageView {
 	}
 	
 	private void init() {
-		WindowManager wm = (WindowManager) getContext().getSystemService(
-				Context.WINDOW_SERVICE);
+		WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
 		DisplayMetrics dm = new DisplayMetrics();
 		wm.getDefaultDisplay().getMetrics(dm);
 		s_Width = dm.widthPixels;
 		
 		refreshBg();
 		
+		mPaint=new Paint();
+		mPaint.setColor(0xFF000000);
+		mPaint.setStyle(Style.FILL);
+		mPaint.setTextSize(40);
+		mPaint.setAntiAlias(true); 
+		mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 	}
 	
     /**
@@ -95,10 +108,22 @@ public class MenuItemView extends ImageView {
 	protected void onDraw(Canvas canvas) {
 		if(type==MENU_MULTI_PAGE){
 			int pageNum=WebWindowManagement.getInstance().getCount();
+			canvas.drawText(pageNum+"", 
+					getMeasuredWidth()/2-mPaint.measureText(pageNum+"")/2, 
+					getMeasuredHeight()/2+getFontHeight()/4, mPaint);
 		}
 		super.onDraw(canvas);
 	}
 
+	/**
+	 * 获取字体高度
+	 * @return
+	 */
+	private int getFontHeight()
+	{
+	    FontMetrics fm = mPaint.getFontMetrics();
+	    return (int) Math.ceil(fm.bottom - fm.top);
+	}
 	/**
 	 * 设置属性
 	 * @param t
