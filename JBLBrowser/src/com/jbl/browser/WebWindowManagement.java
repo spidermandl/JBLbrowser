@@ -102,6 +102,10 @@ public class WebWindowManagement {
 		return currentIndex;
 	}
 	
+	public String getTitleWithIndex(int position){
+		return ((LinkedList<WebPair>)queue).get(position).webView.getWebName();
+	}
+	
 	/**
 	 * 设置当前使用webview的index号
 	 * @param index

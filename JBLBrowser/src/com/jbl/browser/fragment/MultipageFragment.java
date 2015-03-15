@@ -36,6 +36,7 @@ public class MultipageFragment extends SherlockFragment implements OnClickListen
 	
 	private TextView newWindow;
 	private ImageView multiPageNum;
+	private TextView webTitle;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,11 @@ public class MultipageFragment extends SherlockFragment implements OnClickListen
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_multipage, container, false);
 		multiViewPager=(ViewPager) view.findViewById(R.id.multipage_viewpager);
+		webTitle=(TextView)view.findViewById(R.id.web_title);
+        newWindow = (TextView)view.findViewById(R.id.new_window);
+        newWindow.setOnClickListener(this);
+        multiPageNum=(ImageView)view.findViewById(R.id.multi_page_num);
+        multiPageNum.setOnClickListener(this);
 		multipageIndicator=(CirclePageIndicator)view.findViewById(R.id.multipage_indicator);
 		mViewPages=new ArrayList<View>();
 		for(int i=0;i<WebWindowManagement.getInstance().getCount();i++){
@@ -63,6 +69,8 @@ public class MultipageFragment extends SherlockFragment implements OnClickListen
 			});
 			mViewPages.add(v);
 		}
+		webTitle.setText(WebWindowManagement.getInstance().getTitleWithIndex(
+				WebWindowManagement.getInstance().getCurrentWebviewIndex()));
 		multiViewPager.setAdapter(new MultipageAdapter(mViewPages));
         mHorizontalScrollView = (WebHorizontalView) view.findViewById(R.id.id_horizontalScrollView);
         mAdapter = new WebHorizontalViewAdapter();
@@ -72,11 +80,20 @@ public class MultipageFragment extends SherlockFragment implements OnClickListen
         mHorizontalScrollView.initDatas(mAdapter);
         mHorizontalScrollView.setViewPager(multiViewPager);
         mHorizontalScrollView.setIndicator(multipageIndicator);
+        mHorizontalScrollView.setTitleListener(new WebHorizontalView.ContainerInterface() {
+			
+			@Override
+			public void updatePageNum() {
+				multiPageNum.invalidate();
+			}
+			
+			@Override
+			public void setTitle(String text) {
+				webTitle.setText(text);
+				
+			}
+		});
         
-        newWindow = (TextView)view.findViewById(R.id.new_window);
-        newWindow.setOnClickListener(this);
-        multiPageNum=(ImageView)view.findViewById(R.id.multi_page_num);
-        multiPageNum.setOnClickListener(this);
 		return view;
 	}
 	

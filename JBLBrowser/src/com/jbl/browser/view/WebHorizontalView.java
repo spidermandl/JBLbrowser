@@ -36,11 +36,15 @@ public class WebHorizontalView extends HorizontalScrollView {
 
     private static final String TAG = "WebHorizontalScrollView";
     
+    public interface ContainerInterface{
+    	void setTitle(String text);
+    	void updatePageNum();
+    }
     /**
      * viewpager 翻页监听
      */
     private final PageListener pageListener = new PageListener();
-	public OnPageChangeListener delegatePageListener;
+	public ContainerInterface containerListener;
 
 	/**
 	 * viewpager 外部注入
@@ -94,14 +98,19 @@ public class WebHorizontalView extends HorizontalScrollView {
      */
 	private int currentPosition = 0;
 	
-	private float currentPositionOffset = 0f;
-	
     private int scrollOffset = 52;
 
 	private int lastScrollX = 0;
 	
 	
 	private LayoutInflater mInflater;
+	
+	private float lastOffset=0.0f;
+	
+	private int adjastOffset=0;
+	
+	boolean isScolling = false;
+	boolean direction = false;//left false; right true
 	
 	/**
 	 * 删除webview事件
@@ -137,6 +146,8 @@ public class WebHorizontalView extends HorizontalScrollView {
 					currentPosition=currentPosition<mAdapter.getCount()?currentPosition:currentPosition-1;
 					setPosition(currentPosition);	
 					mIndicator.setCurrentItem(currentPosition);
+					if(containerListener!=null)
+						containerListener.updatePageNum();
 				}else{
 					
 				}
@@ -199,6 +210,10 @@ public class WebHorizontalView extends HorizontalScrollView {
 	}
 
 
+	public void setTitleListener(ContainerInterface i){
+		containerListener=i;
+	}
+	
     /**
      * 初始化数据，设置数据适配器
      * 
@@ -274,9 +289,11 @@ public class WebHorizontalView extends HorizontalScrollView {
         	mContainer.addView(views[i]);
             if(i!=0){
             	((LinearLayout.LayoutParams)views[i].getLayoutParams()).leftMargin=mGap;
-            }else{
-            	((LinearLayout.LayoutParams)views[i].getLayoutParams()).leftMargin=0;
             }
+            if (i==0)   
+            	((LinearLayout.LayoutParams)views[i].getLayoutParams()).leftMargin=0;
+            if(i==views.length-1)
+            	((LinearLayout.LayoutParams)views[i].getLayoutParams()).rightMargin=mGap;
         }
 
         currentPosition = WebWindowManagement.getInstance().getCurrentWebviewIndex();
@@ -365,37 +382,70 @@ public class WebHorizontalView extends HorizontalScrollView {
 
 		@Override
 		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+			/**
+			 * positionOffset:[0,1)
+			 */
 			currentPosition = position;
-			currentPositionOffset = positionOffset;
 
-			Log.e("onPageScrolled", position+" "+positionOffset);
-			scrollToChild(position, (int) (positionOffset * mChildWidth));
+			//Log.e("onPageScrolled", position+" "+positionOffset+" "+positionOffsetPixels);
+			
+			//0---0.99 左－－－－右
+//			if((position - lastOffset)>0.95){
+//				if(adjastOffset==1)
+//					adjastOffset=0;
+//				else
+//					adjastOffset = -1;
+//			}
+//			//0.99---0 右------左
+//			if((lastOffset-position)>0.95){
+//				if(adjastOffset==-1)
+//					adjastOffset=0;
+//				else
+//					adjastOffset = 1;
+//			}
+//			Log.e("onPageScrolled", (positionOffset+adjastOffset)+" ");
+			
+//			if(isScolling){
+//				if(positionOffsetPixels>lastOffset){
+//					scrollToChild(position, (int) ((positionOffset-1) * mChildWidth));
+//				}else{
+//					scrollToChild(position, (int) ((positionOffset) * mChildWidth));
+//				}
+//			}else
+//				setPosition(position);
 
-			invalidate();
+			scrollToChild(position, (int) ((positionOffset) * mChildWidth));
+			lastOffset=positionOffsetPixels;
+			
+			//invalidate();
 
-			if (delegatePageListener != null) {
-				delegatePageListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
-			}
 		}
 
 		@Override
 		public void onPageScrollStateChanged(int state) {
 			if (state == ViewPager.SCROLL_STATE_IDLE) {
 				Log.e("onPageScrollStateChanged", "onPageScrollStateChanged");
-				//scrollToChild(pager.getCurrentItem(), 0);
-				//setPosition(pager.getCurrentItem());
+				adjastOffset=0;
+				isScolling=false;
 			}
 
-			if (delegatePageListener != null) {
-				delegatePageListener.onPageScrollStateChanged(state);
+			if(state == ViewPager.SCROLL_STATE_SETTLING){
+				adjastOffset=0;
+				isScolling=false;
+			}
+			
+			if(state == ViewPager.SCROLL_STATE_DRAGGING){
+				isScolling=true;
+			}
+			if (containerListener != null) {
+				containerListener.setTitle(WebWindowManagement.getInstance().getTitleWithIndex(currentPosition));
 			}
 		}
 
 		@Override
 		public void onPageSelected(int position) {
-			if (delegatePageListener != null) {
-				delegatePageListener.onPageSelected(position);
+			if (containerListener != null) {
+				containerListener.setTitle(WebWindowManagement.getInstance().getTitleWithIndex(currentPosition));
 			}
 		}
 
@@ -414,12 +464,13 @@ public class WebHorizontalView extends HorizontalScrollView {
 
 		int newScrollX = mEdge+mChildWidth/2+(mChildWidth+mGap)*position-mScreenWitdh/2 + offset;
 
-		if (position > 0 || offset > 0) {
-			newScrollX -= scrollOffset;
-		}
+//		if (position > 0 || offset > 0) {
+//			newScrollX -= scrollOffset;
+//		}
 
 		if (newScrollX != lastScrollX) {
 			lastScrollX = newScrollX;
+			Log.e("scroll distance", newScrollX+"");
 			this.smoothScrollTo(newScrollX, 0);
 		}
 
