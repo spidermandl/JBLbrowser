@@ -1,56 +1,56 @@
-<?xml version="1.0" encoding="utf-8"?><RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:menu="http://schemas.android.com/apk/res/com.jbl.browser" 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/toolbar_bg">
      
-    <View android:layout_height="1dp"
+     <View android:layout_height="1dp"
         android:layout_width="match_parent"
         android:background="#FFD3D3D3"
         android:id="@+id/toolbar_devide"/>
     
-     <com.jbl.browser.view.ScaleImageView
+     <com.jbl.browser.view.MenuItemView
         android:id="@+id/toolbar_back" 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_devide"
-        android:src="@drawable/toolbar_back_selector"
-        android:clickable="true"/>
+        android:clickable="true"
+        menu:type="0"/>
      
-     <com.jbl.browser.view.ScaleImageView
+     <com.jbl.browser.view.MenuItemView
         android:id="@+id/toolbar_forward" 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/toolbar_back"
         android:layout_below="@id/toolbar_devide"
-        android:src="@drawable/toolbar_forward_selector"
-        android:clickable="true"/>
+        android:clickable="true"
+        menu:type="1"/>
      
-     <com.jbl.browser.view.ScaleImageView
+     <com.jbl.browser.view.MenuItemView
         android:id="@+id/toolbar_home" 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_devide"
         android:layout_toRightOf="@id/toolbar_forward"
-        android:src="@drawable/toolbar_home_selector"
-        android:clickable="true"/>
+        android:clickable="true"
+        menu:type="2"/>
      
-     <com.jbl.browser.view.ScaleImageView
+     <com.jbl.browser.view.MenuItemView
         android:id="@+id/toolbar_menu" 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_devide"
         android:layout_toRightOf="@id/toolbar_home"
-        android:src="@drawable/toolbar_menu_selector"
-        android:clickable="true"/>
+        android:clickable="true"
+        menu:type="4"/>
      
-     <com.jbl.browser.view.ScaleImageView
+     <com.jbl.browser.view.MenuItemView
         android:id="@+id/toolbar_multipage" 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_devide"
         android:layout_toRightOf="@id/toolbar_menu"
-        android:src="@drawable/toolbar_window_selector"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:clickable="true"/>
+        android:clickable="true"
+        menu:type="3"/>
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.jbl.browser.fragment;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class MenuSettingFragment extends SherlockFragment {
 	private ScrollView settingScroll;
 	private AlertDialog dialog;
 	private int width;
+	private Context context;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -98,7 +100,9 @@ public class MenuSettingFragment extends SherlockFragment {
 						default:
 							break;
 						}
-						new MainPageFragment().initmWebViewSize();//动态改变字体大小
+						if(JBLPreference.getInstance(context).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.ISNOT_HOST_URL){
+						new MainPageFragment().initmWebViewSize();//不是主页时动态改变字体大小
+						}
 					}
 				});
 				builder1.setNegativeButton("取消",new DialogInterface.OnClickListener() {
