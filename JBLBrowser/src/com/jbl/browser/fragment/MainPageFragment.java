@@ -54,11 +54,13 @@ import com.jbl.browser.db.BookMarkDao;
 import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.interfaces.LoadURLInterface;
 import com.jbl.browser.interfaces.SettingItemInterface;
+import com.jbl.browser.interfaces.ShareInterface;
 import com.jbl.browser.interfaces.ToolbarItemInterface;
 import com.jbl.browser.interfaces.TopActionbarInterface;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
+import com.jbl.browser.utils.ShareDialog;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.SysApplication;
 import com.jbl.browser.utils.UrlUtils;
@@ -75,7 +77,8 @@ public class MainPageFragment extends SherlockFragment implements
                                               SettingItemInterface,
                                               ToolbarItemInterface,
                                               TopActionbarInterface,
-                                              LoadURLInterface{
+                                              LoadURLInterface,
+                                              ShareInterface{
 	public final static String TAG = "MainPageFragment";
 	/* 定义webview控件 */
 	public  ProgressWebView mWebView; // 主控件 webview
@@ -92,7 +95,6 @@ public class MainPageFragment extends SherlockFragment implements
 	View popview_seekBar;//亮度调节布局
 	PopupWindow popWindow_seekBar;//亮度调节悬浮
 	View multipagePanel;//多页布局
-	
 	//翻页按钮初始位置
 	int mCurrentX_pop_page;
 	int mCurrentY_pop_page;
@@ -119,7 +121,8 @@ public class MainPageFragment extends SherlockFragment implements
 		// //Intent intent = getActivity().getIntent();
 		// //监听webview跳转，实现activity跳转到推荐页面
 		mWebView.setInterface(this);// 设置回调接口
-
+		/*shareDialog=new ShareDialog(getActivity());
+		shareDialog.setInterface(this);*/
 	   /*  WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 1,false);
 		 WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 2,false);
         */
@@ -627,16 +630,11 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	@Override
 	public void share() {
-    	Intent shareIntent = new Intent(Intent.ACTION_SEND);
-    	shareIntent.setType("text/plain");
-    	shareIntent.putExtra(Intent.EXTRA_TEXT, "分享：@"+mWebView.getTitle()+"\n"+mWebView.getUrl());
-    	shareIntent.putExtra(Intent.EXTRA_SUBJECT,mWebView.getTitle());
-    	
-    	try {
-    		getActivity().startActivity(Intent.createChooser(shareIntent, getActivity().getString(R.string.main_share_chooser_title)));
-        } catch(android.content.ActivityNotFoundException ex) {
-           
-        }
+		ShareDialog shareDialog=new ShareDialog(getActivity());
+		shareDialog.setTitle(R.string.select_share);
+		shareDialog.show();
+		shareDialog.setInterface(this);
+		
 	
 		
 	}
@@ -818,11 +816,7 @@ public class MainPageFragment extends SherlockFragment implements
   			int brightness=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
   			BrightnessSettings.setBrightness(getActivity(),brightness);
   		}
-  		//退出主页时字体默认为适中
-  		if(url.equals(UrlUtils.URL_GET_HOST)){
-  			BrowserSettings.textSize = WebSettings.TextSize.NORMAL;
-  			BrowserSettings.getInstance().update();
-  		}
+  		
 	}
 
 	@Override
@@ -843,6 +837,21 @@ public class MainPageFragment extends SherlockFragment implements
 			}
 		}	
 
+	}
+
+	@Override
+	public void shareMore() {
+		// TODO Auto-generated method stub
+		Intent shareIntent = new Intent(Intent.ACTION_SEND);
+    	shareIntent.setType("text/plain");
+    	shareIntent.putExtra(Intent.EXTRA_TEXT, "分享：@"+mWebView.getTitle()+"\n"+mWebView.getUrl());
+    	shareIntent.putExtra(Intent.EXTRA_SUBJECT,mWebView.getTitle());
+    	
+    	try {
+    		getActivity().startActivity(Intent.createChooser(shareIntent, getActivity().getString(R.string.main_share_chooser_title)));
+        } catch(android.content.ActivityNotFoundException ex) {
+           
+        }
 	}
 	
 }
