@@ -524,7 +524,7 @@ public class MainPageFragment extends SherlockFragment implements
 							mCurrentY_pop_full_screen, -1, -1);	
 					
 				} else if (event.getAction() == MotionEvent.ACTION_UP) {
-					if(flag){
+					if(flag){        //移动事件
 						popview_full_screen.setPressed(true);
 						JBLPreference.getInstance(getActivity()).writeInt(
 								JBLPreference.pop_full_currentX_value,
@@ -533,7 +533,7 @@ public class MainPageFragment extends SherlockFragment implements
 								JBLPreference.pop_full_currentY_value,
 								mCurrentY_pop_full_screen);
 
-					}else{
+					}else{          //点击事件
 						getFragmentManager().beginTransaction().show(toolbarFragment).commit();
 			            getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
 			            popview_full_screen.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
@@ -545,7 +545,7 @@ public class MainPageFragment extends SherlockFragment implements
 					flag=false;
 				}
 
-				return flag;
+				return false;
 			}
 		});
     }
@@ -629,7 +629,7 @@ public class MainPageFragment extends SherlockFragment implements
 	public void share() {
     	Intent shareIntent = new Intent(Intent.ACTION_SEND);
     	shareIntent.setType("text/plain");
-    	shareIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
+    	shareIntent.putExtra(Intent.EXTRA_TEXT, "分享：@"+mWebView.getTitle()+"\n"+mWebView.getUrl());
     	shareIntent.putExtra(Intent.EXTRA_SUBJECT,mWebView.getTitle());
     	
     	try {
@@ -637,6 +637,7 @@ public class MainPageFragment extends SherlockFragment implements
         } catch(android.content.ActivityNotFoundException ex) {
            
         }
+	
 		
 	}
 	@Override
