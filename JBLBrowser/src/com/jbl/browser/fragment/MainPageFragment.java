@@ -22,7 +22,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
-import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -46,6 +45,7 @@ import com.jbl.browser.activity.BrowserSettingActivity;
 import com.jbl.browser.activity.DownloadManageActivity;
 import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
+import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.activity.ScannerManageActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.bean.BookMark;
@@ -60,7 +60,6 @@ import com.jbl.browser.interfaces.TopActionbarInterface;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
-import com.jbl.browser.utils.ShareDialog;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.SysApplication;
 import com.jbl.browser.utils.UrlUtils;
@@ -630,12 +629,20 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	@Override
 	public void share() {
-		ShareDialog shareDialog=new ShareDialog(getActivity());
-		shareDialog.setTitle(R.string.select_share);
-		shareDialog.show();
-		shareDialog.setInterface(this);
+//		ShareDialog shareDialog=new ShareDialog(getActivity());
+//		shareDialog.setTitle(R.string.select_share);
+//		shareDialog.show();
+//		shareDialog.setInterface(this);
 		
+		Intent shareIntent = new Intent(Intent.ACTION_SEND);		
+		shareIntent.setType("text/plain");		
+		shareIntent.putExtra(Intent.EXTRA_TEXT, "分享：@"+mWebView.getTitle()+"\n"+mWebView.getUrl());		
+		shareIntent.putExtra(Intent.EXTRA_SUBJECT,mWebView.getTitle());		
 	
+		try {	
+			getActivity().startActivity(Intent.createChooser(shareIntent, getActivity().getString(R.string.main_share_chooser_title)));		
+		} catch(android.content.ActivityNotFoundException ex) {		
+		}
 		
 	}
 	@Override
@@ -731,11 +738,11 @@ public class MainPageFragment extends SherlockFragment implements
 			}
 			
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
-			if (settingFragment.isRemoving() || getFragmentManager().findFragmentByTag(SettingPagerFragment.TAG) == null) {
+			if (!settingFragment.isVisible() || getFragmentManager().findFragmentByTag(SettingPagerFragment.TAG) == null) {
 				transaction.replace(R.id.main_setting_panel, settingFragment,SettingPagerFragment.TAG);
 				transaction.addToBackStack(null);
 			} else {
-				transaction.remove(settingFragment);
+ 				transaction.remove(settingFragment);
 			}
 			transaction.commitAllowingStateLoss();
 			this.getActivity().getSupportFragmentManager().executePendingTransactions();
@@ -767,8 +774,12 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	//登录注册监听
 	@Override
-	public void goLand() {
-		mWebView.loadUrl(UrlUtils.URL_LOGIN);
+	public void goHot() {
+		//mWebView.loadUrl(UrlUtils.URL_LOGIN);
+		Intent in=new Intent();
+		in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		in.setClass(this.getActivity(),RecommendMainActivity.class);
+		startActivity(in);
 	}
 	//载入网页监听
 	@Override

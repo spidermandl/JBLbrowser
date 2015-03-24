@@ -77,10 +77,7 @@ public class SettingPagerFragment extends SherlockFragment{
 			public boolean onTouch(View v, MotionEvent event) {
 				try {
 					//点击空白处 销毁fragment
-					FragmentTransaction transaction = getFragmentManager().beginTransaction();
-					transaction.remove(SettingPagerFragment.this);
-					transaction.commitAllowingStateLoss();
-					getFragmentManager().executePendingTransactions();
+					((BaseFragActivity)SettingPagerFragment.this.getActivity()).removeFragment(SettingPagerFragment.this);
 				} catch (Exception e) {
 					
 				}

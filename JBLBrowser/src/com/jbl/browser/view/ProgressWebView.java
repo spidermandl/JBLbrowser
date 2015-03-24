@@ -136,16 +136,16 @@ public class ProgressWebView extends WebView {
 	
 	@Override
 	public void loadUrl(String url) {
-		if(url.contains("jbl")){
-			/**
-			 * jbl关键字截断
-			 */
-			Intent in=new Intent();
-			in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			in.setClass(mContext,RecommendMainActivity.class);
-			mContext.startActivity(in);
-			return;
-		}
+//		if(url.contains("jbl")){
+//			/**
+//			 * jbl关键字截断
+//			 */
+//			Intent in=new Intent();
+//			in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//			in.setClass(mContext,RecommendMainActivity.class);
+//			mContext.startActivity(in);
+//			return;
+//		}
 		if (url.equals(this.getCurrentUrl())){
 			//不重复载入网页
 			return;

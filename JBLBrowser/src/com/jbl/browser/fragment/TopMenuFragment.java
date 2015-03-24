@@ -26,7 +26,7 @@ public class TopMenuFragment extends SherlockFragment implements View.OnClickLis
 	//定义顶部ActionBar控件
 	private EditText mSearch; //输入网址搜索
 	private ImageView mCode; //二维码搜索
-	private ImageView mLand; //登录注册
+	private ImageView mHot; //登录注册
 	
 	
 	@Override
@@ -36,10 +36,10 @@ public class TopMenuFragment extends SherlockFragment implements View.OnClickLis
 		View view = inflater.inflate(R.layout.fragment_main_topmenu, container, false);
 		mSearch=(EditText)view.findViewById(R.id.top_menu_search);
 		mCode=(ImageView)view.findViewById(R.id.top_menu_qrcode);
-		mLand=(ImageView)view.findViewById(R.id.top_menu_person);
+		mHot=(ImageView)view.findViewById(R.id.top_menu_person);
 		
 		mCode.setOnClickListener(this);
-		mLand.setOnClickListener(this);
+		mHot.setOnClickListener(this);
 		mSearch.setOnTouchListener(this);
 		mSearch.setInputType(InputType.TYPE_NULL);
 		mSearch.requestFocus();
@@ -73,7 +73,7 @@ public class TopMenuFragment extends SherlockFragment implements View.OnClickLis
 			break;
 		case R.id.top_menu_person:
 			if(topActionbarInterfaces!=null){
-				topActionbarInterfaces.goLand();
+				topActionbarInterfaces.goHot();
 			}
 			break;
 		}

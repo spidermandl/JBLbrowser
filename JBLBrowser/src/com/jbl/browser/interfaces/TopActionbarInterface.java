@@ -15,7 +15,7 @@ public interface TopActionbarInterface {
 	 * */
 	void goCode();
 	/**
-	 * 点击注册登录
+	 * 点击热点
 	 * */
-	void goLand();
+	void goHot();
 }
