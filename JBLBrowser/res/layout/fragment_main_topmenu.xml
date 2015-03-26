@@ -40,7 +40,7 @@
         android:clickable="true"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/menu_person_selector" />    
+        android:src="@drawable/titlebar_person_selector" />    
         
     <View android:layout_height="1dp"
         android:layout_width="match_parent"
