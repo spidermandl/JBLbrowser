@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,6 @@ public class SettingGridItemAdapter extends BaseAdapter
 	private List<SettingMenuType> mList;// 定义一个list对象
 	private Context mContext;// 上下文
 	public static final int APP_PAGE_SIZE = 8;// 每一页装载数据的大小
-	private PackageManager pm;// 定义一个PackageManager对象
 	private int page;
 	public int getPage() {
 		return page;
@@ -48,7 +46,6 @@ public class SettingGridItemAdapter extends BaseAdapter
 	 */
 	public SettingGridItemAdapter(Context context,  ArrayList<SettingMenuType> list, int page) {
 		mContext = context;
-		pm = context.getPackageManager();
 		this.page = page;
 		mList = new ArrayList<SettingMenuType>();
 		// 根据当前页计算装载的应用，每页只装载16个
