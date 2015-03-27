@@ -10,6 +10,8 @@ public class UrlUtils {
 	public static final String URL_GET_HOST =  "http://m.hi2345.net/home.php";//取正式服地址
 			                                   //"http://114.141.132.167/url.php";//取测试服地址
 	//http://m.hi2345.net/login.php
+	/**手机验证url*/
+	public static final String URL_AUTH = "http://m.hi2345.net/userreg.php";//
 	/**服务器资源路径*/
 	public static String URL_HEAD2 =  null;
 	/**android服务器host*/

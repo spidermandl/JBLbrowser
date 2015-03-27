@@ -1,9 +1,7 @@
 package com.jbl.browser.fragment;
 
 import java.util.ArrayList;
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -88,11 +86,11 @@ public class SettingPagerFragment extends SherlockFragment {
 				name= resArrays[0];
 				break;
 			case 2:
-				drawable=R.drawable.menu_setting_selector;
+				drawable=R.drawable.menu_combine_selector;
 				name= resArrays[1];
 				break;
 			case 3:
-				drawable=R.drawable.menu_add_bookmark_selector;
+				drawable=R.drawable.menu_setting_selector;
 				name= resArrays[2];
 				break;
 			case 4:
@@ -297,24 +295,18 @@ public class SettingPagerFragment extends SherlockFragment {
 									JBLPreference.HOST_URL_BOOLEAN) == JBLPreference.ISNOT_HOST_URL) {
 								if (settingInterface != null)
 									settingInterface.addBookMark();
-								((BaseFragActivity) (SettingPagerFragment.this
-										.getActivity()))
-										.removeFragment(SettingPagerFragment.this);
+								((BaseFragActivity) (SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 							}
 							break;
 						case 1: // 跳转到书签界面
 							if (settingInterface != null)
 								settingInterface.listBookMark();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
+							((BaseFragActivity) (SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 							break;
 						case 2:// 跳转到设置界面
 							if (settingInterface != null)
 								settingInterface.browserSetting();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
+							((BaseFragActivity) (SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 							break;
 						case 3: // 刷新
 							/*
@@ -323,37 +315,27 @@ public class SettingPagerFragment extends SherlockFragment {
 							 */
 							if (settingInterface != null)
 								settingInterface.refresh();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
+							((BaseFragActivity) (SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 							break;
 						case 4:// 分享
 							if (settingInterface != null)
 								settingInterface.share();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
+							((BaseFragActivity) (SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 							break;
 						case 5: // 设置无图模式
 							if (settingInterface != null)
 								settingInterface.fitlerPicLoading();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
+							((BaseFragActivity) (SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 							break;
 						case 6: // 下载管理
 							if (settingInterface != null)
 								settingInterface.manageDownload();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
+							((BaseFragActivity) (SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 							break;
 						case 7:// 退出系统
 							if (settingInterface != null)
 								settingInterface.quit();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
+							((BaseFragActivity) (SettingPagerFragment.this.getActivity())).removeFragment(SettingPagerFragment.this);
 							break;
 						default:
 							break;

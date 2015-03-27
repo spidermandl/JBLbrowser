@@ -218,7 +218,6 @@ public class MainPageFragment extends SherlockFragment implements
 	/**
 	 * 动态改变字体大小
 	 * */
-	@SuppressLint("SetJavaScriptEnabled")
 	public void initmWebViewSize(){
 		
 		int fontSize = JBLPreference.getInstance(this.getActivity()).readInt(JBLPreference.FONT_TYPE);

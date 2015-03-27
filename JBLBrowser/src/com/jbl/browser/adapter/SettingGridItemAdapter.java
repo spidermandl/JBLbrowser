@@ -67,30 +67,23 @@ public class SettingGridItemAdapter extends BaseAdapter
 	}
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = LayoutInflater.from(mContext).inflate(
-					R.layout.main_setting_item, parent, false);
+			convertView = LayoutInflater.from(mContext).inflate(R.layout.main_setting_item, parent, false);
 		}
 		
 		SettingMenuType appInfo = mList.get(position);
-		ImageView appicon = (ImageView) convertView
-				.findViewById(R.id.viewpage_test_icon);
+		ImageView appicon = (ImageView) convertView.findViewById(R.id.viewpage_test_icon);
 		TextView appname = (TextView) convertView.findViewById(R.id.viewpage_test_text);
 		appicon.setImageResource(appInfo.getDrawable());
 		appname.setText(appInfo.getName());
-		if(appname.getText().equals(StringUtils.ADD_BOOKMARK)){      
+		if(mList.get(position)==SettingMenuType.ADD_BOOKMARK_DISABLE){      
 			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.IS_HOST_URL){
 				appname.setTextColor(Color.GRAY);
 				convertView.setFocusable(false);
 			}
 		}
-		if(appname.getText().equals(StringUtils.TURNING_BUTTON_OPEN)){
+		if(mList.get(position)==SettingMenuType.PAGE_ROLL_ABLE||mList.get(position)==SettingMenuType.PAGE_ROOL_DISABLE){
 			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.IS_HOST_URL){
-				appname.setTextColor(Color.GRAY);
-				convertView.setFocusable(false);
-			}
-		}
-		if(appname.getText().equals(StringUtils.TURNING_BUTTON_CLOSE)){
-			if(JBLPreference.getInstance(mContext).readInt(JBLPreference.HOST_URL_BOOLEAN)==JBLPreference.IS_HOST_URL){
+				appicon.setImageResource(R.drawable.menu_roll_webview_disable);
 				appname.setTextColor(Color.GRAY);
 				convertView.setFocusable(false);
 				convertView.setSelected(false);

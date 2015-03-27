@@ -1,32 +1,25 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"  
-    android:layout_width="fill_parent"  
-    android:layout_height="fill_parent"
-      android:layout_centerVertical="true"
-      android:gravity="center"
-     >  
-     <LinearLayout
-         android:id="@+id/linear"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:orientation="vertical"
-         android:gravity="center"
-         android:layout_alignParentTop="true"
-         android:layout_marginBottom="23dp"
-         android:layout_marginTop="8dp"
-          >
-    <ImageView  
-        android:id="@+id/viewpage_test_icon"  
-        android:layout_width="wrap_content"  
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ImageView
+        android:id="@+id/viewpage_test_icon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-     >  
-    </ImageView>  
-    <TextView  
-        android:id="@+id/viewpage_test_text"  
-        android:layout_width="wrap_content"  
-        android:layout_height="wrap_content"     
-        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/menu_personal_selector" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/viewpage_test_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/viewpage_test_icon"
+        android:paddingBottom="5dp"
+        android:text="aaaaa"
         android:textColor="@drawable/font_color"
-         >  
-    </TextView>  
-    </LinearLayout>
-</RelativeLayout>  
+        android:textStyle="bold" >
+    </TextView>
+
+</RelativeLayout>
