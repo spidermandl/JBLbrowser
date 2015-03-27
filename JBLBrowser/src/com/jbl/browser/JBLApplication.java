@@ -2,9 +2,12 @@ package com.jbl.browser;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.LinkedList;
+import java.util.List;
 
 import com.jbl.browser.utils.JBLPreference;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.os.Build;
@@ -18,6 +21,7 @@ import android.os.Build;
 public class JBLApplication extends Application {
 
 	public static JBLApplication instance;
+	private List<Activity> mList = new LinkedList<Activity>();
 	
 	public static JBLApplication getInstance(){
 		return instance;
@@ -29,35 +33,57 @@ public class JBLApplication extends Application {
 		super.onCreate();
 	}
 	
+    /**
+     * add Activity  
+     * @param activity
+     */
+    public void addActivity(Activity activity) { 
+        mList.add(activity); 
+    } 
+    
 	/**
-	 * 推出进程
+	 * 退出进程
 	 */
 	public void quit(){
 		clearDataBeforeQuit();
+		try { 
+            for (Activity activity : mList) { 
+                if (activity != null) 
+                    activity.finish(); 
+            } 
+            
+            ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE); 
+        	if (Build.VERSION.SDK_INT < 8){
+        		am.restartPackage(getPackageName());
+        		System.exit(0); 
+        	}
+			Method method = am.getClass().getMethod("killBackgroundProcesses",new Class[] {String.class });
+		    method.invoke(am,"com.jbl.browser");    
+		    
+        } catch (NoSuchMethodException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalArgumentException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvocationTargetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}catch (Exception e) { 
+        	
+        } finally { 
+            System.exit(0); 
+        } 
 		
-		ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE); 
-    	if (Build.VERSION.SDK_INT < 8){
-    		am.restartPackage(getPackageName());
-    		System.exit(0); 
-    	}
-    	else{
-			Method method;
-			try {
-				method = am.getClass().getMethod("killBackgroundProcesses",new Class[] {String.class });
-				method.invoke(am,"com.jbl.browser");
-	   		} catch (NoSuchMethodException e) {
-				e.printStackTrace();
-			}catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			}	
-    		//am.killBackgroundProcesses("com.diary.goal.setting"); 
-    	}
 	}
 	
+    public void onLowMemory() { 
+        super.onLowMemory();     
+        System.gc(); 
+    }
 	/**
 	 * 退出进程前清除数据
 	 */

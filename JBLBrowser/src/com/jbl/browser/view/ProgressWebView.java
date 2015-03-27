@@ -1,10 +1,8 @@
 package com.jbl.browser.view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.interfaces.LoadURLInterface;
 
 /**

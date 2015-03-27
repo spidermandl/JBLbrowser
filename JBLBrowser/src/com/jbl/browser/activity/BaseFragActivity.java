@@ -9,6 +9,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
+import com.jbl.browser.fragment.MainPageFragment;
 import com.jbl.browser.fragment.SettingPagerFragment;
 
 /**
@@ -142,10 +143,18 @@ public abstract class BaseFragActivity extends SherlockFragmentActivity {
     
     @Override
     public void onBackPressed() {
-//    	FragmentManager fragManager = getSupportFragmentManager();
-//        FragmentTransaction transaction = fragManager.beginTransaction();
-//        if(transaction.isEmpty())
-//        	this.finish();
+    	//mainpagefragment 退出
+    	Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        String curr_fragment_TAG = "";
+        if (currentFragment != null) {
+        	                             
+            curr_fragment_TAG = currentFragment.getClass().getSimpleName();
+        }
+
+        if (curr_fragment_TAG.contentEquals(MainPageFragment.class.getSimpleName())) {
+            ((MainPageFragment)currentFragment).onBackPressed();
+            return;
+        }
     	super.onBackPressed();
     }
     

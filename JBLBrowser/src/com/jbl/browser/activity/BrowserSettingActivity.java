@@ -4,11 +4,11 @@ import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
+import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
-import com.jbl.browser.utils.SysApplication;
 
 /**
  * 浏览器设置界面
@@ -22,7 +22,7 @@ public class BrowserSettingActivity extends BaseFragActivity {
 
 		setTheme(R.style.Theme_Sherlock_Light);
 		super.onCreate(savedInstanceState);
-		SysApplication.getInstance().addActivity(this);//添加到activity队列中
+		JBLApplication.getInstance().addActivity(this);//添加到activity队列中
 		/**
 		 * 设置actionbar样式
 		 */

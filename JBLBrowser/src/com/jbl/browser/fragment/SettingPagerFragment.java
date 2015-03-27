@@ -1,9 +1,7 @@
 package com.jbl.browser.fragment;
 
 import java.util.ArrayList;
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -88,11 +86,11 @@ public class SettingPagerFragment extends SherlockFragment {
 				name= resArrays[0];
 				break;
 			case 2:
-				drawable=R.drawable.menu_setting_selector;
+				drawable=R.drawable.menu_combine_selector;
 				name= resArrays[1];
 				break;
 			case 3:
-				drawable=R.drawable.menu_add_bookmark_selector;
+				drawable=R.drawable.menu_setting_selector;
 				name= resArrays[2];
 				break;
 			case 4:
@@ -284,135 +282,118 @@ public class SettingPagerFragment extends SherlockFragment {
 			appPage.setAdapter(adapter);
 			appPage.setNumColumns(4);
 			viewLists.add(i, appPage);
-			if (i == 0) {
-				// 菜单监听事件
-				appPage.setOnItemClickListener(new OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
-						// TODO Auto-generated method stub
-						switch (position) {
-						case 0: // 添加书签
-							if (JBLPreference.getInstance(mContext).readInt(
-									JBLPreference.HOST_URL_BOOLEAN) == JBLPreference.ISNOT_HOST_URL) {
-								if (settingInterface != null)
-									settingInterface.addBookMark();
-								((BaseFragActivity) (SettingPagerFragment.this
-										.getActivity()))
-										.removeFragment(SettingPagerFragment.this);
-							}
-							break;
-						case 1: // 跳转到书签界面
+
+			// 菜单监听事件
+			appPage.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					// TODO Auto-generated method stub
+					switch ((SettingMenuType) adapter.getItem(position)) {
+					case ADD_BOOKMARK_ABLE:// 添加书签
+						if (settingInterface != null)
+							settingInterface.addBookMark();
+						((BaseFragActivity) (SettingPagerFragment.this
+								.getActivity()))
+								.removeFragment(SettingPagerFragment.this);
+						break;
+					case FAVORATE_HISTORY:// 跳转到书签界面
+						if (settingInterface != null)
+							settingInterface.listBookMark();
+						((BaseFragActivity) (SettingPagerFragment.this
+								.getActivity()))
+								.removeFragment(SettingPagerFragment.this);
+						break;
+					case SETTING:// 跳转到设置界面
+						if (settingInterface != null)
+							settingInterface.browserSetting();
+						((BaseFragActivity) (SettingPagerFragment.this
+								.getActivity()))
+								.removeFragment(SettingPagerFragment.this);
+						break;
+					case REFRESH:// 刷新
+						/*
+						 * if(settingInterface!=null)
+						 * settingInterface.listHistory();
+						 */
+						if (settingInterface != null)
+							settingInterface.refresh();
+						((BaseFragActivity) (SettingPagerFragment.this
+								.getActivity()))
+								.removeFragment(SettingPagerFragment.this);
+						break;
+					case SHARE:// 分享
+						if (settingInterface != null)
+							settingInterface.share();
+						((BaseFragActivity) (SettingPagerFragment.this
+								.getActivity()))
+								.removeFragment(SettingPagerFragment.this);
+						break;
+					case CACHE_PIC_DISABLE:// 设置无图模式
+					case CACHE_PIC_ABLE:
+						if (settingInterface != null)
+							settingInterface.fitlerPicLoading();
+						((BaseFragActivity) (SettingPagerFragment.this
+								.getActivity()))
+								.removeFragment(SettingPagerFragment.this);
+						break;
+					case DOWNLOAD:// 下载管理
+						if (settingInterface != null)
+							settingInterface.manageDownload();
+						((BaseFragActivity) (SettingPagerFragment.this
+								.getActivity()))
+								.removeFragment(SettingPagerFragment.this);
+						break;
+					case QUIT:// 退出系统
+						if (settingInterface != null)
+							settingInterface.quit();
+						((BaseFragActivity) (SettingPagerFragment.this
+								.getActivity()))
+								.removeFragment(SettingPagerFragment.this);
+						break;
+					case PAGE_ROLL_ABLE:// 页面翻转
+						if (JBLPreference.getInstance(mContext).readInt(
+								JBLPreference.HOST_URL_BOOLEAN) == JBLPreference.ISNOT_HOST_URL) {
 							if (settingInterface != null)
-								settingInterface.listBookMark();
+								settingInterface.pageTurningSwitch();
 							((BaseFragActivity) (SettingPagerFragment.this
 									.getActivity()))
 									.removeFragment(SettingPagerFragment.this);
-							break;
-						case 2:// 跳转到设置界面
-							if (settingInterface != null)
-								settingInterface.browserSetting();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
-							break;
-						case 3: // 刷新
-							/*
-							 * if(settingInterface!=null)
-							 * settingInterface.listHistory();
-							 */
-							if (settingInterface != null)
-								settingInterface.refresh();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
-							break;
-						case 4:// 分享
-							if (settingInterface != null)
-								settingInterface.share();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
-							break;
-						case 5: // 设置无图模式
-							if (settingInterface != null)
-								settingInterface.fitlerPicLoading();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
-							break;
-						case 6: // 下载管理
-							if (settingInterface != null)
-								settingInterface.manageDownload();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
-							break;
-						case 7:// 退出系统
-							if (settingInterface != null)
-								settingInterface.quit();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
-							break;
-						default:
-							break;
 						}
-
-					}
-				});
-			}
-			if (i == 1) {
-				appPage.setOnItemClickListener(new OnItemClickListener() {
-
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
-						switch (position) {
-						case 0:// 页面翻转
-							if (JBLPreference.getInstance(mContext).readInt(
-									JBLPreference.HOST_URL_BOOLEAN) == JBLPreference.ISNOT_HOST_URL) {
-								if (settingInterface != null)
-									settingInterface.pageTurningSwitch();
-								((BaseFragActivity) (SettingPagerFragment.this
-										.getActivity()))
-										.removeFragment(SettingPagerFragment.this);
-							}
-							break;
-						case 1:// 网页无痕浏览模式
-							if (settingInterface != null)
-								settingInterface.withoutTrace();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
-							break;
-						case 2:// 网页全屏浏览模式
-							if (settingInterface != null)
-								settingInterface.fullScreen();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
-							break;
-						case 3:// 意见反馈
-							/*
-							 * if(settingInterface!=null)
-							 * settingInterface.refresh(); break;
-							 */
-						case 4:// 夜间模式
-							if (settingInterface != null)
-								settingInterface.nightBright();
-							((BaseFragActivity) (SettingPagerFragment.this
-									.getActivity()))
-									.removeFragment(SettingPagerFragment.this);
-							break;
-						default:
-							break;
-						}
-
+						break;
+					case BROWSER_TRACK_ABLE:// 网页无痕浏览模式
+					case BROWSER_TRACK_DISABLE:
+						if (settingInterface != null)
+							settingInterface.withoutTrace();
+						((BaseFragActivity) (SettingPagerFragment.this
+								.getActivity()))
+								.removeFragment(SettingPagerFragment.this);
+						break;
+					case FULL_SCREEN_ABLE:// 网页全屏浏览模式
+					case FULL_SCREEN_DISABLE:
+						if (settingInterface != null)
+							settingInterface.fullScreen();
+						((BaseFragActivity) (SettingPagerFragment.this
+								.getActivity()))
+								.removeFragment(SettingPagerFragment.this);
+						break;
+					case FEEDBACK:// 意见反馈
+						break;
+					case NIGHT_MODE_ABLE:// 夜间模式
+					case NIGHT_MODE_DISABLE:
+						if (settingInterface != null)
+							settingInterface.nightBright();
+						((BaseFragActivity) (SettingPagerFragment.this
+								.getActivity()))
+								.removeFragment(SettingPagerFragment.this);
+						break;
+					default:
+						break;
 					}
 
-				});
-			}
+				}
+			});
+			
 		}
 	}
 

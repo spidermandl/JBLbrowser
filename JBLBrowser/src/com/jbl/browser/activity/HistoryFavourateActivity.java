@@ -1,7 +1,5 @@
 package com.jbl.browser.activity;
 
-
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -10,6 +8,7 @@ import android.widget.TabHost;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
 import com.jbl.browser.fragment.BookMarkFragment;
 import com.jbl.browser.fragment.HistoryFragment;
@@ -17,7 +16,6 @@ import com.jbl.browser.interfaces.deleteHistory;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
-import com.jbl.browser.utils.SysApplication;
 
 /**
  * 
@@ -38,7 +36,7 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Theme_Sherlock_Light);
 		super.onCreate(savedInstanceState);
-		SysApplication.getInstance().addActivity(this);//添加到activity队列中
+		JBLApplication.getInstance().addActivity(this);//添加到activity队列中
 		/**
 		 * 设置actionbar样式
 		 */

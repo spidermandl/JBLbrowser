@@ -10,10 +10,10 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
-import com.jbl.browser.utils.SysApplication;
 import com.jbl.browser.utils.JBLPreference.BoolType;
 import com.mozillaonline.providers.DownloadManager;
 import com.mozillaonline.providers.downloads.ui.DateSortedDownloadAdapter;
@@ -112,7 +112,7 @@ public class DownloadManageActivity extends BaseFragActivity implements
 
 		setTheme(R.style.Theme_Sherlock_Light);
 		super.onCreate(icicle);
-		SysApplication.getInstance().addActivity(this);//添加到activity队列中
+		JBLApplication.getInstance().addActivity(this);//添加到activity队列中
 
 		/**
 		 * 设置actionbar样式
