@@ -21,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -61,7 +60,6 @@ import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
 import com.jbl.browser.utils.StringUtils;
-import com.jbl.browser.utils.SysApplication;
 import com.jbl.browser.utils.UrlUtils;
 import com.jbl.browser.view.ProgressWebView;
 import com.jbl.browser.view.UserDefinedDialog;
@@ -104,6 +102,7 @@ public class MainPageFragment extends SherlockFragment implements
 	int width;  
 	int height;
 	int statusBarHeight;//状态栏高度
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -113,18 +112,13 @@ public class MainPageFragment extends SherlockFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_main_page, container,
-				false);
+		View view = inflater.inflate(R.layout.fragment_main_page, container,false);
+		
 		webFrame = ((FrameLayout) view.findViewById(R.id.web_view_frame));
 		mWebView = WebWindowManagement.getInstance().replaceMainWebView(webFrame);
 		// //Intent intent = getActivity().getIntent();
 		// //监听webview跳转，实现activity跳转到推荐页面
 		mWebView.setInterface(this);// 设置回调接口
-		/*shareDialog=new ShareDialog(getActivity());
-		shareDialog.setInterface(this);*/
-	   /*  WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 1,false);
-		 WebWindowManagement.getInstance().replaceWebViewWithIndex(null, 2,false);
-        */
 		toolbarFragment = (BottomMenuFragment) (this.getActivity().getSupportFragmentManager().findFragmentById(R.id.bottom_toolbar_fragment));
 		toolbarFragment.setInterface(this);// 设置回调接口
 
@@ -136,6 +130,7 @@ public class MainPageFragment extends SherlockFragment implements
 
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
+		
 		DisplayMetrics metric = new DisplayMetrics();
 	    getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
 	    width=metric.widthPixels;
@@ -191,9 +186,9 @@ public class MainPageFragment extends SherlockFragment implements
 					popview_full_screen.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
 						   public void run() {
 							   popWindow_full_screen.showAtLocation(popview_full_screen, Gravity.NO_GRAVITY, x, y);
-							   }
+						   }
 
-							});
+					});
 					getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
 					getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
 				}
@@ -205,6 +200,7 @@ public class MainPageFragment extends SherlockFragment implements
 		initWebView();
 		return view;
 	}
+	
 	@Override
 	public void onDestroyView() {  
 		//移除重复使用的view
@@ -248,23 +244,6 @@ public class MainPageFragment extends SherlockFragment implements
 		}else{
 			mWebView.loadUrl(urlAddress);
 		}
-		//在progressWebView中已经有监听。
-		//监听物理返回键
-		mWebView.setOnKeyListener(new OnKeyListener() {
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (event.getAction() == KeyEvent.ACTION_DOWN) {
-					 if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
-						 mWebView.goBack(); //goBack()表示返回WebView的上一页面  
-				         return true;  
-					 }else{
-						JBLApplication.getInstance().clearDataBeforeQuit();//直接退出fragment，不会出现白色界面
-						SysApplication.getInstance().exit();//退出整个程序
-					 }
-				 }
-				return false;
-			}
-		});
 
 		//添加下载监听
 		mWebView.setDownloadListener(new DownloadListener() {
@@ -665,7 +644,6 @@ public class MainPageFragment extends SherlockFragment implements
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub		
 				getFragmentManager().beginTransaction().remove(MainPageFragment.this).commit();//必须要加 负责saveinstance 会比fragment transition 先调用
-				getActivity().finish();//会调用saveinstance
 				JBLApplication.getInstance().quit();
 			}
 		}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener(){
@@ -862,6 +840,13 @@ public class MainPageFragment extends SherlockFragment implements
         } catch(android.content.ActivityNotFoundException ex) {
            
         }
+	}
+	
+	public void onBackPressed(){
+		 if(mWebView.canGoBack()) 
+		     mWebView.goBack(); //goBack()表示返回WebView的上一页面  
+		 else
+			quit();//直接退出fragment，不会出现白色界面
 	}
 	
 }
