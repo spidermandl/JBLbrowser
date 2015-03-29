@@ -1,6 +1,7 @@
 package com.jbl.browser.db;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import orm.sqlite.db.DatabaseHelper;
 import android.content.Context;
@@ -13,18 +14,72 @@ import com.jbl.browser.bean.UserInfo;
  */
 public class UserInfoDao {
 	private Context context;
-	private Dao<UserInfo, Integer> UserInfoDaoOpe;
+	private Dao<UserInfo, Integer> userDao;
 	private DatabaseHelper helper;
-	
-	public UserInfoDao(Context context){
+
+	public UserInfoDao(Context context) {
 		this.context = context;
-		try
-		{
+		try {
 			helper = DatabaseHelper.getHelper(context);
-			UserInfoDaoOpe = helper.getDao(UserInfo.class);
-		} catch (SQLException e)
-		{
+			userDao = helper.getDao(UserInfo.class);
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+
+	public boolean userApproved(UserInfo userInfo) {
+		boolean flag = false;
+		try {
+			int temp = userDao.create(userInfo);
+			if (temp != 0) {
+				flag = true;
+			} else
+				flag = false;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
+
+	public int deleteUserById(int id){
+		try {
+			return userDao.deleteById(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public UserInfo get(int id) {
+		UserInfo user = null;
+		try {
+			user = userDao.queryForId(id);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
+	
+	/**
+	 * 判断是否已经验证过
+	 * @param cid
+	 * @return
+	 */
+	public boolean hasApproved(String cid){
+		try {
+			List<UserInfo> users=userDao.queryForEq("device_id", cid);
+			if(users==null||users.size()==0)
+				return false;
+		} catch (SQLException e) {
+            
+			e.printStackTrace();
+			return false;
+		}
+
+	    return true;
+	}
+
 }

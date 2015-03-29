@@ -42,7 +42,7 @@ public class HttpTool {
 	/**
 	 * 获取网络通信工具的实例
 	 * 
-	 * */
+	 **/
 	public static HttpTool getInstance() {
 		if(httpTool == null){
 			httpTool = new HttpTool();

@@ -29,6 +29,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -1325,6 +1326,13 @@ public class BusinessTool {
 
 	public static void setLoginDone(boolean loginDone) {
 		BusinessTool.loginDone = loginDone;
+	}
+	
+	
+	public static String getDeviceID(Context context){
+		TelephonyManager telephonemanage = (TelephonyManager)context
+				.getSystemService(Context.TELEPHONY_SERVICE);
+		return telephonemanage.getDeviceId();
 	}
 	
 }

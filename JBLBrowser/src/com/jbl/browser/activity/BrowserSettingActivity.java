@@ -27,17 +27,17 @@ public class BrowserSettingActivity extends BaseFragActivity {
 		 * 设置actionbar样式
 		 */
 		 ab = this.getSupportActionBar();	
- 		ab.setDisplayHomeAsUpEnabled(true);		 	
- 		ab.setDisplayUseLogoEnabled(false);		 		
- 		ab.setDisplayShowHomeEnabled(false);		 		
- 		ab.setDisplayShowTitleEnabled(true);
- 		ab.setTitle(R.string.browser_setting_title);
-		setContentView(R.layout.activity_setting);
-		//判断是夜间模式需再设置下activity亮度
-  		if(JBLPreference.getInstance(BrowserSettingActivity.this).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
-  			int brightness=JBLPreference.getInstance(BrowserSettingActivity.this).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
-  			BrightnessSettings.setBrightness(BrowserSettingActivity.this,brightness);
-  		}
+ 		 ab.setDisplayHomeAsUpEnabled(true);		 	
+ 		 ab.setDisplayUseLogoEnabled(false);		 		
+ 		 ab.setDisplayShowHomeEnabled(false);		 		
+ 		 ab.setDisplayShowTitleEnabled(true);
+ 		 ab.setTitle(R.string.browser_setting_title);
+		 setContentView(R.layout.activity_setting);
+		 //判断是夜间模式需再设置下activity亮度
+  		 if(JBLPreference.getInstance(BrowserSettingActivity.this).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
+  			 int brightness=JBLPreference.getInstance(BrowserSettingActivity.this).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
+  			 BrightnessSettings.setBrightness(BrowserSettingActivity.this,brightness);
+  		 }
 	}
 	
 	@Override

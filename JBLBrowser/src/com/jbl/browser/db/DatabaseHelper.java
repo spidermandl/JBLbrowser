@@ -24,9 +24,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	//数据库名称
 	private static final String DATABASE_NAME="jbl_broswer.db";
 	//数据库版本
-	private static final int DATABASE_VERSION=1;
+	private static final int DATABASE_VERSION=2;
 	private Map<String, Dao> daos = new HashMap<String, Dao>();
-	private Dao<BookMark, Integer> BookMarkDaoOpe;
 	public DatabaseHelper(Context context){
 		super(context, getMyDatabaseName(context), null,DATABASE_VERSION);
 	}
@@ -52,8 +51,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, BookMark.class);
 			TableUtils.createTable(connectionSource, History.class);
 			TableUtils.createTable(connectionSource, UserInfo.class);
-			//初始化表bookmark数据
-			BookMarkDaoOpe=getDao(BookMark.class);
+			//初始化表数据
 			initData();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -62,8 +60,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	}
 	/**
 	 * 第一次运行程序，将推荐网址记录到数据库表bookmark中
+	 * @throws SQLException 
 	 */
-	void initData(){
+	void initData() throws SQLException{
+		Dao<BookMark, Integer> BookMarkDaoOpe =getDao(BookMark.class);
 		String[] resWebAddress={"http://m.baidu.com/",
 				"http://sina.cn/",
 	            "http://3g.163.com",
@@ -94,7 +94,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		try {
 			TableUtils.dropTable(connectionSource, BookMark.class, true);
 			TableUtils.dropTable(connectionSource, History.class, true);			
-			TableUtils.dropTable(connectionSource, UserInfo.class, true);			
+			TableUtils.dropTable(connectionSource, UserInfo.class, true);
+			onCreate(sqliteDatabase, connectionSource);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
