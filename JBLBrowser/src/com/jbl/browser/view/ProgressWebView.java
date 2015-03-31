@@ -1,6 +1,8 @@
 package com.jbl.browser.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
+import android.webkit.JsResult;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
@@ -88,23 +91,6 @@ public class ProgressWebView extends WebView {
 		getSettings().setPluginState(PluginState.ON);
 
 		blockTouch=false;
-		/*//监听物理返回键
-		setOnKeyListener(new OnKeyListener() {
-			
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				// TODO Auto-generated method stub
-				 if (event.getAction() == KeyEvent.ACTION_DOWN) {
-					 if (keyCode == KeyEvent.KEYCODE_BACK && canGoBack()) {
-						 goBack(); //goBack()表示返回WebView的上一页面  
-				         return true;  
-					 }else{
-						 System.exit(0);
-					 }
-				 }
-				return false;
-			}
-		});*/
 	}
 	
 	@Override
@@ -174,6 +160,36 @@ public class ProgressWebView extends WebView {
 			// TODO Auto-generated method stub
 			super.onReceivedIcon(view, icon);
 			
+		}
+		
+		@Override
+		public boolean onJsAlert(WebView view, String url, String message,
+				JsResult result) {
+			final JsResult res=result;
+			final String msg = message;
+			AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+			dialog.setTitle("Alert");
+			dialog.setMessage(message);
+			dialog.setPositiveButton(android.R.string.ok,
+					new AlertDialog.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							res.confirm();
+							if(urlInterface!=null&&msg.contains("验证成功")){
+								urlInterface.authSuccess();
+							}
+						}
+					});
+			dialog.setCancelable(false);
+			dialog.create();
+			dialog.show();
+			return true;
+		}
+		
+		@Override
+		public boolean onJsConfirm(WebView view, String url, String message,
+				JsResult result) {
+			// TODO Auto-generated method stub
+			return super.onJsConfirm(view, url, message, result);
 		}
 		
     }

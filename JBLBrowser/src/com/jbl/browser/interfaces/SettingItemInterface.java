@@ -33,7 +33,6 @@ public interface SettingItemInterface {
 //	  夜间模式
 	void nightBright();
 //    意见反馈
-//    检查更新
-//    页内查找
-//    保存网页
+//个人中心
+	void goPersonal();
 }

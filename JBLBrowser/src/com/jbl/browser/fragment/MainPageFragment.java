@@ -56,6 +56,7 @@ import com.jbl.browser.interfaces.SettingItemInterface;
 import com.jbl.browser.interfaces.ShareInterface;
 import com.jbl.browser.interfaces.ToolbarItemInterface;
 import com.jbl.browser.interfaces.TopActionbarInterface;
+import com.jbl.browser.tools.BusinessTool;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
@@ -754,7 +755,6 @@ public class MainPageFragment extends SherlockFragment implements
 	public void goHot() {
 		//mWebView.loadUrl(UrlUtils.URL_LOGIN);
 		Intent in=new Intent();
-		in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		in.setClass(this.getActivity(),RecommendMainActivity.class);
 		startActivity(in);
 	}
@@ -847,6 +847,18 @@ public class MainPageFragment extends SherlockFragment implements
 		     mWebView.goBack(); //goBack()表示返回WebView的上一页面  
 		 else
 			quit();//直接退出fragment，不会出现白色界面
+	}
+
+	@Override
+	public void authSuccess() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void goPersonal() {
+		mWebView.loadUrl(UrlUtils.URL_PERSONAL_MANAGEMENT+BusinessTool.getDeviceID(getActivity()));
+		
 	}
 	
 }

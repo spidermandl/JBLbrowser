@@ -3,7 +3,6 @@ package com.jbl.browser.db;
 import java.sql.SQLException;
 import java.util.List;
 
-import orm.sqlite.db.DatabaseHelper;
 import android.content.Context;
 
 import com.j256.ormlite.dao.Dao;
@@ -16,7 +15,8 @@ public class UserInfoDao {
 	private Context context;
 	private Dao<UserInfo, Integer> userDao;
 	private DatabaseHelper helper;
-
+	
+	@SuppressWarnings("unchecked")
 	public UserInfoDao(Context context) {
 		this.context = context;
 		try {

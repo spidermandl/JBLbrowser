@@ -30,7 +30,6 @@ import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.adapter.HistoryAdapter;
-import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.db.HistoryDao;
 import com.jbl.browser.interfaces.deleteHistory;

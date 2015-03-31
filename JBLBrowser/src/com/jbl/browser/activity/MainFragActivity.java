@@ -47,28 +47,12 @@ public class MainFragActivity extends BaseFragActivity {
 		init();
 		super.onCreate(arg0);
 		
-//		/**
-//		 * test
-//		 */
-//
-//		boolean flag=false;
-//		BookMark bookMark =new BookMark();
-//		bookMark.setWebName("aaaa");
-//		bookMark.setWebAddress("bbb");
-//		bookMark.setRecommend(true);
-//		flag=new BookMarkDao(this).addBookMark(bookMark);
-//		
-//		UserInfo user = new UserInfo();
-//		user.setUser_name("aaa");
-//		user.setPassword("aaa");
-//		user.setDeviceID(BusinessTool.getDeviceID(this));
-//		new UserInfoDao(this).userApproved(user);
-//		/**
-//		 * 
-//		 */
-//		if(!new UserInfoDao(this).hasApproved(BusinessTool.getDeviceID(this))){
-//			navigateTo(AuthFragment.class,null,false,TAG);
-//		}else
+		/**
+		 * 判断是否注册过
+		 */
+		if(!new UserInfoDao(this).hasApproved(BusinessTool.getDeviceID(this))){
+			navigateTo(AuthFragment.class,null,false,TAG);
+		}else
 		    navigateTo(MainPageFragment.class, null, true, TAG);
 	}
 	

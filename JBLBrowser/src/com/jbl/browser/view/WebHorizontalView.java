@@ -191,16 +191,9 @@ public class WebHorizontalView extends HorizontalScrollView {
 
 		getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 
-			@SuppressWarnings("deprecation")
-			@SuppressLint("NewApi")
 			@Override
 			public void onGlobalLayout() {
-
-				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-					getViewTreeObserver().removeGlobalOnLayoutListener(this);
-				} else {
-					getViewTreeObserver().removeOnGlobalLayoutListener(this);
-				}
+				getViewTreeObserver().removeGlobalOnLayoutListener(this);
 				Log.e("onGlobalLayout", "onGlobalLayout");
 				setPosition(currentPosition);
 				mIndicator.setCurrentItem(currentPosition);

@@ -387,6 +387,13 @@ public class SettingPagerFragment extends SherlockFragment {
 								.getActivity()))
 								.removeFragment(SettingPagerFragment.this);
 						break;
+					case PERSONAL://个人中心
+						if (settingInterface != null)
+							settingInterface.goPersonal();
+						((BaseFragActivity) (SettingPagerFragment.this
+								.getActivity()))
+								.removeFragment(SettingPagerFragment.this);
+					    break;
 					default:
 						break;
 					}

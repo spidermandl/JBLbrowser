@@ -11,4 +11,5 @@ public interface LoadURLInterface {
 
 	void startPage(String url);
 	void stopPage(WebView view,String url);
+	void authSuccess();//验证通过
 }
