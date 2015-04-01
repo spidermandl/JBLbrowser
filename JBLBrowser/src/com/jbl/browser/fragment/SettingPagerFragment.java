@@ -351,6 +351,7 @@ public class SettingPagerFragment extends SherlockFragment {
 								.getActivity()))
 								.removeFragment(SettingPagerFragment.this);
 						break;
+					case PAGE_ROOL_DISABLE:
 					case PAGE_ROLL_ABLE:// 页面翻转
 						if (JBLPreference.getInstance(mContext).readInt(
 								JBLPreference.HOST_URL_BOOLEAN) == JBLPreference.ISNOT_HOST_URL) {

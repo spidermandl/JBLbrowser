@@ -62,6 +62,8 @@ import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
+import com.jbl.browser.view.FullScreenWedget;
+import com.jbl.browser.view.FullScreenWedget.FullScreenClickListener;
 import com.jbl.browser.view.ProgressWebView;
 import com.jbl.browser.view.UserDefinedDialog;
 
@@ -71,12 +73,14 @@ import com.jbl.browser.view.UserDefinedDialog;
  * @author desmond.duan
  * 
  */
+
 public class MainPageFragment extends SherlockFragment implements 
                                               SettingItemInterface,
                                               ToolbarItemInterface,
                                               TopActionbarInterface,
                                               LoadURLInterface,
-                                              ShareInterface{
+                                              ShareInterface,
+                                              FullScreenClickListener{
 	public final static String TAG = "MainPageFragment";
 	/* 定义webview控件 */
 	public  ProgressWebView mWebView; // 主控件 webview
@@ -88,20 +92,15 @@ public class MainPageFragment extends SherlockFragment implements
 	private ScheduledExecutorService scheduledExecutorService;
 	View popview_page;//翻页按钮布局
 	PopupWindow popWindow_page;//翻页悬浮窗口
-	LinearLayout popview_full_screen;//全屏按钮布局
-	PopupWindow popWindow_full_screen;//全屏悬浮窗口
 	View popview_seekBar;//亮度调节布局
 	PopupWindow popWindow_seekBar;//亮度调节悬浮
 	View multipagePanel;//多页布局
 	//翻页按钮初始位置
 	int mCurrentX_pop_page;
 	int mCurrentY_pop_page;
-	//全屏按钮初始位置
-	int mCurrentX_pop_full_screen;
-	int mCurrentY_pop_full_screen;
-	//屏幕高和宽
-	int width;  
-	int height;
+	//全屏按钮初始
+    FullScreenWedget fullWedget;
+
 	int statusBarHeight;//状态栏高度
 	
 	@Override
@@ -132,14 +131,8 @@ public class MainPageFragment extends SherlockFragment implements
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
 		
-		DisplayMetrics metric = new DisplayMetrics();
-	    getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
-	    width=metric.widthPixels;
-	    JBLPreference.getInstance(getActivity()).writeInt(JBLPreference.SCREEN_WIDTH, width);
-	    height=metric.heightPixels;
-	    mCurrentX_pop_full_screen = metric.widthPixels-width/7;     // 全屏按钮初始X轴位置
-		mCurrentY_pop_full_screen =metric.heightPixels-width/7;   // 全屏按钮初始Y轴位置
-		 
+		fullWedget=new FullScreenWedget(getActivity());
+		fullWedget.setInterface(this);
 		//获取状态栏高度
 		Rect frame = new Rect();
 		getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
@@ -182,14 +175,6 @@ public class MainPageFragment extends SherlockFragment implements
 						&& topActionbarFragment.isVisible()
 						&& !mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)) {
 					createPopShrinkFullScreen();
-					final int x=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.pop_full_currentX_value);
-					final int y=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.pop_full_currentY_value);
-					popview_full_screen.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
-						   public void run() {
-							   popWindow_full_screen.showAtLocation(popview_full_screen, Gravity.NO_GRAVITY, x, y);
-						   }
-
-					});
 					getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
 					getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();
 				}
@@ -293,17 +278,12 @@ public class MainPageFragment extends SherlockFragment implements
 	            if(!UrlUtils.URL_GET_HOST.equals(mWebView.getUrl())){
 	            	getFragmentManager().beginTransaction().hide(toolbarFragment).commit();
 		            getFragmentManager().beginTransaction().hide(topActionbarFragment).commit();	
-		            popWindow_full_screen.showAtLocation(popview_full_screen, Gravity.NO_GRAVITY, mCurrentX_pop_full_screen, mCurrentY_pop_full_screen);
 	            } 
 	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.YES_FULL);//写入缓存
 	            Toast.makeText(getActivity(), StringUtils.OPEN_NO_FULL, Toast.LENGTH_SHORT).show();
 			}else{
 				//当要关闭全屏浏览模式时，显示顶部状态栏、底部菜单栏和顶部搜索栏
-				popview_full_screen.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
-					   public void run() {
-			            		popWindow_full_screen.dismiss();
-					 }
-				});
+				fullWedget.dismiss();
 				showStatusBar();
 	            getFragmentManager().beginTransaction().show(toolbarFragment).commit();
             	getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
@@ -341,7 +321,7 @@ public class MainPageFragment extends SherlockFragment implements
 				//当要关闭翻页按钮
 				popview_page.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
 					   public void run() {
-			            		popWindow_page.dismiss();
+			            	popWindow_page.dismiss();
 					 }
 				});
             	Toast.makeText(getActivity(), StringUtils.CLOSE_TURNING_BUTTON, Toast.LENGTH_SHORT).show();
@@ -366,7 +346,7 @@ public class MainPageFragment extends SherlockFragment implements
 			if(value!=JBLPreference.NIGHT_MODEL){
 				//夜间模式
 				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.NIGHT_MODEL);
-				BrightnessSettings.showPopSeekBrightness(getActivity(),width);
+				//BrightnessSettings.showPopSeekBrightness(getActivity(),width);
 				
 			}else{
 				//日间模式
@@ -380,45 +360,45 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	//显示翻页模式
 	private void createTurningPage(){
-		LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		popview_page=mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
-		popWindow_page=new PopupWindow(popview_page,80,240);
-		mCurrentX_pop_page = width-popWindow_page.getWidth();     // 翻页按钮初始X轴位置
-	    mCurrentY_pop_page =(height)/2-popWindow_page.getHeight()/2;   // 翻页按钮初始Y轴位置
-		popview_page.setOnTouchListener(new OnTouchListener() {
-			float mX, mY;
-
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					mX = mCurrentX_pop_page - event.getRawX();
-					mY = mCurrentY_pop_page - event.getRawY();
-				} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-					mCurrentX_pop_page = (int) (event.getRawX() + mX);
-					mCurrentY_pop_page = (int) (event.getRawY() + mY);
-					if (mCurrentX_pop_page >= width - popWindow_page.getWidth()) {
-						mCurrentX_pop_page = width - popWindow_page.getWidth();
-					}
-					if (mCurrentX_pop_page <= 0) {
-						mCurrentX_pop_page = 0;
-					}
-					if (mCurrentY_pop_page <= statusBarHeight) {
-						mCurrentY_pop_page = statusBarHeight;
-					}
-					if (mCurrentY_pop_page >= height- popWindow_page.getHeight()) {
-						mCurrentY_pop_page = height- popWindow_page.getHeight();
-					}
-					try {
-						Thread.sleep(100);
-						popWindow_page.update(mCurrentX_pop_page,mCurrentY_pop_page, -1, -1);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				} else if (event.getAction() == MotionEvent.ACTION_UP) {
-				}
-				return true;
-			}
-		});
+//		LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//		popview_page=mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
+//		popWindow_page=new PopupWindow(popview_page,80,240);
+//		mCurrentX_pop_page = width-popWindow_page.getWidth();     // 翻页按钮初始X轴位置
+//	    mCurrentY_pop_page =(height)/2-popWindow_page.getHeight()/2;   // 翻页按钮初始Y轴位置
+//		popview_page.setOnTouchListener(new OnTouchListener() {
+//			float mX, mY;
+//
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//					mX = mCurrentX_pop_page - event.getRawX();
+//					mY = mCurrentY_pop_page - event.getRawY();
+//				} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+//					mCurrentX_pop_page = (int) (event.getRawX() + mX);
+//					mCurrentY_pop_page = (int) (event.getRawY() + mY);
+//					if (mCurrentX_pop_page >= width - popWindow_page.getWidth()) {
+//						mCurrentX_pop_page = width - popWindow_page.getWidth();
+//					}
+//					if (mCurrentX_pop_page <= 0) {
+//						mCurrentX_pop_page = 0;
+//					}
+//					if (mCurrentY_pop_page <= statusBarHeight) {
+//						mCurrentY_pop_page = statusBarHeight;
+//					}
+//					if (mCurrentY_pop_page >= height- popWindow_page.getHeight()) {
+//						mCurrentY_pop_page = height- popWindow_page.getHeight();
+//					}
+//					try {
+//						Thread.sleep(100);
+//						popWindow_page.update(mCurrentX_pop_page,mCurrentY_pop_page, -1, -1);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//				} else if (event.getAction() == MotionEvent.ACTION_UP) {
+//				}
+//				return true;
+//			}
+//		});
 		Button previous_page = (Button) popview_page.findViewById(R.id.previous_page);
 		Button next_page = (Button) popview_page.findViewById(R.id.next_page);
 		next_page.setOnClickListener(new OnClickListener() {
@@ -462,73 +442,7 @@ public class MainPageFragment extends SherlockFragment implements
    }
 	//显示全屏模式下为显示上下菜单的悬浮按钮
 	private void createPopShrinkFullScreen(){
-        LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		popview_full_screen=(LinearLayout)mLayoutInflater.inflate(R.layout.shrink_full_screen, null);
-		popview_full_screen.setClickable(true);		
-		popWindow_full_screen=new PopupWindow(popview_full_screen,width/7,width/7);
-       popview_full_screen.setOnTouchListener(new OnTouchListener() {
-    	    float mX,mY;
-    	    boolean flag=false;
-    	    int downX,upX,downY,upY;
-			@SuppressLint("ClickableViewAccessibility")
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					downX = (int) event.getX();
-					downY = (int) event.getY();
-					mX = mCurrentX_pop_full_screen - event.getRawX();
-					mY = mCurrentY_pop_full_screen - event.getRawY();
-
-				} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-					upX = (int) event.getX();
-					upY = (int) event.getY();
-					mCurrentX_pop_full_screen = (int) (event.getRawX() + mX);
-					mCurrentY_pop_full_screen = (int) (event.getRawY() + mY);
-					if (mCurrentX_pop_full_screen >= width - width / 7) {
-						mCurrentX_pop_full_screen = width - width / 7;
-					}
-					if (mCurrentX_pop_full_screen <= 0) {
-						mCurrentX_pop_full_screen = 0;
-					}
-					if (mCurrentY_pop_full_screen <= 0) {
-						mCurrentY_pop_full_screen = 0;
-					}
-					if (mCurrentY_pop_full_screen >= height - width / 7) {
-						mCurrentY_pop_full_screen = height - width / 7;
-					}
-					if (Math.abs(upX - downX) > 0) {
-						flag = true;
-						popview_full_screen.setPressed(false);	
-						
-					}
-					popWindow_full_screen.update(mCurrentX_pop_full_screen,
-							mCurrentY_pop_full_screen, -1, -1);	
-					
-				} else if (event.getAction() == MotionEvent.ACTION_UP) {
-					if(flag){        //移动事件
-						popview_full_screen.setPressed(true);
-						JBLPreference.getInstance(getActivity()).writeInt(
-								JBLPreference.pop_full_currentX_value,
-								mCurrentX_pop_full_screen);
-						JBLPreference.getInstance(getActivity()).writeInt(
-								JBLPreference.pop_full_currentY_value,
-								mCurrentY_pop_full_screen);
-
-					}else{          //点击事件
-						getFragmentManager().beginTransaction().show(toolbarFragment).commit();
-			            getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
-			            popview_full_screen.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
-							   public void run() {
-					            		popWindow_full_screen.dismiss();
-							 }
-						});
-					}
-					flag=false;
-				}
-
-				return false;
-			}
-		});
+		fullWedget.show();
     }
 	//隐藏状态栏
 	private void hideStatusBar(){
@@ -763,24 +677,16 @@ public class MainPageFragment extends SherlockFragment implements
 	public void startPage(String url) {
 		if(JBLPreference.getInstance(this.getActivity()).readInt(BoolType.FULL_SCREEN.toString())==JBLPreference.YES_FULL){  //全屏模式
 			hideStatusBar();              //当运行后开启全屏，退出程序，再运行时需重新建popwindow和隐藏状态栏
-			if(popWindow_full_screen==null){
+			if(!fullWedget.isShowing()){
 				createPopShrinkFullScreen();
 			}
 			if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
 				getFragmentManager().beginTransaction().show(toolbarFragment).show(topActionbarFragment).commit();
-				popview_full_screen.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
-					   public void run() {
-			            		popWindow_full_screen.dismiss();
-					 }
-				});
+				fullWedget.dismiss();
 				
 			}else{                                              //不是主页：不显示上下菜单栏，显示悬浮按钮
 				getFragmentManager().beginTransaction().hide(toolbarFragment).hide(topActionbarFragment).commit();
-				popview_full_screen.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
-					   public void run() {
-				            popWindow_full_screen.showAtLocation(popview_full_screen, Gravity.NO_GRAVITY, mCurrentX_pop_full_screen, mCurrentY_pop_full_screen);
-						   }
-						});
+				fullWedget.dismiss();
 			}
 		}
 		if(JBLPreference.getInstance(this.getActivity()).readInt(BoolType.TURNNING.toString())==JBLPreference.OPEN_TURNING_BUTTON){  //全屏模式
@@ -859,6 +765,12 @@ public class MainPageFragment extends SherlockFragment implements
 	public void goPersonal() {
 		mWebView.loadUrl(UrlUtils.URL_PERSONAL_MANAGEMENT+BusinessTool.getDeviceID(getActivity()));
 		
+	}
+
+	@Override
+	public void onFullClick() {
+		getFragmentManager().beginTransaction().show(toolbarFragment).commit();
+		getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
 	}
 	
 }
