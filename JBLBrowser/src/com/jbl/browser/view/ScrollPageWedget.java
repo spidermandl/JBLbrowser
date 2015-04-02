@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 /**
  * 翻页悬浮按钮
@@ -35,8 +36,17 @@ public class ScrollPageWedget extends BaseWedget {
 		moveUp.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
-			public void onClick(View arg0) {
-				onClick(arg0);
+			public void onClick(View view) {
+				//onClick(view);
+				
+			}
+		});
+		
+		moveDown.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View view) {
+				//onClick(view);
 				
 			}
 		});
@@ -48,10 +58,15 @@ public class ScrollPageWedget extends BaseWedget {
     	s_Height = dm.heightPixels;
     	
     	mWidth=s_Width/8;
-    	mHeight=s_Width/6+s_Width/16;
-    	setWidth(s_Width);
+    	mHeight=s_Width/4+s_Width/16;
+    	setWidth(mWidth);
     	setHeight(mHeight);
-		
+    	
+    	moveDown.getLayoutParams().width=mWidth;
+    	moveDown.getLayoutParams().height=mWidth;
+    	moveUp.getLayoutParams().width=mWidth;
+    	moveUp.getLayoutParams().height=mWidth;
+    	
 		m_top_current_x=s_Width-mWidth;
 		m_top_current_y=s_Height/2-mHeight/2;
 		

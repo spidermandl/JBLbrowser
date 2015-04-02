@@ -749,5 +749,11 @@ public class MainPageFragment extends SherlockFragment implements
 		getFragmentManager().beginTransaction().show(toolbarFragment).commit();
 		getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
 	}
+
+	@Override
+	public void onPageScroll(boolean up) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
