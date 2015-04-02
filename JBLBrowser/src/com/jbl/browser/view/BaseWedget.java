@@ -46,17 +46,19 @@ public abstract class BaseWedget extends PopupWindow implements OnTouchListener{
 		case MotionEvent.ACTION_DOWN:
 			upX=downX = (int) event.getX();
 			upY=downY = (int) event.getY();
-			Log.e("raw", event.getRawX()+"  "+event.getRawY());
+			//Log.e("raw", event.getRawX()+"  "+event.getRawY());
 			detX = m_top_current_x - event.getRawX();
 			detY = m_top_current_y - event.getRawY();
-		    Log.e("x_y", m_top_current_x+" : "+m_top_current_y);
+		    //Log.e("x_y_down", m_top_current_x+" : "+m_top_current_y);
+		    //Log.e("x_y_det", detX+" : "+detY);
 			break;
         case MotionEvent.ACTION_MOVE:
         	upX = (int) event.getX();
 			upY = (int) event.getY();
-			Log.e("raw", event.getRawX()+"  "+event.getRawY());
-        	m_top_current_x = (int) (event.getRawX() + detY);
+			//Log.e("raw", event.getRawX()+"  "+event.getRawY());
+        	m_top_current_x = (int) (event.getRawX() + detX);
         	m_top_current_y = (int) (event.getRawY() + detY);
+			//Log.e("x_y_move", m_top_current_x+" : "+m_top_current_y);
         	m_top_current_x = m_top_current_x>s_Width-mWidth?s_Width-mWidth:m_top_current_x;
         	m_top_current_x = m_top_current_x<0?0:m_top_current_x;
         	m_top_current_y = m_top_current_y>s_Height-mHeight?s_Height-mHeight:m_top_current_y;
@@ -64,6 +66,7 @@ public abstract class BaseWedget extends PopupWindow implements OnTouchListener{
 			if (downX==upX&&downY==upY) {
 				mView.setPressed(false);		
 			}
+			//Log.e("x_y", m_top_current_x+" : "+m_top_current_y);
 			this.update(m_top_current_x,m_top_current_y, -1, -1);	
 			break;
         case MotionEvent.ACTION_UP:

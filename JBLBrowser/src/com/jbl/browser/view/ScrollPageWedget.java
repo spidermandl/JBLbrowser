@@ -3,13 +3,12 @@ package com.jbl.browser.view;
 import com.jbl.browser.R;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 /**
  * 翻页悬浮按钮
@@ -37,7 +36,7 @@ public class ScrollPageWedget extends BaseWedget {
 			
 			@Override
 			public void onClick(View view) {
-				//onClick(view);
+				ScrollPageWedget.this.onClick(view);
 				
 			}
 		});
@@ -46,7 +45,7 @@ public class ScrollPageWedget extends BaseWedget {
 			
 			@Override
 			public void onClick(View view) {
-				//onClick(view);
+				ScrollPageWedget.this.onClick(view);
 				
 			}
 		});
@@ -72,12 +71,25 @@ public class ScrollPageWedget extends BaseWedget {
 		
     	mView.setOnTouchListener(this);
     	this.setContentView(mView);
-    	//this.setBackgroundDrawable()
+    	
+    	ColorDrawable dw = new ColorDrawable(0x00000000);
+        this.setBackgroundDrawable(dw);
 	}
 
 	@Override
 	void onClick(View view) {
-		// TODO Auto-generated method stub
+		switch (view.getId()) {
+		case R.id.scroll_up:
+			if(listener!=null)
+				listener.onPageScroll(true);
+			break;
+		case R.id.scroll_down:
+			if(listener!=null)
+				listener.onPageScroll(false);
+			break;
+		default:
+			break;
+		}
 		
 	}
 	

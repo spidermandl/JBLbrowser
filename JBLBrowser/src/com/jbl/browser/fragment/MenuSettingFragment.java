@@ -13,7 +13,6 @@ import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -33,11 +32,9 @@ public class MenuSettingFragment extends SherlockFragment {
 	public final static String TAG="MenuSettingFragment";
 	//菜单设置选项内容 1 字体大小 2屏幕亮度 3默认浏览器 4 关于我们 5 清除数据 6恢复默认设置
 	private ToggleButton mMenuSettingbrowse;
-	private RelativeLayout mMenuSetFont,mMenuSetIntensity,mMenuSetBrowser,mMenuSetAbout;
+	private RelativeLayout mMenuSetFont,mMenuSetIntensity,mMenuSetAbout;
 	private TextView mMenuSetClear,mMentSetSetting;
-	private ScrollView settingScroll;
 	private AlertDialog dialog;
-	private int width;
 	private Context context;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +61,7 @@ public class MenuSettingFragment extends SherlockFragment {
 			font_valuse.setText(StringUtils.FONT_MID);
 		if(fontValuse==2)
 			font_valuse.setText(StringUtils.FONT_MAX);
-		settingScroll=(ScrollView)view.findViewById(R.id.setting_scroll);
+
 		//字体大小监听
 		mMenuSetFont.setOnClickListener(new View.OnClickListener() {
 			
@@ -121,8 +118,7 @@ public class MenuSettingFragment extends SherlockFragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				JBLPreference.getInstance(getActivity()).writeInt(BoolType.BRIGHTNESS_TYPE.toString(),JBLPreference.NIGHT_MODEL);
-				width=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.SCREEN_WIDTH);
-				BrightnessSettings.showPopSeekBrightness(getActivity(),width);
+				BrightnessSettings.showPopSeekBrightness(getActivity());
 				
 			}
 		});

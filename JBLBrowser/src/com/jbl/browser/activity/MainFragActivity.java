@@ -1,7 +1,5 @@
 package com.jbl.browser.activity;
 
-import java.sql.SQLException;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,10 +11,6 @@ import android.os.Environment;
 import com.actionbarsherlock.view.Window;
 import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
-import com.jbl.browser.bean.BookMark;
-import com.jbl.browser.bean.UserInfo;
-import com.jbl.browser.db.BookMarkDao;
-import com.jbl.browser.db.DatabaseHelper;
 import com.jbl.browser.db.UserInfoDao;
 import com.jbl.browser.fragment.AuthFragment;
 import com.jbl.browser.fragment.MainPageFragment;

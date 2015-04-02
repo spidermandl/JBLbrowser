@@ -60,8 +60,6 @@ public class JBLPreference {
 	public static final String HOST_URL_BOOLEAN="是否为主页";
 	public static final int IS_HOST_URL=1;
 	public static final int ISNOT_HOST_URL=0;
-	public static final String SCREEN_WIDTH="屏幕宽度";
-	
 	
 	//书签和历史记录传网址到主页fragment关键字
 	public static final String BOOKMARK_HISTORY_KEY="webAddress";

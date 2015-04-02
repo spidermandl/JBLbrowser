@@ -22,6 +22,7 @@ public class JBLApplication extends Application {
 
 	public static JBLApplication instance;
 	private List<Activity> mList = new LinkedList<Activity>();
+	private boolean isEntering=false;//程序进入标示
 	
 	public static JBLApplication getInstance(){
 		return instance;
@@ -30,6 +31,7 @@ public class JBLApplication extends Application {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		instance=this;
+		setEntering(true);
 		super.onCreate();
 	}
 	
@@ -89,5 +91,11 @@ public class JBLApplication extends Application {
 	 */
 	public void clearDataBeforeQuit(){
 		JBLPreference.getInstance(this).writeString(JBLPreference.BOOKMARK_HISTORY_KEY,null);
+	}
+	public boolean isEntering() {
+		return isEntering;
+	}
+	public void setEntering(boolean isEntering) {
+		this.isEntering = isEntering;
 	}
 }

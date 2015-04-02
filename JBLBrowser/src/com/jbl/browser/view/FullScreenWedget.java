@@ -4,6 +4,7 @@ import com.jbl.browser.R;
 import com.jbl.browser.utils.JBLPreference;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -46,6 +47,9 @@ public class FullScreenWedget extends BaseWedget{
     	m_top_current_y=s_Height-mHeight;
     	mView.setOnTouchListener(this);
     	this.setContentView(mView);
+    	
+    	ColorDrawable dw = new ColorDrawable(0x00000000);
+        this.setBackgroundDrawable(dw);
     }
 
 	@Override

@@ -6,6 +6,7 @@ import android.graphics.drawable.PaintDrawable;
 import android.net.Uri;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,6 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 
 import com.jbl.browser.R;
-import com.jbl.browser.activity.MainFragActivity;
 
 /** 
  * 系统亮度设置 
@@ -120,6 +120,17 @@ public class BrightnessSettings {
         resolver.notifyChange(uri, null); 
     }  
     
+    //显示调节夜间模式亮度悬浮窗
+    public static void showPopSeekBrightness(final Activity act){
+    	if (act == null) {  
+            return;  
+        } 
+    	
+    	WindowManager wm = (WindowManager) act.getSystemService(Context.WINDOW_SERVICE);
+		DisplayMetrics dm = new DisplayMetrics();
+		wm.getDefaultDisplay().getMetrics(dm);
+		showPopSeekBrightness(act, dm.widthPixels);
+    }
     
     //显示调节夜间模式亮度悬浮窗
     public static void showPopSeekBrightness(final Activity act,int width){

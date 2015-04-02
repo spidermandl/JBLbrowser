@@ -2,6 +2,7 @@ package com.jbl.browser.fragment;
 
 import java.util.concurrent.ScheduledExecutorService;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -19,7 +20,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,8 +80,7 @@ public class MainPageFragment extends SherlockFragment implements
 	private FrameLayout webFrame;//webview父控件	
 	private MultipageAdapter multipageAdapter;//多页效果适配器 
 	private ScheduledExecutorService scheduledExecutorService;
-	View popview_seekBar;//亮度调节布局
-	PopupWindow popWindow_seekBar;//亮度调节悬浮
+	
 	View multipagePanel;//多页布局
 	//翻页按钮初始位置
 	int mCurrentX_pop_page;
@@ -194,6 +193,13 @@ public class MainPageFragment extends SherlockFragment implements
 	public void initWebView() {
 		mWebView.setDefaultSetting();
 		String urlAddress=JBLPreference.getInstance(getActivity()).readString(JBLPreference.BOOKMARK_HISTORY_KEY);
+		if(JBLApplication.getInstance().isEntering()){//初始url矫正
+			JBLApplication.getInstance().setEntering(false);
+			if(!urlAddress.equals(UrlUtils.URL_GET_HOST)){
+				JBLPreference.getInstance(getActivity()).writeString(JBLPreference.BOOKMARK_HISTORY_KEY, UrlUtils.URL_GET_HOST);
+				urlAddress=UrlUtils.URL_GET_HOST;
+			}
+		}
 		if(urlAddress==null||urlAddress.length()==0){
 			mWebView.loadUrl(UrlUtils.URL_GET_HOST);
 		}else{
@@ -333,7 +339,7 @@ public class MainPageFragment extends SherlockFragment implements
 			if(value!=JBLPreference.NIGHT_MODEL){
 				//夜间模式
 				JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.NIGHT_MODEL);
-				//BrightnessSettings.showPopSeekBrightness(getActivity(),width);
+				BrightnessSettings.showPopSeekBrightness(getActivity());
 				
 			}else{
 				//日间模式
@@ -345,88 +351,6 @@ public class MainPageFragment extends SherlockFragment implements
 			break;
 		}
 	}
-//	//显示翻页模式
-//	private void createTurningPage(){
-//		LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//		popview_page=mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
-//		popWindow_page=new PopupWindow(popview_page,80,240);
-//		mCurrentX_pop_page = width-popWindow_page.getWidth();     // 翻页按钮初始X轴位置
-//	    mCurrentY_pop_page =(height)/2-popWindow_page.getHeight()/2;   // 翻页按钮初始Y轴位置
-//		popview_page.setOnTouchListener(new OnTouchListener() {
-//			float mX, mY;
-//
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//					mX = mCurrentX_pop_page - event.getRawX();
-//					mY = mCurrentY_pop_page - event.getRawY();
-//				} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-//					mCurrentX_pop_page = (int) (event.getRawX() + mX);
-//					mCurrentY_pop_page = (int) (event.getRawY() + mY);
-//					if (mCurrentX_pop_page >= width - popWindow_page.getWidth()) {
-//						mCurrentX_pop_page = width - popWindow_page.getWidth();
-//					}
-//					if (mCurrentX_pop_page <= 0) {
-//						mCurrentX_pop_page = 0;
-//					}
-//					if (mCurrentY_pop_page <= statusBarHeight) {
-//						mCurrentY_pop_page = statusBarHeight;
-//					}
-//					if (mCurrentY_pop_page >= height- popWindow_page.getHeight()) {
-//						mCurrentY_pop_page = height- popWindow_page.getHeight();
-//					}
-//					try {
-//						Thread.sleep(100);
-//						popWindow_page.update(mCurrentX_pop_page,mCurrentY_pop_page, -1, -1);
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
-//				} else if (event.getAction() == MotionEvent.ACTION_UP) {
-//				}
-//				return true;
-//			}
-//		});
-//		Button previous_page = (Button) popview_page.findViewById(R.id.previous_page);
-//		Button next_page = (Button) popview_page.findViewById(R.id.next_page);
-//		next_page.setOnClickListener(new OnClickListener() {
-//			@SuppressLint("NewApi")
-//			@Override
-//			public void onClick(View v) {
-//				// 判断向下滚动是否已经到网页底部
-//				float fullHeight = mWebView.getContentHeight()* mWebView.getScale();
-//				float contentHeight = mWebView.getHeight()+ mWebView.getScrollY();
-//				int y = mWebView.getHeight();
-//				if ((fullHeight - contentHeight) > 0) {
-//					if ((fullHeight - contentHeight) > y) {
-//						mWebView.scrollBy(0,(int) (mWebView.getHeight() + mWebView.getScaleY()));
-//					} else {
-//						mWebView.scrollBy(0, (int) (fullHeight - contentHeight));
-//					}
-//				}
-//			}
-//		});
-//		previous_page.setOnClickListener(new OnClickListener() {
-//			@SuppressLint("NewApi")
-//			@Override
-//			public void onClick(View v) {
-//				// 判断向上滚动对否已经到网页顶部
-//				float scrollY = mWebView.getScrollY();
-//				int y = mWebView.getHeight();
-//				if (scrollY > 0) {
-//					if (scrollY > y) {
-//						mWebView.scrollBy(0,
-//								(int) (mWebView.getScaleY() - mWebView
-//										.getHeight()));
-//					} else {
-//						mWebView.scrollBy(0,
-//								(int) (mWebView.getScaleY() - scrollY));
-//					}
-//				} else {
-//					mWebView.scrollBy(0, 0);
-//				}
-//			}
-//		});       
-//   }
 
 //	//隐藏状态栏
 //	private void hideStatusBar(){
@@ -750,10 +674,34 @@ public class MainPageFragment extends SherlockFragment implements
 		getFragmentManager().beginTransaction().show(topActionbarFragment).commit();
 	}
 
-	@Override
+	@SuppressLint("NewApi") @Override
 	public void onPageScroll(boolean up) {
-		// TODO Auto-generated method stub
-		
+		if(up){
+			float scrollY = mWebView.getScrollY();
+			int y = mWebView.getHeight();
+			if (scrollY > 0) {
+				if (scrollY > y) {
+					mWebView.scrollBy(0,(int) (mWebView.getScaleY() - mWebView.getHeight()));
+				} else {
+					mWebView.scrollBy(0,(int) (mWebView.getScaleY() - scrollY));
+				}
+			} else {
+				mWebView.scrollBy(0, 0);
+			}
+		}else{
+			// 判断向下滚动是否已经到网页底部
+			float fullHeight = mWebView.getContentHeight()* mWebView.getScale();
+			float contentHeight = mWebView.getHeight()+ mWebView.getScrollY();
+			int y = mWebView.getHeight();
+			if ((fullHeight - contentHeight) > 0) {
+				if ((fullHeight - contentHeight) > y) {
+					mWebView.scrollBy(0,(int) (mWebView.getHeight() + mWebView.getScaleY()));
+				} else {
+					mWebView.scrollBy(0, (int) (fullHeight - contentHeight));
+				}
+			}
+
+		}
 	}
 	
 }
