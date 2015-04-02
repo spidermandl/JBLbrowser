@@ -1,35 +1,24 @@
 package com.jbl.browser.fragment;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,9 +51,10 @@ import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.JBLPreference.BoolType;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
+import com.jbl.browser.view.BaseWedget.WedgetClickListener;
 import com.jbl.browser.view.FullScreenWedget;
-import com.jbl.browser.view.FullScreenWedget.FullScreenClickListener;
 import com.jbl.browser.view.ProgressWebView;
+import com.jbl.browser.view.ScrollPageWedget;
 import com.jbl.browser.view.UserDefinedDialog;
 
 /**
@@ -80,7 +70,7 @@ public class MainPageFragment extends SherlockFragment implements
                                               TopActionbarInterface,
                                               LoadURLInterface,
                                               ShareInterface,
-                                              FullScreenClickListener{
+                                              WedgetClickListener{
 	public final static String TAG = "MainPageFragment";
 	/* 定义webview控件 */
 	public  ProgressWebView mWebView; // 主控件 webview
@@ -90,8 +80,6 @@ public class MainPageFragment extends SherlockFragment implements
 	private FrameLayout webFrame;//webview父控件	
 	private MultipageAdapter multipageAdapter;//多页效果适配器 
 	private ScheduledExecutorService scheduledExecutorService;
-	View popview_page;//翻页按钮布局
-	PopupWindow popWindow_page;//翻页悬浮窗口
 	View popview_seekBar;//亮度调节布局
 	PopupWindow popWindow_seekBar;//亮度调节悬浮
 	View multipagePanel;//多页布局
@@ -100,6 +88,8 @@ public class MainPageFragment extends SherlockFragment implements
 	int mCurrentY_pop_page;
 	//全屏浮动按钮
     FullScreenWedget fullWedget;
+    //翻页浮动按钮 
+    ScrollPageWedget scrollWedget;
 
 	int statusBarHeight;//状态栏高度
 	
@@ -130,9 +120,12 @@ public class MainPageFragment extends SherlockFragment implements
 
 		// 设置友好交互，即如果该网页中有链接，在本浏览器中重新定位并加载，而不是调用系统的浏览器
 		mWebView.requestFocus();
-		
+		//全屏浮动按钮
 		fullWedget=new FullScreenWedget(getActivity());
 		fullWedget.setInterface(this);
+		//翻页浮动按钮
+		scrollWedget = new ScrollPageWedget(getActivity());
+		scrollWedget.setInterface(this);
 		//获取状态栏高度
 		Rect frame = new Rect();
 		getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
@@ -310,19 +303,14 @@ public class MainPageFragment extends SherlockFragment implements
 			value=JBLPreference.getInstance(getActivity()).readInt(BoolType.TURNNING.toString());
 			if(value!=JBLPreference.OPEN_TURNING_BUTTON){
 				//当要开启翻页模式
-	            createTurningPage();
 	            if(!mWebView.getUrl().equals(UrlUtils.URL_GET_HOST)){
-	            		popWindow_page.showAtLocation(popview_page, Gravity.NO_GRAVITY, mCurrentX_pop_page, mCurrentY_pop_page);
+	            	scrollWedget.show();
 	            } 
 	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.OPEN_TURNING_BUTTON);//写入缓存
 	            Toast.makeText(getActivity(), StringUtils.OPEN_TURNING_BUTTON, Toast.LENGTH_SHORT).show();
 			}else{
 				//当要关闭翻页按钮
-				popview_page.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
-					   public void run() {
-			            	popWindow_page.dismiss();
-					 }
-				});
+				scrollWedget.dismiss();
             	Toast.makeText(getActivity(), StringUtils.CLOSE_TURNING_BUTTON, Toast.LENGTH_SHORT).show();
 	    		JBLPreference.getInstance(getActivity()).writeInt(type.toString(),JBLPreference.CLOSE_TURNING_BUTTON);//写入缓存
 			}
@@ -357,10 +345,10 @@ public class MainPageFragment extends SherlockFragment implements
 			break;
 		}
 	}
-	//显示翻页模式
-	private void createTurningPage(){
-		LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		popview_page=mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
+//	//显示翻页模式
+//	private void createTurningPage(){
+//		LayoutInflater mLayoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//		popview_page=mLayoutInflater.inflate(R.layout.pop_window_nextpager, null);
 //		popWindow_page=new PopupWindow(popview_page,80,240);
 //		mCurrentX_pop_page = width-popWindow_page.getWidth();     // 翻页按钮初始X轴位置
 //	    mCurrentY_pop_page =(height)/2-popWindow_page.getHeight()/2;   // 翻页按钮初始Y轴位置
@@ -398,47 +386,47 @@ public class MainPageFragment extends SherlockFragment implements
 //				return true;
 //			}
 //		});
-		Button previous_page = (Button) popview_page.findViewById(R.id.previous_page);
-		Button next_page = (Button) popview_page.findViewById(R.id.next_page);
-		next_page.setOnClickListener(new OnClickListener() {
-			@SuppressLint("NewApi")
-			@Override
-			public void onClick(View v) {
-				// 判断向下滚动是否已经到网页底部
-				float fullHeight = mWebView.getContentHeight()* mWebView.getScale();
-				float contentHeight = mWebView.getHeight()+ mWebView.getScrollY();
-				int y = mWebView.getHeight();
-				if ((fullHeight - contentHeight) > 0) {
-					if ((fullHeight - contentHeight) > y) {
-						mWebView.scrollBy(0,(int) (mWebView.getHeight() + mWebView.getScaleY()));
-					} else {
-						mWebView.scrollBy(0, (int) (fullHeight - contentHeight));
-					}
-				}
-			}
-		});
-		previous_page.setOnClickListener(new OnClickListener() {
-			@SuppressLint("NewApi")
-			@Override
-			public void onClick(View v) {
-				// 判断向上滚动对否已经到网页顶部
-				float scrollY = mWebView.getScrollY();
-				int y = mWebView.getHeight();
-				if (scrollY > 0) {
-					if (scrollY > y) {
-						mWebView.scrollBy(0,
-								(int) (mWebView.getScaleY() - mWebView
-										.getHeight()));
-					} else {
-						mWebView.scrollBy(0,
-								(int) (mWebView.getScaleY() - scrollY));
-					}
-				} else {
-					mWebView.scrollBy(0, 0);
-				}
-			}
-		});       
-   }
+//		Button previous_page = (Button) popview_page.findViewById(R.id.previous_page);
+//		Button next_page = (Button) popview_page.findViewById(R.id.next_page);
+//		next_page.setOnClickListener(new OnClickListener() {
+//			@SuppressLint("NewApi")
+//			@Override
+//			public void onClick(View v) {
+//				// 判断向下滚动是否已经到网页底部
+//				float fullHeight = mWebView.getContentHeight()* mWebView.getScale();
+//				float contentHeight = mWebView.getHeight()+ mWebView.getScrollY();
+//				int y = mWebView.getHeight();
+//				if ((fullHeight - contentHeight) > 0) {
+//					if ((fullHeight - contentHeight) > y) {
+//						mWebView.scrollBy(0,(int) (mWebView.getHeight() + mWebView.getScaleY()));
+//					} else {
+//						mWebView.scrollBy(0, (int) (fullHeight - contentHeight));
+//					}
+//				}
+//			}
+//		});
+//		previous_page.setOnClickListener(new OnClickListener() {
+//			@SuppressLint("NewApi")
+//			@Override
+//			public void onClick(View v) {
+//				// 判断向上滚动对否已经到网页顶部
+//				float scrollY = mWebView.getScrollY();
+//				int y = mWebView.getHeight();
+//				if (scrollY > 0) {
+//					if (scrollY > y) {
+//						mWebView.scrollBy(0,
+//								(int) (mWebView.getScaleY() - mWebView
+//										.getHeight()));
+//					} else {
+//						mWebView.scrollBy(0,
+//								(int) (mWebView.getScaleY() - scrollY));
+//					}
+//				} else {
+//					mWebView.scrollBy(0, 0);
+//				}
+//			}
+//		});       
+//   }
 
 //	//隐藏状态栏
 //	private void hideStatusBar(){
@@ -671,7 +659,7 @@ public class MainPageFragment extends SherlockFragment implements
 	//载入网页监听
 	@Override
 	public void startPage(String url) {
-		/**全屏按钮*/
+		/**判断是否有全屏*/
 		if(JBLPreference.getInstance(this.getActivity()).readInt(BoolType.FULL_SCREEN.toString())==JBLPreference.YES_FULL){  //全屏模式
 			if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
 				getFragmentManager().beginTransaction()
@@ -686,24 +674,15 @@ public class MainPageFragment extends SherlockFragment implements
 				fullWedget.show();
 			}
 		}
-		/**翻页按钮*/
-		if(JBLPreference.getInstance(this.getActivity()).readInt(BoolType.TURNNING.toString())==JBLPreference.OPEN_TURNING_BUTTON){  //全屏模式
-			if(popWindow_page==null){
-				createTurningPage();
-			}      		
+		/**判断是否有翻页*/
+		if(JBLPreference.getInstance(this.getActivity()).readInt(BoolType.TURNNING.toString())==JBLPreference.OPEN_TURNING_BUTTON){  //全屏模式     		
 			if(url.equals(UrlUtils.URL_GET_HOST)){                //主页：显示上下菜单栏，不显示悬浮按钮
-				if(popWindow_page.isShowing()){
-            		popWindow_page.dismiss();
-				}
+				scrollWedget.dismiss();
 			}else{                                              //不是主页：不显示上下菜单栏，显示悬浮按钮
-				popview_page.post(new Runnable() {                   //activity的生命周期函数全部执行完毕,才可以执行popwindow
-					   public void run() {
-			            	popWindow_page.showAtLocation(popview_page, Gravity.NO_GRAVITY, mCurrentX_pop_page, mCurrentY_pop_page);
-					 }
-				});
+				scrollWedget.show();
 			}
 		}
-		  //判断是夜间模式需再设置下activity亮度
+		/**判断是夜间模式需再设置下activity亮度*/
   		if(JBLPreference.getInstance(getActivity()).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
   			int brightness=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
   			BrightnessSettings.setBrightness(getActivity(),brightness);
@@ -716,8 +695,8 @@ public class MainPageFragment extends SherlockFragment implements
 		// TODO Auto-generated method stub
 		if(JBLPreference.getInstance(getActivity()).readInt(BoolType.HISTORY_CACHE.toString())==JBLPreference.CLOSE_HISTORY){   //判断不是无痕浏览，添加历史记录
 			if(url!=""){           
-				String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA)
-						.format(new Date()).toString();
+				//String date = new SimpleDateFormat("yyyyMMdd", Locale.CHINA).format(new Date()).toString();
+				
 				String temp=UrlUtils.URL_GET_HOST.substring(0, UrlUtils.URL_GET_HOST.length());
 				if(!url.equals(temp)){      //当加载默认网址时不加入历史记录
 					History history = new History();
