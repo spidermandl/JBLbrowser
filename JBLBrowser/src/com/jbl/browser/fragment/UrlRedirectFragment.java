@@ -78,6 +78,7 @@ public class UrlRedirectFragment extends SherlockFragment implements
 		mController=(TextView)view.findViewById(R.id.control_search);
 		mController.setText(R.string.search_cancel);
 		mController.setOnClickListener(this);
+		mSearch.setSingleLine(true);
 		mSearch.addTextChangedListener(this);
 		mSearch.setFocusable(true);
 		mSearch.setFocusableInTouchMode(true);
@@ -171,12 +172,12 @@ public class UrlRedirectFragment extends SherlockFragment implements
 	private void showSoftInput(boolean is){
         InputMethodManager imm = (InputMethodManager)this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE); 
 		if(is){
-			if(!imm.isActive(mSearch))
+			if(!imm.isActive())
 			     imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
 			     //imm.showSoftInput(mSearch,InputMethodManager.SHOW_FORCED);
 		}
 		else{
-			if(imm.isActive(mSearch))
+			if(imm.isActive())
 				imm.hideSoftInputFromWindow(this.getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);  
 			    //imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
 		}

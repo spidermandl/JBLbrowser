@@ -3,7 +3,6 @@ package com.jbl.browser.view;
 import com.jbl.browser.utils.JBLPreference;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;

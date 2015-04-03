@@ -82,9 +82,7 @@ public class MainPageFragment extends SherlockFragment implements
 	private ScheduledExecutorService scheduledExecutorService;
 	
 	View multipagePanel;//多页布局
-	//翻页按钮初始位置
-	int mCurrentX_pop_page;
-	int mCurrentY_pop_page;
+	
 	//全屏浮动按钮
     FullScreenWedget fullWedget;
     //翻页浮动按钮 

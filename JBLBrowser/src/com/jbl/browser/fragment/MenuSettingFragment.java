@@ -55,6 +55,7 @@ public class MenuSettingFragment extends SherlockFragment {
 		mMenuSettingbrowse=(ToggleButton)view.findViewById(R.id.settings_default);
 		TextView font_valuse=(TextView)view.findViewById(R.id.font_valuse);
 		int fontValuse=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.FONT_TYPE);
+		
 		if(fontValuse==0)
 			font_valuse.setText(StringUtils.FONT_MIN);
 		if(fontValuse==1)
