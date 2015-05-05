@@ -1008,6 +1008,98 @@ public class BusinessTool {
 	}
 	
 	/**
+	 * 获取登录认证
+	 * */
+	public void getLogin(final BusinessCallback callback,final String wlanName,final String ipName){
+		//USER=test_cxw&PWD=cxw@013&wlanacname=1019.0731.731.00&wlanuserip=10.60.73.222&actiontype=LOGIN& pwdtype=1&clienttype=UE,Android,6.8.0711& forceflag=1
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				String response = null;
+				HttpGet httpGet = null;
+				HttpResponse httpResponse = null;
+				try {
+					String url=UrlUtils.URL_GET_HOST+
+							"USER=test_cxw&PWD=cxw@013&wlanacname="+wlanName+"&wlanuserip="+ipName+"&actiontype=LOGIN& pwdtype=1&clienttype=UE,Android,6.8.0711& forceflag=1";
+					httpGet = new HttpGet(UrlUtils.URL_GET_HOST);
+					httpResponse = new DefaultHttpClient().execute(httpGet);
+					int statusCode = httpResponse.getStatusLine().getStatusCode();
+					if(StringUtils.DEBUG){
+						Log.d(TAG, "getHost:返回代码：" + statusCode);
+					}
+					BusinessTool.this.callback = callback;
+					if(statusCode == 200){
+						response = EntityUtils.toString(httpResponse.getEntity(),HTTP.UTF_8);
+						if(StringUtils.DEBUG){
+							Log.d(TAG, "getHost:" + response);
+						}
+						values = new Bundle();
+						values.putString(StringUtils.DATA, response);
+						myHandler.sendEmptyMessage(COMPLETE);
+					}
+					else{
+						myHandler.sendEmptyMessage(FAIL);
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					BusinessTool.this.callback = callback;
+					errorInfo = new ErrorInfo(e);
+					myHandler.sendEmptyMessage(ERROR);
+				}
+			}
+		}).start();
+	}
+	
+	/**
+	 * 获取下线认证
+	 * */
+	public void getLogout(final BusinessCallback callback,final String wlanName,final String ipName,final String logonsessid){
+		//wlanuserip=10.60.73.222&wlanacname=1019.0731.731.00&actiontype=LOGOUT&logonsessid=1285446080
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				String response = null;
+				HttpGet httpGet = null;
+				HttpResponse httpResponse = null;
+				try {
+					String url=UrlUtils.URL_GET_HOST+
+							"wlanuserip="+wlanName+"&wlanacname="+ipName+"&actiontype=LOGOUT&logonsessid="+logonsessid;
+					httpGet = new HttpGet(UrlUtils.URL_GET_HOST);
+					httpResponse = new DefaultHttpClient().execute(httpGet);
+					int statusCode = httpResponse.getStatusLine().getStatusCode();
+					if(StringUtils.DEBUG){
+						Log.d(TAG, "getHost:返回代码：" + statusCode);
+					}
+					BusinessTool.this.callback = callback;
+					if(statusCode == 200){
+						response = EntityUtils.toString(httpResponse.getEntity(),HTTP.UTF_8);
+						if(StringUtils.DEBUG){
+							Log.d(TAG, "getHost:" + response);
+						}
+						values = new Bundle();
+						values.putString(StringUtils.DATA, response);
+						myHandler.sendEmptyMessage(COMPLETE);
+					}
+					else{
+						myHandler.sendEmptyMessage(FAIL);
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					BusinessTool.this.callback = callback;
+					errorInfo = new ErrorInfo(e);
+					myHandler.sendEmptyMessage(ERROR);
+				}
+			}
+		}).start();
+	}
+	
+	/**
 	 * 获取服务器域名
 	 * */
 	public void getHost(final BusinessCallback callback){

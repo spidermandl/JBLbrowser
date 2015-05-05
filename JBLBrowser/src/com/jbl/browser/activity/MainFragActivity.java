@@ -1,10 +1,17 @@
 package com.jbl.browser.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 
@@ -14,7 +21,10 @@ import com.jbl.browser.R;
 import com.jbl.browser.db.UserInfoDao;
 import com.jbl.browser.fragment.AuthFragment;
 import com.jbl.browser.fragment.MainPageFragment;
+import com.jbl.browser.model.ErrorInfo;
+import com.jbl.browser.tools.BusinessCallback;
 import com.jbl.browser.tools.BusinessTool;
+import com.jbl.browser.utils.UrlUtils;
 import com.mozillaonline.providers.DownloadManager;
 import com.mozillaonline.providers.DownloadManager.Request;
 import com.mozillaonline.providers.downloads.DownloadService;
@@ -31,6 +41,7 @@ public class MainFragActivity extends BaseFragActivity {
 	private DownloadManager mDownloadManager;
 	//下载模块接收receiver　
 	private BroadcastReceiver mDownloadReceiver;
+	
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -64,6 +75,7 @@ public class MainFragActivity extends BaseFragActivity {
 		    	showDownloadList();
 		    }
 		};
+		
 	}
 	
 	@Override
