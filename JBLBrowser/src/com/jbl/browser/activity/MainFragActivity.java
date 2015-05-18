@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
@@ -14,6 +16,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.IBinder;
 
 import com.actionbarsherlock.view.Window;
 import com.jbl.browser.JBLApplication;
@@ -42,6 +45,21 @@ public class MainFragActivity extends BaseFragActivity {
 	//下载模块接收receiver　
 	private BroadcastReceiver mDownloadReceiver;
 	
+	private ServiceConnection serviceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+           // countService = (ICountService) service;
+            
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            //countService = null ;
+        }
+
+    };
+    
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -66,6 +84,8 @@ public class MainFragActivity extends BaseFragActivity {
 	 * 初始化
 	 */
 	void init(){
+		//开启wifi检测服务
+		this.bindService(new Intent(this,WIFIService.class), this.serviceConnection, BIND_AUTO_CREATE);
 		startDownloadService();
 		mDownloadManager = new DownloadManager(getContentResolver(),getPackageName());
 		mDownloadReceiver = new BroadcastReceiver() {
@@ -95,6 +115,7 @@ public class MainFragActivity extends BaseFragActivity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		this.unbindService(this.serviceConnection);
 		JBLApplication.getInstance().quit();
 	}
 	/**

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript">
+	function getCon() {
+		var USER = document.getElementById("USER").value;
+		var PWD = document.getElementById("PWD").value;
+		var wlanacname = document.getElementById("wlanacname").value;
+		var wlanuserip = document.getElementById("wlanuserip").value;
+		var actiontype = "LOGIN";
+		var pwdtype = 1;
+		var clienttype = document.getElementById("clienttype").value;
+		var forceflag = 1;
+		document.forms[0].action = "http://211.142.211.10/suiexingclient.jsp?"
+				+ "USER=" + USER + "&PWD=" + PWD + "&wlanacname=" + wlanacname
+				+ "&wlanuserip=" + wlanuserip + "&actiontype=" + actiontype
+				+ "&pwdtype=" + pwdtype + "&clienttype=" + clienttype
+				+ "&forceflag=" + forceflag;
+		document.forms[0].submit();
+	}
+</script>
+<script type="text/javascript">
+	function getout() {
+		var logonsessid = document.getElementById("logonsessid").value;
+		var wlanacname = document.getElementById("wlanacnameout").value;
+		var wlanuserip = document.getElementById("wlanuseripout").value;
+		var actiontype = "LOGOUT";
+		document.forms[0].action = "http://211.142.211.10/suiexingclient.jsp?"
+				+ "logonsessid=" + logonsessid + "&wlanacname=" + wlanacname
+				+ "&wlanuserip=" + wlanuserip + "&actiontype=" + actiontype
+		document.forms[0].submit();
+	}
+</script>
+</head>
+<body>
+<form action="" method="post" target="_bank">
+<p><input type="text"
+	value="http://211.142.211.10/suiexingclient.jsp" name="url" id="url">请求url【http://211.142.211.10/suiexingclient.jsp】（必须）</p>
+<p><input type="text" value="test_cxw" name="USER" id="USER">用户名（必须）</p>
+<p><input type="text" value="cxw@013" name="PWD" id="PWD">密码（必须）</p>
+<p><input type="text" value="" name="wlanacname" id="wlanacname">wlanacname【请从移动登陆页地址中获取】（必须）</p>
+<p><input type="text" value="" name="wlanuserip" id="wlanuserip">用户IP地址【请从移动登陆页地址中获取】（必须）</p>
+
+<p><input type="text" value="" name="clienttype" id="clienttype">客户端类型【当该字段为空时，默认为PC客户端】（可选）</p>
+<p><input type="button" value="确定" onclick="getCon()"></p>
+</form>
+
+<div>
+<h4>下线</h4>
+</div>
+<p><input type="text" value="" name="logonsessid" id="logonsessid">用户logonsessid（必须）</p>
+<p><input type="text" value="" name="wlanacnameout"
+	id="wlanacnameout">wlanacname【请从移动登陆页地址中获取】（必须）</p>
+<p><input type="text" value="" name="wlanuseripout"
+	id="wlanuseripout">用户IP地址【请从移动登陆页地址中获取】（必须）</p>
+<p><input type="button" value="下线" onclick="getout()"></p>
+</body>
+</html>

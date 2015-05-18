@@ -5,11 +5,13 @@ import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.jbl.browser.activity.WIFIService;
 import com.jbl.browser.utils.JBLPreference;
 
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Intent;
 import android.os.Build;
 
 /**
@@ -31,6 +33,7 @@ public class JBLApplication extends Application {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		instance=this;
+		this.startService(new Intent(this, WIFIService.class));
 		setEntering(true);
 		super.onCreate();
 	}
@@ -47,6 +50,7 @@ public class JBLApplication extends Application {
 	 * 退出进程
 	 */
 	public void quit(){
+		this.stopService(new Intent(this, WIFIService.class));
 		clearDataBeforeQuit();
 		try { 
             for (Activity activity : mList) { 

@@ -1,7 +1,21 @@
 package com.jbl.browser.activity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+
 
 import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.tools.BusinessCallback;
@@ -12,10 +26,14 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 
@@ -30,11 +48,40 @@ public class WIFIService extends Service {
 	private WifiManager wifiManager;
 	private List<String> passableHotsPot;
 	private WifiReceiver wifiReceiver;
-	private boolean isConnected=false;
+	private boolean isConnected=false;//指定wifi是否连接上
+	private boolean isFirstLogin=true;//未做网络检测
+	private boolean isAuthed=false;//wifi验证通过
 	private String logonsessid;
 	
+	private WifiBinder mWifiBinder = new WifiBinder();
+
+	public interface IWifiService{
+		public boolean isWifiTested();
+		public boolean isWifiAuthed();
+	}
+	
+    public class WifiBinder extends Binder implements IWifiService{
+
+		@Override
+		public boolean isWifiTested() {
+			// TODO Auto-generated method stub
+			return isFirstLogin;
+		}
+
+		@Override
+		public boolean isWifiAuthed() {
+			// TODO Auto-generated method stub
+			return isAuthed;
+		}
+
+    	
+    }
+    
 	@Override
 	public void onCreate() {
+		IntentFilter mFilter = new IntentFilter();  
+        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);  
+		this.registerReceiver(wifiReceiver, mFilter);
 		wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		wifiReceiver=new WifiReceiver();
 		startSpecificWifi();
@@ -50,7 +97,7 @@ public class WIFIService extends Service {
 	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
-		return null;
+		return mWifiBinder;
 	}
 
 	@Override
@@ -86,16 +133,28 @@ public class WIFIService extends Service {
 	private final class WifiReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			startSpecificWifi();
+			String action = intent.getAction();  
+            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) { 
+			     startSpecificWifi();
+            }
 		}
 	}
 
 	public void startSpecificWifi(){
+		new Thread(){
+			@Override
+			public void run() {
+				redirect02();
+				super.run();
+			}
+		}.start();
+		
 		wifiList = wifiManager.getScanResults();
 		if (wifiList == null || wifiList.size() == 0 || isConnected)
 			return;
 		onReceiveNewNetworks(wifiList);
 	}
+	
 	/* 当搜索到新的wifi热点时判断该热点是否符合规格 */
 	public void onReceiveNewNetworks(List<ScanResult> wifiList) {
 		passableHotsPot = new ArrayList<String>();
@@ -128,22 +187,23 @@ public class WIFIService extends Service {
 				
 				@Override
 				public void fail(ErrorInfo e) {
-					// TODO Auto-generated method stub
-					
+					isFirstLogin=false;
 				}
 				
 				@Override
 				public void error(ErrorInfo e) {
-					// TODO Auto-generated method stub
-					
+					isFirstLogin=false;
 				}
 				
 				@Override
 				public void complete(Bundle values) {
-					// TODO Auto-generated method stub
+					isAuthed=true;
+					isFirstLogin=false;
 					
 				}
 			}, info.getBSSID(), int2ip(info.getIpAddress()));
+		}else{
+			isFirstLogin=false;
 		}
 		System.out.println("connect success? " + flag);
 	}
@@ -176,5 +236,120 @@ public class WIFIService extends Service {
         sb.append((ipInt >> 24) & 0xFF);  
         return sb.toString();  
     }  
+	
+	
+	/**
+	 * Http URL重定向
+	 */
+	private static void redirect02() {
+		DefaultHttpClient httpclient = null;
+		String url = "http://hotels.ctrip.com/hotel/hong-kong58";
+		try {
+			httpclient = new DefaultHttpClient();
+//			httpclient.setRedirectStrategy(new RedirectStrategy() {
+//
+//				@Override
+//				public HttpUriRequest getRedirect(HttpRequest arg0,
+//						HttpResponse arg1, HttpContext arg2)
+//						throws ProtocolException {
+//					// TODO Auto-generated method stub
+//					return null;
+//				}
+//
+//				@Override
+//				public boolean isRedirected(HttpRequest arg0,
+//						HttpResponse arg1, HttpContext arg2)
+//						throws ProtocolException {
+//					// TODO Auto-generated method stub
+//					return false;
+//				}	//设置重定向处理方式
+//
+//
+//			});
+
+			// 创建httpget.
+			HttpGet httpget = new HttpGet(url);
+			// 执行get请求.
+			HttpResponse response = httpclient.execute(httpget);
+
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode == HttpStatus.SC_OK) {
+				// 获取响应实体
+				HttpEntity entity = response.getEntity();
+				if (entity != null) {
+					// 打印响应内容长度
+					System.out.println("Response content length: "
+							+ entity.getContentLength());
+					// 打印响应内容
+					System.out.println("Response content: "
+							+ EntityUtils.toString(entity));
+				}
+			} else if (statusCode == HttpStatus.SC_MOVED_TEMPORARILY
+					|| statusCode == HttpStatus.SC_MOVED_PERMANENTLY) {
+				
+				System.out.println("当前页面发生重定向了---");
+				
+				Header[] headers = response.getHeaders("Location");
+				if(headers!=null && headers.length>0){
+					String redirectUrl = headers[0].getValue();
+					System.out.println("重定向的URL:"+redirectUrl);
+					
+					redirectUrl = redirectUrl.replace(" ", "%20");
+					get(redirectUrl);
+				}
+			}
+
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// 关闭连接,释放资源
+			httpclient.getConnectionManager().shutdown();
+		}
+	}
+
+	/**
+	 * 发送 get请求
+	 */
+	private static void get(String url) {
+
+		HttpClient httpclient = new DefaultHttpClient();
+
+		try {
+			// 创建httpget.
+			HttpGet httpget = new HttpGet(url);
+			System.out.println("executing request " + httpget.getURI());
+			// 执行get请求.
+			HttpResponse response = httpclient.execute(httpget);
+			
+			// 获取响应状态
+			int statusCode = response.getStatusLine().getStatusCode();
+			if(statusCode==HttpStatus.SC_OK){
+				// 获取响应实体
+				HttpEntity entity = response.getEntity();
+				if (entity != null) {
+					// 打印响应内容长度
+					System.out.println("Response content length: "
+							+ entity.getContentLength());
+					// 打印响应内容
+					System.out.println("Response content: "
+							+ EntityUtils.toString(entity));
+				}
+			}
+			
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// 关闭连接,释放资源
+			httpclient.getConnectionManager().shutdown();
+		}
+	}
 	
 }
