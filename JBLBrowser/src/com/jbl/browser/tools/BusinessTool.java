@@ -1044,7 +1044,7 @@ public class BusinessTool {
 					myHandler.sendEmptyMessage(COMPLETE);
 				}
 			}
-		});
+		}).start();
 	}
 	
 	private boolean getLocationMethod1(String reqUrl) {// 第一次重定向
@@ -1074,7 +1074,8 @@ public class BusinessTool {
 			e.printStackTrace();
 
 		}
-        Toast.makeText(context, "mothed1 失败", 1000).show();
+		Log.e("验证失败", "mothed1 失败");
+        //Toast.makeText(context, "mothed1 失败", 1000).show();
 		return false;
 	}
 	
@@ -1116,7 +1117,8 @@ public class BusinessTool {
 			e.printStackTrace();
 
 		}
-		Toast.makeText(context, "mothed2 失败", 1000).show();
+		Log.e("验证失败", "mothed2 失败");
+		//Toast.makeText(context, "mothed2 失败", 1000).show();
 		return false;
 	}
 	
@@ -1166,7 +1168,8 @@ public class BusinessTool {
 			e.printStackTrace();
 
 		}
-		Toast.makeText(context, "mothed3 失败", 1000).show();
+		Log.e("验证失败", "mothed3 失败");
+		//Toast.makeText(context, "mothed3 失败", 1000).show();
 		return false;
 	}
 	
@@ -1278,7 +1281,8 @@ public class BusinessTool {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			Toast.makeText(context, "getAuth 失败", 1000).show();
+			Log.e("验证失败", "getAuth 失败");
+			//Toast.makeText(context, "getAuth 失败", 1000).show();
 		} finally {
 			// 关闭连接,释放资源
 			httpclient.getConnectionManager().shutdown();

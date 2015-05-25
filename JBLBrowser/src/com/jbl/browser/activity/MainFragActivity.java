@@ -111,16 +111,20 @@ public class MainFragActivity extends BaseFragActivity {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					
-					pd = new ProgressDialog(MainFragActivity.this);
-                    pd.setMessage("正在连接...");
-                    pd.setCancelable(false);
-                    pd.show();
-                    
 					WifiConfiguration wifiConfig = setWifiParams(passableHotsPot.get(0));
 					int wcgID = wifiManager.addNetwork(wifiConfig);
 					boolean flag = wifiManager.enableNetwork(wcgID, true);
-					if(flag){
+
+			        WifiInfo info = wifiManager.getConnectionInfo();
+			        String wifiId = info != null ? info.getSSID() : null;
+			        //if(wifiId!=null&&!wifiId.contains(UrlUtils.HOTPOT_NAME)){//判断wifi是否已经连接
+
+					if(flag||(wifiId!=null&&!wifiId.contains(UrlUtils.HOTPOT_NAME))){
 						BusinessTool.getInstance().getLogin(callback);
+						pd = new ProgressDialog(MainFragActivity.this);
+	                    pd.setMessage("正在连接...");
+	                    pd.setCancelable(false);
+	                    pd.show();
 					}else{
 						enter();
 					}
@@ -134,7 +138,8 @@ public class MainFragActivity extends BaseFragActivity {
 					enter();
 					
 				}
-			});
+			})
+			.show();
 		}
 		else{
 			enter();
@@ -186,9 +191,9 @@ public class MainFragActivity extends BaseFragActivity {
 			if ((result.SSID).contains(UrlUtils.HOTPOT_NAME)){
 		        WifiInfo info = wifiManager.getConnectionInfo();
 		        String wifiId = info != null ? info.getSSID() : null;
-		        if(wifiId!=null&&!wifiId.contains(UrlUtils.HOTPOT_NAME)){//判断wifi是否已经连接
+		        //if(wifiId!=null&&!wifiId.contains(UrlUtils.HOTPOT_NAME)){//判断wifi是否已经连接
 				    passableHotsPot.add(result.SSID);
-		        }
+		        //}
 			}
 		}
 	}
@@ -219,7 +224,7 @@ public class MainFragActivity extends BaseFragActivity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		this.unbindService(this.serviceConnection);
+		//this.unbindService(this.serviceConnection);
 		JBLApplication.getInstance().quit();
 	}
 	/**
