@@ -57,27 +57,7 @@
     <string name="share_load_fail">加载分享资源出错，请重试！</string>
     <string name="username">昵称</string>
     <string name="username_pro">（全角3~10个字符）</string>
-    <string name="wait_login">正在为你登录…</string>
-    <string name="wait_sigin">正在为你注册…</string>
-    <string name="wait_buy">正在处理交易…</string>
-    <string name="wait_download">正在下载卡片资源…</string>
-    <string name="wait_share">正在提交请求…</string>
-    <string name="weibosdk_attention">注意</string>
-    <string name="weibosdk_delete_all">是否要删除这条微博？</string>
-    <string name="weibosdk_ok">是</string>
-    <string name="weibosdk_cancel">否</string>
-    <string name="weibosdk_app_name">com_weibo_android</string>
-    <string name="weibosdk_send">发送</string>
-    <string name="weibosdk_photo">拍照</string>
-    <string name="weibosdk_close">关闭</string>
-    <string name="weibosdk_share_dialog_title">新浪微博</string>
-    <string name="weibosdk_please_login">请登录！</string>
-    <string name="weibosdk_send_sucess">分享成功！</string>
-    <string name="weibosdk_send_failed">分享失败！</string>
-    <string name="weibosdk_del_pic">是否删除图片？</string>
-    <string name="weibosdk_comment">评论</string>
-    <string name="weibosdk_forward">转发</string>
-    <string name="weibosdk_fav">收藏</string>
+    
 
     <!-- JBLBrowser -->
     <string name="title_activity_main_page_activity">MainPageActivity</string>
@@ -123,6 +103,7 @@
     <string name="delete_history">删除历史</string>
     <string name="action_setting">多选</string>
     <string name="select_item">已选择:</string>
+    <string name="cmcc_edu_warning">检测到cmcc网络，是否选择免认证连接?</string>
     <!-- 菜单文字 -->
     <string-array name="setting_content_item">
         <item>添加收藏</item>
@@ -180,6 +161,8 @@
     <string name="about_us">关于我们</string>
     <string name="clear_data">清除数据</string>
     <string name="restore_settings">恢复默认设置</string>
+    
+    
     <string name="Constants.SearchUrlGoogle">http://www.google.com/m?hl=en&amp;gl=us&amp;client=ms-null&amp;source=android-browser-key&amp;q=%s</string>
     <string name="Constants.SearchUrlWikipedia">http://en.wikipedia.org/w/index.php?search=%s&amp;go=Go</string>
     <string name="Commons.Yes">Yes</string>

@@ -4,14 +4,24 @@ package com.jbl.browser.tools;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
@@ -32,6 +42,7 @@ import android.os.Message;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.model.MusicModel;
@@ -1007,6 +1018,273 @@ public class BusinessTool {
 		}
 	}
 	
+   String location = null;
+   String locationtemp;
+   String[] set_cookie3 = new String[9];
+   //boolean isOK = true;// 登录是否成功
+   String wlanacname = null; 
+   String wlanuserip = null;
+   
+	/**
+	 * 获取登录认证
+	 * */
+	public void getLogin(final BusinessCallback callback){
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				BusinessTool.this.callback = callback;
+				
+				
+				if(!getLocationMethod1("http://www.m.baidu.com")){
+					myHandler.sendEmptyMessage(FAIL);
+				}
+				if (location != null) {// location说明获取登录请求成功
+					parseParam(location);// 开始解析登录url参数并且登录
+					myHandler.sendEmptyMessage(COMPLETE);
+				}
+			}
+		});
+	}
+	
+	private boolean getLocationMethod1(String reqUrl) {// 第一次重定向
+		DefaultHttpClient httpclient = new DefaultHttpClient();
+
+		int responseCode = 0;
+		try {
+			final HttpGet request = new HttpGet(reqUrl);
+			HttpParams params = new BasicHttpParams();
+			params.setParameter("http.protocol.handle-redirects", false); // 默认不让重定向
+			// 这样就能拿到Location头了
+			request.setParams(params);
+			HttpResponse response = httpclient.execute(request);
+			responseCode = response.getStatusLine().getStatusCode();
+			// System.out.println(responseCode + "-----getLocationMethod1");
+			if (responseCode == HttpStatus.SC_MOVED_TEMPORARILY
+					|| responseCode == HttpStatus.SC_MOVED_PERMANENTLY) {
+				Header locationHeader = response.getFirstHeader("Location");
+				if (locationHeader != null) {
+					locationtemp = locationHeader.getValue();
+					return getLocationMethod2(locationtemp);
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+        Toast.makeText(context, "mothed1 失败", 1000).show();
+		return false;
+	}
+	
+	private boolean getLocationMethod2(String reqUrl) {// 第二次次重定向，Host改变了
+		DefaultHttpClient httpclient = new DefaultHttpClient();
+
+		int responseCode = 0;
+		try {
+			final HttpGet request = new HttpGet(reqUrl);
+			request.addHeader("Host", "gd1.wlanportal.chinamobile.com:8080");
+			request.addHeader("Connection", "keep-alive");
+			request.addHeader("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0");
+			HttpParams params = new BasicHttpParams();
+			params.setParameter("http.protocol.handle-redirects", false); // 默认不让重定向
+			// 这样就能拿到Location头了
+			request.setParams(params);
+			HttpResponse response = httpclient.execute(request);
+			responseCode = response.getStatusLine().getStatusCode();
+			// System.out.println(responseCode + "-----getLocationMethod2");
+
+			if (responseCode == HttpStatus.SC_MOVED_TEMPORARILY
+					|| responseCode == HttpStatus.SC_MOVED_PERMANENTLY) {
+				Header locationHeader = response.getFirstHeader("Location");
+				if (locationHeader != null) {
+					locationtemp = locationHeader.getValue();
+
+					return getLocationMethod2(locationtemp);
+				}
+
+			}
+			if (responseCode == 200) {
+
+				boolean result=getLocationMethod3(locationtemp);
+				location = locationtemp;
+				return result;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		Toast.makeText(context, "mothed2 失败", 1000).show();
+		return false;
+	}
+	
+	private boolean getLocationMethod3(String reqUrl) {// 第三次次重定向，Host改变了
+		DefaultHttpClient httpclient = new DefaultHttpClient();
+
+		int responseCode = 0;
+		try {
+			final HttpGet request = new HttpGet(reqUrl);
+			request.addHeader("Host", "gd1.wlanportal.chinamobile.com:8080");
+			request.addHeader("Connection", "keep-alive");
+			request.addHeader("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0");
+			HttpParams params = new BasicHttpParams();
+			params.setParameter("http.protocol.handle-redirects", false); // 默认不让重定向
+			// 这样就能拿到Location头了
+			request.setParams(params);
+			HttpResponse response = httpclient.execute(request);
+			responseCode = response.getStatusLine().getStatusCode();
+			/*
+			 * Header headers = response.getFirstHeader("Set-Cookie"); if
+			 * (headers != null) { set_cookie3 = headers.getValue().split(";");
+			 * }
+			 */
+			if (responseCode == HttpStatus.SC_MOVED_TEMPORARILY
+					|| responseCode == HttpStatus.SC_MOVED_PERMANENTLY) {
+				Header locationHeader = response.getFirstHeader("Location");
+				if (locationHeader != null) {
+					String locationtemp = locationHeader.getValue();
+
+					location = locationtemp;
+
+					// getLocationMethod3(location);
+				}
+
+			}
+			if (responseCode == HttpStatus.SC_OK) { // 这里表示与wifi真正建立有有效连接
+				List<Cookie> cookies = httpclient.getCookieStore().getCookies();
+				for (int i = 0; i < cookies.size(); i++) {
+					set_cookie3[i] = cookies.get(i).getValue().toString();
+
+				}
+				
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		Toast.makeText(context, "mothed3 失败", 1000).show();
+		return false;
+	}
+	
+	
+	private void parseParam(String str) {
+
+		String ssid = null;
+		Pattern pattern = Pattern.compile("wlanacname=([^&]*)(&|\\b)");
+		Matcher matcher = pattern.matcher(str);
+		if (matcher.find()) {
+			wlanacname = matcher.group(0).replace("wlanacname=", "")
+					.replace("&", "");
+
+		}
+
+		pattern = Pattern.compile("wlanuserip=([^&]*)(&|\\b)");
+		matcher = pattern.matcher(str);
+		if (matcher.find()) {
+			wlanuserip = matcher.group(0).replace("wlanuserip=", "")
+					.replace("&", "");
+			// System.out.println(wlanuserip);
+		}
+
+		pattern = Pattern.compile("ssid=([^&]*)(&|\\b)");
+		matcher = pattern.matcher(str);
+		if (matcher.find()) {
+			ssid = matcher.group(0).replace("ssid=", "").replace("&", "");
+			// System.out.println(ssid);
+		}
+		// https://gd1.wlanportal.chinamobile.com:8443/LoginServlet?wlanuserip=100.99.73.5&
+		// wlanacname=1232.0021.210.00&username=13916177061&password=969rCr7N
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("wlanuserip", wlanuserip));
+		params.add(new BasicNameValuePair("wlanacname", wlanacname));
+		params.add(new BasicNameValuePair("username", "18800399005"));
+		params.add(new BasicNameValuePair("password", "NGVQhY9P"));
+
+		// get(location);
+		// doPost("https://gd1.wlanportal.chinamobile.com:8443/LoginServlet",
+		// / params, set_cookie[0]);
+
+		//while (isOK) {// 循环发送登录请求，登录成功后改为isOK=false
+			getAuth("https://gd1.wlanportal.chinamobile.com:8443/LoginServlet?wlanuserip="
+					+ wlanuserip
+					+ "&wlanacname="
+					+ wlanacname
+					+ "&username=18800399005" + "&password=NGVQhY9P");
+//			try {
+//				Thread.sleep(10000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+		//}
+
+	}
+	
+	private void getAuth(String url) {
+
+		HttpClient httpclient = new DefaultHttpClient();
+		System.out.println(url + "????????????");
+		System.out.println(set_cookie3[0]);
+		System.out.println(set_cookie3[1]);
+		try {
+			// 创建httpget.
+			HttpGet httpget = new HttpGet(url);
+			httpget.addHeader("Cookie", "JSESSIONID=" + set_cookie3[0]);
+			httpget.addHeader("Cookie", "cookie_persiste=" + set_cookie3[1]);
+			httpget.addHeader("Host", "gd1.wlanportal.chinamobile.com:8443");
+			httpget.addHeader("Referer ", location);
+			httpget.addHeader("Connection", "keep-alive");
+			httpget.addHeader("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0");
+			HttpParams params = new BasicHttpParams();
+			// // 执行get请求.
+			HttpResponse response = httpclient.execute(httpget);
+			// // 获取响应状态
+			int statusCode = response.getStatusLine().getStatusCode();
+			// String set_cookie =
+			// response.getFirstHeader("Set-Cookie").getValue();
+
+			// 打印Cookie值
+			// System.out.println(set_cookie.substring(0,set_cookie.indexOf(";")));
+			// / System.out.println(set_cookie);
+			System.out.println("-------------------------------------"
+					+ statusCode);
+
+			if (statusCode == HttpStatus.SC_OK) { // 登录成功后获取响应的实体内容，
+				// 解析<span
+				// class="loginsuccess">登录成功</span>判断登录成功isOK=false;停止发送登录请求
+
+				HttpEntity entity = response.getEntity();
+				if (entity != null) { // 打印响应内容长度 //
+					System.out.println("Response content length: "
+							+ entity.getContentLength()); // 打印响应内容
+					System.out.println("Response content: "
+							+ EntityUtils.toString(entity));
+				}
+				// get(url);
+				List<Cookie> cookies = ((AbstractHttpClient) httpclient)
+						.getCookieStore().getCookies();
+				for (int i = 0; i < cookies.size(); i++) {
+
+					set_cookie3[i] = cookies.get(i).getValue().toString();
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Toast.makeText(context, "getAuth 失败", 1000).show();
+		} finally {
+			// 关闭连接,释放资源
+			httpclient.getConnectionManager().shutdown();
+		}
+		
+	}
 	/**
 	 * 获取登录认证
 	 * */

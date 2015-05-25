@@ -42,6 +42,7 @@ import android.os.IBinder;
  * @author yyjoy-mac3
  *
  */
+@Deprecated
 public class WIFIService extends Service {
 
 	private List<ScanResult> wifiList;

@@ -74,32 +74,32 @@ public class ListLinks {
 		 * 抓取域名
 		 */
         String domain="http://211.142.211.10/suiexingclient.jsp";
-//		File file = new File("resource/cmcc_edu_test.html");
-//		InputStream in = OUTSIDE?null:conn.getInputStream();   //通过输入流获得网站数据   
-//        
-//		try {
-//            // 一次读一个字节
-//            if(OUTSIDE)
-//                in = new FileInputStream(file);
-//            byte[] getData = readInputStream(in);     //获得网站的二进制数据  
-//            String data = new String(getData, OUTSIDE?"utf-8":"gb2312");  
-//            print("登录网页");
-//            print(data);
-//            Document doc = Jsoup.parse(data);//Jsoup.connect(url).get();
-//            Elements inputs = doc.select("input");
-//            for (Element input : inputs) {
-//            	if(input.attr("name").equals("url")){
-//            		domain=input.attr("value");
-//            		break;
-//            	}
-//            }
-//    	    print("网页抓取域名 %s", domain);
-//            in.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            print("网页抓取域名 %s", domain);
-//            return;
-//        }
+		File file = new File("resource/cmcc_edu_test.html");
+		InputStream in = OUTSIDE?null:conn.getInputStream();   //通过输入流获得网站数据   
+        
+		try {
+            // 一次读一个字节
+            if(OUTSIDE)
+                in = new FileInputStream(file);
+            byte[] getData = readInputStream(in);     //获得网站的二进制数据  
+            String data = new String(getData, OUTSIDE?"utf-8":"gb2312");  
+            print("登录网页");
+            print(data);
+            Document doc = Jsoup.parse(data);//Jsoup.connect(url).get();
+            Elements inputs = doc.select("input");
+            for (Element input : inputs) {
+            	if(input.attr("name").equals("url")){
+            		domain=input.attr("value");
+            		break;
+            	}
+            }
+    	    print("网页抓取域名 %s", domain);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            print("网页抓取域名 %s", domain);
+            return;
+        }
 
 		conn.disconnect();
 		
