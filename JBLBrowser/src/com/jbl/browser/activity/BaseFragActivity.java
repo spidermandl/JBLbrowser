@@ -11,6 +11,9 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.R;
 import com.jbl.browser.fragment.MainPageFragment;
 import com.jbl.browser.fragment.SettingPagerFragment;
+import com.jbl.browser.utils.BrightnessSettings;
+import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.JBLPreference.BoolType;
 
 /**
  * fragment activity 基类
@@ -20,6 +23,19 @@ import com.jbl.browser.fragment.SettingPagerFragment;
  */
 public abstract class BaseFragActivity extends SherlockFragmentActivity {
 
+	
+	@Override
+	protected void onCreate(Bundle arg0) {
+		
+	    //判断是夜间模式需再设置下activity亮度
+  		if(JBLPreference.getInstance(BaseFragActivity.this).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
+  			int brightness=JBLPreference.getInstance(BaseFragActivity.this).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
+  			BrightnessSettings.setBrightness(BaseFragActivity.this,brightness);
+  		}
+  		
+		super.onCreate(arg0);
+	}
+	
 	/**
      * Navigate to a specific fragment
      * 

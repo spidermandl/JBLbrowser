@@ -3,4 +3,10 @@
     <declare-styleable name="menu_item"> 
         <attr name="type" format="integer"/> 
     </declare-styleable> 
+    
+    <declare-styleable name="toggle_item"> 
+        <attr name="toggle_check" format="boolean"/> 
+        <attr name="toggle_valid" format="reference"/> 
+        <attr name="toggle_invalid" format="reference"/> 
+    </declare-styleable> 
 </resources>

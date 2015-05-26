@@ -163,11 +163,6 @@ public class DownloadManageActivity extends BaseFragActivity implements
 
 			ensureSomeGroupIsExpanded();
 		}
-		//判断是夜间模式需再设置下activity亮度
-  		if(JBLPreference.getInstance(DownloadManageActivity.this).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
-  			int brightness=JBLPreference.getInstance(DownloadManageActivity.this).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
-  			BrightnessSettings.setBrightness(DownloadManageActivity.this,brightness);
-  		}
 
 		chooseListToShow();
 	}
