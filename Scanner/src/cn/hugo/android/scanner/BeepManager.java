@@ -29,7 +29,6 @@ import cn.hugo.android.scanner.config.Config;
 
 import java.io.IOException;
 
-
 /**
  * Manages beeps and vibrations for {@link CaptureActivity}.
  */
