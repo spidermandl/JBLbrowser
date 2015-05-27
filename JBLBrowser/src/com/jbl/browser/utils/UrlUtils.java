@@ -16,6 +16,7 @@ public class UrlUtils {
 	public static final String URL_PERSONAL_MANAGEMENT = "http://m.hi2345.net/personalct.php?cid=";
 	
 	public static final String HOTPOT_NAME="CMCC-WEB";//"CMCC-EDU";//"YYJOY";//
+
 	/**服务器资源路径*/
 	public static String URL_HEAD2 =  null;
 	/**android服务器host*/

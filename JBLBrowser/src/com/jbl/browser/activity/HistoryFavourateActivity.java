@@ -69,11 +69,7 @@ public class HistoryFavourateActivity extends BaseSwapeActivity {
             mTabHost.setCurrentTabByTag(tag);
         }
 
-      //判断是夜间模式需再设置下activity亮度
-      		if(JBLPreference.getInstance(HistoryFavourateActivity.this).readInt(BoolType.BRIGHTNESS_TYPE.toString())==JBLPreference.NIGHT_MODEL){
-      			int brightness=JBLPreference.getInstance(HistoryFavourateActivity.this).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
-      			BrightnessSettings.setBrightness(HistoryFavourateActivity.this,brightness);
-      		}
+
 	}
 	
 	@Override

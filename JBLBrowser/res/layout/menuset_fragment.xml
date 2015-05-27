@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toggle="http://schemas.android.com/apk/res/com.jbl.browser"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/setting_scroll"
@@ -42,7 +43,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/gray"
-                    android:layout_marginRight="10dp"
                     android:layout_centerVertical="true"
                     android:drawableRight="@drawable/right_forward_cursor"/>
             </RelativeLayout>
@@ -64,19 +64,13 @@
                 android:paddingBottom="15dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
-                    android:text="@string/screen_intensity" />
+                    android:text="@string/screen_intensity" 
+                    android:drawableRight="@drawable/right_forward_cursor"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:drawableRight="@drawable/right_forward_cursor" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -107,17 +101,14 @@
                     android:gravity="center_vertical"
                     android:text="@string/default_browser" />
                 
-                <ToggleButton
+                <com.jbl.browser.view.ToggleImageView
                     android:id="@+id/settings_default"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/selector_default_browser"
-                    android:text=""
-                    android:textOff=""
-                    android:textOn="" />
+                    toggle:toggle_valid="@drawable/checkbox_iphone_style_on"
+                    toggle:toggle_invalid="@drawable/checkbox_iphone_style_off"/>
             </RelativeLayout>
 			<View
                 android:layout_width="match_parent"
@@ -129,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"             
                 android:background="@drawable/setting_item_seletor"
-               android:paddingTop="15dp"
+                android:paddingTop="15dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp" 
                 android:paddingBottom="15dp" >
@@ -139,7 +130,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
-                    android:layout_marginRight="10dp"
                     android:drawableRight="@drawable/right_forward_cursor"
                     android:text="@string/about_us" />
             </RelativeLayout>

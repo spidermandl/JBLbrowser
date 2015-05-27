@@ -10,19 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.utils.BrightnessSettings;
 import com.jbl.browser.utils.JBLPreference;
-import com.jbl.browser.utils.JBLPreference.BoolType;
 import com.jbl.browser.utils.StringUtils;
+import com.jbl.browser.view.ToggleImageView;
 
 /**
  * 菜单设置选项fragment
@@ -31,7 +28,8 @@ public class MenuSettingFragment extends SherlockFragment {
 	
 	public final static String TAG="MenuSettingFragment";
 	//菜单设置选项内容 1 字体大小 2屏幕亮度 3默认浏览器 4 关于我们 5 清除数据 6恢复默认设置
-	private ToggleButton mMenuSettingbrowse;
+	private RelativeLayout defBrowser; 
+	private ToggleImageView mMenuSettingbrowse;
 	private RelativeLayout mMenuSetFont,mMenuSetIntensity,mMenuSetAbout;
 	private TextView mMenuSetClear,mMentSetSetting;
 	private AlertDialog dialog;
@@ -52,7 +50,8 @@ public class MenuSettingFragment extends SherlockFragment {
 		mMenuSetAbout=(RelativeLayout)view.findViewById(R.id.about_us);
 		mMenuSetClear=(TextView)view.findViewById(R.id.clear_data);
 		mMentSetSetting=(TextView)view.findViewById(R.id.restore_settings);
-		mMenuSettingbrowse=(ToggleButton)view.findViewById(R.id.settings_default);
+		mMenuSettingbrowse=(ToggleImageView)view.findViewById(R.id.settings_default);
+		defBrowser=(RelativeLayout)view.findViewById(R.id.default_browser);
 		TextView font_valuse=(TextView)view.findViewById(R.id.font_valuse);
 		int fontValuse=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.FONT_TYPE);
 		
@@ -118,7 +117,7 @@ public class MenuSettingFragment extends SherlockFragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				JBLPreference.getInstance(getActivity()).writeInt(BoolType.BRIGHTNESS_TYPE.toString(),JBLPreference.NIGHT_MODEL);
+				//JBLPreference.getInstance(getActivity()).writeInt(BoolType.BRIGHTNESS_TYPE.toString(),JBLPreference.NIGHT_MODEL);
 				BrightnessSettings.showPopSeekBrightness(getActivity());
 				
 			}
@@ -151,16 +150,11 @@ public class MenuSettingFragment extends SherlockFragment {
 			}
 		});
 		//监听设置默认浏览器滑动开关
-		mMenuSettingbrowse.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		defBrowser.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				// TODO Auto-generated method stub
-				if(isChecked){           //当打开默认浏览器
-					
-				}else{                   //关闭默认浏览器
-					
-				}
+			public void onClick(View v) {
+				mMenuSettingbrowse.setToggle();
 			}
 		});
 		return view;

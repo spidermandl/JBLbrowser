@@ -21,10 +21,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 
 import com.actionbarsherlock.view.Window;
 import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
+import com.jbl.browser.activity.WIFIService.IWifiService;
+import com.jbl.browser.activity.WIFIService.WIFIStatus;
 import com.jbl.browser.db.UserInfoDao;
 import com.jbl.browser.fragment.AuthFragment;
 import com.jbl.browser.fragment.MainPageFragment;
@@ -50,31 +53,120 @@ public class MainFragActivity extends BaseFragActivity {
 	private BroadcastReceiver mDownloadReceiver;
 	
 	
-	private WifiManager wifiManager;
-	private List<ScanResult> wifiList;
-	private List<String> passableHotsPot;
+//	private WifiManager wifiManager;
+//	private List<ScanResult> wifiList;
+//	private List<String> passableHotsPot;
 	
 	private ProgressDialog pd;
+	private AlertDialog.Builder wifiWarning;
 	
+//	BusinessCallback callback=new BusinessCallback() {
+//		
+//		@Override
+//		public void fail(ErrorInfo e) {
+//			pd.dismiss();
+//			enter();
+//		}
+//		
+//		@Override
+//		public void error(ErrorInfo e) {
+//			pd.dismiss();
+//			enter();
+//		}
+//		
+//		@Override
+//		public void complete(Bundle values) {
+//			pd.dismiss();
+//			enter();
+//		}
+//	};
 	
-	BusinessCallback callback=new BusinessCallback() {
+	private IWifiService iWifiService;
+	private Handler statusHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			WIFIStatus status=(WIFIStatus)msg.obj;
+			if(status!=null){
+				switch (status) {
+				case CHECKED:
+					if(wifiWarning==null){
+						wifiWarning=new AlertDialog.Builder(MainFragActivity.this)
+					     .setTitle(R.string.cmcc_edu_warning)
+					     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						
+						     @Override
+						     public void onClick(DialogInterface dialog, int which) {
+							
+							     iWifiService.startConnection();
+							     pd = new ProgressDialog(MainFragActivity.this);
+			                     pd.setMessage("正在连接wifi...");
+			                     pd.setCancelable(false);
+			                     pd.show();
+						     }
+					      })
+					     .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+						
+						     @Override
+						     public void onClick(DialogInterface dialog, int which) {
+							     enter();
+							
+						     }
+					      });
+						wifiWarning.show();
+					}
+					break;
+				case CONNECTED:
+					if(pd!=null&&pd.isShowing()){
+						pd.setMessage("正在验证...");
+						break;
+					}
+					pd = new ProgressDialog(MainFragActivity.this);
+					pd.setMessage("正在验证...");
+                    pd.setCancelable(false);
+                    pd.show();
+					
+					
+					break;
+				case FAILED:
+					if(pd!=null&&pd.isShowing()){
+						pd.dismiss();
+					}
+					enter();
+					break;
+				case AUTHORITHED:
+					if(pd!=null&&pd.isShowing()){
+						pd.dismiss();
+					}
+					enter();
+					break;
+				default:
+					break;
+				}
+			}
+		};
+	};
+	
+	Runnable wifiTestRun=new Runnable() {
 		
 		@Override
-		public void fail(ErrorInfo e) {
-			pd.dismiss();
-			enter();
-		}
-		
-		@Override
-		public void error(ErrorInfo e) {
-			pd.dismiss();
-			enter();
-		}
-		
-		@Override
-		public void complete(Bundle values) {
-			pd.dismiss();
-			enter();
+		public void run() {
+			while (true) {
+				if(iWifiService!=null){
+				     WIFIStatus status=iWifiService.getWifiStatus();
+				     Message msg=new Message();
+				     msg.obj=status;
+				     statusHandler.sendMessage(msg);
+				     if(status==WIFIStatus.AUTHORITHED||status==WIFIStatus.FAILED){
+				    	 return;
+				     }
+				}
+				try {
+					Thread.sleep(1000L);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
 		}
 	};
 	
@@ -82,13 +174,13 @@ public class MainFragActivity extends BaseFragActivity {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-           // countService = (ICountService) service;
+        	iWifiService = (IWifiService) service;
             
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            //countService = null ;
+        	iWifiService = null ;
         }
 
     };
@@ -103,47 +195,53 @@ public class MainFragActivity extends BaseFragActivity {
 		init();
 		super.onCreate(arg0);
 		
-		if(passableHotsPot!=null&&passableHotsPot.size()>0){
-			new AlertDialog.Builder(MainFragActivity.this)
-			.setTitle(R.string.cmcc_edu_warning)
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					
-					WifiConfiguration wifiConfig = setWifiParams(passableHotsPot.get(0));
-					int wcgID = wifiManager.addNetwork(wifiConfig);
-					boolean flag = wifiManager.enableNetwork(wcgID, true);
-
-			        WifiInfo info = wifiManager.getConnectionInfo();
-			        String wifiId = info != null ? info.getSSID() : null;
-			        //if(wifiId!=null&&!wifiId.contains(UrlUtils.HOTPOT_NAME)){//判断wifi是否已经连接
-
-					if(flag||(wifiId!=null&&!wifiId.contains(UrlUtils.HOTPOT_NAME))){
-						BusinessTool.getInstance().getLogin(callback);
-						pd = new ProgressDialog(MainFragActivity.this);
-	                    pd.setMessage("正在连接...");
-	                    pd.setCancelable(false);
-	                    pd.show();
-					}else{
-						enter();
-					}
-					
-				}
-			})
-			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					enter();
-					
-				}
-			})
-			.show();
-		}
-		else{
+		if(!JBLApplication.getInstance().isEntering()){//非第一次进入程序
 			enter();
+			return;
 		}
+		
+		new Thread(wifiTestRun).start();
+//		if(passableHotsPot!=null&&passableHotsPot.size()>0){//第一次进入程序 wifi检测
+//			new AlertDialog.Builder(MainFragActivity.this)
+//			.setTitle(R.string.cmcc_edu_warning)
+//			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//				
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//					
+//					WifiConfiguration wifiConfig = setWifiParams(passableHotsPot.get(0));
+//					int wcgID = wifiManager.addNetwork(wifiConfig);
+//					boolean flag = wifiManager.enableNetwork(wcgID, true);
+//
+//			        WifiInfo info = wifiManager.getConnectionInfo();
+//			        String wifiId = info != null ? info.getSSID() : null;
+//			        //if(wifiId!=null&&!wifiId.contains(UrlUtils.HOTPOT_NAME)){//判断wifi是否已经连接
+//
+//					if(flag||(wifiId!=null&&!wifiId.contains(UrlUtils.HOTPOT_NAME))){
+//						BusinessTool.getInstance().getLogin(callback);
+//						pd = new ProgressDialog(MainFragActivity.this);
+//	                    pd.setMessage("正在连接...");
+//	                    pd.setCancelable(false);
+//	                    pd.show();
+//					}else{
+//						enter();
+//					}
+//					
+//				}
+//			})
+//			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+//				
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//					enter();
+//					
+//				}
+//			})
+//			.show();
+//		}
+//		else{
+//			enter();
+//		}
 
 	}
 	
@@ -153,7 +251,7 @@ public class MainFragActivity extends BaseFragActivity {
 	 */
 	void init(){
 		//开启wifi检测服务
-		//this.bindService(new Intent(this,WIFIService.class), this.serviceConnection, BIND_AUTO_CREATE);
+		this.bindService(new Intent(this,WIFIService.class), this.serviceConnection, BIND_AUTO_CREATE);
 		startDownloadService();
 		mDownloadManager = new DownloadManager(getContentResolver(),getPackageName());
 		mDownloadReceiver = new BroadcastReceiver() {
@@ -165,9 +263,9 @@ public class MainFragActivity extends BaseFragActivity {
 		};
 		
 		//检测wifi连接名
-		wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-		wifiList = wifiManager.getScanResults();
-		onReceiveNewNetworks(wifiList);
+//		wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+//		wifiList = wifiManager.getScanResults();
+//		onReceiveNewNetworks(wifiList);
 		
 	}
 	
@@ -181,31 +279,38 @@ public class MainFragActivity extends BaseFragActivity {
 		    navigateTo(MainPageFragment.class, null, true, TAG);
 	}
 	
-	/* 当搜索到新的wifi热点时判断该热点是否符合规格 */
-	private void onReceiveNewNetworks(List<ScanResult> wifiList) {
-		if(wifiList == null || wifiList.size() == 0)
-			return;
-		passableHotsPot = new ArrayList<String>();
-		for (ScanResult result : wifiList) {
-			System.out.println(result.SSID);
-			if ((result.SSID).contains(UrlUtils.HOTPOT_NAME)){
-		        WifiInfo info = wifiManager.getConnectionInfo();
-		        String wifiId = info != null ? info.getSSID() : null;
-		        //if(wifiId!=null&&!wifiId.contains(UrlUtils.HOTPOT_NAME)){//判断wifi是否已经连接
-				    passableHotsPot.add(result.SSID);
-		        //}
-			}
-		}
-	}
-	/* 设置要连接的热点的参数 */
-	private WifiConfiguration setWifiParams(String ssid) {
-		WifiConfiguration apConfig = new WifiConfiguration();
-		apConfig.SSID = "\"" + ssid + "\"";
-        apConfig.wepKeys[0] = "";  
-        apConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);  
-        apConfig.wepTxKeyIndex = 0;  
-		return apConfig;
-	}
+//	/* 当搜索到新的wifi热点时判断该热点是否符合规格 */
+//	private void onReceiveNewNetworks(List<ScanResult> wifiList) {
+//		if(wifiList == null || wifiList.size() == 0)
+//			return;
+//		passableHotsPot = new ArrayList<String>();
+//		for (ScanResult result : wifiList) {
+//			System.out.println(result.SSID);
+//			if ((result.SSID).contains(UrlUtils.HOTPOT_NAME)){
+//		        WifiInfo info = wifiManager.getConnectionInfo();
+//		        String wifiId = info != null ? info.getSSID() : null;
+//		        //if(wifiId!=null&&!wifiId.contains(UrlUtils.HOTPOT_NAME)){//判断wifi是否已经连接
+//				    passableHotsPot.add(result.SSID);
+//		        //}
+//			}
+//		}
+//	}
+//	/* 设置要连接的热点的参数 */
+//	private WifiConfiguration setWifiParams(String ssid) {
+//		WifiConfiguration config = new WifiConfiguration();     
+//        config.allowedAuthAlgorithms.clear();   
+//        config.allowedGroupCiphers.clear();   
+//        config.allowedKeyManagement.clear();   
+//        config.allowedPairwiseCiphers.clear();   
+//        config.allowedProtocols.clear();   
+//        config.SSID = "\"" + ssid + "\"";     
+//        
+//        //config.wepKeys[0] = "";   
+//        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);   
+//        //config.wepTxKeyIndex = 0;
+//  
+//		return config;
+//	}
 	
 	@Override
 	protected void onStart() {
@@ -224,7 +329,7 @@ public class MainFragActivity extends BaseFragActivity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		//this.unbindService(this.serviceConnection);
+		this.unbindService(this.serviceConnection);
 		JBLApplication.getInstance().quit();
 	}
 	/**
