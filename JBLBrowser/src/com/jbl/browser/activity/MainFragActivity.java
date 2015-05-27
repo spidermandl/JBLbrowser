@@ -200,48 +200,7 @@ public class MainFragActivity extends BaseFragActivity {
 			return;
 		}
 		
-		new Thread(wifiTestRun).start();
-//		if(passableHotsPot!=null&&passableHotsPot.size()>0){//第一次进入程序 wifi检测
-//			new AlertDialog.Builder(MainFragActivity.this)
-//			.setTitle(R.string.cmcc_edu_warning)
-//			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//				
-//				@Override
-//				public void onClick(DialogInterface dialog, int which) {
-//					
-//					WifiConfiguration wifiConfig = setWifiParams(passableHotsPot.get(0));
-//					int wcgID = wifiManager.addNetwork(wifiConfig);
-//					boolean flag = wifiManager.enableNetwork(wcgID, true);
-//
-//			        WifiInfo info = wifiManager.getConnectionInfo();
-//			        String wifiId = info != null ? info.getSSID() : null;
-//			        //if(wifiId!=null&&!wifiId.contains(UrlUtils.HOTPOT_NAME)){//判断wifi是否已经连接
-//
-//					if(flag||(wifiId!=null&&!wifiId.contains(UrlUtils.HOTPOT_NAME))){
-//						BusinessTool.getInstance().getLogin(callback);
-//						pd = new ProgressDialog(MainFragActivity.this);
-//	                    pd.setMessage("正在连接...");
-//	                    pd.setCancelable(false);
-//	                    pd.show();
-//					}else{
-//						enter();
-//					}
-//					
-//				}
-//			})
-//			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-//				
-//				@Override
-//				public void onClick(DialogInterface dialog, int which) {
-//					enter();
-//					
-//				}
-//			})
-//			.show();
-//		}
-//		else{
-//			enter();
-//		}
+		new Thread(wifiTestRun).start();//开启检测wifi验证服务
 
 	}
 	
@@ -278,39 +237,6 @@ public class MainFragActivity extends BaseFragActivity {
 		}else
 		    navigateTo(MainPageFragment.class, null, true, TAG);
 	}
-	
-//	/* 当搜索到新的wifi热点时判断该热点是否符合规格 */
-//	private void onReceiveNewNetworks(List<ScanResult> wifiList) {
-//		if(wifiList == null || wifiList.size() == 0)
-//			return;
-//		passableHotsPot = new ArrayList<String>();
-//		for (ScanResult result : wifiList) {
-//			System.out.println(result.SSID);
-//			if ((result.SSID).contains(UrlUtils.HOTPOT_NAME)){
-//		        WifiInfo info = wifiManager.getConnectionInfo();
-//		        String wifiId = info != null ? info.getSSID() : null;
-//		        //if(wifiId!=null&&!wifiId.contains(UrlUtils.HOTPOT_NAME)){//判断wifi是否已经连接
-//				    passableHotsPot.add(result.SSID);
-//		        //}
-//			}
-//		}
-//	}
-//	/* 设置要连接的热点的参数 */
-//	private WifiConfiguration setWifiParams(String ssid) {
-//		WifiConfiguration config = new WifiConfiguration();     
-//        config.allowedAuthAlgorithms.clear();   
-//        config.allowedGroupCiphers.clear();   
-//        config.allowedKeyManagement.clear();   
-//        config.allowedPairwiseCiphers.clear();   
-//        config.allowedProtocols.clear();   
-//        config.SSID = "\"" + ssid + "\"";     
-//        
-//        //config.wepKeys[0] = "";   
-//        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);   
-//        //config.wepTxKeyIndex = 0;
-//  
-//		return config;
-//	}
 	
 	@Override
 	protected void onStart() {

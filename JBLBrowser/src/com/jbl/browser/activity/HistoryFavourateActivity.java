@@ -13,9 +13,6 @@ import com.jbl.browser.R;
 import com.jbl.browser.fragment.BookMarkFragment;
 import com.jbl.browser.fragment.HistoryFragment;
 import com.jbl.browser.interfaces.deleteHistory;
-import com.jbl.browser.utils.BrightnessSettings;
-import com.jbl.browser.utils.JBLPreference;
-import com.jbl.browser.utils.JBLPreference.BoolType;
 
 /**
  * 

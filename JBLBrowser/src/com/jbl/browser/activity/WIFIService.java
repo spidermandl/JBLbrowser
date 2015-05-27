@@ -15,12 +15,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-
-
-
-
-
-
 import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.tools.BusinessCallback;
 import com.jbl.browser.tools.BusinessTool;
@@ -135,8 +129,8 @@ public class WIFIService extends Service {
 		        if(wifiId!=null&&wifiId.contains(UrlUtils.HOTPOT_NAME)){
 		        	mHanlder.sendEmptyMessage(0);
 		        	wStatus=WIFIStatus.CONNECTED;
-		        	wifiThread=null;
-		        	return;
+//		        	wifiThread=null;
+//		        	return;
 		        }
 		        
 				try {
