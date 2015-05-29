@@ -1119,6 +1119,7 @@ public class BusinessTool {
 				break;
 			}
 		} catch (Exception e) {
+			myHandler.sendEmptyMessage(FAIL);
 			e.printStackTrace();
 
 		}

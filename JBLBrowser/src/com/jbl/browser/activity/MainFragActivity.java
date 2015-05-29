@@ -60,33 +60,15 @@ public class MainFragActivity extends BaseFragActivity {
 	private ProgressDialog pd;
 	private AlertDialog.Builder wifiWarning;
 	
-//	BusinessCallback callback=new BusinessCallback() {
-//		
-//		@Override
-//		public void fail(ErrorInfo e) {
-//			pd.dismiss();
-//			enter();
-//		}
-//		
-//		@Override
-//		public void error(ErrorInfo e) {
-//			pd.dismiss();
-//			enter();
-//		}
-//		
-//		@Override
-//		public void complete(Bundle values) {
-//			pd.dismiss();
-//			enter();
-//		}
-//	};
-	
 	private IWifiService iWifiService;
 	private Handler statusHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			WIFIStatus status=(WIFIStatus)msg.obj;
 			if(status!=null){
 				switch (status) {
+				case UNREACH:
+					enter();
+					break;
 				case CHECKED:
 					if(wifiWarning==null){
 						wifiWarning=new AlertDialog.Builder(MainFragActivity.this)
@@ -145,6 +127,9 @@ public class MainFragActivity extends BaseFragActivity {
 		};
 	};
 	
+	/**
+	 * 检测wifi扫描service的进度状态
+	 */
 	Runnable wifiTestRun=new Runnable() {
 		
 		@Override
