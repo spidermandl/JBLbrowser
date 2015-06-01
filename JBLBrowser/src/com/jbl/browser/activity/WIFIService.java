@@ -279,31 +279,6 @@ public class WIFIService extends Service {
 				wifiThread.start();
 			}
 		}
-//		if(flag){
-//			WifiInfo info=wifiManager.getConnectionInfo();
-//			BusinessTool.getInstance().getLogin(new BusinessCallback() {
-//				
-//				@Override
-//				public void fail(ErrorInfo e) {
-//					isFirstLogin=false;
-//				}
-//				
-//				@Override
-//				public void error(ErrorInfo e) {
-//					isFirstLogin=false;
-//				}
-//				
-//				@Override
-//				public void complete(Bundle values) {
-//					isAuthed=true;
-//					isFirstLogin=false;
-//					
-//				}
-//			}, info.getBSSID(), int2ip(info.getIpAddress()));
-//		}else{
-//			isFirstLogin=false;
-//		}
-		System.out.println("connect success? " + flag);
 	}
 
 	/* 设置要连接的热点的参数 */
@@ -336,6 +311,7 @@ public class WIFIService extends Service {
 	/**
 	 * Http URL重定向
 	 */
+	@Deprecated
 	private static void redirect02() {
 		DefaultHttpClient httpclient = null;
 		String url = "http://hotels.ctrip.com/hotel/hong-kong58";
@@ -409,6 +385,7 @@ public class WIFIService extends Service {
 	/**
 	 * 发送 get请求
 	 */
+	@Deprecated
 	private static void get(String url) {
 
 		HttpClient httpclient = new DefaultHttpClient();
