@@ -34,6 +34,7 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 
 /**
  * wifi connect service
@@ -56,14 +57,22 @@ public class WIFIService extends Service {
 		
 		@Override
 		public void fail(ErrorInfo e) {
+			//isAuthing=false;
+			Log.e("fail", "fail");
+			wStatus=WIFIStatus.FAILED;
 		}
 		
 		@Override
 		public void error(ErrorInfo e) {
+			//isAuthing=false;
+			Log.e("fail", "fail");
+			wStatus=WIFIStatus.FAILED;
 		}
 		
 		@Override
 		public void complete(Bundle values) {
+			Log.e("complete", "complete");
+			//isAuthing=false;
 			wStatus=WIFIStatus.AUTHORITHED;
 		}
 	};
@@ -113,12 +122,21 @@ public class WIFIService extends Service {
 			return String.valueOf("wifi_status_type_"+this.nCode);
 		}
 	};
-	
+	boolean isAuthing=false;
 	Handler mHanlder =new Handler(){
 		public void handleMessage(android.os.Message msg) {
-			BusinessTool.getInstance().getLogin(callback);
+			if(!isAuthing){
+				isAuthing=true;
+				Log.e("登录验证开始", "登录验证开始");
+				
+				BusinessTool.getInstance().getLogin(callback);
+			}
 		};
 	};
+	
+	/**
+	 * 检测wifi网路连接ssid
+	 */
 	Runnable wifiTestRun = new Runnable() {
 		
 		@Override

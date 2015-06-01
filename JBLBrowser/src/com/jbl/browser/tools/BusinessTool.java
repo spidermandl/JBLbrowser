@@ -24,6 +24,11 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.jivesoftware.smack.sasl.SASLMechanism.Success;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import android.app.Activity;
 import android.content.Context;
@@ -1024,6 +1029,7 @@ public class BusinessTool {
    //boolean isOK = true;// 登录是否成功
    String wlanacname = null; 
    String wlanuserip = null;
+   String logonsessid;
    
 	/**
 	 * 获取登录认证
@@ -1035,14 +1041,25 @@ public class BusinessTool {
 			public void run() {
 				BusinessTool.this.callback = callback;
 				
-				
-				if(!getLocationMethod1("http://www.m.baidu.com")){
+				switch (UrlUtils.WIFI_LOCATION) {
+				case SHANGHAI:
+					if(!getLocationMethod1("http://www.m.baidu.com")){
+						myHandler.sendEmptyMessage(FAIL);
+					}
+					if (location != null) {// location说明获取登录请求成功
+						parseParam(location);// 开始解析登录url参数并且登录
+						myHandler.sendEmptyMessage(COMPLETE);
+					}
+				    break;
+					
+				case CHANGSHA:
+					getLocationMethod1("http://www.m.baidu.com");
+					break;
+				default:
 					myHandler.sendEmptyMessage(FAIL);
+					break;
 				}
-				if (location != null) {// location说明获取登录请求成功
-					parseParam(location);// 开始解析登录url参数并且登录
-					myHandler.sendEmptyMessage(COMPLETE);
-				}
+				
 			}
 		}).start();
 	}
@@ -1065,12 +1082,44 @@ public class BusinessTool {
 				Header locationHeader = response.getFirstHeader("Location");
 				if (locationHeader != null) {
 					locationtemp = locationHeader.getValue();
-					return getLocationMethod2(locationtemp);
+					switch (UrlUtils.WIFI_LOCATION) {
+					case SHANGHAI:
+
+					    return getLocationMethod2(locationtemp);
+						
+					case CHANGSHA:
+						getLocationMethod1(location);
+						break;
+					default:
+						return getLocationMethod2(locationtemp);
+					}
+
 				}
 
 			}
 
+			switch (UrlUtils.WIFI_LOCATION) {
+			case SHANGHAI:
+
+			    break;
+				
+			case CHANGSHA:
+				if (responseCode == 200) {
+					HttpEntity entity = response.getEntity();
+					if (entity != null) { // 打印响应内容长度 //
+						// parserparam(EntityUtils.toString(entity));
+						parseParam(location);
+						break;
+					}
+				}
+				myHandler.sendEmptyMessage(FAIL);
+				break;
+			default:
+				myHandler.sendEmptyMessage(FAIL);
+				break;
+			}
 		} catch (Exception e) {
+			myHandler.sendEmptyMessage(FAIL);
 			e.printStackTrace();
 
 		}
@@ -1202,29 +1251,47 @@ public class BusinessTool {
 		// https://gd1.wlanportal.chinamobile.com:8443/LoginServlet?wlanuserip=100.99.73.5&
 		// wlanacname=1232.0021.210.00&username=13916177061&password=969rCr7N
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("wlanuserip", wlanuserip));
-		params.add(new BasicNameValuePair("wlanacname", wlanacname));
-		params.add(new BasicNameValuePair("username", "18800399005"));
-		params.add(new BasicNameValuePair("password", "NGVQhY9P"));
+		switch (UrlUtils.WIFI_LOCATION) {
+		case SHANGHAI:
 
-		// get(location);
-		// doPost("https://gd1.wlanportal.chinamobile.com:8443/LoginServlet",
-		// / params, set_cookie[0]);
+			params.add(new BasicNameValuePair("wlanuserip", wlanuserip));
+			params.add(new BasicNameValuePair("wlanacname", wlanacname));
+			params.add(new BasicNameValuePair("username", "18800399005"));
+			params.add(new BasicNameValuePair("password", "NGVQhY9P"));
 
-		//while (isOK) {// 循环发送登录请求，登录成功后改为isOK=false
+			// get(location);
+			// doPost("https://gd1.wlanportal.chinamobile.com:8443/LoginServlet",
+			// / params, set_cookie[0]);
+
+			// while (isOK) {// 循环发送登录请求，登录成功后改为isOK=false
 			getAuth("https://gd1.wlanportal.chinamobile.com:8443/LoginServlet?wlanuserip="
 					+ wlanuserip
 					+ "&wlanacname="
 					+ wlanacname
 					+ "&username=18800399005" + "&password=NGVQhY9P");
-//			try {
-//				Thread.sleep(10000);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-		//}
+			// try {
+			// Thread.sleep(10000);
+			// } catch (InterruptedException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
+			// }
 
+			break;
+
+		case CHANGSHA:
+			params.add(new BasicNameValuePair("wlanuserip", wlanuserip));
+			params.add(new BasicNameValuePair("wlanacname", wlanacname));
+			params.add(new BasicNameValuePair("PWD", "cxw@013"));
+			params.add(new BasicNameValuePair("USER", "test_cxw"));
+			params.add(new BasicNameValuePair("actiontype", "LOGIN"));
+
+			getAuth("http://211.142.211.10/suiexingclient.jsp",
+					params);
+			break;
+		default:
+			break;
+		}
 	}
 	
 	private void getAuth(String url) {
@@ -1289,6 +1356,54 @@ public class BusinessTool {
 		}
 		
 	}
+	
+	private String getAuth(String url, List<NameValuePair> params) {
+		int responseCode = 0;
+		/* 建立HTTPost对象 */
+		String strResult = null;
+		HttpPost httpRequest = new HttpPost(url);
+		try {
+			/* 添加请求参数到请求对象 */
+
+			httpRequest.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+			/* 发送请求并等待响应 */
+			HttpResponse httpResponse = new DefaultHttpClient()
+					.execute(httpRequest);
+			responseCode = httpResponse.getStatusLine().getStatusCode();
+			System.out.println(responseCode);
+			/* 若状态码为200 ok */
+			switch (responseCode) {
+			case 200:
+				/* 读返回数据 */
+				strResult = EntityUtils.toString(httpResponse.getEntity());
+				byte[] getData = strResult.getBytes(); // 获得网站的二进制数据
+				String data = new String(getData, "gb2312");
+				//System.out.println(data);
+				Document doc = Jsoup.parse(data);// Jsoup.connect(url).get();
+				Elements inputs = doc.select("input");
+				for (Element input : inputs) {
+					if (input.attr("name").equals("logonsessid")) {
+						logonsessid = input.attr("value");
+						break;
+					}
+				}
+				Log.e(logonsessid,"logonsessid------------");
+				Log.e("strResult",strResult);
+				myHandler.sendEmptyMessage(COMPLETE);
+				break;
+
+			default:
+				myHandler.sendEmptyMessage(FAIL);
+				break;
+			}
+
+		} catch (Exception e) {
+			myHandler.sendEmptyMessage(FAIL);
+			e.printStackTrace();
+		}
+		return strResult;
+	}
+	
 	/**
 	 * 获取登录认证
 	 * */

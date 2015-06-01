@@ -66,6 +66,9 @@ public class MainFragActivity extends BaseFragActivity {
 			WIFIStatus status=(WIFIStatus)msg.obj;
 			if(status!=null){
 				switch (status) {
+				case UNREACH:
+					enter();
+					break;
 				case CHECKED:
 					if(wifiWarning==null){
 						wifiWarning=new AlertDialog.Builder(MainFragActivity.this)
@@ -124,6 +127,9 @@ public class MainFragActivity extends BaseFragActivity {
 		};
 	};
 	
+	/**
+	 * 检测wifi扫描service的进度状态
+	 */
 	Runnable wifiTestRun=new Runnable() {
 		
 		@Override
