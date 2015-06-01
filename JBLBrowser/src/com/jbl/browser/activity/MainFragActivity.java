@@ -60,27 +60,6 @@ public class MainFragActivity extends BaseFragActivity {
 	private ProgressDialog pd;
 	private AlertDialog.Builder wifiWarning;
 	
-//	BusinessCallback callback=new BusinessCallback() {
-//		
-//		@Override
-//		public void fail(ErrorInfo e) {
-//			pd.dismiss();
-//			enter();
-//		}
-//		
-//		@Override
-//		public void error(ErrorInfo e) {
-//			pd.dismiss();
-//			enter();
-//		}
-//		
-//		@Override
-//		public void complete(Bundle values) {
-//			pd.dismiss();
-//			enter();
-//		}
-//	};
-	
 	private IWifiService iWifiService;
 	private Handler statusHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
