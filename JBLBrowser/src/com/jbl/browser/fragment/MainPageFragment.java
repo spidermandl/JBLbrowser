@@ -459,10 +459,9 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	@Override
 	public void quit() {  //退出跳出对话框确定
-		int edu_flag=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.EDU_KEY);
 		Dialog dialog=new AlertDialog.Builder(getActivity())
 		.setTitle(R.string.quit)
-		.setMessage(edu_flag==1?R.string.edu_quit:R.string.confirm_quit)
+		.setMessage(R.string.confirm_quit)
 		.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
