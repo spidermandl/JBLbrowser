@@ -1046,14 +1046,14 @@ public class BusinessTool {
 				
 				switch (UrlUtils.WIFI_LOCATION) {
 				case SHANGHAI:
-					/*if(!getLocationMethod1("http://www.m.baidu.com")){
+					if(!getLocationMethod1("http://www.m.baidu.com")){
 						myHandler.sendEmptyMessage(FAIL);
 					}
 					if (location != null) {// location说明获取登录请求成功
 						parseParam(location);// 开始解析登录url参数并且登录
 						myHandler.sendEmptyMessage(COMPLETE);
 					}
-				    break;*/
+				    break;
 					
 				case CHANGSHA:
 					/*if(!getLocationMethod1("http://www.m.baidu.com")){
@@ -1074,6 +1074,7 @@ public class BusinessTool {
 			}
 		}).start();
 	}
+	
 	public void getLocationMethod11(String reqUrl) {
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 
@@ -1134,8 +1135,7 @@ public class BusinessTool {
 				Header locationHeader = response.getFirstHeader("Location");
 				if (locationHeader != null) {
 					locationtemp = locationHeader.getValue();
-					return getLocationMethod2(locationtemp);
-					/*switch (UrlUtils.WIFI_LOCATION) {
+					switch (UrlUtils.WIFI_LOCATION) {
 					case SHANGHAI:
 
 					    return getLocationMethod2(locationtemp);
@@ -1146,20 +1146,22 @@ public class BusinessTool {
 						
 					default:
 						return getLocationMethod2(locationtemp);
-					}*/
+					}
 
 				}
-				/*if (responseCode == 200) {
-					HttpEntity entity = response.getEntity();
-					if (entity != null) { // 打印响应内容长度 //
-						// parserparam(EntityUtils.toString(entity));
-						parseParam(location);
-						System.out.println(location + "------------");
-					}
-				}*/
+
 
 			}
 
+			if (responseCode == 200) {
+				HttpEntity entity = response.getEntity();
+				if (entity != null) { // 打印响应内容长度 //
+					// parserparam(EntityUtils.toString(entity));
+					parseParam(location);
+					System.out.println(location + "------------");
+				}
+			}
+			
 			switch (UrlUtils.WIFI_LOCATION) {
 			case SHANGHAI:
 
@@ -1512,25 +1514,31 @@ public class BusinessTool {
 		}
 		return strResult;
 	}
+
 	// wifi的信息存储到数据库中
-		public void putWifi(List<String> info) {
-			JBLPreference.getInstance(getContext()).writeString("wlanacname", info.get(0));
-			JBLPreference.getInstance(getContext()).writeString("wlanuserip", info.get(1));
-			JBLPreference.getInstance(getContext()).writeString("logonsessid", info.get(2));
-			System.out.println(info.get(0) + info.get(1) + info.get(2)
-					+ "rrrrrrrrrrr");
-		}
-		// 获取wifi的信息
-		public  List<String> getWifi() {
-			List<String> info = new ArrayList<String>();
-			String wlanacname = JBLPreference.getInstance(getContext()).readString("wlanacname");// 如果没有数值，默认是空值
-			String wlanuserip = JBLPreference.getInstance(getContext()).readString("wlanuserip");// 如果没有数值，默认是空值
-			String logonsessid = JBLPreference.getInstance(getContext()).readString("logonsessid");// 如果没有数值，默认是空值
-			info.add(wlanacname);
-			info.add(wlanuserip);
-			info.add(logonsessid);
-			return info;
-		}
+	public void putWifi(List<String> info) {
+		JBLPreference.getInstance(getContext()).writeString("wlanacname",
+				info.get(0));
+		JBLPreference.getInstance(getContext()).writeString("wlanuserip",
+				info.get(1));
+		JBLPreference.getInstance(getContext()).writeString("logonsessid",
+				info.get(2));
+	}
+
+	// 获取wifi的信息
+	public List<String> getWifi() {
+		List<String> info = new ArrayList<String>();
+		String wlanacname = JBLPreference.getInstance(getContext()).readString(
+				"wlanacname");// 如果没有数值，默认是空值
+		String wlanuserip = JBLPreference.getInstance(getContext()).readString(
+				"wlanuserip");// 如果没有数值，默认是空值
+		String logonsessid = JBLPreference.getInstance(getContext())
+				.readString("logonsessid");// 如果没有数值，默认是空值
+		info.add(wlanacname);
+		info.add(wlanuserip);
+		info.add(logonsessid);
+		return info;
+	}
 	/**
 	 * 获取登录认证
 	 * */

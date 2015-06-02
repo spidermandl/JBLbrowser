@@ -467,10 +467,8 @@ public class MainPageFragment extends SherlockFragment implements
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub	
-				BusinessTool.getInstance().eduLogout();
-				
-				/*getFragmentManager().beginTransaction().remove(MainPageFragment.this).commit();//必须要加 负责saveinstance 会比fragment transition 先调用
-				JBLApplication.getInstance().quit();*/
+				getFragmentManager().beginTransaction().remove(MainPageFragment.this).commit();//必须要加 负责saveinstance 会比fragment transition 先调用
+				JBLApplication.getInstance().quit();
 			}
 		}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener(){
 
