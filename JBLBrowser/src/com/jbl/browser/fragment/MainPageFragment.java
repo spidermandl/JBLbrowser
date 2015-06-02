@@ -1,5 +1,7 @@
 package com.jbl.browser.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 
 import android.annotation.SuppressLint;
@@ -457,15 +459,18 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 	@Override
 	public void quit() {  //退出跳出对话框确定
+		int edu_flag=JBLPreference.getInstance(getActivity()).readInt(JBLPreference.EDU_KEY);
 		Dialog dialog=new AlertDialog.Builder(getActivity())
 		.setTitle(R.string.quit)
-		.setMessage(R.string.confirm_quit)
+		.setMessage(edu_flag==1?R.string.edu_quit:R.string.confirm_quit)
 		.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub		
-				getFragmentManager().beginTransaction().remove(MainPageFragment.this).commit();//必须要加 负责saveinstance 会比fragment transition 先调用
-				JBLApplication.getInstance().quit();
+				// TODO Auto-generated method stub	
+				BusinessTool.getInstance().eduLogout();
+				
+				/*getFragmentManager().beginTransaction().remove(MainPageFragment.this).commit();//必须要加 负责saveinstance 会比fragment transition 先调用
+				JBLApplication.getInstance().quit();*/
 			}
 		}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener(){
 
