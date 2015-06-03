@@ -15,8 +15,8 @@ public class UrlUtils {
 	/**个人中心url*/
 	public static final String URL_PERSONAL_MANAGEMENT = "http://m.hi2345.net/personalct.php?cid=";
 	
-	public static final String HOTPOT_NAME="CMCC-WEB";//"CMCC-WEB";//"CMCC-EDU";
-	public static final LOCATION WIFI_LOCATION=LOCATION.SHANGHAI;
+	public static final String HOTPOT_NAME="CMCC-EDU";//"CMCC-WEB";//"CMCC-EDU";
+	public static final LOCATION WIFI_LOCATION=LOCATION.CHANGSHA;
 	public static enum LOCATION{
 		SHANGHAI, //上海
 		CHANGSHA, //长沙

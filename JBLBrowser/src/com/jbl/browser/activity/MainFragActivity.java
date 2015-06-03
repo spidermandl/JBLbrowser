@@ -13,10 +13,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.net.Uri;
-import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -31,10 +27,8 @@ import com.jbl.browser.activity.WIFIService.WIFIStatus;
 import com.jbl.browser.db.UserInfoDao;
 import com.jbl.browser.fragment.AuthFragment;
 import com.jbl.browser.fragment.MainPageFragment;
-import com.jbl.browser.model.ErrorInfo;
-import com.jbl.browser.tools.BusinessCallback;
 import com.jbl.browser.tools.BusinessTool;
-import com.jbl.browser.utils.UrlUtils;
+import com.jbl.browser.utils.JBLPreference;
 import com.mozillaonline.providers.DownloadManager;
 import com.mozillaonline.providers.DownloadManager.Request;
 import com.mozillaonline.providers.downloads.DownloadService;
@@ -52,6 +46,10 @@ public class MainFragActivity extends BaseFragActivity {
 	//下载模块接收receiver　
 	private BroadcastReceiver mDownloadReceiver;
 	
+	private Context context;
+//	private WifiManager wifiManager;
+//	private List<ScanResult> wifiList;
+//	private List<String> passableHotsPot;
 	private ProgressDialog pd;
 	private AlertDialog.Builder wifiWarning;
 	
@@ -100,8 +98,6 @@ public class MainFragActivity extends BaseFragActivity {
 					pd.setMessage("正在验证...");
                     pd.setCancelable(false);
                     pd.show();
-					
-					
 					break;
 				case FAILED:
 					if(pd!=null&&pd.isShowing()){
@@ -110,9 +106,11 @@ public class MainFragActivity extends BaseFragActivity {
 					enter();
 					break;
 				case AUTHORITHED:
+					System.out.println("success--------");
 					if(pd!=null&&pd.isShowing()){
 						pd.dismiss();
 					}
+					JBLPreference.getInstance(context).writeInt(JBLPreference.EDU_KEY,JBLPreference.IS_EDU);
 					enter();
 					break;
 				default:
@@ -172,6 +170,7 @@ public class MainFragActivity extends BaseFragActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_frame);
 		JBLApplication.getInstance().addActivity(this);//添加到activity队列中
+		context=getApplicationContext();
 		init();
 		super.onCreate(arg0);
 		
@@ -181,7 +180,7 @@ public class MainFragActivity extends BaseFragActivity {
 		}
 		
 		new Thread(wifiTestRun).start();//开启检测wifi验证服务
-
+		
 	}
 	
 	

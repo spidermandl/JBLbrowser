@@ -218,6 +218,11 @@ public class WIFIService extends Service {
 		return super.onUnbind(intent);
 	}
 	
+	@Override
+	public void onDestroy() {
+		BusinessTool.getInstance().eduLogout();
+		super.onDestroy();
+	}
 //	/* 监听热点变化 */
 //	private final class WifiReceiver extends BroadcastReceiver {
 //		@Override

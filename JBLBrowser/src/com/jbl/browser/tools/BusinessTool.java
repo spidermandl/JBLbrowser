@@ -2,6 +2,7 @@ package com.jbl.browser.tools;
 
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -12,6 +13,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -49,10 +51,12 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.model.MusicModel;
 import com.jbl.browser.model.ResponseModel;
 import com.jbl.browser.model.UserInfo;
+import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
 
@@ -178,7 +182,7 @@ public class BusinessTool {
 					switch (msg.what) {
 					
 					case COMPLETE:
-						callback.complete(values);
+							callback.complete(values);
 						break;
 						
 					case ERROR:
@@ -1026,7 +1030,7 @@ public class BusinessTool {
    String location = null;
    String locationtemp;
    String[] set_cookie3 = new String[9];
-   //boolean isOK = true;// 登录是否成功
+   boolean isOK = true;// 登录是否成功
    String wlanacname = null; 
    String wlanuserip = null;
    String logonsessid;
@@ -1040,7 +1044,22 @@ public class BusinessTool {
 			@Override
 			public void run() {
 				BusinessTool.this.callback = callback;
-				
+				boolean preTest=true;
+				while(preTest){
+					Log.e("pretest", "pretest");
+					DefaultHttpClient httpclient = new DefaultHttpClient();
+					HttpGet request = new HttpGet("http://www.m.baidu.com");
+					try {
+						HttpResponse response = httpclient.execute(request);
+						preTest=false;
+					} catch (ClientProtocolException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				switch (UrlUtils.WIFI_LOCATION) {
 				case SHANGHAI:
 					if(!getLocationMethod1("http://www.m.baidu.com")){
@@ -1053,7 +1072,15 @@ public class BusinessTool {
 				    break;
 					
 				case CHANGSHA:
-					getLocationMethod1("http://www.m.baidu.com");
+					while(!getLocationMethod1("http://www.m.baidu.com")){
+						//myHandler.sendEmptyMessage(FAIL);
+					}
+					if (location != null) {// location说明获取登录请求成功
+						parseParam(location);// 开始解析登录url参数并且登录
+						myHandler.sendEmptyMessage(COMPLETE);
+					}
+				
+					//getLocationMethod11("http://www.m.baidu.com");
 					break;
 				default:
 					myHandler.sendEmptyMessage(FAIL);
@@ -1064,6 +1091,47 @@ public class BusinessTool {
 		}).start();
 	}
 	
+	public void getLocationMethod11(String reqUrl) {
+		DefaultHttpClient httpclient = new DefaultHttpClient();
+
+		int responseCode = 0;
+		try {
+			final HttpGet request = new HttpGet(reqUrl);
+			HttpParams params = new BasicHttpParams();
+			params.setParameter("http.protocol.handle-redirects", false); // 默认不让重定向
+			// 这样就能拿到Location头了
+			request.setParams(params);
+
+			HttpResponse response = httpclient.execute(request);
+			responseCode = response.getStatusLine().getStatusCode();
+
+			if (responseCode == HttpStatus.SC_MOVED_TEMPORARILY
+					|| responseCode == HttpStatus.SC_MOVED_PERMANENTLY) {
+				Header locationHeader = response.getFirstHeader("Location");
+				if (locationHeader != null) {
+					location = locationHeader.getValue();
+					Header[] allHeaders = response.getAllHeaders();
+					for (int i = 0; i < allHeaders.length; i++) {
+						// System.out.println(allHeaders[i]);
+					}
+					getLocationMethod11(location);
+				}
+
+			}
+
+			if (responseCode == 200) {
+				HttpEntity entity = response.getEntity();
+				if (entity != null) { // 打印响应内容长度 //
+					// parserparam(EntityUtils.toString(entity));
+					parseParam(location);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+
+	}
 	private boolean getLocationMethod1(String reqUrl) {// 第一次重定向
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 
@@ -1074,13 +1142,15 @@ public class BusinessTool {
 			params.setParameter("http.protocol.handle-redirects", false); // 默认不让重定向
 			// 这样就能拿到Location头了
 			request.setParams(params);
+			Log.e("getLocationMethod1", "before execute");
 			HttpResponse response = httpclient.execute(request);
 			responseCode = response.getStatusLine().getStatusCode();
-			// System.out.println(responseCode + "-----getLocationMethod1");
+			Log.e("getLocationMethod1 respond code", responseCode+"");
 			if (responseCode == HttpStatus.SC_MOVED_TEMPORARILY
 					|| responseCode == HttpStatus.SC_MOVED_PERMANENTLY) {
 				Header locationHeader = response.getFirstHeader("Location");
 				if (locationHeader != null) {
+					Log.e("locationHeader", "!=null");
 					locationtemp = locationHeader.getValue();
 					switch (UrlUtils.WIFI_LOCATION) {
 					case SHANGHAI:
@@ -1088,44 +1158,47 @@ public class BusinessTool {
 					    return getLocationMethod2(locationtemp);
 						
 					case CHANGSHA:
-						getLocationMethod1(location);
-						break;
+						Log.e("重复探测网络", "重复探测网络");
+						//return getLocationMethod1(location);
+						location=locationtemp;
+						if(location.contains("wlanacname"))
+							return true;
+						return false;
 					default:
 						return getLocationMethod2(locationtemp);
 					}
-
 				}
-
-			}
-
-			switch (UrlUtils.WIFI_LOCATION) {
-			case SHANGHAI:
-
-			    break;
 				
-			case CHANGSHA:
-				if (responseCode == 200) {
-					HttpEntity entity = response.getEntity();
-					if (entity != null) { // 打印响应内容长度 //
-						// parserparam(EntityUtils.toString(entity));
-						parseParam(location);
-						break;
-					}
-				}
-				myHandler.sendEmptyMessage(FAIL);
-				break;
-			default:
-				myHandler.sendEmptyMessage(FAIL);
-				break;
+				Log.e("locationHeader", "==null");
 			}
+			
+//			switch (UrlUtils.WIFI_LOCATION) {
+//			case SHANGHAI:
+//
+//			    break;
+//				
+//			case CHANGSHA:
+//				if (responseCode == 200) {
+//					Log.e("获取参数成功", "mothed1 成功");
+//					HttpEntity entity = response.getEntity();
+//					if (entity != null) { // 打印响应内容长度 //
+//						// parserparam(EntityUtils.toString(entity));
+//						parseParam(location);
+//						break;
+//					}
+//				}
+//				myHandler.sendEmptyMessage(FAIL);
+//				break;
+//			default:
+//				myHandler.sendEmptyMessage(FAIL);
+//				break;
+//			}
 		} catch (Exception e) {
-			myHandler.sendEmptyMessage(FAIL);
+			Log.e("验证失败", "mothed1 失败");
 			e.printStackTrace();
-
+			return false;
 		}
-		Log.e("验证失败", "mothed1 失败");
-        //Toast.makeText(context, "mothed1 失败", 1000).show();
-		return false;
+		return true;
 	}
 	
 	private boolean getLocationMethod2(String reqUrl) {// 第二次次重定向，Host改变了
@@ -1144,7 +1217,7 @@ public class BusinessTool {
 			request.setParams(params);
 			HttpResponse response = httpclient.execute(request);
 			responseCode = response.getStatusLine().getStatusCode();
-			// System.out.println(responseCode + "-----getLocationMethod2");
+			 System.out.println(responseCode + "-----getLocationMethod2");
 
 			if (responseCode == HttpStatus.SC_MOVED_TEMPORARILY
 					|| responseCode == HttpStatus.SC_MOVED_PERMANENTLY) {
@@ -1157,7 +1230,7 @@ public class BusinessTool {
 
 			}
 			if (responseCode == 200) {
-
+				System.out.println("getlocationmethod3---------");
 				boolean result=getLocationMethod3(locationtemp);
 				location = locationtemp;
 				return result;
@@ -1239,18 +1312,38 @@ public class BusinessTool {
 		if (matcher.find()) {
 			wlanuserip = matcher.group(0).replace("wlanuserip=", "")
 					.replace("&", "");
-			// System.out.println(wlanuserip);
+			 System.out.println(wlanuserip);
 		}
 
 		pattern = Pattern.compile("ssid=([^&]*)(&|\\b)");
 		matcher = pattern.matcher(str);
 		if (matcher.find()) {
 			ssid = matcher.group(0).replace("ssid=", "").replace("&", "");
-			// System.out.println(ssid);
+			 System.out.println(ssid);
 		}
+		final List<NameValuePair> params = new ArrayList<NameValuePair>();
+//		params.add(new BasicNameValuePair("wlanuserip", wlanuserip));
+//		params.add(new BasicNameValuePair("wlanacname", wlanacname));
+//		params.add(new BasicNameValuePair("PWD", "cxw@013"));
+//		params.add(new BasicNameValuePair("USER", "test_cxw"));
+//		params.add(new BasicNameValuePair("actiontype", "LOGIN"));
+//		new Thread() {
+//			public void run() {
+//				while (isOK) {// 循环发送登录请求，登录成功后改为isOK=false
+//					getAuth("http://211.142.211.10/suiexingclient.jsp",
+//							params);
+//					try {
+//						Thread.sleep(10000);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				}
+//
+//			};
+//		}.start();
 		// https://gd1.wlanportal.chinamobile.com:8443/LoginServlet?wlanuserip=100.99.73.5&
 		// wlanacname=1232.0021.210.00&username=13916177061&password=969rCr7N
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		switch (UrlUtils.WIFI_LOCATION) {
 		case SHANGHAI:
 
@@ -1285,9 +1378,22 @@ public class BusinessTool {
 			params.add(new BasicNameValuePair("PWD", "cxw@013"));
 			params.add(new BasicNameValuePair("USER", "test_cxw"));
 			params.add(new BasicNameValuePair("actiontype", "LOGIN"));
+			new Thread() {
+				public void run() {
+					while (isOK) {// 循环发送登录请求，登录成功后改为isOK=false
+						getAuth("http://211.142.211.10/suiexingclient.jsp",
+								params);
+						try {
+							Thread.sleep(10000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 
-			getAuth("http://211.142.211.10/suiexingclient.jsp",
-					params);
+				};
+			}.start();
+			
 			break;
 		default:
 			break;
@@ -1297,9 +1403,6 @@ public class BusinessTool {
 	private void getAuth(String url) {
 
 		HttpClient httpclient = new DefaultHttpClient();
-		System.out.println(url + "????????????");
-		System.out.println(set_cookie3[0]);
-		System.out.println(set_cookie3[1]);
 		try {
 			// 创建httpget.
 			HttpGet httpget = new HttpGet(url);
@@ -1362,6 +1465,7 @@ public class BusinessTool {
 		/* 建立HTTPost对象 */
 		String strResult = null;
 		HttpPost httpRequest = new HttpPost(url);
+		Log.e("发送验证请求", url);
 		try {
 			/* 添加请求参数到请求对象 */
 
@@ -1370,8 +1474,8 @@ public class BusinessTool {
 			HttpResponse httpResponse = new DefaultHttpClient()
 					.execute(httpRequest);
 			responseCode = httpResponse.getStatusLine().getStatusCode();
-			System.out.println(responseCode);
 			/* 若状态码为200 ok */
+			Log.e("验证请求返回码", responseCode+"");
 			switch (responseCode) {
 			case 200:
 				/* 读返回数据 */
@@ -1383,27 +1487,66 @@ public class BusinessTool {
 				Elements inputs = doc.select("input");
 				for (Element input : inputs) {
 					if (input.attr("name").equals("logonsessid")) {
+						isOK = false;// 停止发送登录请求
 						logonsessid = input.attr("value");
+						if (logonsessid != "") {
+							List<String> info = new ArrayList<String>();
+							info.add(wlanacname);
+							info.add(wlanuserip);
+							info.add(logonsessid);
+							putWifi(info);
+						}
+
+						System.out.println(logonsessid + "logonsessid------------");
+						System.out.println(strResult);
+						
+						myHandler.sendEmptyMessage(COMPLETE);
 						break;
 					}
 				}
 				Log.e(logonsessid,"logonsessid------------");
 				Log.e("strResult",strResult);
-				myHandler.sendEmptyMessage(COMPLETE);
+				
 				break;
 
 			default:
+				Log.e("getauth 1", "getauth 1");
 				myHandler.sendEmptyMessage(FAIL);
 				break;
 			}
 
 		} catch (Exception e) {
+			Log.e("getauth 2", "getauth 2");
 			myHandler.sendEmptyMessage(FAIL);
 			e.printStackTrace();
 		}
 		return strResult;
 	}
-	
+
+	// wifi的信息存储到数据库中
+	public void putWifi(List<String> info) {
+		JBLPreference.getInstance(getContext()).writeString("wlanacname",
+				info.get(0));
+		JBLPreference.getInstance(getContext()).writeString("wlanuserip",
+				info.get(1));
+		JBLPreference.getInstance(getContext()).writeString("logonsessid",
+				info.get(2));
+	}
+
+	// 获取wifi的信息
+	public List<String> getWifi() {
+		List<String> info = new ArrayList<String>();
+		String wlanacname = JBLPreference.getInstance(getContext()).readString(
+				"wlanacname");// 如果没有数值，默认是空值
+		String wlanuserip = JBLPreference.getInstance(getContext()).readString(
+				"wlanuserip");// 如果没有数值，默认是空值
+		String logonsessid = JBLPreference.getInstance(getContext())
+				.readString("logonsessid");// 如果没有数值，默认是空值
+		info.add(wlanacname);
+		info.add(wlanuserip);
+		info.add(logonsessid);
+		return info;
+	}
 	/**
 	 * 获取登录认证
 	 * */
@@ -1450,9 +1593,71 @@ public class BusinessTool {
 		}).start();
 	}
 	
+	public void eduLogout(){
+		//String locationOut = "http://211.142.211.10?wlanacname=1028.0731.731.00&wlanuserip=10.70.95.162&ssid=CMCC-EDU";
+		List<String> wifi = getWifi();
+		System.out.println(wifi.get(0) + "---");
+		System.out.println(wifi.get(1) + "---");
+		System.out.println(wifi.get(2) + "---");
+		final List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("wlanacname", wifi
+				.get(0)));
+		params.add(new BasicNameValuePair("wlanuserip", wifi
+				.get(1)));
+		params.add(new BasicNameValuePair("actiontype",
+				"LOGOUT"));
+		params.add(new BasicNameValuePair("logonsessid", wifi
+				.get(2)));
+		new Thread() {
+			public void run() {
+
+				doPostlogout(
+						// 下线请求
+						"http://211.142.211.10/suiexingclient.jsp",
+						params);
+			};
+		}.start();
+		
+	}
+	
+	
+	
 	/**
 	 * 获取下线认证
 	 * */
+	public String doPostlogout(String url, List<NameValuePair> params) {
+		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+		int responseCode = 0;
+		/* 建立HTTPost对象 */
+		String strResult = null;
+		HttpPost httpRequest = new HttpPost(url);
+		try {
+			/* 添加请求参数到请求对象 */
+
+			httpRequest.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+			/* 发送请求并等待响应 */
+			HttpResponse httpResponse = new DefaultHttpClient()
+					.execute(httpRequest);
+			responseCode = httpResponse.getStatusLine().getStatusCode();
+			System.out.println(responseCode
+					+ "状态码eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+			/* 若状态码为200 ok */
+			switch (responseCode) {
+			case 200:
+				/* 读返回数据 */
+				strResult = EntityUtils.toString(httpResponse.getEntity());
+				System.out.println(strResult);
+				break;
+
+			default:
+				break;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return strResult;
+	}
 	public void getLogout(final BusinessCallback callback,final String wlanName,final String ipName,final String logonsessid){
 		//wlanuserip=10.60.73.222&wlanacname=1019.0731.731.00&actiontype=LOGOUT&logonsessid=1285446080
 		new Thread(new Runnable() {

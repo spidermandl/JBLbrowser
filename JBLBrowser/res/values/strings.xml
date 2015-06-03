@@ -149,6 +149,8 @@
     <string name="please_input_and_search">请输入网址或搜索</string>
     <string name="quit">提示</string>
     <string name="confirm_quit">您确定要退出？</string>
+    <string name="edu_quit">您要立即下线？</string>
+    
     <string name="bookmark">书签</string>
     <string name="history">历史记录</string>
     <string name="add_bookmark">添加收藏</string>

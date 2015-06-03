@@ -1,5 +1,7 @@
 package com.jbl.browser.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 
 import android.annotation.SuppressLint;
@@ -463,7 +465,7 @@ public class MainPageFragment extends SherlockFragment implements
 		.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub		
+				// TODO Auto-generated method stub	
 				getFragmentManager().beginTransaction().remove(MainPageFragment.this).commit();//必须要加 负责saveinstance 会比fragment transition 先调用
 				JBLApplication.getInstance().quit();
 			}
