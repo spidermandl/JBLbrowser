@@ -52,11 +52,6 @@ public class MainFragActivity extends BaseFragActivity {
 	//下载模块接收receiver　
 	private BroadcastReceiver mDownloadReceiver;
 	
-	
-//	private WifiManager wifiManager;
-//	private List<ScanResult> wifiList;
-//	private List<String> passableHotsPot;
-	
 	private ProgressDialog pd;
 	private AlertDialog.Builder wifiWarning;
 	
