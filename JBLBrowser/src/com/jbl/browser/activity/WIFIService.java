@@ -1,6 +1,7 @@
 package com.jbl.browser.activity;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,6 @@ import com.jbl.browser.tools.BusinessTool;
 import com.jbl.browser.utils.UrlUtils;
 
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -34,6 +34,7 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 /**
@@ -45,6 +46,8 @@ public class WIFIService extends Service {
 
 	private List<ScanResult> wifiList;
 	private WifiManager wifiManager;
+	private ConnectivityManager mConnectivityManager;
+	private TelephonyManager mTelephonyManager;
 	private List<String> passableHotsPot;
 	//private WifiReceiver wifiReceiver;
 	
@@ -93,7 +96,7 @@ public class WIFIService extends Service {
 		@Override
 		public void startConnection() {
 			synchronized (this) {
-				connectToHotpot();
+				switchToSpecWifi();
 			}
 			
 		}
@@ -107,9 +110,10 @@ public class WIFIService extends Service {
 		IDLE(0),//没有状态
 		UNREACH(1), //没有cmcc
 		CHECKED(2), //有cmcc但没有连上
-		CONNECTED(3), //cmcc连接上
-		FAILED(4),//CMCC验证失败
-	    AUTHORITHED(5);//CMCC验证通过
+		DATASTREAM(3),//数据流量
+		CONNECTED(4), //cmcc连接上
+		FAILED(5),//CMCC验证失败
+	    AUTHORITHED(6);//CMCC验证通过
 		// 定义私有变量
 		private int nCode;
 
@@ -173,6 +177,8 @@ public class WIFIService extends Service {
         mFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
 		//this.registerReceiver(wifiReceiver, mFilter);
 		wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+		mConnectivityManager=(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        mTelephonyManager=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
 		//wifiReceiver=new WifiReceiver();
 		startSpecificWifi();
 		super.onCreate();
@@ -224,23 +230,10 @@ public class WIFIService extends Service {
 		BusinessTool.getInstance().eduLogout();
 		super.onDestroy();
 	}
-//	/* 监听热点变化 */
-//	private final class WifiReceiver extends BroadcastReceiver {
-//		@Override
-//		public void onReceive(Context context, Intent intent) {
-//			String action = intent.getAction();  
-//            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)||
-//            		action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)||
-//            		action.equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) { 
-//            	WifiInfo info = wifiManager.getConnectionInfo();
-//		        String wifiId = info != null ? info.getSSID() : null;
-//		        if(wifiId!=null&&wifiId.contains(UrlUtils.HOTPOT_NAME)){
-//		        	BusinessTool.getInstance().getLogin(callback);
-//		        }
-//            }
-//		}
-//	}
 
+	/**
+	 * 检测edu wifi
+	 */
 	public void startSpecificWifi(){
 		
 		wifiList = wifiManager.getScanResults();
@@ -252,7 +245,7 @@ public class WIFIService extends Service {
 	}
 	
 	/* 当搜索到新的wifi热点时判断该热点是否符合规格 */
-	public void onReceiveNewNetworks(List<ScanResult> wifiList) {
+	private void onReceiveNewNetworks(List<ScanResult> wifiList) {
 		wStatus = WIFIStatus.UNREACH;
 		passableHotsPot = new ArrayList<String>();
 		for (ScanResult result : wifiList) {
@@ -265,15 +258,17 @@ public class WIFIService extends Service {
 				    passableHotsPot.add(result.SSID);
 		        }else{
 		        	wStatus = WIFIStatus.CONNECTED;
-		        	BusinessTool.getInstance().getLogin(callback);//直接验证
+		        	//BusinessTool.getInstance().getLogin(callback);//直接验证
 		        }
 			}
 		}
 
 	}
 
-	/* 连接到热点 */
-	public void connectToHotpot() {
+	/**
+	 * 连接到指定wifi（cmcc wifi）
+	 */
+	public void switchToSpecWifi() {
 		if (wStatus!=WIFIStatus.CHECKED)
 			return;
 		WifiConfiguration wifiConfig = this.setWifiParams(passableHotsPot.get(0));
@@ -287,8 +282,23 @@ public class WIFIService extends Service {
 		}
 	}
 
+	/**
+	 * 连接到2G／3G数据网络
+	 */
+	public void switchToDataRoam(){
+		wifiManager.setWifiEnabled(false);//关闭wifi
+		
+        try {
+        	Method mMethod=ConnectivityManager.class.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
+        	mMethod.invoke(mConnectivityManager, true);
+        } catch (Exception e) {
+        	
+        }
+            
+    
+	}
 	/* 设置要连接的热点的参数 */
-	public WifiConfiguration setWifiParams(String ssid) {
+	private WifiConfiguration setWifiParams(String ssid) {
 		WifiConfiguration config = new WifiConfiguration();     
         config.allowedAuthAlgorithms.clear();   
         config.allowedGroupCiphers.clear();   
@@ -313,121 +323,5 @@ public class WIFIService extends Service {
         return sb.toString();  
     }  
 	
-	
-	/**
-	 * Http URL重定向
-	 */
-	@Deprecated
-	private static void redirect02() {
-		DefaultHttpClient httpclient = null;
-		String url = "http://hotels.ctrip.com/hotel/hong-kong58";
-		try {
-			httpclient = new DefaultHttpClient();
-//			httpclient.setRedirectStrategy(new RedirectStrategy() {
-//
-//				@Override
-//				public HttpUriRequest getRedirect(HttpRequest arg0,
-//						HttpResponse arg1, HttpContext arg2)
-//						throws ProtocolException {
-//					// TODO Auto-generated method stub
-//					return null;
-//				}
-//
-//				@Override
-//				public boolean isRedirected(HttpRequest arg0,
-//						HttpResponse arg1, HttpContext arg2)
-//						throws ProtocolException {
-//					// TODO Auto-generated method stub
-//					return false;
-//				}	//设置重定向处理方式
-//
-//
-//			});
-
-			// 创建httpget.
-			HttpGet httpget = new HttpGet(url);
-			// 执行get请求.
-			HttpResponse response = httpclient.execute(httpget);
-
-			int statusCode = response.getStatusLine().getStatusCode();
-			if (statusCode == HttpStatus.SC_OK) {
-				// 获取响应实体
-				HttpEntity entity = response.getEntity();
-				if (entity != null) {
-					// 打印响应内容长度
-					System.out.println("Response content length: "
-							+ entity.getContentLength());
-					// 打印响应内容
-					System.out.println("Response content: "
-							+ EntityUtils.toString(entity));
-				}
-			} else if (statusCode == HttpStatus.SC_MOVED_TEMPORARILY
-					|| statusCode == HttpStatus.SC_MOVED_PERMANENTLY) {
-				
-				System.out.println("当前页面发生重定向了---");
-				
-				Header[] headers = response.getHeaders("Location");
-				if(headers!=null && headers.length>0){
-					String redirectUrl = headers[0].getValue();
-					System.out.println("重定向的URL:"+redirectUrl);
-					
-					redirectUrl = redirectUrl.replace(" ", "%20");
-					get(redirectUrl);
-				}
-			}
-
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			// 关闭连接,释放资源
-			httpclient.getConnectionManager().shutdown();
-		}
-	}
-
-	/**
-	 * 发送 get请求
-	 */
-	@Deprecated
-	private static void get(String url) {
-
-		HttpClient httpclient = new DefaultHttpClient();
-
-		try {
-			// 创建httpget.
-			HttpGet httpget = new HttpGet(url);
-			System.out.println("executing request " + httpget.getURI());
-			// 执行get请求.
-			HttpResponse response = httpclient.execute(httpget);
-			
-			// 获取响应状态
-			int statusCode = response.getStatusLine().getStatusCode();
-			if(statusCode==HttpStatus.SC_OK){
-				// 获取响应实体
-				HttpEntity entity = response.getEntity();
-				if (entity != null) {
-					// 打印响应内容长度
-					System.out.println("Response content length: "
-							+ entity.getContentLength());
-					// 打印响应内容
-					System.out.println("Response content: "
-							+ EntityUtils.toString(entity));
-				}
-			}
-			
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			// 关闭连接,释放资源
-			httpclient.getConnectionManager().shutdown();
-		}
-	}
 	
 }
