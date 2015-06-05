@@ -1,8 +1,5 @@
 package com.jbl.browser.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -12,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,11 +22,9 @@ import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.WIFIService.IWifiService;
 import com.jbl.browser.activity.WIFIService.WIFIStatus;
-import com.jbl.browser.db.UserInfoDao;
-import com.jbl.browser.fragment.AuthFragment;
 import com.jbl.browser.fragment.MainPageFragment;
-import com.jbl.browser.tools.BusinessTool;
 import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.UrlUtils;
 import com.mozillaonline.providers.DownloadManager;
 import com.mozillaonline.providers.DownloadManager.Request;
 import com.mozillaonline.providers.downloads.DownloadService;
@@ -174,7 +170,10 @@ public class MainFragActivity extends BaseFragActivity {
 		context=getApplicationContext();
 		init();
 		super.onCreate(arg0);
-		
+		SharedPreferences sp = getSharedPreferences(
+				UrlUtils.SP_SaveUserInfo, Context.MODE_APPEND);
+		sp.edit().putBoolean(UrlUtils.SP_SaveUserInfo_Second, true)
+				.commit();
 		if(!JBLApplication.getInstance().isEntering()){//非第一次进入程序
 			enter();
 			return;

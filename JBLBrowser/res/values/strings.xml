@@ -213,4 +213,22 @@
     <string name="tengt">腾讯微博</string>
 	
 
-    <string name="more">更多</string></resources>
+    <string name="more">更多</string>
+	
+
+    <string name="china_mobie_edu">中国移动CMCC-EDU</string>
+	
+
+    <string name="first_login">首次登录即赠送</string>
+	
+
+    <string name="free_online">1小时免费上网时长+9个牛宝</string>
+
+	
+
+    <string name="can_free_online">检测到CMCC-EDU信号，可以免费上网</string>
+
+	
+
+    <string name="cmcc_web">CMCC-WEB</string>	
+</resources>

@@ -11,6 +11,25 @@
     <style name="MyCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/checkbox_selector</item>
     </style>
+    <style name="layout_padding13leftright">
+        <item name="android:paddingLeft">13dip</item>
+        <item name="android:paddingRight">13dip</item>
+    </style>
+     <style name="tablerow_top">
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:gravity">center_vertical</item>
+         <item name="android:background">@drawable/tablerow_top</item>
+    </style>
+     <style name="tablelayout">
+        <item name="android:paddingTop">2px</item>
+        <item name="android:paddingBottom">2px</item>
+        <item name="android:paddingLeft">2px</item>
+        <item name="android:paddingRight">2px</item>
+        <item name="android:background">@drawable/table</item> 
+         
+    </style>
     
     <style name="Transparent">
         <item name="android:windowBackground">@color/transparent_background</item>
@@ -25,5 +44,8 @@
          <item name="android:windowFullscreen">true</item>
          <item name="android:windowFrame">@null</item>
     </style>
-    
+    <style name="TextStyle_firstlogin">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#cfcfcf</item>
+    </style>
 </resources>
