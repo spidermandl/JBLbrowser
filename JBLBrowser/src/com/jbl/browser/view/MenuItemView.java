@@ -27,6 +27,7 @@ public class MenuItemView extends ImageView {
 	private final static int MENU_HOME=2;//回到主页按钮
 	private final static int MENU_MULTI_PAGE=3;//多页按钮
 	private final static int MENU_SETTING=4;// 设置按钮
+	private final static int MENU_WIFI=5;//wifi按钮
 	
 	/**
 	 * 当前属性
@@ -95,13 +96,15 @@ public class MenuItemView extends ImageView {
 		case MENU_SETTING:
 			setImageResource(R.drawable.toolbar_menu_selector);
 			break;
+		case MENU_WIFI:
+			setBackgroundColor(0xFFFF0000);
 		default:
 			break;
 		}
 	}
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		this.setMeasuredDimension(s_Width/5, 96*s_Width/144/5);
+		this.setMeasuredDimension(s_Width/6, 96*s_Width/144/5);
 	}
 	
 	@Override

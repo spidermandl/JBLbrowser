@@ -53,4 +53,13 @@
         android:layout_toRightOf="@id/toolbar_menu"
         android:clickable="true"
         menu:type="3"/>
+     
+     <com.jbl.browser.view.MenuItemView
+        android:id="@+id/toolbar_wifi" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_devide"
+        android:layout_toRightOf="@id/toolbar_multipage"
+        android:clickable="true"
+        menu:type="5"/>
 </RelativeLayout>
