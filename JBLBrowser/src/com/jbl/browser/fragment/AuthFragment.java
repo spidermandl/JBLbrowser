@@ -7,7 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.jbl.browser.JBLApplication;
+import com.jbl.browser.R;
 import com.jbl.browser.activity.BaseFragActivity;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.bean.UserInfo;
@@ -26,10 +30,26 @@ import com.jbl.browser.view.ProgressWebView;
 public class AuthFragment extends SherlockFragment implements LoadURLInterface{
 
 	ProgressWebView mWebView;
+	public static ActionBar ab;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
 
+//		this.getActivity().setTheme(R.style.Theme_Sherlock_Light);
+//		/**
+//		 * 设置actionbar样式
+//		 */
+//		ab = ((BaseFragActivity)this.getActivity()).getSupportActionBar();	
+// 		ab.setDisplayHomeAsUpEnabled(true);		 	
+// 		ab.setDisplayUseLogoEnabled(false);		 		
+// 		ab.setDisplayShowHomeEnabled(false);		 		
+// 		ab.setDisplayShowTitleEnabled(true);
+// 		ab.setTitle(R.string.history_favourate_title);
+		super.onCreate(savedInstanceState);
+	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+		
 		super.onActivityCreated(savedInstanceState);
 	}
 
@@ -59,6 +79,12 @@ public class AuthFragment extends SherlockFragment implements LoadURLInterface{
 	public void stopPage(WebView view, String url) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
 	}
 
 	@Override

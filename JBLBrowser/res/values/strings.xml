@@ -104,6 +104,7 @@
     <string name="action_setting">多选</string>
     <string name="select_item">已选择:</string>
     <string name="cmcc_edu_warning">检测到cmcc网络，是否选择免认证连接?</string>
+    <string name="wifi_option_title">免费wifi</string>
     <!-- 菜单文字 -->
     <string-array name="setting_content_item">
         <item>添加收藏</item>
