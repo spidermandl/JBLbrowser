@@ -28,4 +28,9 @@ public interface ToolbarItemInterface {
 	 */
 	void goMultiWindow();
 	
+	/**
+	 * wifi按钮
+	 */
+	void goWifi();
+	
 }

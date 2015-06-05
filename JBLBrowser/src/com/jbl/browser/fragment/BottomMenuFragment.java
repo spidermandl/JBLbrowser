@@ -29,6 +29,7 @@ public class BottomMenuFragment extends SherlockFragment implements View.OnClick
 	private ImageView mHome; // 3.3  Home
 	private ImageView mMultiWindows;// 3.4  切换多页模式
 	private ImageView mMenu;// 3.5  选项菜单
+	private ImageView mWifi;//3.6  
 	@Override
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
@@ -44,12 +45,14 @@ public class BottomMenuFragment extends SherlockFragment implements View.OnClick
         mHome = (ImageView) view.findViewById(R.id.toolbar_home); // 3.3
         mMenu = (ImageView) view.findViewById(R.id.toolbar_menu); // 3.4
         mMultiWindows = (ImageView) view.findViewById(R.id.toolbar_multipage); // 3.5
+        mWifi = (ImageView)view.findViewById(R.id.toolbar_wifi);//3.6
         
         mBack.setOnClickListener(this);
         mForward.setOnClickListener(this);
         mHome.setOnClickListener(this);
         mMenu.setOnClickListener(this);
         mMultiWindows.setOnClickListener(this);
+        mWifi.setOnClickListener(this);
         
 		return view;
 	}
@@ -80,6 +83,10 @@ public class BottomMenuFragment extends SherlockFragment implements View.OnClick
 		case R.id.toolbar_multipage:
 			if(toolbarInterfaces!=null)
 				toolbarInterfaces.goMultiWindow();
+			break;
+		case R.id.toolbar_wifi:
+			if(toolbarInterfaces!=null)
+				toolbarInterfaces.goWifi();
 			break;
 		default:
 			break;

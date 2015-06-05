@@ -60,7 +60,8 @@ public class MainFragActivity extends BaseFragActivity {
 			if(status!=null){
 				switch (status) {
 				case UNREACH:
-					enter();
+					if(JBLApplication.getInstance().isEntering())
+					     enter();
 					break;
 				case CHECKED:
 					if(wifiWarning==null){
@@ -211,10 +212,10 @@ public class MainFragActivity extends BaseFragActivity {
 		/**
 		 * 判断是否注册过
 		 */
-		if(!new UserInfoDao(this).hasApproved(BusinessTool.getDeviceID(this))){
-			navigateTo(AuthFragment.class,null,false,TAG);
-		}else
-		    navigateTo(MainPageFragment.class, null, true, TAG);
+//		if(!new UserInfoDao(this).hasApproved(BusinessTool.getDeviceID(this))){
+//			navigateTo(AuthFragment.class,null,false,TAG);
+//		}else
+		navigateTo(MainPageFragment.class, null, true, TAG);
 	}
 	
 	@Override

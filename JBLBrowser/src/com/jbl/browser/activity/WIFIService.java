@@ -104,11 +104,12 @@ public class WIFIService extends Service {
 	 * 网络状态设置类型
 	 */
 	public static enum WIFIStatus{
-		UNREACH(0), //没有cmcc
-		CHECKED(1), //有cmcc但没有连上
-		CONNECTED(2), //cmcc连接上
-		FAILED(3),//CMCC验证失败
-	    AUTHORITHED(4);//CMCC验证通过
+		IDLE(0),//没有状态
+		UNREACH(1), //没有cmcc
+		CHECKED(2), //有cmcc但没有连上
+		CONNECTED(3), //cmcc连接上
+		FAILED(4),//CMCC验证失败
+	    AUTHORITHED(5);//CMCC验证通过
 		// 定义私有变量
 		private int nCode;
 
