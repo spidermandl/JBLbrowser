@@ -1,19 +1,13 @@
 package com.jbl.browser.activity;
 
-<<<<<<< HEAD
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-=======
->>>>>>> 1b00643f31d70f3baddf7b245f7cc2fd5c9d3f17
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-<<<<<<< HEAD
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-=======
->>>>>>> 1b00643f31d70f3baddf7b245f7cc2fd5c9d3f17
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,15 +15,12 @@ import android.os.Environment;
 import com.actionbarsherlock.view.Window;
 import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
-<<<<<<< HEAD
 import com.jbl.browser.activity.WIFIService.IWifiService;
 import com.jbl.browser.activity.WIFIService.WIFIStatus;
 import com.jbl.browser.fragment.MainPageFragment;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.UrlUtils;
-=======
 import com.jbl.browser.fragment.MainPageFragment;
->>>>>>> 1b00643f31d70f3baddf7b245f7cc2fd5c9d3f17
 import com.mozillaonline.providers.DownloadManager;
 import com.mozillaonline.providers.DownloadManager.Request;
 import com.mozillaonline.providers.downloads.DownloadService;
@@ -58,7 +49,6 @@ public class MainFragActivity extends BaseFragActivity {
 		setContentView(R.layout.activity_frame);
 		JBLApplication.getInstance().addActivity(this);//添加到activity队列中
 		init();
-<<<<<<< HEAD
 		super.onCreate(arg0);
 		SharedPreferences sp = getSharedPreferences(
 				UrlUtils.SP_SaveUserInfo, Context.MODE_APPEND);
@@ -68,8 +58,6 @@ public class MainFragActivity extends BaseFragActivity {
 			enter();
 			return;
 		}
-=======
->>>>>>> 1b00643f31d70f3baddf7b245f7cc2fd5c9d3f17
 		
 		enter();
 //		if(!JBLApplication.getInstance().isEntering()){//非第一次进入程序
