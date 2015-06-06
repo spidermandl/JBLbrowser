@@ -231,4 +231,22 @@
 	
 
     <string name="cmcc_web">CMCC-WEB</string>	
+
+	
+
+    <string name="cmcc_edu2">CMCC-EDU</string>	
+
+	
+
+    <string name="connect_success">连接成功</string>
+	
+
+	
+
+    <string name="logout">下线</string>
+	
+
+	
+
+    <string name="log_time">已在线0小时0分钟</string>
 </resources>
