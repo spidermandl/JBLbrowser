@@ -1,12 +1,9 @@
 package com.jbl.browser.activity;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,12 +12,8 @@ import android.os.Environment;
 import com.actionbarsherlock.view.Window;
 import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
-import com.jbl.browser.activity.WIFIService.IWifiService;
-import com.jbl.browser.activity.WIFIService.WIFIStatus;
 import com.jbl.browser.fragment.MainPageFragment;
-import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.UrlUtils;
-import com.jbl.browser.fragment.MainPageFragment;
 import com.mozillaonline.providers.DownloadManager;
 import com.mozillaonline.providers.DownloadManager.Request;
 import com.mozillaonline.providers.downloads.DownloadService;
@@ -65,7 +58,7 @@ public class MainFragActivity extends BaseFragActivity {
 //		return;
 //	}
 		
-		super.onCreate(arg0);
+		
 	}
 	
 	
