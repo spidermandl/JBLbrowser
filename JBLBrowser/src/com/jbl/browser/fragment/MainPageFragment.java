@@ -1,7 +1,5 @@
 package com.jbl.browser.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 
 import android.annotation.SuppressLint;
