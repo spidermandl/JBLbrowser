@@ -20,12 +20,23 @@ import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.tools.BusinessCallback;
 import com.jbl.browser.tools.BusinessTool;
 import com.jbl.browser.utils.UrlUtils;
+import com.jbl.browser.wifi.AuthFailedState;
+import com.jbl.browser.wifi.CMCCState;
+import com.jbl.browser.wifi.ExceptionState;
+import com.jbl.browser.wifi.FreeWifiState;
+import com.jbl.browser.wifi.IState;
+import com.jbl.browser.wifi.InitState;
+import com.jbl.browser.wifi.MobileDataState;
+import com.jbl.browser.wifi.NoCMCCState;
+import com.jbl.browser.wifi.NormalWifiState;
+import com.jbl.browser.wifi.WifiMachine;
 
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
@@ -34,6 +45,7 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -42,7 +54,7 @@ import android.util.Log;
  * @author yyjoy-mac3
  *
  */
-public class WIFIService extends Service {
+public class WIFIService extends Service{
 
 	private List<ScanResult> wifiList;
 	private WifiManager wifiManager;
@@ -51,74 +63,52 @@ public class WIFIService extends Service {
 	private List<String> passableHotsPot;
 	//private WifiReceiver wifiReceiver;
 	
-	private WIFIStatus wStatus;
 	private String logonsessid;
 	
 	private WifiBinder mWifiBinder = new WifiBinder();
 	
-	BusinessCallback callback=new BusinessCallback() {
-		
-		@Override
-		public void fail(ErrorInfo e) {
-			//isAuthing=false;
-			Log.e("fail", "fail");
-			wStatus=WIFIStatus.FAILED;
-		}
-		
-		@Override
-		public void error(ErrorInfo e) {
-			//isAuthing=false;
-			Log.e("fail", "fail");
-			wStatus=WIFIStatus.FAILED;
-		}
-		
-		@Override
-		public void complete(Bundle values) {
-			Log.e("complete", "complete");
-			//isAuthing=false;
-			wStatus=WIFIStatus.AUTHORITHED;
-		}
-	};
+	/**
+	 * 状态机器管理
+	 */
+	private WifiMachine stateMachine;
 	
 	public interface IWifiService{
-		public WIFIStatus getWifiStatus();
+		public IState getWifiStatus();
 		public void startConnection();
 	}
 	
     public class WifiBinder extends Binder implements IWifiService{
 
 		@Override
-		public WIFIStatus getWifiStatus() {
+		public IState getWifiStatus() {
 			// TODO Auto-generated method stub
-			return wStatus;
+			return stateMachine.getState();
 		}
 
 		@Override
 		public void startConnection() {
 			synchronized (this) {
-				switchToSpecWifi();
+				//switchToSpecWifi();
 			}
 			
 		}
 
     }
-    
+	
+	
 	/**
-	 * 网络状态设置类型
+	 * 执行动作类型
 	 */
-	public static enum WIFIStatus{
-		IDLE(0),//没有状态
-		UNREACH(1), //没有cmcc
-		CHECKED(2), //有cmcc但没有连上
-		DATASTREAM(3),//数据流量
-		CONNECTED(4), //cmcc连接上
-		FAILED(5),//CMCC验证失败
-	    AUTHORITHED(6);//CMCC验证通过
+	public static enum WifiAction{
+		TOMOBILEDATA(0),//连接数据网络
+		TOWIFIACCOUNT(1),//请求wifi登录账号
+		TONORMALWIFI(2),//连接任意wifi　
+		TOCMCCWIFI(3);//连接cmcc wifi
 		// 定义私有变量
 		private int nCode;
 
 		// 构造函数，枚举类型只能为私有
-		private WIFIStatus(int _nCode) {
+		private WifiAction(int _nCode) {
 			this.nCode = _nCode;
 		}
 
@@ -126,49 +116,104 @@ public class WIFIService extends Service {
 		public String toString() {
 			return String.valueOf("wifi_status_type_"+this.nCode);
 		}
-	};
-	boolean isAuthing=false;
-	Handler mHanlder =new Handler(){
-		public void handleMessage(android.os.Message msg) {
-			if(!isAuthing){
-				isAuthing=true;
-				Log.e("登录验证开始", "登录验证开始");
-				
-				BusinessTool.getInstance().getLogin(callback);
-			}
-		};
+		
 	};
 	
 	/**
-	 * 检测wifi网路连接ssid
+	 * 检测线程执行结果处理
 	 */
-	Runnable wifiTestRun = new Runnable() {
-		
+	Handler checkHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch ((WifiAction)msg.obj) {
+			case TOMOBILEDATA:
+				stateMachine.changeState(new MobileDataState(WIFIService.this));
+				mobileDataThread=null;
+				break;
+			case TOWIFIACCOUNT:
+				stateMachine.changeState(new NormalWifiState(WIFIService.this));
+				break;
+			case TONORMALWIFI:
+				startCMCCWifi();
+				normalWifiThread=null;
+				break;
+			case TOCMCCWIFI:
+				stateMachine.changeState(new CMCCState(WIFIService.this));
+			    conCMCCThread=null;
+				break;
+			default:
+				break;
+			}
+		};
+	};
+	/**
+	 * 网络检测线程runnable
+	 * 判断当前网路状态
+	 */
+	class CheckRunnable implements Runnable{
+
+		WifiAction action;
+		public CheckRunnable (WifiAction a){
+			action = a;
+		}
 		@Override
 		public void run() {
-			while(true){
-				WifiInfo info = wifiManager.getConnectionInfo();
-		        String wifiId = info != null ? info.getSSID() : null;
-		        if(wifiId!=null&&wifiId.contains(UrlUtils.HOTPOT_NAME)){
-		        	mHanlder.sendEmptyMessage(0);
-		        	wStatus=WIFIStatus.CONNECTED;
-//		        	wifiThread=null;
-//		        	return;
-		        }
-		        
+			while (true) {
+				NetworkInfo mobileData = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE),
+				wifiData = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+				switch (action) {
+				case TOMOBILEDATA:
+					if (mobileData.isConnected() && !wifiData.isConnected()) {
+						Message msg=new Message();
+						msg.obj=WifiAction.TOMOBILEDATA;
+						checkHandler.sendMessage(msg);
+						return;
+					}
+					break;
+				case TONORMALWIFI:
+					if(wifiData.isConnected()){
+						Message msg=new Message();
+						msg.obj=WifiAction.TONORMALWIFI;
+						checkHandler.sendMessage(msg);
+						return;
+					}
+					break;
+				case TOCMCCWIFI:
+					WifiInfo info = wifiManager.getConnectionInfo();
+			        String wifiId = info != null ? info.getSSID() : null;
+			        if(wifiId!=null&&wifiId.contains(UrlUtils.HOTPOT_NAME)){
+			        	Message msg=new Message();
+						msg.obj=WifiAction.TOCMCCWIFI;
+						checkHandler.sendMessage(msg);
+						return;
+			        }
+					break;
+				default:
+					break;
+				}
+
 				try {
-					Thread.sleep(1000L);
+					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-			
 		}
-	};
+		
+	}
 	
-	Thread wifiThread=null;
-	
+	/**
+	 * 扫描2g／3g thread　
+	 */
+	Thread mobileDataThread=null;
+	/**
+	 * 普通wifi检测 thread
+	 */
+	Thread normalWifiThread=null;
+	/**
+	 * 连接cmcc thread
+	 */
+	Thread conCMCCThread=null;
 	@Override
 	public void onCreate() {
 		IntentFilter mFilter = new IntentFilter();  
@@ -180,7 +225,8 @@ public class WIFIService extends Service {
 		mConnectivityManager=(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         mTelephonyManager=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
 		//wifiReceiver=new WifiReceiver();
-		startSpecificWifi();
+        stateMachine=new WifiMachine();
+        stateMachine.changeState(new InitState(this));
 		super.onCreate();
 	}
 	
@@ -232,88 +278,138 @@ public class WIFIService extends Service {
 	}
 
 	/**
-	 * 检测edu wifi
+	 * 连接cmcc wifi
 	 */
-	public void startSpecificWifi(){
+	public void startCMCCWifi(){
 		
 		wifiList = wifiManager.getScanResults();
 		if (wifiList == null || wifiList.size() == 0){
-			wStatus = WIFIStatus.UNREACH;
+			stateMachine.changeState(new NoCMCCState(this));
 			return;
 		}
-		onReceiveNewNetworks(wifiList);
-	}
-	
-	/* 当搜索到新的wifi热点时判断该热点是否符合规格 */
-	private void onReceiveNewNetworks(List<ScanResult> wifiList) {
-		wStatus = WIFIStatus.UNREACH;
+		
 		passableHotsPot = new ArrayList<String>();
 		for (ScanResult result : wifiList) {
-			System.out.println(result.SSID);
-			if ((result.SSID).contains(UrlUtils.HOTPOT_NAME)){
-				wStatus = WIFIStatus.CHECKED;
-		        WifiInfo info = wifiManager.getConnectionInfo();
-		        String wifiId = info != null ? info.getSSID() : null;
-		        if(wifiId!=null&&!wifiId.contains(UrlUtils.HOTPOT_NAME)){//判断wifi是否已经连接
-				    passableHotsPot.add(result.SSID);
-		        }else{
-		        	wStatus = WIFIStatus.CONNECTED;
-		        	//BusinessTool.getInstance().getLogin(callback);//直接验证
-		        }
+			WifiInfo info = wifiManager.getConnectionInfo();
+			String wifiId = info != null ? info.getSSID() : null;
+			if (wifiId != null && !wifiId.contains(UrlUtils.HOTPOT_NAME)) {// 判断wifi是否已经连接
+				passableHotsPot.add(result.SSID);
+				connectCMCCWifi();
+			} else {//已经连接
+				stateMachine.changeState(new CMCCState(this));
 			}
 		}
 
 	}
-
+	
 	/**
-	 * 连接到指定wifi（cmcc wifi）
+	 * 连接2g／3g数据网络
 	 */
-	public void switchToSpecWifi() {
-		if (wStatus!=WIFIStatus.CHECKED)
-			return;
-		WifiConfiguration wifiConfig = this.setWifiParams(passableHotsPot.get(0));
-		int wcgID = wifiManager.addNetwork(wifiConfig);
-		boolean flag = wifiManager.enableNetwork(wcgID, true);
-		if(flag){
-			if(wifiThread==null){
-				wifiThread=new Thread(wifiTestRun);
-				wifiThread.start();
-			}
-		}
-	}
-
-	/**
-	 * 连接到2G／3G数据网络
-	 */
-	public void switchToDataRoam(){
+	public void startMoblieData() {
 		wifiManager.setWifiEnabled(false);//关闭wifi
 		
         try {
         	Method mMethod=ConnectivityManager.class.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
         	mMethod.invoke(mConnectivityManager, true);
+        	mobileDataThread=new Thread(new CheckRunnable(WifiAction.TOMOBILEDATA));
+        	mobileDataThread.start();
         } catch (Exception e) {
-        	
+        	stateMachine.changeState(new NormalWifiState(this));
         }
-            
-    
+		
+	}  
+	
+	/**
+	 * 连接普通wifi
+	 */
+	public void startWifiConnection(){
+		wifiManager.setWifiEnabled(true);
+		normalWifiThread=new Thread(new CheckRunnable(WifiAction.TONORMALWIFI));
+		normalWifiThread.start();
 	}
-	/* 设置要连接的热点的参数 */
-	private WifiConfiguration setWifiParams(String ssid) {
+	
+	/**
+	 * 请求免费wifi登录账号
+	 */
+	public void requestAccount(){
+		BusinessTool.getInstance().getWifiAccount(new BusinessCallback() {
+			
+			@Override
+			public void fail(ErrorInfo e) {
+				stateMachine.changeState(new NormalWifiState(WIFIService.this));
+				
+			}
+			
+			@Override
+			public void error(ErrorInfo e) {
+				stateMachine.changeState(new NormalWifiState(WIFIService.this));
+				
+			}
+			
+			@Override
+			public void complete(Bundle values) {
+				Message msg=new Message();
+				msg.obj = WifiAction.TOWIFIACCOUNT;
+				checkHandler.sendMessage(msg);
+				
+			}
+		});
+	}
+
+	/**
+	 * 发送cmcc验证
+	 */
+	public void sendCMCCAuth(){
+
+		BusinessTool.getInstance().getLogin(new BusinessCallback() {
+			
+			@Override
+			public void fail(ErrorInfo e) {
+				stateMachine.changeState(new AuthFailedState(WIFIService.this));
+				
+			}
+			
+			@Override
+			public void error(ErrorInfo e) {
+				stateMachine.changeState(new AuthFailedState(WIFIService.this));
+				
+			}
+			
+			@Override
+			public void complete(Bundle values) {
+				stateMachine.changeState(new FreeWifiState(WIFIService.this));
+				
+			}
+		});
+	}
+
+	/**
+	 * 连接到指定wifi（cmcc wifi）
+	 */
+	private void connectCMCCWifi() {
+		/**设置要连接的热点的参数 */
 		WifiConfiguration config = new WifiConfiguration();     
         config.allowedAuthAlgorithms.clear();   
         config.allowedGroupCiphers.clear();   
         config.allowedKeyManagement.clear();   
         config.allowedPairwiseCiphers.clear();   
         config.allowedProtocols.clear();   
-        config.SSID = "\"" + ssid + "\"";     
+        config.SSID = "\"" + passableHotsPot.get(0) + "\"";     
         
         //config.wepKeys[0] = "";   
         config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);   
         //config.wepTxKeyIndex = 0;
-  
-		return config;
+        /**********************/
+		int wcgID = wifiManager.addNetwork(config);
+		boolean flag = wifiManager.enableNetwork(wcgID, true);
+		if(flag){
+			conCMCCThread=new Thread(new CheckRunnable(WifiAction.TOCMCCWIFI));
+			conCMCCThread.start();
+		}
 	}
+	
 
+    
 	private String int2ip(int ipInt) {  
         StringBuilder sb = new StringBuilder();  
         sb.append(ipInt & 0xFF).append(".");  
@@ -321,7 +417,9 @@ public class WIFIService extends Service {
         sb.append((ipInt >> 16) & 0xFF).append(".");  
         sb.append((ipInt >> 24) & 0xFF);  
         return sb.toString();  
-    }  
+    }
+
+
 	
 	
 }

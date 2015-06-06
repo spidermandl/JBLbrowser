@@ -59,6 +59,13 @@ public class WIFITool {
 	}
 	
 	/**
+	 * 获取免费wifi登录api
+	 * @return
+	 */
+	public boolean requestWifiAccount(){
+		return false;
+	}
+	/**
 	 * 执行登陆验证所有流程
 	 * @param reqUrl
 	 * @return

@@ -1028,6 +1028,24 @@ public class BusinessTool {
 	}
    
 	/**
+	 * 获取免费wifi登录api
+	 * @param callback
+	 */
+	public void getWifiAccount(final BusinessCallback callback){
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				BusinessTool.this.callback = callback;
+				if(WIFITool.getInstance().requestWifiAccount()){
+					myHandler.sendEmptyMessage(COMPLETE);
+				}else{
+					myHandler.sendEmptyMessage(FAIL);
+				}
+			}
+		}).start();
+	}
+	/**
 	 * 获取登录认证
 	 * */
 	public void getLogin(final BusinessCallback callback){
