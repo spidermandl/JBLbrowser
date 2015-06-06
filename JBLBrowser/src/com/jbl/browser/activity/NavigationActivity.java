@@ -47,10 +47,6 @@ public class NavigationActivity extends Activity {
 			item.setBackgroundResource(index);
 			mList.add(item);
 		}
-		// 经过遍历，此时item是最后一个view，设置button
-		// Button btn = (Button) item.findViewById(R.id.button1);
-		// btn.setVisibility(View.VISIBLE);
-		// btn.setOnClickListener(this)，设置最后一个页面上button的监听
 		item.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -75,9 +71,6 @@ public class NavigationActivity extends Activity {
 
 	/**
 	 * 内部类，继承PagerAdapter，当然你也可以直接 new PageAdapter
-	 * 
-	 * @author yangxiaolong
-	 * 
 	 */
 	class MViewPageAdapter extends PagerAdapter implements OnPageChangeListener {
 
@@ -126,10 +119,6 @@ public class NavigationActivity extends Activity {
 				mViewPager.setCurrentItem(1);
 			} else if (position == mViewList.size() - 1) {
 				mViewPager.setCurrentItem(position - 1);
-				// Toast.makeText(getApplicationContext(), "页面即将跳转",
-				// Toast.LENGTH_SHORT).show();
-				// 应该在这里跳转到MainActivity
-				// startActivity(intent);
 
 			}
 

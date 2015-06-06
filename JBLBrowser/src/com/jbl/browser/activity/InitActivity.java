@@ -19,8 +19,6 @@ import com.jbl.browser.utils.UrlUtils;
 /**
  * @ClassName: InitActivity
  * @Description: TODO(初始化)
- * @author tanghuan
- * @date 2014年12月3日 下午7:42:28
  * 
  */
 public class InitActivity extends Activity {
@@ -43,18 +41,8 @@ public class InitActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_init);
 		goMainActivity();
-	/*	try {
-			this.unregisterReceiver(goShoppingCartBroadcastReceiver);
-		} catch (Exception e) {
-		}
-		application = (MyApplication) getApplication();*/
 
-		// 异步图片的加载初始化 有物理缓存
-		// AsyImgConfig.init(true, 6, Confing.imgCache);
-		// 没有物理缓存
-		/*AsyImgConfig.init(true, 6);
-
-		util = VersionUpdateUtil.init(this);
+		/*util = VersionUpdateUtil.init(this);
 		// runMITUtil = RunMITUtil.init();
 
 		sdHelper = new SdcardHelper();
@@ -62,26 +50,7 @@ public class InitActivity extends Activity {
 			Toast.makeText(InitActivity.this, R.string.nosdcard,
 					Toast.LENGTH_SHORT).show();
 		}*/
-
-		// MyTimerTask task = new MyTimerTask();
-		// // 延时3.5秒跳转页面
-		// Timer timer = new Timer();
-		// timer.schedule(task, 3500);
 		
-		/*
-		 * 沉睡1秒
-		 */
-		// RunMITStaticQueue queue = new RunMITStaticQueue();
-		// queue.setCls(Thread.class);
-		// queue.setMethodName("sleep");
-		// queue.setParms(new Object[] { 1000 });
-		// queue.setCallBack(new IRunMITCallBack() {
-		//
-		// @Override
-		// public void onRuned(RunMITQueue queue) {
-		// }
-		// });
-		// runMITUtil.runQueue(queue);
 	}
 
 	// 重新onkeydown拦截返回键
