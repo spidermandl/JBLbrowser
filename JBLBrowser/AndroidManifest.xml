@@ -96,7 +96,7 @@
             android:value="s_android" />
         
         <activity
-            android:name=".activity.MainFragActivity"
+            android:name=".activity.InitActivity"
             android:label="@string/app_name"
             android:launchMode="standard"
             android:screenOrientation="portrait" >
@@ -113,12 +113,25 @@
             android:screenOrientation="portrait" >
             
         </activity>
+         <activity 
+            android:name=".activity.MainFragActivity"
+            android:label="@string/app_name"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+            
+        </activity>
         <activity
             android:name=".activity.RecommendMainActivity"
             android:label="@string/app_name"
             android:launchMode="standard"
             android:screenOrientation="portrait" >
         </activity>
+          <activity
+            android:name=".activity.NavigationActivity"
+            android:label="@string/app_name"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+              </activity>
         <activity
             android:name=".activity.DownloadManageActivity"
             android:label="@string/app_name"
@@ -127,6 +140,12 @@
         </activity>
         <activity
             android:name=".activity.BrowserSettingActivity"
+            android:label="@string/app_name"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.WifiOptionActivity"
             android:label="@string/app_name"
             android:launchMode="standard"
             android:screenOrientation="portrait" >

@@ -35,11 +35,13 @@ import com.jbl.browser.activity.HistoryFavourateActivity;
 import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.activity.RecommendMainActivity;
 import com.jbl.browser.activity.ScannerManageActivity;
+import com.jbl.browser.activity.WifiOptionActivity;
 import com.jbl.browser.adapter.MultipageAdapter;
 import com.jbl.browser.bean.BookMark;
 import com.jbl.browser.bean.History;
 import com.jbl.browser.db.BookMarkDao;
 import com.jbl.browser.db.HistoryDao;
+import com.jbl.browser.db.UserInfoDao;
 import com.jbl.browser.interfaces.LoadURLInterface;
 import com.jbl.browser.interfaces.SettingItemInterface;
 import com.jbl.browser.interfaces.ShareInterface;
@@ -552,6 +554,19 @@ public class MainPageFragment extends SherlockFragment implements
 		((BaseFragActivity)getActivity()).navigateTo(MultipageFragment.class, null, true,MultipageFragment.TAG);
 		//移除重复使用的view
 		webFrame.removeView(mWebView);
+	}
+	
+	@Override
+	public void goWifi(){
+		if(!new UserInfoDao(this.getActivity()).hasApproved(BusinessTool.getDeviceID(this.getActivity()))){
+			((BaseFragActivity)getActivity()).navigateTo(AuthFragment.class,null,true,TAG);
+			return;
+		}
+		//进入wifi界面
+		Intent intent = new Intent();
+		intent.setClass(getActivity(), WifiOptionActivity.class);
+		startActivity(intent);
+		
 	}
 	//点击搜索图标
 	@Override

@@ -1,7 +1,22 @@
 package com.jbl.browser.utils;
 
 public class UrlUtils {
-
+	/**
+	 * 项目保存用户信息的sp的用户信息
+	 */
+	public final static String SP_SaveUserInfo = "sp_userinfo";
+	/*
+	 * 项目保存用户信息的sp的名字
+	 */
+	public final static String SP_SaveUserInfo_Second="second";
+	/**
+	 * 项目保存用户信息的sp的名字
+	 */
+	public final static String SP_SaveUserInfo_Name = "name";
+	/**
+	 * 项目保存用户信息的sp的名字
+	 */
+	public final static String SP_SaveUserInfo_Phone = "phone";
 	public static boolean TEST = false;
 	/**测试地址*/
 	public static String URL_TEST_HOST = "http://218.104.200.106:8002";
