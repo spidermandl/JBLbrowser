@@ -1,5 +1,11 @@
 package com.jbl.browser.utils;
 
+import java.io.File;
+import com.jbl.browser.tools.HttpTool;
+
+import android.content.Context;
+import android.os.Environment;
+
 public class UrlUtils {
 	/**
 	 * 项目保存用户信息的sp的用户信息
@@ -20,6 +26,20 @@ public class UrlUtils {
 	public static boolean TEST = false;
 	/**测试地址*/
 	public static String URL_TEST_HOST = "http://218.104.200.106:8002";
+	/**
+	 * 所有的action的父亲
+	 */
+	public final static String Action_Basic = "/";
+	public final static String Action_selectAppVersionInfo = Action_Basic
+			+ "http://m.hi2345.net/download/version.html";
+	/**
+	 * 在sdcard建立项目应用的路径
+	 */
+	public final static String productPath = Environment
+			.getExternalStorageDirectory().getPath()
+			+ File.separator
+			+ "NotClosing" + File.separator;
+	
 	
 	/**服务器地址存储的url*/
 	public static final String URL_GET_HOST =  "http://m.hi2345.net/home.php";//取正式服地址
@@ -36,7 +56,6 @@ public class UrlUtils {
 		SHANGHAI, //上海
 		CHANGSHA, //长沙
 	};//地点测试宏
-
 	/**服务器资源路径*/
 	public static String URL_HEAD2 =  null;
 	/**android服务器host*/
