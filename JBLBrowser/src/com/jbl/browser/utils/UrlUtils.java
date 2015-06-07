@@ -24,6 +24,9 @@ public class UrlUtils {
 	public static final String URL_AUTH = "http://m.hi2345.net/userreg.php?cid=";
 	/**个人中心url*/
 	public static final String URL_PERSONAL_MANAGEMENT = "http://m.hi2345.net/personalct.php?cid=";
+	/**api post请求域名*/
+	public static final String URL_API_DOMAIN = "http://m.hi2345.net/api/";
+	
 	
 	public static final String HOTPOT_NAME="CMCC-EDU";//"CMCC-WEB";//"CMCC-EDU";
 	public static final LOCATION WIFI_LOCATION=LOCATION.CHANGSHA;

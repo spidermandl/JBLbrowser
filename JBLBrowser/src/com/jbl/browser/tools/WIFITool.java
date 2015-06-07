@@ -64,6 +64,22 @@ public class WIFITool {
 	 * @return
 	 */
 	public boolean requestWifiAccount(){
+		/**
+			数据指令：
+			op：get_wifi
+			数据内容：
+			data：
+			province 省份，汉字，见省份列表
+			wifiname 热点信号名称
+			mobile 手机号码
+			stime Unix时间戳(1970-01-01至今的秒数)
+
+			数据签名：
+			sign：
+
+			数据返回：
+			{"action":"ok","ret":0,"op":"get_wifi","data":{"uid":10001,"mobile":"13962988888","times":1100,"stime":1400000000,"wifiid":123456,"account":"account","pass":"pass","chid":4},"sign":"32位md5值"}
+		**/
 		return false;
 	}
 	/**
@@ -80,6 +96,19 @@ public class WIFITool {
 	 * @return
 	 */
 	public JSONObject sendSyncTime(){
+		/**
+		 * 数据指令： op：heartbeat 数据内容： data： type
+		 * 类型:start,连接成功;stop,断开连接;heartbeat,连接心跳 wifiid WIFI帐号编号 uid 用户编号
+		 * mobile 手机号码 stime Unix时间戳(1970-01-01至今的秒数) times
+		 * Wifi使用时长，秒数，可以理解为上次心跳间隔时间
+		 * 
+		 * 数据签名： sign：
+		 * 
+		 * 数据返回： {"action":"ok","ret":0,"op":"get_wifi","data":{"type":
+		 * "start/stop/heartbeat"
+		 * ,"uid":10001,"mobile":"13962988888","times":1200
+		 * ,"stime":1400000000},"sign":"32位md5值"}
+		 */
 		return null;
 	}
 	/**
