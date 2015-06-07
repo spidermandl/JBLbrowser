@@ -14,6 +14,9 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.jbl.browser.R;
+import com.jbl.browser.bean.UserInfo;
+import com.jbl.browser.db.UserInfoDao;
+import com.jbl.browser.tools.BusinessTool;
 import com.jbl.browser.utils.UrlUtils;
 
 /**
@@ -21,7 +24,7 @@ import com.jbl.browser.utils.UrlUtils;
  * @Description: TODO(初始化)
  * 
  */
-public class InitActivity extends Activity {
+public class InitActivity extends BaseFragActivity {
 	private final String TAG = InitActivity.class.getSimpleName();
 /*
 	// 全局

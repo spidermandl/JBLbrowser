@@ -5,13 +5,13 @@ package com.jbl.browser.wifi;
  * wifi 状态机
  * @author Desmond
  *   
- *       
- *   InitState------------->MoblieDataState-------------->NormalWifiState---------->CMCCState------>FreeWifiState
- *                                                               |                       |
- *                                                              \|/                      |
- *                                                               |                      \|/
- *                                                        NoCMCCState                    |
- *                                                                                 AuthFiledState     
+ *                                                                                                                            |-----------|           
+ *   InitState------------->MoblieDataState-------------->NormalWifiState---------->CMCCState------>FreeWifiState----->HeartBearState------
+ *                                                               |                       |                                   |
+ *                                                              \|/                      |                                   |
+ *                                                               |                      \|/                                 \|/   
+ *                                                        NoCMCCState                    |                                   |
+ *                                                                                 AuthFiledState                       OfflineState
  */
 public class WifiMachine{  
     private IState state; //机器的当前状态  
@@ -38,4 +38,9 @@ public class WifiMachine{
     	this.state.excute();
     }
 
+    public void runState(){
+    	if(state!=null){
+    		state.excute();
+    	}
+    }
 }  

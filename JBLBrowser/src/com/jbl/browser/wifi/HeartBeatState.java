@@ -2,13 +2,14 @@ package com.jbl.browser.wifi;
 
 import com.jbl.browser.activity.WIFIService;
 
-/** 
- * 初始状态 
- */  
-public class InitState extends BaseState {  
+/**
+ * 发心跳包状态
+ * @author Desmond
+ *
+ */
+public class HeartBeatState extends BaseState {
 
-    
-	public InitState(WIFIService m) {
+	public HeartBeatState(WIFIService m) {
 		super(m);
 		// TODO Auto-generated constructor stub
 	}
@@ -16,22 +17,19 @@ public class InitState extends BaseState {
 	@Override
 	public void enter() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void excute() {
+		// TODO Auto-generated method stub
 
-		service.startMoblieData();
-		
 	}
 
 	@Override
 	public void exit() {
 		// TODO Auto-generated method stub
-		
+
 	}
-      
-  
-  
-}  
+
+}

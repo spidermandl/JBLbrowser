@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import com.jbl.browser.R;
 
 
-public class NavigationActivity extends Activity {
+public class NavigationActivity extends BaseFragActivity {
 	private final String TAG = NavigationActivity.class.getSimpleName();
 	ViewPager mViewPager;
 	// 导航页图片资源

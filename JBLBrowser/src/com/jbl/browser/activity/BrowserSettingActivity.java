@@ -22,7 +22,7 @@ public class BrowserSettingActivity extends BaseFragActivity {
 
 		setTheme(R.style.Theme_Sherlock_Light);
 		super.onCreate(savedInstanceState);
-		JBLApplication.getInstance().addActivity(this);//添加到activity队列中
+		//JBLApplication.getInstance().addActivity(this);//添加到activity队列中
 		/**
 		 * 设置actionbar样式
 		 */

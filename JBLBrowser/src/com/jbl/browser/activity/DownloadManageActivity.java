@@ -112,7 +112,7 @@ public class DownloadManageActivity extends BaseFragActivity implements
 
 		setTheme(R.style.Theme_Sherlock_Light);
 		super.onCreate(icicle);
-		JBLApplication.getInstance().addActivity(this);//添加到activity队列中
+		//JBLApplication.getInstance().addActivity(this);//添加到activity队列中
 
 		/**
 		 * 设置actionbar样式

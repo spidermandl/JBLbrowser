@@ -27,6 +27,7 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.jivesoftware.smack.sasl.SASLMechanism.Success;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -49,14 +50,10 @@ import android.os.Message;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.jbl.browser.activity.MainFragActivity;
 import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.model.MusicModel;
 import com.jbl.browser.model.ResponseModel;
 import com.jbl.browser.model.UserInfo;
-import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
 
@@ -1080,12 +1077,30 @@ public class BusinessTool {
 		}).start();
 	}
 	
-	public void eduLogout(){
+	/**
+	 * 发送免费wifi用时心跳包
+	 * @param callback
+	 */
+	public void sendHeartBeatSync(final BusinessCallback callback){
+		BusinessTool.this.callback = callback;
+		JSONObject jsonObj=WIFITool.getInstance().sendSyncTime();
+		if(jsonObj==null){
+			myHandler.sendEmptyMessage(FAIL);
+		}else{
+			myHandler.sendEmptyMessage(COMPLETE);
+		}
+	}
+	
+	public void eduLogout(final BusinessCallback callback){
 		//String locationOut = "http://211.142.211.10?wlanacname=1028.0731.731.00&wlanuserip=10.70.95.162&ssid=CMCC-EDU";
 		new Thread() {
 			public void run() {
-
-				WIFITool.getInstance().doPostlogout("http://211.142.211.10/suiexingclient.jsp");
+				BusinessTool.this.callback = callback;
+				if(WIFITool.getInstance().doPostlogout(UrlUtils.URL_CMCC_LOGOUT)){
+					myHandler.sendEmptyMessage(FAIL);
+				}else{
+					myHandler.sendEmptyMessage(COMPLETE);
+				}
 			};
 		}.start();
 		
