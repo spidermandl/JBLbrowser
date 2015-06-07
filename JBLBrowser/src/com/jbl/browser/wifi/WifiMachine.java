@@ -30,6 +30,10 @@ public class WifiMachine{
         this.state = state;  
     }
     
+    /**
+     * 切换状态机状态
+     * @param state
+     */
     public void changeState(IState state){
     	if(this.state!=null)
     		this.state.exit();
@@ -38,6 +42,9 @@ public class WifiMachine{
     	this.state.excute();
     }
 
+    /**
+     * 运行当前状态
+     */
     public void runState(){
     	if(state!=null){
     		state.excute();

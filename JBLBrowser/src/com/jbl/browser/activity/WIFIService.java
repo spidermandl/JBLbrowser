@@ -58,11 +58,11 @@ import android.util.Log;
  */
 public class WIFIService extends Service{
 
-	private List<ScanResult> wifiList;
+	private List<ScanResult> wifiList;//范围内wifi列表
 	private WifiManager wifiManager;
 	private ConnectivityManager mConnectivityManager;
 	private TelephonyManager mTelephonyManager;
-	private List<String> passableHotsPot;
+	private List<String> passableHotsPot;//指定免费wifi列表
 	//private WifiReceiver wifiReceiver;
 	
 	/**
@@ -98,13 +98,13 @@ public class WIFIService extends Service{
 	private WifiBinder mWifiBinder = new WifiBinder();
 	
 	/**
-	 * 状态机器管理
+	 * 状态机管理器
 	 */
 	private WifiMachine stateMachine;
 	
 	public interface IWifiService{
-		public IState getWifiStatus();
-		public void startConnection();
+		public IState getWifiStatus();//获取当前的状态
+		public void startConnection();//开始进入wifi验证过程
 	}
 	
 	/**
@@ -247,17 +247,16 @@ public class WIFIService extends Service{
 	
 	@Override
 	public void onCreate() {
-		IntentFilter mFilter = new IntentFilter();  
-        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);  
-        mFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        mFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-		//this.registerReceiver(wifiReceiver, mFilter);
+//		IntentFilter mFilter = new IntentFilter();  
+//        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);  
+//        mFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+//        mFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+//		this.registerReceiver(wifiReceiver, mFilter);
 		wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		mConnectivityManager=(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         mTelephonyManager=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-		//wifiReceiver=new WifiReceiver();
         stateMachine=new WifiMachine();
-        stateMachine.setState(new InitState(this));
+        stateMachine.setState(new InitState(this));//设置第一个状态
 		super.onCreate();
 	}
 	

@@ -33,7 +33,7 @@ import android.util.Log;
 import com.jbl.browser.utils.UrlUtils;
 
 /**
- * wifi验证工具方法
+ * wifi验证工具方法类
  * @author osondesmond
  *
  */
