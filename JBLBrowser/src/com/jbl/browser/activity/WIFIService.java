@@ -248,9 +248,9 @@ public class WIFIService extends Service{
 	@Override
 	public void onCreate() {
 //		IntentFilter mFilter = new IntentFilter();  
-//        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);  
-//        mFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-//        mFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+//      mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);  
+//      mFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+//      mFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
 //		this.registerReceiver(wifiReceiver, mFilter);
 		wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		mConnectivityManager=(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

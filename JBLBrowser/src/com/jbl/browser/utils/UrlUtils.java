@@ -7,43 +7,16 @@ import android.content.Context;
 import android.os.Environment;
 
 public class UrlUtils {
-	/**
-	 * 项目保存用户信息的sp的用户信息
-	 */
-	public final static String SP_SaveUserInfo = "sp_userinfo";
-	/*
-	 * 项目保存用户信息的sp的名字
-	 */
-	public final static String SP_SaveUserInfo_Second="second";
-	/**
-	 * 项目保存用户信息的sp的名字
-	 */
-	public final static String SP_SaveUserInfo_Name = "name";
-	/**
-	 * 项目保存用户信息的sp的名字
-	 */
-	public final static String SP_SaveUserInfo_Phone = "phone";
+	
 	public static boolean TEST = false;
 	/**测试地址*/
 	public static String URL_TEST_HOST = "http://218.104.200.106:8002";
-	/**
-	 * 所有的action的父亲
-	 */
-	public final static String Action_Basic = "/";
-	public final static String Action_selectAppVersionInfo = Action_Basic
-			+ "http://m.hi2345.net/download/version.html";
-	/**
-	 * 在sdcard建立项目应用的路径
-	 */
-	public final static String productPath = Environment
-			.getExternalStorageDirectory().getPath()
-			+ File.separator
-			+ "NotClosing" + File.separator;
-	
-	
+
 	/**服务器地址存储的url*/
 	public static final String URL_GET_HOST =  "http://m.hi2345.net/home.php";//取正式服地址
 			                                   //"http://114.141.132.167/url.php";//取测试服地址
+	/**版本检查url*/
+	public static final String URL_VERSION_CHECK = "http://m.hi2345.net/download/version.htm";
 	/**cmcc 下线url*/
 	public static final String URL_CMCC_LOGOUT = "http://211.142.211.10/suiexingclient.jsp";
 	//http://m.hi2345.net/login.php

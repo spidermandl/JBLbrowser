@@ -43,7 +43,6 @@ public class MainFragActivity extends BaseFragActivity {
 		setContentView(R.layout.activity_frame);
 		init();
 		super.onCreate(arg0);
-		JBLPreference.getInstance(getApplicationContext()).writeBool(UrlUtils.SP_SaveUserInfo_Second, true);
 		if(!JBLApplication.getInstance().isEntering()){//非第一次进入程序
 			enter();
 			return;

@@ -3,7 +3,6 @@ package com.jbl.browser.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -15,8 +14,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.jbl.browser.R;
+import com.jbl.browser.utils.JBLPreference;
 
-
+/**
+ * 导航页面
+ * @author Desmond
+ *
+ */
 public class NavigationActivity extends BaseFragActivity {
 	private final String TAG = NavigationActivity.class.getSimpleName();
 	ViewPager mViewPager;
@@ -51,8 +55,8 @@ public class NavigationActivity extends BaseFragActivity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(NavigationActivity.this,
-						MainFragActivity.class);
+				JBLPreference.getInstance(NavigationActivity.this).writeBool(JBLPreference.NOT_FIRST_RUN, true);//已经阅读新手页面
+				Intent intent = new Intent(NavigationActivity.this,MainFragActivity.class);
 				startActivity(intent);
 				NavigationActivity.this.finish();
 

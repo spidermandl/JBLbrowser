@@ -27,6 +27,7 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.jivesoftware.smack.sasl.SASLMechanism.Success;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -50,6 +51,7 @@ import android.os.Message;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+
 import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.model.MusicModel;
 import com.jbl.browser.model.ResponseModel;
@@ -1024,6 +1026,25 @@ public class BusinessTool {
 		}
 	}
    
+	/**
+	 * 版本检查
+	 * @param callback
+	 */
+	public void versionCheck(final BusinessCallback callback){
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				BusinessTool.this.callback = callback;
+				String result = HttpTool.getInstance().sendGet(UrlUtils.URL_VERSION_CHECK, null);
+				values = new Bundle();
+				values.putString(StringUtils.DATA, result);
+				myHandler.sendEmptyMessage(COMPLETE);
+
+			}
+		}).start();
+	}
+	
 	/**
 	 * 获取免费wifi登录api
 	 * @param callback

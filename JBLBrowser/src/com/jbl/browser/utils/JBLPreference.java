@@ -89,7 +89,7 @@ public class JBLPreference {
 	public static final String pop_full_currentX_value="全屏悬浮窗x轴值";
 	public static final String pop_full_currentY_value="全屏悬浮窗Y轴值";
 	
-	public static final String IS_FIRST_RUN="是否第一次运行";
+	public static final String NOT_FIRST_RUN="not first run";
 	public static final int NO_FIRST_RUN=1;
 	// 提供私有的构造方法
 	private JBLPreference() {
@@ -199,5 +199,15 @@ public class JBLPreference {
 	 */
 	public int readInt(String key) {
 		return sp.getInt(key, -1);
+	}
+	
+	/**
+	 * 根据key读取SharedPreferences中的boolean类型的数据
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public boolean readBool(String key) {
+		return sp.getBoolean(key, false);
 	}
 }
