@@ -158,7 +158,7 @@ public class InitActivity extends Activity {
 			jsonArray = new JSONArray(builder.toString());
 			if (jsonArray.length() > 0) {
 				
-					m_newVerName = jsonArray.getJSONObject(0).getString(
+	        		m_newVerName = jsonArray.getJSONObject(0).getString(
 							"name");
 					m_newVerCode = jsonArray.getJSONObject(0)
 							.getLong("version");
