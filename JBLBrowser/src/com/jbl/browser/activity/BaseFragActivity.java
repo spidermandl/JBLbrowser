@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
 import com.jbl.browser.fragment.MainPageFragment;
 import com.jbl.browser.fragment.SettingPagerFragment;
@@ -32,7 +33,8 @@ public abstract class BaseFragActivity extends SherlockFragmentActivity {
   			int brightness=JBLPreference.getInstance(BaseFragActivity.this).readInt(JBLPreference.NIGHT_BRIGHTNESS_VALUS);
   			BrightnessSettings.setBrightness(BaseFragActivity.this,brightness);
   		}
-  		
+
+		JBLApplication.getInstance().addActivity(this);//添加到activity队列中
 		super.onCreate(arg0);
 	}
 	

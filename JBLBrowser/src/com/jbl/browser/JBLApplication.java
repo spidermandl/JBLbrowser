@@ -35,6 +35,7 @@ public class JBLApplication extends Application {
 		instance=this;
 		this.startService(new Intent(this, WIFIService.class));
 		setEntering(true);
+		this.startService(new Intent(this,WIFIService.class));
 		super.onCreate();
 	}
 	

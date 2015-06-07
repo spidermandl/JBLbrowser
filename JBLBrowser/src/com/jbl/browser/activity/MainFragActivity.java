@@ -13,6 +13,7 @@ import com.actionbarsherlock.view.Window;
 import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
 import com.jbl.browser.fragment.MainPageFragment;
+import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.UrlUtils;
 import com.mozillaonline.providers.DownloadManager;
 import com.mozillaonline.providers.DownloadManager.Request;
@@ -40,13 +41,9 @@ public class MainFragActivity extends BaseFragActivity {
 		//setTheme(R.style.Theme_Sherlock); // Used for theme switching in samples
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_frame);
-		JBLApplication.getInstance().addActivity(this);//添加到activity队列中
 		init();
 		super.onCreate(arg0);
-		SharedPreferences sp = getSharedPreferences(
-				UrlUtils.SP_SaveUserInfo, Context.MODE_APPEND);
-		sp.edit().putBoolean(UrlUtils.SP_SaveUserInfo_Second, true)
-				.commit();
+		JBLPreference.getInstance(getApplicationContext()).writeBool(UrlUtils.SP_SaveUserInfo_Second, true);
 		if(!JBLApplication.getInstance().isEntering()){//非第一次进入程序
 			enter();
 			return;
@@ -66,8 +63,6 @@ public class MainFragActivity extends BaseFragActivity {
 	 * 初始化
 	 */
 	void init(){
-		//开启wifi检测服务
-		this.startService(new Intent(this,WIFIService.class));
 		startDownloadService();
 		mDownloadManager = new DownloadManager(getContentResolver(),getPackageName());
 		mDownloadReceiver = new BroadcastReceiver() {

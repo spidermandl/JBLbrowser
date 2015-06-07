@@ -16,6 +16,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jbl.browser.JBLApplication;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.WIFIService.IWifiService;
+import com.jbl.browser.wifi.IState;
 
 
 
@@ -24,7 +25,7 @@ import com.jbl.browser.activity.WIFIService.IWifiService;
  * @author osondesmond
  *
  */
-public class WifiOptionActivity extends BaseFragActivity {
+public class WifiOptionActivity extends BaseFragActivity implements IWifiService {
 
 	public static ActionBar ab;
 	@Override
@@ -32,7 +33,6 @@ public class WifiOptionActivity extends BaseFragActivity {
 
 		setTheme(R.style.Theme_Sherlock_Light);
 		super.onCreate(savedInstanceState);
-		JBLApplication.getInstance().addActivity(this);//添加到activity队列中
 		/**
 		 * 设置actionbar样式
 		 */
@@ -67,7 +67,6 @@ public class WifiOptionActivity extends BaseFragActivity {
 
 		this.bindService(new Intent(this,WIFIService.class), this.serviceConnection, BIND_AUTO_CREATE);
 
-		//new Thread(wifiTestRun).start();//开启检测wifi验证服务
 	}
 	
 
@@ -187,5 +186,16 @@ public class WifiOptionActivity extends BaseFragActivity {
         }
 
     };
+	@Override
+	public IState getWifiStatus() {
+		// TODO Auto-generated method stub
+		return iWifiService.getWifiStatus();
+	}
+
+
+	@Override
+	public void startConnection() {
+		iWifiService.startConnection();
+	}
     
 }

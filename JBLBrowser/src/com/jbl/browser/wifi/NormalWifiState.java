@@ -22,7 +22,7 @@ public class NormalWifiState extends BaseState {
 
 	@Override
 	public void excute() {
-		service.startCMCCWifi();
+		service.startWifiConnection();
 		
 	}
 

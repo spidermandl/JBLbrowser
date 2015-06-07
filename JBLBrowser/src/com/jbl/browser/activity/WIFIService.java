@@ -29,6 +29,7 @@ import com.jbl.browser.wifi.InitState;
 import com.jbl.browser.wifi.MobileDataState;
 import com.jbl.browser.wifi.NoCMCCState;
 import com.jbl.browser.wifi.NormalWifiState;
+import com.jbl.browser.wifi.OfflineState;
 import com.jbl.browser.wifi.WifiMachine;
 
 import android.app.Service;
@@ -47,6 +48,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.telephony.TelephonyManager;
+import android.text.format.Time;
 import android.util.Log;
 
 /**
@@ -56,27 +58,60 @@ import android.util.Log;
  */
 public class WIFIService extends Service{
 
-	private List<ScanResult> wifiList;
+	private List<ScanResult> wifiList;//范围内wifi列表
 	private WifiManager wifiManager;
 	private ConnectivityManager mConnectivityManager;
 	private TelephonyManager mTelephonyManager;
-	private List<String> passableHotsPot;
+	private List<String> passableHotsPot;//指定免费wifi列表
 	//private WifiReceiver wifiReceiver;
 	
+	/**
+	 * cmcc wifi免费认证会话id
+	 */
 	private String logonsessid;
+	/**
+	 * 上一次心跳时间
+	 */
+	private long lastHeartBeatTime;
+	/**
+	 * 免费wifi可用时长倒计
+	 */
+	private long countDownTime = 30*60*1000;
+
+	/**
+	 * 扫描2g／3g thread　
+	 */
+	Thread mobileDataThread=null;
+	/**
+	 * 普通wifi检测 thread
+	 */
+	Thread normalWifiThread=null;
+	/**
+	 * 连接cmcc thread
+	 */
+	Thread conCMCCThread=null;
+	/**
+	 * 发送心跳包loop线程
+	 */
+	Thread heartBeatLoopThread = null;
 	
 	private WifiBinder mWifiBinder = new WifiBinder();
 	
 	/**
-	 * 状态机器管理
+	 * 状态机管理器
 	 */
 	private WifiMachine stateMachine;
 	
 	public interface IWifiService{
-		public IState getWifiStatus();
-		public void startConnection();
+		public IState getWifiStatus();//获取当前的状态
+		public void startConnection();//开始进入wifi验证过程
 	}
 	
+	/**
+	 * 连接wifi service的通道
+	 * @author Desmond
+	 *
+	 */
     public class WifiBinder extends Binder implements IWifiService{
 
 		@Override
@@ -87,9 +122,7 @@ public class WIFIService extends Service{
 
 		@Override
 		public void startConnection() {
-			synchronized (this) {
-				//switchToSpecWifi();
-			}
+			stateMachine.runState();
 			
 		}
 
@@ -103,7 +136,8 @@ public class WIFIService extends Service{
 		TOMOBILEDATA(0),//连接数据网络
 		TOWIFIACCOUNT(1),//请求wifi登录账号
 		TONORMALWIFI(2),//连接任意wifi　
-		TOCMCCWIFI(3);//连接cmcc wifi
+		TOCMCCWIFI(3),//连接cmcc wifi
+		TOOFFLINE(4);//下线
 		// 定义私有变量
 		private int nCode;
 
@@ -140,6 +174,10 @@ public class WIFIService extends Service{
 				stateMachine.changeState(new CMCCState(WIFIService.this));
 			    conCMCCThread=null;
 				break;
+			case TOOFFLINE:
+				stateMachine.changeState(new OfflineState(WIFIService.this));
+				heartBeatLoopThread=null;
+				break;
 			default:
 				break;
 			}
@@ -162,6 +200,11 @@ public class WIFIService extends Service{
 				wifiData = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 				switch (action) {
 				case TOMOBILEDATA:
+					if(!mobileData.isAvailable()){//没有数据网络
+						Log.e("数据网络不可用", "数据网络不可用");
+						wifiManager.setWifiEnabled(true);
+						return;
+					}
 					if (mobileData.isConnected() && !wifiData.isConnected()) {
 						Message msg=new Message();
 						msg.obj=WifiAction.TOMOBILEDATA;
@@ -202,31 +245,18 @@ public class WIFIService extends Service{
 		
 	}
 	
-	/**
-	 * 扫描2g／3g thread　
-	 */
-	Thread mobileDataThread=null;
-	/**
-	 * 普通wifi检测 thread
-	 */
-	Thread normalWifiThread=null;
-	/**
-	 * 连接cmcc thread
-	 */
-	Thread conCMCCThread=null;
 	@Override
 	public void onCreate() {
-		IntentFilter mFilter = new IntentFilter();  
-        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);  
-        mFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        mFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-		//this.registerReceiver(wifiReceiver, mFilter);
+//		IntentFilter mFilter = new IntentFilter();  
+//        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);  
+//        mFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+//        mFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+//		this.registerReceiver(wifiReceiver, mFilter);
 		wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		mConnectivityManager=(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         mTelephonyManager=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-		//wifiReceiver=new WifiReceiver();
         stateMachine=new WifiMachine();
-        stateMachine.changeState(new InitState(this));
+        stateMachine.setState(new InitState(this));//设置第一个状态
 		super.onCreate();
 	}
 	
@@ -273,12 +303,11 @@ public class WIFIService extends Service{
 	
 	@Override
 	public void onDestroy() {
-		BusinessTool.getInstance().eduLogout();
 		super.onDestroy();
 	}
 
 	/**
-	 * 连接cmcc wifi
+	 * 开始连接cmcc wifi
 	 */
 	public void startCMCCWifi(){
 		
@@ -311,8 +340,10 @@ public class WIFIService extends Service{
         try {
         	Method mMethod=ConnectivityManager.class.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
         	mMethod.invoke(mConnectivityManager, true);
-        	mobileDataThread=new Thread(new CheckRunnable(WifiAction.TOMOBILEDATA));
-        	mobileDataThread.start();
+        	if(mobileDataThread==null){
+        	    mobileDataThread=new Thread(new CheckRunnable(WifiAction.TOMOBILEDATA));
+        	    mobileDataThread.start();
+        	}
         } catch (Exception e) {
         	stateMachine.changeState(new NormalWifiState(this));
         }
@@ -320,16 +351,18 @@ public class WIFIService extends Service{
 	}  
 	
 	/**
-	 * 连接普通wifi
+	 * 打开wifi 连接普通wifi
 	 */
 	public void startWifiConnection(){
 		wifiManager.setWifiEnabled(true);
-		normalWifiThread=new Thread(new CheckRunnable(WifiAction.TONORMALWIFI));
-		normalWifiThread.start();
+		if(normalWifiThread==null){
+		    normalWifiThread=new Thread(new CheckRunnable(WifiAction.TONORMALWIFI));
+		    normalWifiThread.start();
+		}
 	}
 	
 	/**
-	 * 请求免费wifi登录账号
+	 * 请求免费cmcc wifi登录账号
 	 */
 	public void requestAccount(){
 		BusinessTool.getInstance().getWifiAccount(new BusinessCallback() {
@@ -357,7 +390,7 @@ public class WIFIService extends Service{
 	}
 
 	/**
-	 * 发送cmcc验证
+	 * cmcc连接成功，发送cmcc wifi免费使用验证
 	 */
 	public void sendCMCCAuth(){
 
@@ -382,7 +415,90 @@ public class WIFIService extends Service{
 			}
 		});
 	}
+	
+	/**
+	 * 开启发送心跳包请求
+	 */
+	public void startHeartBeatSync(){
+		if (heartBeatLoopThread == null) {
+			heartBeatLoopThread = new Thread(new Runnable() {
 
+				@Override
+				public void run() {
+					while (true) {
+						BusinessTool.getInstance().sendHeartBeatSync(
+								new BusinessCallback() {
+
+									@Override
+									public void fail(ErrorInfo e) {
+										Message msg = new Message();
+										msg.obj = WifiAction.TOOFFLINE;
+										checkHandler.sendMessage(msg);
+
+									}
+
+									@Override
+									public void error(ErrorInfo e) {
+										Message msg = new Message();
+										msg.obj = WifiAction.TOOFFLINE;
+										checkHandler.sendMessage(msg);
+
+									}
+
+									@Override
+									public void complete(Bundle values) {
+										long currentTime = System
+												.currentTimeMillis();
+										if (currentTime - lastHeartBeatTime > 120000) {// 超时两分钟
+											Message msg = new Message();
+											msg.obj = WifiAction.TOOFFLINE;
+											checkHandler.sendMessage(msg);
+										} else {
+											lastHeartBeatTime = currentTime;
+										}
+									}
+								});
+
+						try {
+							Thread.sleep(60000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+
+				}
+			});
+			heartBeatLoopThread.start();
+		}
+		
+	}
+
+	/**
+	 * cmcc免费wifi 下线
+	 */
+	public void cmccLogout(){
+		BusinessTool.getInstance().eduLogout(new BusinessCallback() {
+			
+			@Override
+			public void fail(ErrorInfo e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void error(ErrorInfo e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void complete(Bundle values) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
 	/**
 	 * 连接到指定wifi（cmcc wifi）
 	 */
@@ -403,8 +519,10 @@ public class WIFIService extends Service{
 		int wcgID = wifiManager.addNetwork(config);
 		boolean flag = wifiManager.enableNetwork(wcgID, true);
 		if(flag){
-			conCMCCThread=new Thread(new CheckRunnable(WifiAction.TOCMCCWIFI));
-			conCMCCThread.start();
+			if(conCMCCThread==null){
+			    conCMCCThread=new Thread(new CheckRunnable(WifiAction.TOCMCCWIFI));
+			    conCMCCThread.start();
+			}
 		}
 	}
 	

@@ -154,7 +154,19 @@ public class JBLPreference {
 		editor.commit();// 提交写入的数据
 		
 	}
-
+	/**
+	 * 向SharedPreferences中写入boolean类型的数据
+	 * 
+	 * @param text
+	 */
+	public void writeBool(String key, boolean value) {
+		// 获取编辑器对象
+		Editor editor = sp.edit();
+		// 写入数据
+		editor.putBoolean(key, value);
+		editor.commit();// 提交写入的数据
+	}
+	
 	/**
 	 * 向SharedPreferences中写入integer类型的数据
 	 * 

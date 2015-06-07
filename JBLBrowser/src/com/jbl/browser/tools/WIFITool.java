@@ -22,6 +22,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -32,7 +33,7 @@ import android.util.Log;
 import com.jbl.browser.utils.UrlUtils;
 
 /**
- * wifi验证工具方法
+ * wifi验证工具方法类
  * @author osondesmond
  *
  */
@@ -72,6 +73,14 @@ public class WIFITool {
 	 */
 	public boolean loginCheck(String reqUrl){
 		return isDefaultPage(reqUrl);
+	}
+	
+	/**
+	 * 同步免费wifi用时
+	 * @return
+	 */
+	public JSONObject sendSyncTime(){
+		return null;
 	}
 	/**
 	 * 获取edu默认返回页面的重定向url

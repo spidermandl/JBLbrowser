@@ -44,6 +44,8 @@ public class UrlUtils {
 	/**服务器地址存储的url*/
 	public static final String URL_GET_HOST =  "http://m.hi2345.net/home.php";//取正式服地址
 			                                   //"http://114.141.132.167/url.php";//取测试服地址
+	/**cmcc 下线url*/
+	public static final String URL_CMCC_LOGOUT = "http://211.142.211.10/suiexingclient.jsp";
 	//http://m.hi2345.net/login.php
 	/**手机验证url*/
 	public static final String URL_AUTH = "http://m.hi2345.net/userreg.php?cid=";

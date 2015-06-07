@@ -2,13 +2,14 @@ package com.jbl.browser.wifi;
 
 import com.jbl.browser.activity.WIFIService;
 
-/** 
- * 初始状态 
- */  
-public class InitState extends BaseState {  
+/**
+ * 下线状态
+ * @author Desmond
+ *
+ */
+public class OfflineState extends BaseState {
 
-    
-	public InitState(WIFIService m) {
+	public OfflineState(WIFIService m) {
 		super(m);
 		// TODO Auto-generated constructor stub
 	}
@@ -16,22 +17,19 @@ public class InitState extends BaseState {
 	@Override
 	public void enter() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void excute() {
+		service.cmccLogout();
 
-		service.startMoblieData();
-		
 	}
 
 	@Override
 	public void exit() {
 		// TODO Auto-generated method stub
-		
+
 	}
-      
-  
-  
-}  
+
+}
