@@ -3,59 +3,29 @@
  */
 package com.jbl.browser.activity;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.jbl.browser.Common;
 import com.jbl.browser.R;
-import com.jbl.browser.bean.UserInfo;
-import com.jbl.browser.db.UserInfoDao;
 import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.tools.BusinessCallback;
 import com.jbl.browser.tools.BusinessTool;
 import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
-import com.jbl.browser.utils.UrlUtils;
 import com.mozillaonline.providers.DownloadManager;
 import com.mozillaonline.providers.DownloadManager.Request;
 
