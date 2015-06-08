@@ -75,13 +75,13 @@ public class WifiOptionFragment extends SherlockFragment implements OnClickListe
 	 */
 	Handler timeHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
-			long time = ((WifiOptionActivity)WifiOptionFragment.this.getActivity()).getOnlineTime();
+			//long time = ((WifiOptionActivity)WifiOptionFragment.this.getActivity()).getOnlineTime();
 			/**
 			 * 更新时间界面
 			 */
 			
 			/*******************/
-			timeHandler.sendMessageDelayed(null, 1000);
+			timeHandler.sendEmptyMessageDelayed(0,1000);
 		};
 	};
 	
@@ -95,7 +95,7 @@ public class WifiOptionFragment extends SherlockFragment implements OnClickListe
 			if(state instanceof FreeWifiState){
 				insertingCoil.setVisibility(View.VISIBLE);
 			}else{
-				timeHandler.sendMessageDelayed(null, 1000);
+				timeHandler.sendEmptyMessageDelayed(0,1000);
 			}
 		};
 	};
