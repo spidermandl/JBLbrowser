@@ -525,7 +525,7 @@ public class WIFIService extends Service{
 												cmccLogout();//cmcc下线
 												return;
 											}
-											lastHeartBeatTime = currentTime;
+											lastHeartBeatTime = currentTime;//纪录此次心跳包时间
 											countDownTime=currentTime-startHeartBeatTime;
 											if(json.getLong("times")<=0){//时间到下线
 												Message msg = new Message();
