@@ -1,5 +1,7 @@
 package com.jbl.browser.tools;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -105,9 +107,12 @@ public class WIFITool {
 			
 			String key= md5(sign.toString()+md5(stime+md5(mobile+stime)+mobile+"wifi").substring(8, 24));
 			json.put("sign", key);
-			String result = HttpTool.getInstance().postData(url, json.toString(), HTTP.UTF_8);
+			String result = HttpTool.getInstance().postData(url, URLEncoder.encode(json.toString(),HTTP.UTF_8), HTTP.UTF_8);
 			return result;
-		} catch (NoSuchAlgorithmException e2) {
+		} catch (UnsupportedEncodingException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}catch (NoSuchAlgorithmException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}  catch (JSONException e1) {
@@ -174,9 +179,12 @@ public class WIFITool {
 
 			String key = md5(sign.toString() + stime + md5(mobile + stime) + mobile+ "wifi").substring(8, 25);
 			json.put("sign", key);
-			String result = HttpTool.getInstance().postData(url,json.toString(), HTTP.UTF_8);
+			String result = HttpTool.getInstance().postData(url,URLEncoder.encode(json.toString(),"utf-8"), HTTP.UTF_8);
 			return result;
-		} catch (NoSuchAlgorithmException e2) {
+		} catch (UnsupportedEncodingException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}catch (NoSuchAlgorithmException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		} catch (JSONException e1) {

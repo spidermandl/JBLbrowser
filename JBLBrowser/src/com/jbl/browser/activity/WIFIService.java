@@ -24,12 +24,10 @@ import com.jbl.browser.db.UserInfoDao;
 import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.tools.BusinessCallback;
 import com.jbl.browser.tools.BusinessTool;
-import com.jbl.browser.utils.JBLPreference;
 import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
 import com.jbl.browser.wifi.AuthFailedState;
 import com.jbl.browser.wifi.CMCCState;
-import com.jbl.browser.wifi.ExceptionState;
 import com.jbl.browser.wifi.FreeWifiState;
 import com.jbl.browser.wifi.IState;
 import com.jbl.browser.wifi.InitState;
@@ -104,6 +102,11 @@ public class WIFIService extends Service{
 	 * 免费wifi可用时长倒计
 	 */
 	private long countDownTime = 30*60*1000;
+	
+	/**
+	 * 最大可上网时间
+	 */
+	private long maxTime=60*60*1000;
 	/**
 	 * 手机号
 	 */
@@ -137,6 +140,8 @@ public class WIFIService extends Service{
 		public IState getWifiStatus();//获取当前的状态
 		public void startConnection();//开始进入wifi验证过程
 		public void changeState(Class state);//外部干预状态改变，用于测试
+		public void stopConnection();//断开cmcc连接
+		public long getOnlineTime();//获取在线时间
 	}
 	
 	/**
@@ -179,6 +184,18 @@ public class WIFIService extends Service{
 				e.printStackTrace();
 			}
 			
+		}
+
+		@Override
+		public void stopConnection() {
+			startHeartBeatSync("stop");
+			
+		}
+
+		@Override
+		public long getOnlineTime() {
+			// TODO Auto-generated method stub
+			return 0;
 		}
 
     }
