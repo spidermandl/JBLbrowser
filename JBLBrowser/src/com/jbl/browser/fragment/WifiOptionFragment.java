@@ -13,6 +13,9 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.activity.WifiOptionActivity;
+import com.jbl.browser.wifi.IState;
+import com.jbl.browser.wifi.InitState;
+import com.jbl.browser.wifi.MobileDataState;
 
 /**
  * wifi
@@ -42,7 +45,16 @@ public class WifiOptionFragment extends SherlockFragment implements OnClickListe
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.wifi:
-			((WifiOptionActivity)this.getActivity()).startConnection();
+			IState state = ((WifiOptionActivity)this.getActivity()).getWifiStatus();
+			if(state instanceof InitState){//初始状态
+				if(!state.invalid())
+			         ((WifiOptionActivity)this.getActivity()).startConnection();
+				else{
+					((WifiOptionActivity)this.getActivity()).changeState(MobileDataState.class);
+				}
+			}else if(state instanceof MobileDataState){
+				
+			}
 			break;
 		case R.id.logout:
 		case R.id.for_more:

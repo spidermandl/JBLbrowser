@@ -31,6 +31,12 @@ public class InitState extends BaseState {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void dead(String info) {
+		service.openWifiSetting();
+		super.dead(info);
+	}
       
   
   

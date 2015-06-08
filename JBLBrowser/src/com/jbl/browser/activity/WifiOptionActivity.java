@@ -197,5 +197,12 @@ public class WifiOptionActivity extends BaseFragActivity implements IWifiService
 	public void startConnection() {
 		iWifiService.startConnection();
 	}
+
+
+	@Override
+	public void changeState(Class state) {
+		iWifiService.changeState(state);
+		
+	}
     
 }

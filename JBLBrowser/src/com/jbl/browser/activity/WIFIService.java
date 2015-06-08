@@ -1,6 +1,7 @@
 package com.jbl.browser.activity;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -135,6 +136,7 @@ public class WIFIService extends Service{
 	public interface IWifiService{
 		public IState getWifiStatus();//获取当前的状态
 		public void startConnection();//开始进入wifi验证过程
+		public void changeState(Class state);//外部干预状态改变，用于测试
 	}
 	
 	/**
@@ -153,6 +155,29 @@ public class WIFIService extends Service{
 		@Override
 		public void startConnection() {
 			stateMachine.runState();
+			
+		}
+
+		@Override
+		public void changeState(Class state) {
+			try {
+				stateMachine.changeState((IState)(state.getDeclaredConstructor(WIFIService.class).newInstance(WIFIService.this)));
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 
@@ -236,6 +261,7 @@ public class WIFIService extends Service{
 				case TOMOBILEDATA:
 					if(!mobileData.isAvailable()){//没有数据网络
 						stateMachine.setError("数据网络不可用");
+						mobileDataThread=null;
 						return;
 					}
 					if (mobileData.isConnected() && !wifiData.isConnected()) {

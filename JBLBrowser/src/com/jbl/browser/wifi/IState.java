@@ -27,5 +27,11 @@ public interface IState {
      * @return
      */
     String getError();
+    
+    /**
+     * 状态没有执行成功
+     * @return
+     */
+    boolean invalid();
 
 }  
