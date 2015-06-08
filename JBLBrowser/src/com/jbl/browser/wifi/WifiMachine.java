@@ -1,5 +1,7 @@
 package com.jbl.browser.wifi;
 
+import com.umeng.common.Log;
+
 
 /**
  * wifi 状态机
@@ -49,5 +51,26 @@ public class WifiMachine{
     	if(state!=null){
     		state.excute();
     	}
+    }
+    
+    /**
+     * 设置状态失效
+     * @param msg
+     */
+    public void setError(String msg){
+    	if(state!=null){
+    		Log.e("wifi service error", msg);
+    		state.dead(msg);
+    	}
+    }
+    
+    /**
+     * 获取失效信息
+     * @return
+     */
+    public String getError(){
+    	if(state!=null)
+    		return state.getError();
+    	return null;
     }
 }  

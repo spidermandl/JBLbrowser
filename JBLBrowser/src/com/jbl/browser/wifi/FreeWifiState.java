@@ -22,7 +22,7 @@ public class FreeWifiState extends BaseState{
 
 	@Override
 	public void excute() {
-		service.startHeartBeatSync();
+		service.startHeartBeatSync("start");
 		
 	}
 

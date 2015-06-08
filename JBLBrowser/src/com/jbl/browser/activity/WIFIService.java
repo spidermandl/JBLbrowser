@@ -15,10 +15,16 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import com.jbl.browser.JBLApplication;
+import com.jbl.browser.db.UserInfoDao;
 import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.tools.BusinessCallback;
 import com.jbl.browser.tools.BusinessTool;
+import com.jbl.browser.utils.JBLPreference;
+import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
 import com.jbl.browser.wifi.AuthFailedState;
 import com.jbl.browser.wifi.CMCCState;
@@ -70,13 +76,37 @@ public class WIFIService extends Service{
 	 */
 	private String logonsessid;
 	/**
+	 * WIFI帐号编号
+	 */
+	private String wifi_id;
+	/**
+	 * 用户编号
+	 */
+	private String uid;
+	/**
+	 * WIFI帐号
+	 */
+	private String cmcc_account;
+	/**
+	 * WIFI密码
+	 */
+	private String cmcc_passwd;
+	/**
 	 * 上一次心跳时间
 	 */
 	private long lastHeartBeatTime;
 	/**
+	 * 开始心跳时间
+	 */
+	private long startHeartBeatTime;
+	/**
 	 * 免费wifi可用时长倒计
 	 */
 	private long countDownTime = 30*60*1000;
+	/**
+	 * 手机号
+	 */
+	private String phoneNumber;
 
 	/**
 	 * 扫描2g／3g thread　
@@ -137,7 +167,8 @@ public class WIFIService extends Service{
 		TOWIFIACCOUNT(1),//请求wifi登录账号
 		TONORMALWIFI(2),//连接任意wifi　
 		TOCMCCWIFI(3),//连接cmcc wifi
-		TOOFFLINE(4);//下线
+		TOHEARTBEAT(4),//发心跳包
+		TOOFFLINE(5);//下线
 		// 定义私有变量
 		private int nCode;
 
@@ -174,6 +205,9 @@ public class WIFIService extends Service{
 				stateMachine.changeState(new CMCCState(WIFIService.this));
 			    conCMCCThread=null;
 				break;
+			case TOHEARTBEAT:
+				startHeartBeatSync("heartbeat");
+				break;
 			case TOOFFLINE:
 				stateMachine.changeState(new OfflineState(WIFIService.this));
 				heartBeatLoopThread=null;
@@ -201,8 +235,7 @@ public class WIFIService extends Service{
 				switch (action) {
 				case TOMOBILEDATA:
 					if(!mobileData.isAvailable()){//没有数据网络
-						Log.e("数据网络不可用", "数据网络不可用");
-						wifiManager.setWifiEnabled(true);
+						stateMachine.setError("数据网络不可用");
 						return;
 					}
 					if (mobileData.isConnected() && !wifiData.isConnected()) {
@@ -332,6 +365,12 @@ public class WIFIService extends Service{
 	}
 	
 	/**
+	 * 
+	 */
+	public void openWifiSetting(){
+		wifiManager.setWifiEnabled(true);
+	}
+	/**
 	 * 连接2g／3g数据网络
 	 */
 	public void startMoblieData() {
@@ -369,24 +408,42 @@ public class WIFIService extends Service{
 			
 			@Override
 			public void fail(ErrorInfo e) {
-				stateMachine.changeState(new NormalWifiState(WIFIService.this));
+			    stateMachine.setError("cmcc wifi 账户获取失败");
 				
 			}
 			
 			@Override
 			public void error(ErrorInfo e) {
-				stateMachine.changeState(new NormalWifiState(WIFIService.this));
+				stateMachine.setError("cmcc wifi 账户获取失败");
 				
 			}
 			
 			@Override
 			public void complete(Bundle values) {
-				Message msg=new Message();
-				msg.obj = WifiAction.TOWIFIACCOUNT;
-				checkHandler.sendMessage(msg);
+				
+				try {
+					/**
+					 * 解析返回
+					 */
+					JSONObject json= new JSONObject(values.getString(StringUtils.DATA));
+					json=json.getJSONObject("data");
+					uid=json.getString("uid");
+					cmcc_account=json.getString("account");
+					cmcc_passwd=json.getString("pass");
+					countDownTime=json.getLong("times");
+					phoneNumber=json.getString("mobile");
+					Message msg=new Message();
+					msg.obj = WifiAction.TOWIFIACCOUNT;
+					checkHandler.sendMessage(msg);
+				} catch (JSONException e) {
+					stateMachine.setError("cmcc wifi 账户获取失败");
+					e.printStackTrace();
+				}
 				
 			}
-		});
+		},new UserInfoDao(JBLApplication.getInstance().getApplicationContext()).getPhoneID(
+				BusinessTool.getDeviceID(JBLApplication.getInstance().getApplicationContext()))
+				,System.currentTimeMillis()/1000);
 	}
 
 	/**
@@ -418,54 +475,83 @@ public class WIFIService extends Service{
 	
 	/**
 	 * 开启发送心跳包请求
+	 * @param type
 	 */
-	public void startHeartBeatSync(){
+	public void startHeartBeatSync(final String type){
+		if(type.contains("start")){
+			startHeartBeatTime=lastHeartBeatTime=System.currentTimeMillis();
+			countDownTime=0;
+		}
 		if (heartBeatLoopThread == null) {
 			heartBeatLoopThread = new Thread(new Runnable() {
 
 				@Override
 				public void run() {
-					while (true) {
-						BusinessTool.getInstance().sendHeartBeatSync(
-								new BusinessCallback() {
+					BusinessTool.getInstance().sendHeartBeatSync(
+							new BusinessCallback() {
 
-									@Override
-									public void fail(ErrorInfo e) {
+								@Override
+								public void fail(ErrorInfo e) {
+									stateMachine.setError("心跳包请求错误");
+									Message msg = new Message();
+									msg.obj = WifiAction.TOOFFLINE;
+									checkHandler.sendMessage(msg);
+
+								}
+
+								@Override
+								public void error(ErrorInfo e) {
+									stateMachine.setError("心跳包请求错误");
+									Message msg = new Message();
+									msg.obj = WifiAction.TOOFFLINE;
+									checkHandler.sendMessage(msg);
+
+								}
+
+								@Override
+								public void complete(Bundle values) {
+									long currentTime = System.currentTimeMillis();
+									if (currentTime - lastHeartBeatTime > 120000) {// 超时两分钟
+										stateMachine.setError("心跳包超时");
 										Message msg = new Message();
 										msg.obj = WifiAction.TOOFFLINE;
 										checkHandler.sendMessage(msg);
-
-									}
-
-									@Override
-									public void error(ErrorInfo e) {
-										Message msg = new Message();
-										msg.obj = WifiAction.TOOFFLINE;
-										checkHandler.sendMessage(msg);
-
-									}
-
-									@Override
-									public void complete(Bundle values) {
-										long currentTime = System
-												.currentTimeMillis();
-										if (currentTime - lastHeartBeatTime > 120000) {// 超时两分钟
+									} else {
+										try {
+											JSONObject json = new JSONObject(values.getString(StringUtils.DATA));
+											json = json.getJSONObject("data");
+											String type=json.getString("type");
+											if(type.contains("stop")){//结束心跳包
+												cmccLogout();//cmcc下线
+												return;
+											}
+											lastHeartBeatTime = currentTime;
+											countDownTime=currentTime-startHeartBeatTime;
+											if(json.getLong("times")<=0){//时间到下线
+												Message msg = new Message();
+												msg.obj = WifiAction.TOOFFLINE;
+												checkHandler.sendMessage(msg);
+											}else{//继续心跳
+												Message msg = new Message();
+												msg.obj = WifiAction.TOHEARTBEAT;
+												checkHandler.sendMessageDelayed(msg, 60000);
+											}
+										} catch (JSONException e) {
+											stateMachine.setError("心跳包请求错误");
 											Message msg = new Message();
 											msg.obj = WifiAction.TOOFFLINE;
 											checkHandler.sendMessage(msg);
-										} else {
-											lastHeartBeatTime = currentTime;
+											e.printStackTrace();
 										}
 									}
-								});
-
-						try {
-							Thread.sleep(60000);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
+								}
+							},
+							type,
+							wifi_id,
+							uid,
+							new UserInfoDao(JBLApplication.getInstance().getApplicationContext()).getPhoneID(BusinessTool
+											.getDeviceID(JBLApplication.getInstance().getApplicationContext())),
+							System.currentTimeMillis(), countDownTime/1000);
 
 				}
 			});
@@ -477,7 +563,7 @@ public class WIFIService extends Service{
 	/**
 	 * cmcc免费wifi 下线
 	 */
-	public void cmccLogout(){
+	private void cmccLogout(){
 		BusinessTool.getInstance().eduLogout(new BusinessCallback() {
 			
 			@Override
@@ -538,6 +624,4 @@ public class WIFIService extends Service{
     }
 
 
-	
-	
 }

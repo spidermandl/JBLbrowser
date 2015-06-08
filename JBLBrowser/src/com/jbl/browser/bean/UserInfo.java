@@ -16,6 +16,8 @@ public class UserInfo {
 	private String password;
 	@DatabaseField(columnName="device_id")
 	private String device_id;
+	@DatabaseField(columnName="phone_id",canBeNull = true)
+	private String phone_id;
 	
 	public UserInfo() {
 	}
@@ -42,6 +44,12 @@ public class UserInfo {
 	}
 	public void setDeviceID(String device_id){
 		this.device_id=device_id;
+	}
+	public String getPhoneID(){
+		return phone_id;
+	}
+	public void setPhoneID(String phone_id){
+		this.phone_id=phone_id;
 	}
 	
 	

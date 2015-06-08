@@ -1049,13 +1049,16 @@ public class BusinessTool {
 	 * 获取免费wifi登录api
 	 * @param callback
 	 */
-	public void getWifiAccount(final BusinessCallback callback){
+	public void getWifiAccount(final BusinessCallback callback,final String mobile,final long stime){
 		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				BusinessTool.this.callback = callback;
-				if(WIFITool.getInstance().requestWifiAccount()){
+				String result=WIFITool.getInstance().requestWifiAccount(UrlUtils.URL_API_DOMAIN,mobile,stime);
+				if(result!=null){
+					values=new Bundle();
+					values.putString(StringUtils.DATA, result);
 					myHandler.sendEmptyMessage(COMPLETE);
 				}else{
 					myHandler.sendEmptyMessage(FAIL);
@@ -1100,14 +1103,22 @@ public class BusinessTool {
 	
 	/**
 	 * 发送免费wifi用时心跳包
-	 * @param callback
+	 * @param callback 返回回调
+	 * @param type 类型:start,连接成功;stop,断开连接;heartbeat,连接心跳
+	 * @param wifi_id WIFI帐号编号
+	 * @param uid 用户编号
+	 * @param mobile 手机号码
+	 * @param stime  时间戳
+	 * @param times Wifi使用时长，秒数，可以理解为上次心跳间隔时间
 	 */
-	public void sendHeartBeatSync(final BusinessCallback callback){
+	public void sendHeartBeatSync(final BusinessCallback callback,String type,String wifi_id,String uid,String mobile,long stime,long times){
 		BusinessTool.this.callback = callback;
-		JSONObject jsonObj=WIFITool.getInstance().sendSyncTime();
-		if(jsonObj==null){
+		String result=WIFITool.getInstance().sendSyncTime(UrlUtils.URL_API_DOMAIN,type,wifi_id,uid,mobile,stime,times);
+		if(result==null){
 			myHandler.sendEmptyMessage(FAIL);
 		}else{
+			values = new Bundle();
+			values.putString(StringUtils.DATA, result);
 			myHandler.sendEmptyMessage(COMPLETE);
 		}
 	}

@@ -22,7 +22,7 @@ public class MobileDataState extends BaseState {
 
 	@Override
 	public void excute() {
-		// TODO Auto-generated method stub
+		service.requestAccount();
 		
 	}
 
@@ -32,5 +32,10 @@ public class MobileDataState extends BaseState {
 		
 	}
 
+	@Override
+	public void dead(String info) {
+		service.openWifiSetting();
+		super.dead(info);
+	}
   
 }  

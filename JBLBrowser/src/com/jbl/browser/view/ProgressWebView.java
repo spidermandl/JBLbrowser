@@ -1,5 +1,8 @@
 package com.jbl.browser.view;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -175,7 +178,8 @@ public class ProgressWebView extends WebView {
 						public void onClick(DialogInterface dialog, int which) {
 							res.confirm();
 							if(urlInterface!=null&&msg.contains("验证成功")){
-								urlInterface.authSuccess();
+								Matcher m = Pattern.compile("(\\d+)").matcher(msg);//取出手机号
+								urlInterface.authSuccess(m.find()?m.group():"123456");
 							}
 						}
 					});

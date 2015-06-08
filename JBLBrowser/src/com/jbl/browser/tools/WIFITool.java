@@ -1,5 +1,7 @@
 package com.jbl.browser.tools;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -22,6 +24,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,7 +33,11 @@ import org.jsoup.select.Elements;
 
 import android.util.Log;
 
+import com.jbl.browser.JBLApplication;
+import com.jbl.browser.db.UserInfoDao;
+import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.utils.UrlUtils;
+import com.jbl.browser.utils.UrlUtils.LOCATION;
 
 /**
  * wifi验证工具方法类
@@ -63,16 +70,16 @@ public class WIFITool {
 	 * 获取免费wifi登录api
 	 * @return
 	 */
-	public boolean requestWifiAccount(){
+	public String requestWifiAccount(String url,String mobile,long stime){
 		/**
 			数据指令：
 			op：get_wifi
 			数据内容：
 			data：
-			province 省份，汉字，见省份列表
-			wifiname 热点信号名称
-			mobile 手机号码
-			stime Unix时间戳(1970-01-01至今的秒数)
+			    province 省份，汉字，见省份列表
+			    wifiname 热点信号名称
+			    mobile 手机号码
+			    stime Unix时间戳(1970-01-01至今的秒数)
 
 			数据签名：
 			sign：
@@ -80,7 +87,37 @@ public class WIFITool {
 			数据返回：
 			{"action":"ok","ret":0,"op":"get_wifi","data":{"uid":10001,"mobile":"13962988888","times":1100,"stime":1400000000,"wifiid":123456,"account":"account","pass":"pass","chid":4},"sign":"32位md5值"}
 		**/
-		return false;
+		try {
+			JSONObject json=new JSONObject();
+			json.put("op", "get_wifi");
+			JSONObject data=new JSONObject();
+			StringBuffer sign=new StringBuffer();
+			data.put("mobile", mobile);
+			sign.append("mobile="+mobile+"&");
+			String lcode=UrlUtils.LOCATION_CODE.get(UrlUtils.WIFI_LOCATION);
+			data.put("province",lcode);
+			sign.append("province="+lcode+"&");
+			data.put("stime", stime);
+			sign.append("stime="+stime+"&");
+			data.put("wifiname", wlanacname);
+			sign.append("wifiname="+wlanacname);
+			json.put("data", data);
+			
+			String key= md5(sign.toString()+stime+md5(mobile+stime)+mobile+"wifi").substring(8, 25);
+			json.put("sign", key);
+			String result = HttpTool.getInstance().postData(url, json.toString(), HTTP.UTF_8);
+			return result;
+		} catch (NoSuchAlgorithmException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}  catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}catch (ErrorInfo e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	/**
 	 * 执行登陆验证所有流程
@@ -91,11 +128,18 @@ public class WIFITool {
 		return isDefaultPage(reqUrl);
 	}
 	
+
 	/**
 	 * 同步免费wifi用时
-	 * @return
+	 * @param url 访问连接
+	 * @param type 类型:start,连接成功;stop,断开连接;heartbeat,连接心跳
+	 * @param wifi_id WIFI帐号编号
+	 * @param uid 用户编号
+	 * @param mobile 手机号码
+	 * @param stime  时间戳
+	 * @param times Wifi使用时长，秒数，可以理解为上次心跳间隔时间
 	 */
-	public JSONObject sendSyncTime(){
+	public String sendSyncTime(String url,String type,String wifi_id,String uid,String mobile,long stime,long times){
 		/**
 		 * 数据指令： op：heartbeat 数据内容： data： type
 		 * 类型:start,连接成功;stop,断开连接;heartbeat,连接心跳 wifiid WIFI帐号编号 uid 用户编号
@@ -109,6 +153,39 @@ public class WIFITool {
 		 * ,"uid":10001,"mobile":"13962988888","times":1200
 		 * ,"stime":1400000000},"sign":"32位md5值"}
 		 */
+		try {
+			JSONObject json = new JSONObject();
+			json.put("op", "heratbeat");
+			JSONObject data = new JSONObject();
+			StringBuffer sign = new StringBuffer();
+			data.put("mobile", mobile);
+			sign.append("mobile=" + mobile + "&");
+			data.put("stime", stime);
+			sign.append("stime=" + stime + "&");
+			data.put("times", times);
+			sign.append("times=" + times + "&");
+			data.put("type", type);
+			sign.append("type=" + type + "&");
+			data.put("uid", uid);
+			sign.append("uid=" + uid + "&");
+			data.put("wifiid", wifi_id);
+			sign.append("wifiid=" + wifi_id);
+			json.put("data", data);
+
+			String key = md5(sign.toString() + stime + md5(mobile + stime) + mobile+ "wifi").substring(8, 25);
+			json.put("sign", key);
+			String result = HttpTool.getInstance().postData(url,json.toString(), HTTP.UTF_8);
+			return result;
+		} catch (NoSuchAlgorithmException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ErrorInfo e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 	/**
@@ -434,5 +511,21 @@ public class WIFITool {
 		return false;
 	}
 	
+	/**
+	 * 计算md5
+	 * @param input
+	 * @return
+	 * @throws NoSuchAlgorithmException
+	 */
+	private String md5(String input) throws NoSuchAlgorithmException{
+		MessageDigest md5 = MessageDigest.getInstance("MD5");
+		md5.update(input.getBytes());
+		StringBuffer sb = new StringBuffer();
+		byte[] b = md5.digest();
+		for (int i = 0; i < b.length; i++) {
+			sb.append(b[i]);
+		}
+		return sb.toString();
+	}
 	
 }

@@ -670,7 +670,7 @@ public class MainPageFragment extends SherlockFragment implements
 	}
 
 	@Override
-	public void authSuccess() {
+	public void authSuccess(String phoneNum) {
 		// TODO Auto-generated method stub
 		
 	}

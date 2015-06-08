@@ -22,7 +22,7 @@ public class OfflineState extends BaseState {
 
 	@Override
 	public void excute() {
-		service.cmccLogout();
+		service.startHeartBeatSync("stop");
 
 	}
 

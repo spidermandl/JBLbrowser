@@ -88,9 +88,10 @@ public class AuthFragment extends SherlockFragment implements LoadURLInterface{
 	}
 
 	@Override
-	public void authSuccess() {
+	public void authSuccess(String phoneNum) {
 		UserInfo user=new UserInfo();
 		user.setDeviceID(BusinessTool.getDeviceID(getActivity()));
+		user.setPhoneID(phoneNum);
 		new UserInfoDao(getActivity()).userApproved(user);
 		
 		((BaseFragActivity)getActivity()).navigateTo(MainPageFragment.class, null, true, MainFragActivity.TAG);

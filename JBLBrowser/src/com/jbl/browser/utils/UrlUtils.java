@@ -1,6 +1,8 @@
 package com.jbl.browser.utils;
 
 import java.io.File;
+import java.util.HashMap;
+
 import com.jbl.browser.tools.HttpTool;
 
 import android.content.Context;
@@ -34,6 +36,48 @@ public class UrlUtils {
 		SHANGHAI, //上海
 		CHANGSHA, //长沙
 	};//地点测试宏
+	/**
+	 * 地点码
+	 */
+	public static final HashMap<LOCATION,String> LOCATION_CODE=new HashMap<UrlUtils.LOCATION, String>(){
+		{
+			put(LOCATION.SHANGHAI, "09");
+			put(LOCATION.CHANGSHA, "17");
+		}
+	};
+	/**
+	'01' => '北京',
+	'02' => '天津',
+	'03' => '河北',
+	'04' => '山西',
+	'05' => '内蒙古',
+	'06' => '辽宁',
+	'07' => '吉林',
+	'08' => '黑龙江',
+	'09' => '上海',
+	'10' => '江苏',
+	'11' => '浙江',
+	'12' => '安徽',
+	'13' => '福建',
+	'14' => '江西',
+	'15' => '山东',
+	'16' => '河南',
+	'17' => '湖北',
+	'18' => '湖南',
+	'19' => '广东',
+	'20' => '广西',
+	'21' => '海南',
+	'22' => '四川',
+	'23' => '贵州',
+	'24' => '云南',
+	'25' => '西藏',
+	'26' => '陕西',
+	'27' => '甘肃',
+	'28' => '青海',
+	'29' => '宁夏',
+	'30' => '新疆',
+	'31' => '重庆'
+	**/
 	/**服务器资源路径*/
 	public static String URL_HEAD2 =  null;
 	/**android服务器host*/

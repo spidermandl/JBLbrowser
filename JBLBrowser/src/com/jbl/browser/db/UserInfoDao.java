@@ -81,5 +81,24 @@ public class UserInfoDao {
 
 	    return true;
 	}
+	
+	/**
+	 * 取手机号
+	 * @param cid
+	 * @return
+	 */
+	public String getPhoneID(String cid){
+		try {
+			List<UserInfo> users=userDao.queryForEq("device_id", cid);
+			if(users!=null&&users.size()>0){
+				return users.get(0).getPhoneID();
+			}
+		} catch (SQLException e) {
+            
+			e.printStackTrace();
+		}
+
+	    return "";
+	}
 
 }

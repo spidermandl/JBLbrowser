@@ -91,6 +91,8 @@ public class JBLPreference {
 	
 	public static final String NOT_FIRST_RUN="not first run";
 	public static final int NO_FIRST_RUN=1;
+	
+
 	// 提供私有的构造方法
 	private JBLPreference() {
 	}
