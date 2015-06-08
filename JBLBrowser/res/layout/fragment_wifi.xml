@@ -88,6 +88,25 @@
                 android:gravity="center_horizontal"
                 android:text="@string/log_time"
                 android:textSize="20sp" />
+             <TextView
+                android:id="@+id/free_online60"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:gravity="center_horizontal"
+                android:text="@string/free_online_60"
+                style="@style/TextStyle_freeonline"/>
+               <TextView
+                android:id="@+id/for_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
+                android:text="@string/acquire_more"
+                style="@style/TextStyle_more"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <TextView

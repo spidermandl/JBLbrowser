@@ -1,11 +1,14 @@
 package com.jbl.browser.fragment;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
@@ -19,12 +22,19 @@ import com.jbl.browser.activity.WifiOptionActivity;
 public class WifiOptionFragment extends SherlockFragment implements OnClickListener{
 
 	ImageView connectView;
+	Button insertingCoil;//下线
+	TextView  moreFree;//获取更多免费时长
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_wifi, container, false);
 		connectView=(ImageView)view.findViewById(R.id.wifi);
+		insertingCoil=(Button)view.findViewById(R.id.logout);
+		moreFree=(TextView)view.findViewById(R.id.for_more);
+		moreFree.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//获取更多免费时长加下划线
 		connectView.setOnClickListener(this);
+		insertingCoil.setOnClickListener(this);
+		moreFree.setOnClickListener(this);
 		return view;
 	}
 
@@ -34,7 +44,8 @@ public class WifiOptionFragment extends SherlockFragment implements OnClickListe
 		case R.id.wifi:
 			((WifiOptionActivity)this.getActivity()).startConnection();
 			break;
-
+		case R.id.logout:
+		case R.id.for_more:
 		default:
 			break;
 		}
