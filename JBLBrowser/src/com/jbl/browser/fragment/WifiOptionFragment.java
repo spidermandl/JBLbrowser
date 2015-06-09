@@ -57,10 +57,11 @@ public class WifiOptionFragment extends SherlockFragment implements OnClickListe
 		moreFree.setOnClickListener(this);
 		
 
-		infoDialog.setCancelable(false);
+		
 		timeHandler.sendEmptyMessage(0);
 		infoTextView = new TextView(getActivity());
 		infoDialog = new AlertDialog.Builder(getActivity()).setTitle("连接网络").setView(infoTextView);
+		infoDialog.setCancelable(false);
 		return view;
 	}
 

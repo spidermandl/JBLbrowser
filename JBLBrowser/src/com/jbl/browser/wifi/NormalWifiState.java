@@ -20,6 +20,7 @@ public class NormalWifiState extends BaseState {
 	public void enter() {
 
 		service.startWifiConnection();//连接wifi
+		service.statusLooping(0);
 	}
 
 	@Override

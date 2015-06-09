@@ -326,12 +326,7 @@ public class WIFIService extends Service{
 	public void statusLooping(int delay){
 		statusHandler.sendEmptyMessageDelayed(0, delay);
 	}
-	/**
-	 * 打开wifi
-	 */
-	public void openWifiSetting(){
-		wifiManager.setWifiEnabled(true);
-	}
+
 	/**
 	 * 连接2g／3g数据网络
 	 */
@@ -383,8 +378,8 @@ public class WIFIService extends Service{
 					JSONObject json= new JSONObject(values.getString(StringUtils.DATA));
 					json=json.getJSONObject("data");
 					uid=json.getString("uid");
-					cmcc_account=json.getString("account");
-					cmcc_passwd=json.getString("pass");
+					cmcc_account=json.getString("wifiaccount");
+					cmcc_passwd=json.getString("wifipass");
 					countDownTime=json.getLong("times");
 					phoneNumber=json.getString("mobile");
 					statusLooping(0);

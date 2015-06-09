@@ -32,7 +32,7 @@ public class InitState extends BaseState {
 	
 	@Override
 	public void dead(String info) {
-		service.openWifiSetting();
+		service.startWifiConnection();
 		super.dead(info);
 	}
       
