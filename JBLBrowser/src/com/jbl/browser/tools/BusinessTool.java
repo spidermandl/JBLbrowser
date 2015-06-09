@@ -1069,7 +1069,7 @@ public class BusinessTool {
 	/**
 	 * 获取登录认证
 	 * */
-	public void getLogin(final BusinessCallback callback){
+	public void getLogin(final BusinessCallback callback,final String account,final String passwd){
 		new Thread(new Runnable() {
 			
 			@Override
@@ -1091,7 +1091,7 @@ public class BusinessTool {
 						e.printStackTrace();
 					}
 				}
-				if(WIFITool.getInstance().loginCheck("http://www.m.baidu.com")){
+				if(WIFITool.getInstance().loginCheck("http://www.m.baidu.com",account,passwd)){
 					myHandler.sendEmptyMessage(COMPLETE);
 				}else{
 					myHandler.sendEmptyMessage(FAIL);
@@ -1138,6 +1138,7 @@ public class BusinessTool {
 		
 	}
 	
+	@Deprecated
 	public void getLogout(final BusinessCallback callback,final String wlanName,final String ipName,final String logonsessid){
 		//wlanuserip=10.60.73.222&wlanacname=1019.0731.731.00&actiontype=LOGOUT&logonsessid=1285446080
 		new Thread(new Runnable() {

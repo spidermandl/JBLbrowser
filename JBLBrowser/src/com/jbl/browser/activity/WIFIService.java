@@ -1,21 +1,9 @@
 package com.jbl.browser.activity;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.ParseException;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -264,30 +252,7 @@ public class WIFIService extends Service{
 
 	@Override
 	public boolean onUnbind(Intent intent) {
-		if (logonsessid != null) {
-			WifiInfo info = wifiManager.getConnectionInfo();
-			BusinessTool.getInstance().getLogout(new BusinessCallback() {
-
-				@Override
-				public void fail(ErrorInfo e) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void error(ErrorInfo e) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void complete(Bundle values) {
-					// TODO Auto-generated method stub
-
-				}
-			}, info.getBSSID(), int2ip(info.getIpAddress()), logonsessid);
-		}
-		//unregisterReceiver(wifiReceiver);
+		cmccLogout();
 		return super.onUnbind(intent);
 	}
 	
@@ -424,7 +389,7 @@ public class WIFIService extends Service{
 			public void complete(Bundle values) {
 				stateMachine.changeState(new HeartBeatState(WIFIService.this));
 			}
-		});
+		},cmcc_account,cmcc_passwd);
 	}
 	
 	/**
@@ -541,8 +506,7 @@ public class WIFIService extends Service{
 		}
 	}
 	
-
-    
+    @Deprecated
 	private String int2ip(int ipInt) {  
         StringBuilder sb = new StringBuilder();  
         sb.append(ipInt & 0xFF).append(".");  

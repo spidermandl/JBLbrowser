@@ -50,6 +50,7 @@ public class WIFITool {
 	String[] set_cookie3 = new String[9];
 	String wlanacname = null; 
 	String wlanuserip = null;
+	String account=null,passwd=null;
 	String logonsessid = null;
 	
 	
@@ -127,7 +128,9 @@ public class WIFITool {
 	 * @param reqUrl
 	 * @return
 	 */
-	public boolean loginCheck(String reqUrl){
+	public boolean loginCheck(String reqUrl,String account,String passwd){
+		this.account=account;
+		this.passwd=passwd;
 		return isDefaultPage(reqUrl);
 	}
 	
@@ -353,8 +356,8 @@ public class WIFITool {
 		case CHANGSHA:
 			params.add(new BasicNameValuePair("wlanuserip", wlanuserip));
 			params.add(new BasicNameValuePair("wlanacname", wlanacname));
-			params.add(new BasicNameValuePair("PWD", "cxw@013"));
-			params.add(new BasicNameValuePair("USER", "test_cxw"));
+			params.add(new BasicNameValuePair("PWD", passwd));
+			params.add(new BasicNameValuePair("USER", account));
 			params.add(new BasicNameValuePair("actiontype", "LOGIN"));
 			params.add(new BasicNameValuePair("forceflag", "1"));
 			return sendAuth("http://211.142.211.10/suiexingclient.jsp",params);
