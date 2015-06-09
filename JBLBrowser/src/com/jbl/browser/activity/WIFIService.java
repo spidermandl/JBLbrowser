@@ -217,6 +217,15 @@ public class WIFIService extends Service{
 			}
 		};
 	};
+	
+	Handler statusHandler = new Handler(){
+		public void handleMessage(Message msg) {
+			IState state=stateMachine.getState();
+			if(state instanceof InitState){
+				
+			}
+		};
+	};
 	/**
 	 * 网络检测线程runnable
 	 * 判断当前网路状态
