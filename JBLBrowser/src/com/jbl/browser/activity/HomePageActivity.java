@@ -50,7 +50,7 @@ public class HomePageActivity extends BaseFragActivity {
 	protected void onCreate(Bundle arg0) {  
 		setContentView(R.layout.activity_init);
 		mDownloadManager = new DownloadManager(getContentResolver(),getPackageName());
-		
+//		
 //		UserInfo user=new UserInfo();
 //		user.setDeviceID(BusinessTool.getDeviceID(this));
 //		user.setPhoneID("13585871125");

@@ -28,6 +28,7 @@ import com.jbl.browser.utils.StringUtils;
 import com.jbl.browser.utils.UrlUtils;
 import com.jbl.browser.wifi.AuthFailedState;
 import com.jbl.browser.wifi.CMCCState;
+import com.jbl.browser.wifi.ExceptionState;
 import com.jbl.browser.wifi.HeartBeatState;
 import com.jbl.browser.wifi.IState;
 import com.jbl.browser.wifi.InitState;
@@ -193,6 +194,7 @@ public class WIFIService extends Service{
 				
 				if (!mobileData.isAvailable()) {// 没有数据网络
 					stateMachine.setError("数据网络不可用");
+				    stateMachine.changeState(new ExceptionState(WIFIService.this));
 					return;
 				}
 				if (mobileData.isConnected() && !wifiData.isConnected()) {
@@ -359,12 +361,14 @@ public class WIFIService extends Service{
 			@Override
 			public void fail(ErrorInfo e) {
 			    stateMachine.setError("cmcc wifi 账户获取失败");
+			    stateMachine.changeState(new ExceptionState(WIFIService.this));
 				
 			}
 			
 			@Override
 			public void error(ErrorInfo e) {
 				stateMachine.setError("cmcc wifi 账户获取失败");
+			    stateMachine.changeState(new ExceptionState(WIFIService.this));
 				
 			}
 			
@@ -388,6 +392,7 @@ public class WIFIService extends Service{
 //					checkHandler.sendMessage(msg);
 				} catch (JSONException e) {
 					stateMachine.setError("cmcc wifi 账户获取失败");
+				    stateMachine.changeState(new ExceptionState(WIFIService.this));
 					e.printStackTrace();
 				}
 				

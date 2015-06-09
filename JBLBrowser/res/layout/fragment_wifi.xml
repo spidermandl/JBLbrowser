@@ -1,183 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white" >
+    android:layout_height="match_parent" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <TextView
+        android:id="@+id/china_mobie"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="@string/china_mobie_edu"
+        android:textSize="25sp" />
 
-        <LinearLayout
-            android:id="@+id/context"
-            android:layout_width="fill_parent"
+    <TextView
+        android:id="@+id/first_login"
+        style="@style/TextStyle_firstlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/china_mobie"
+        android:layout_below="@id/china_mobie"
+        android:layout_marginTop="5dp"
+        android:text="@string/first_login" />
+
+    <TextView
+        android:id="@+id/free_online"
+        style="@style/TextStyle_firstlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/china_mobie"
+        android:layout_below="@id/first_login"
+        android:layout_marginTop="5dp"
+        android:text="@string/free_online" />
+
+<!--****************************************上线**********************************************-->
+    <RelativeLayout
+        android:id="@+id/cmcc_online"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/free_online" >
+
+        <TextView
+            android:id="@+id/can_free_online"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
-            android:orientation="vertical" >
+            android:text="@string/can_free_online"
+            android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/china_mobie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:text="@string/china_mobie_edu"
-                android:textSize="25sp" />
-
-            <TextView
-                android:id="@+id/first_login"
-                style="@style/TextStyle_firstlogin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="95dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/first_login" />
-
-            <TextView
-                android:id="@+id/free_online"
-                style="@style/TextStyle_firstlogin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="105dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/free_online" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linear_logout"
-            android:layout_width="fill_parent"
+        <RelativeLayout
+            android:id="@+id/cmcc_item"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            android:visibility="gone" >
-
-            <TextView
-                android:id="@+id/cmcc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:text="@string/cmcc_edu2"
-                android:textSize="25sp" />
-
-            <TextView
-                android:id="@+id/connect_success"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:text="@string/connect_success"
-                android:textSize="27sp" />
+            android:layout_below="@id/can_free_online"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp" 
+            android:background="@drawable/setting_item_seletor">
 
             <Button
-                android:id="@+id/logout"
+                android:id="@+id/connect_cmcc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:text="@string/logout"
-                android:textSize="27sp" />
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dip"
+                android:gravity="center"
+                android:text="@string/cmcc_connect"
+                android:textSize="17sp" />
 
             <TextView
-                android:id="@+id/log_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:text="@string/log_time"
-                android:textSize="20sp" />
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dip"
+                android:gravity="center"
+                android:text="@string/cmcc_web"
+                android:textSize="22sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+<!--****************************************下线**********************************************-->
+    <LinearLayout
+        android:id="@+id/cmcc_offline"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/free_online"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:visibility="gone" >
 
-            <TextView
-                android:id="@+id/free_online60"
-                style="@style/TextStyle_freeonline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="25dp"
-                android:gravity="center_horizontal"
-                android:text="@string/free_online_60" />
-
-            <TextView
-                android:id="@+id/for_more"
-                style="@style/TextStyle_more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:gravity="center_horizontal"
-                android:text="@string/acquire_more"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linear_connect_wifi"
-            android:layout_width="fill_parent"
+        <TextView
+            android:id="@+id/cmcc"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible" >
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="@string/cmcc_edu2"
+            android:textSize="25sp" />
 
-            <TextView
-                android:id="@+id/can_free_online"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/can_free_online"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/connect_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/connect_success"
+            android:textSize="27sp" />
 
-            <TableLayout
-                style="@style/tablelayout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:layout_marginLeft="13dip"
-                android:layout_marginRight="13dip"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical"
-                android:stretchColumns="0" >
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/logout"
+            android:textSize="27sp" />
 
-                <TableRow
-                    android:id="@+id/u_tr_ziliao"
-                    style="@style/tablerow_top"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/log_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/log_time"
+            android:textSize="20sp" />
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/free_online60"
+            style="@style/TextStyle_freeonline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:gravity="center_horizontal"
+            android:text="@string/free_online_60" />
 
-                        <TextView
-                            android:id="@+id/cmcc_edu"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="@string/cmcc_web"
-                            android:textSize="22sp" />
-
-                        <ImageView
-                            android:id="@+id/wifi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="50dp"
-                            android:src="@drawable/skin_ico_checked" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="5dp"
-                            android:src="@drawable/skin_ico_checked" />
-                    </RelativeLayout>
-                </TableRow>
-            </TableLayout>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/for_more"
+            style="@style/TextStyle_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:text="@string/acquire_more"
+            android:textStyle="bold" />
     </LinearLayout>
 
-</FrameLayout>
+</RelativeLayout>

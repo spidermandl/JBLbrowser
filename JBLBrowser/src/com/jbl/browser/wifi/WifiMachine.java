@@ -1,6 +1,9 @@
 package com.jbl.browser.wifi;
 
+import com.jbl.browser.JBLApplication;
+
 import android.util.Log;
+import android.widget.Toast;
 
 
 
@@ -61,6 +64,7 @@ public class WifiMachine{
     public void setError(String msg){
     	if(state!=null){
     		Log.e("wifi service error", msg);
+    		Toast.makeText(JBLApplication.getInstance().getApplicationContext(), msg, 1000).show();
     		state.dead(msg);
     	}
     }
