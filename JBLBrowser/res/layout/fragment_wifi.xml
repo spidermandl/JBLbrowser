@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white" >
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -44,6 +45,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linear_logout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -88,67 +90,94 @@
                 android:gravity="center_horizontal"
                 android:text="@string/log_time"
                 android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/free_online60"
+                style="@style/TextStyle_freeonline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:gravity="center_horizontal"
+                android:text="@string/free_online_60" />
+
+            <TextView
+                android:id="@+id/for_more"
+                style="@style/TextStyle_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
+                android:text="@string/acquire_more"
+                android:textStyle="bold" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/can_free_online"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/can_free_online"
-            android:textSize="16sp"
-            android:visibility="visible" />
-
-        <TableLayout
-            style="@style/tablelayout"
+        <LinearLayout
+            android:id="@+id/linear_connect_wifi"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:layout_marginLeft="13dip"
-            android:layout_marginRight="13dip"
-            android:layout_marginTop="12dp"
             android:orientation="vertical"
-            android:stretchColumns="0"
             android:visibility="visible" >
 
-            <TableRow
-                android:id="@+id/u_tr_ziliao"
-                style="@style/tablerow_top"
+            <TextView
+                android:id="@+id/can_free_online"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/can_free_online"
+                android:textSize="16sp" />
+
+            <TableLayout
+                style="@style/tablelayout"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="13dip"
+                android:layout_marginRight="13dip"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:stretchColumns="0" >
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal" >
+                <TableRow
+                    android:id="@+id/u_tr_ziliao"
+                    style="@style/tablerow_top"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
 
-                    <TextView
-                        android:id="@+id/cmcc_edu"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="@string/cmcc_web"
-                        android:textSize="22sp" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
 
-                    <ImageView
-                        android:id="@+id/wifi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="50dp"
-                        android:src="@drawable/skin_ico_checked" />
+                        <TextView
+                            android:id="@+id/cmcc_edu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/cmcc_web"
+                            android:textSize="22sp" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="5dp"
-                        android:src="@drawable/skin_ico_checked" />
-                </RelativeLayout>
-            </TableRow>
-        </TableLayout>
+                        <ImageView
+                            android:id="@+id/wifi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="50dp"
+                            android:src="@drawable/skin_ico_checked" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="5dp"
+                            android:src="@drawable/skin_ico_checked" />
+                    </RelativeLayout>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

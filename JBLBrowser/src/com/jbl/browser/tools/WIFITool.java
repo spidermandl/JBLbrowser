@@ -1,5 +1,7 @@
 package com.jbl.browser.tools;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -99,15 +101,18 @@ public class WIFITool {
 			sign.append("province="+lcode+"&");
 			data.put("stime", stime);
 			sign.append("stime="+stime+"&");
-			data.put("wifiname", wlanacname);
-			sign.append("wifiname="+wlanacname);
+			data.put("wifiname", "cmcc-edu");
+			sign.append("wifiname="+"cmcc-edu");
 			json.put("data", data);
 			
-			String key= md5(sign.toString()+stime+md5(mobile+stime)+mobile+"wifi").substring(8, 25);
+			String key= md5(sign.toString()+md5(stime+md5(mobile+stime)+mobile+"wifi").substring(8, 24));
 			json.put("sign", key);
-			String result = HttpTool.getInstance().postData(url, json.toString(), HTTP.UTF_8);
+			String result = HttpTool.getInstance().postData(url, URLEncoder.encode(json.toString(),HTTP.UTF_8), HTTP.UTF_8);
 			return result;
-		} catch (NoSuchAlgorithmException e2) {
+		} catch (UnsupportedEncodingException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}catch (NoSuchAlgorithmException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}  catch (JSONException e1) {
@@ -174,9 +179,12 @@ public class WIFITool {
 
 			String key = md5(sign.toString() + stime + md5(mobile + stime) + mobile+ "wifi").substring(8, 25);
 			json.put("sign", key);
-			String result = HttpTool.getInstance().postData(url,json.toString(), HTTP.UTF_8);
+			String result = HttpTool.getInstance().postData(url,URLEncoder.encode(json.toString(),"utf-8"), HTTP.UTF_8);
 			return result;
-		} catch (NoSuchAlgorithmException e2) {
+		} catch (UnsupportedEncodingException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}catch (NoSuchAlgorithmException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		} catch (JSONException e1) {
@@ -518,14 +526,20 @@ public class WIFITool {
 	 * @throws NoSuchAlgorithmException
 	 */
 	private String md5(String input) throws NoSuchAlgorithmException{
-		MessageDigest md5 = MessageDigest.getInstance("MD5");
-		md5.update(input.getBytes());
-		StringBuffer sb = new StringBuffer();
-		byte[] b = md5.digest();
-		for (int i = 0; i < b.length; i++) {
-			sb.append(b[i]);
+		MessageDigest bmd5 = MessageDigest.getInstance("MD5");
+		bmd5.update(input.getBytes());
+		StringBuffer buf = new StringBuffer();
+		byte[] b = bmd5.digest();
+		for (int offset = 0; offset < b.length; offset++) {
+			int i = b[offset];
+			if (i < 0)
+				i += 256;
+			if (i < 16)
+				buf.append("0");
+			buf.append(Integer.toHexString(i));
 		}
-		return sb.toString();
+		return buf.toString();
 	}
+	
 	
 }

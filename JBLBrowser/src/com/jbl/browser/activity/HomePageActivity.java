@@ -6,6 +6,7 @@ package com.jbl.browser.activity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import orm.sqlite.db.UserDao;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -21,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.jbl.browser.R;
+import com.jbl.browser.bean.UserInfo;
+import com.jbl.browser.db.UserInfoDao;
 import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.tools.BusinessCallback;
 import com.jbl.browser.tools.BusinessTool;
@@ -49,6 +52,12 @@ public class HomePageActivity extends BaseFragActivity {
 	protected void onCreate(Bundle arg0) {  
 		setContentView(R.layout.activity_init);
 		mDownloadManager = new DownloadManager(getContentResolver(),getPackageName());
+		
+//		UserInfo user=new UserInfo();
+//		user.setDeviceID(BusinessTool.getDeviceID(this));
+//		user.setPhoneID("13585871125");
+//		new UserInfoDao(this).userApproved(user);
+		
 		BusinessTool.getInstance().versionCheck(new BusinessCallback() {
 			
 			@Override

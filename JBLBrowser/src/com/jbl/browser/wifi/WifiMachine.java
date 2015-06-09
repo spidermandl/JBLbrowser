@@ -1,6 +1,7 @@
 package com.jbl.browser.wifi;
 
-import com.umeng.common.Log;
+import android.util.Log;
+
 
 
 /**

@@ -222,31 +222,18 @@ public class HttpTool {
 				httpClient = new DefaultHttpClient();
 			}
 			httpPost  = new HttpPost(url);
-			httpPost.setHeader("User-Agent", String.format("%s/%s (Linux; Android %s; %s Build/%s)", "hai1", "dalu", "1.0", "D2C", "1"));
-			//httpPost.setHeader("HTTP_USER_AGENT", String.format("%s/%s (Linux; Android %s; %s Build/%s)", "hai1", "dalu", "1.0", "D2C", "1"));
-			httpPost.setEntity(new StringEntity(params, encoding));
+			//解决中文乱码问题
+            StringEntity entity = new StringEntity(params, encoding);
+            entity.setContentEncoding("UTF-8");
+            entity.setContentType("application/json");
+			httpPost.setEntity(entity);
 			httpResponse = httpClient.execute(httpPost);
 			int statusCode = httpResponse.getStatusLine().getStatusCode();
 			if (statusCode == 200) {
     			response = EntityUtils.toString(httpResponse.getEntity(),encoding);
-    			if(StringUtils.DEBUG){
-    				Log.v(TAG, "请求结果：" + response);
-    			}
-//    			Header[] headers = httpResponse.getAllHeaders();
-//    			Log.e(TAG, "headers元素数量：" +  headers.length);
-//    			for(int i = 0;i < headers.length;i++){
-//    				Log.e(TAG, headers[i].getName() + ":" + headers[i].getValue());
-//    			}
-    			if(response.contains("500")){
-    				return response;
-    			}
-    			
     			return response;
     		}
 			else{
-				if(StringUtils.DEBUG){
-					Log.v(TAG, "请求失败：" + statusCode + httpResponse.getStatusLine().getReasonPhrase());
-    			}
 				throw new Exception(new ErrorInfo("请求失败", statusCode));
 			}
 			

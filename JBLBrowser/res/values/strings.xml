@@ -256,4 +256,14 @@
 	
 
     <string name="log_time">已在线0小时0分钟</string>
-</resources>
+	
+
+	
+
+    <string name="free_online_60">可用免费上网时长60分钟</string>
+
+	
+
+	
+
+    <string name="acquire_more">获取更多免费时长</string></resources>

@@ -189,13 +189,38 @@ public class WifiOptionActivity extends BaseFragActivity implements IWifiService
 	@Override
 	public IState getWifiStatus() {
 		// TODO Auto-generated method stub
-		return iWifiService.getWifiStatus();
+		return iWifiService!=null?iWifiService.getWifiStatus():null;
 	}
 
 
 	@Override
 	public void startConnection() {
+		if(iWifiService!=null)
 		iWifiService.startConnection();
+	}
+
+
+	@Override
+	public void changeState(Class state) {
+		if(iWifiService!=null)
+		iWifiService.changeState(state);
+		
+	}
+
+
+	@Override
+	public void stopConnection() {
+		if(iWifiService!=null)
+			iWifiService.stopConnection();
+		
+	}
+
+
+	@Override
+	public long getOnlineTime() {
+		// TODO Auto-generated method stub
+		
+		return iWifiService!=null?iWifiService.getOnlineTime():0;
 	}
     
 }

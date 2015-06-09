@@ -41,8 +41,8 @@ public class UrlUtils {
 	 */
 	public static final HashMap<LOCATION,String> LOCATION_CODE=new HashMap<UrlUtils.LOCATION, String>(){
 		{
-			put(LOCATION.SHANGHAI, "09");
-			put(LOCATION.CHANGSHA, "17");
+			put(LOCATION.SHANGHAI, "上海");
+			put(LOCATION.CHANGSHA, "湖南");
 		}
 	};
 	/**
