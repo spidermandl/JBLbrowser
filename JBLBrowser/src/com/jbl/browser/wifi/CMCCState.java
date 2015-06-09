@@ -16,13 +16,13 @@ public class CMCCState extends BaseState {
 
 	@Override
 	public void enter() {
-		// TODO Auto-generated method stub
+
+		service.sendCMCCAuth();
 
 	}
 
 	@Override
 	public void excute() {
-		service.sendCMCCAuth();
 
 	}
 

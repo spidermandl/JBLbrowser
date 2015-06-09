@@ -3,7 +3,7 @@ package com.jbl.browser.wifi;
 import com.jbl.browser.activity.WIFIService;
 
 /**
- * 发心跳包状态
+ * cmcc 验证通过，发心跳包状态
  * @author Desmond
  *
  */
@@ -16,14 +16,13 @@ public class HeartBeatState extends BaseState {
 
 	@Override
 	public void enter() {
-		// TODO Auto-generated method stub
+		service.startHeartBeatSync("start");
 
 	}
 
 	@Override
 	public void excute() {
-		// TODO Auto-generated method stub
-
+		service.startHeartBeatSync("heartbeat");
 	}
 
 	@Override

@@ -15,15 +15,13 @@ public class InitState extends BaseState {
 
 	@Override
 	public void enter() {
-		// TODO Auto-generated method stub
+		service.startMoblieData();
 		
 	}
 
 	@Override
 	public void excute() {
-
-		service.startMoblieData();
-		
+		service.statusLooping(500);
 	}
 
 	@Override

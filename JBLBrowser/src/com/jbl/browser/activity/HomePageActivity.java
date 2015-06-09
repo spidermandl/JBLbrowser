@@ -45,8 +45,6 @@ public class HomePageActivity extends BaseFragActivity {
 	DownloadManager mDownloadManager;
 	private ImageView frontPage;
 
-	Handler m_mainHandler;
-	ProgressDialog m_progressDlg;
 
 	@Override
 	protected void onCreate(Bundle arg0) {  

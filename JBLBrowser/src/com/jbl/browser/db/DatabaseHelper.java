@@ -32,11 +32,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	 private static String getMyDatabaseName(Context context){
 	        String databasename = DATABASE_NAME;
 	        String dbPath = null;
-	        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){//SDCard是否插入
-	            dbPath = Environment.getExternalStorageDirectory().getPath() + "/database/";
-	        }else{//未插入SDCard，建在内存中
+//	        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){//SDCard是否插入
+//	            dbPath = Environment.getExternalStorageDirectory().getPath() + "/database/";
+//	        }else{//未插入SDCard，建在内存中
 	            dbPath = context.getFilesDir().getPath() + "/database/";
-	        }
+//	        }
 	        File dbp = new File(dbPath);
 	        if(!dbp.exists()){
 	            dbp.mkdirs();

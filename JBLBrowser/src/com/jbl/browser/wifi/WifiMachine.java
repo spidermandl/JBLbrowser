@@ -42,7 +42,6 @@ public class WifiMachine{
     		this.state.exit();
     	state.enter();
     	this.state=state;
-    	this.state.excute();
     }
 
     /**
@@ -53,6 +52,7 @@ public class WifiMachine{
     		state.excute();
     	}
     }
+    
     
     /**
      * 设置状态失效

@@ -9,6 +9,8 @@ import com.jbl.browser.activity.WIFIService;
  */
 public class NormalWifiState extends BaseState {
 	
+	boolean isConnectingWifi=false;//是否正在连接wifi
+	
 	public NormalWifiState(WIFIService m) {
 		super(m);
 		// TODO Auto-generated constructor stub
@@ -16,14 +18,16 @@ public class NormalWifiState extends BaseState {
 
 	@Override
 	public void enter() {
-		// TODO Auto-generated method stub
-		
+
+		service.startWifiConnection();//连接wifi
 	}
 
 	@Override
 	public void excute() {
-		service.startWifiConnection();
-		
+        if(!isConnectingWifi){
+		    service.startCMCCWifi();
+		    isConnectingWifi=true;
+        }
 	}
 
 	@Override

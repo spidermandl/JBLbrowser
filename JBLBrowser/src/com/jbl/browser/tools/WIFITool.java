@@ -1,6 +1,7 @@
 package com.jbl.browser.tools;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -35,11 +36,8 @@ import org.jsoup.select.Elements;
 
 import android.util.Log;
 
-import com.jbl.browser.JBLApplication;
-import com.jbl.browser.db.UserInfoDao;
 import com.jbl.browser.model.ErrorInfo;
 import com.jbl.browser.utils.UrlUtils;
-import com.jbl.browser.utils.UrlUtils.LOCATION;
 
 /**
  * wifi验证工具方法类
@@ -97,8 +95,8 @@ public class WIFITool {
 			data.put("mobile", mobile);
 			sign.append("mobile="+mobile+"&");
 			String lcode=UrlUtils.LOCATION_CODE.get(UrlUtils.WIFI_LOCATION);
-			data.put("province",lcode);
-			sign.append("province="+lcode+"&");
+			data.put("province",lcode);//传输需要url encode
+			sign.append("province="+URLEncoder.encode(lcode,HTTP.UTF_8)+"&");//加密不用url encode
 			data.put("stime", stime);
 			sign.append("stime="+stime+"&");
 			data.put("wifiname", "cmcc-edu");
@@ -107,7 +105,7 @@ public class WIFITool {
 			
 			String key= md5(sign.toString()+md5(stime+md5(mobile+stime)+mobile+"wifi").substring(8, 24));
 			json.put("sign", key);
-			String result = HttpTool.getInstance().postData(url, URLEncoder.encode(json.toString(),HTTP.UTF_8), HTTP.UTF_8);
+			String result = HttpTool.getInstance().postData(url, json.toString(), HTTP.UTF_8);
 			return result;
 		} catch (UnsupportedEncodingException e3) {
 			// TODO Auto-generated catch block
@@ -177,14 +175,11 @@ public class WIFITool {
 			sign.append("wifiid=" + wifi_id);
 			json.put("data", data);
 
-			String key = md5(sign.toString() + stime + md5(mobile + stime) + mobile+ "wifi").substring(8, 25);
+			String key= md5(sign.toString()+md5(stime+md5(mobile+stime)+mobile+"wifi").substring(8, 24));
 			json.put("sign", key);
-			String result = HttpTool.getInstance().postData(url,URLEncoder.encode(json.toString(),"utf-8"), HTTP.UTF_8);
+			String result = HttpTool.getInstance().postData(url,json.toString(), HTTP.UTF_8);
 			return result;
-		} catch (UnsupportedEncodingException e3) {
-			// TODO Auto-generated catch block
-			e3.printStackTrace();
-		}catch (NoSuchAlgorithmException e2) {
+		} catch (NoSuchAlgorithmException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		} catch (JSONException e1) {
