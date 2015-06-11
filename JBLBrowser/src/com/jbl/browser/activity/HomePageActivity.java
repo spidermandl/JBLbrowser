@@ -111,23 +111,14 @@ public class HomePageActivity extends BaseFragActivity {
 						})
 						.show();
 					}else{
-						/**
-						 * 进入应用
-						 */
-						if (JBLPreference.getInstance(HomePageActivity.this).readBool(JBLPreference.NOT_FIRST_RUN)) {
-							Intent intent = new Intent(HomePageActivity.this,MainFragActivity.class);
-							startActivity(intent);
-						} else {
-							Intent intent = new Intent(HomePageActivity.this,NavigationActivity.class);
-							startActivity(intent);
-						}
-						HomePageActivity.this.finish();
-						
+						enterMain();
 					}
 				} catch (JSONException e) {
+					enterMain();
 					Toast.makeText(HomePageActivity.this, "请检查网络", 1000).show();
 					e.printStackTrace();
 				}catch (NameNotFoundException e) {
+					enterMain();
 					Toast.makeText(HomePageActivity.this, "报名错误", 1000).show();
 					e.printStackTrace();
 				}
@@ -136,6 +127,19 @@ public class HomePageActivity extends BaseFragActivity {
 		});
 		super.onCreate(arg0);
 	}
-
+    /**
+	 * 进入应用
+	 */
+	private void enterMain(){
+		
+		if (JBLPreference.getInstance(HomePageActivity.this).readBool(JBLPreference.NOT_FIRST_RUN)) {
+			Intent intent = new Intent(HomePageActivity.this,MainFragActivity.class);
+			startActivity(intent);
+		} else {
+			Intent intent = new Intent(HomePageActivity.this,NavigationActivity.class);
+			startActivity(intent);
+		}
+		HomePageActivity.this.finish();
+	}
 
 }

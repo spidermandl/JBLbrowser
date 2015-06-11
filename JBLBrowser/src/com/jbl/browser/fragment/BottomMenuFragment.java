@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbl.browser.R;
 import com.jbl.browser.interfaces.ToolbarItemInterface;
-import com.unionpay.upomp.bypay.activity.GetpassActivity;
 
 /**
  * 主页面底部菜单栏

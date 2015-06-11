@@ -4,6 +4,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="D:/JBLbrowser/pay_proxy_res/libs/pay_plugin.jar"/>
+	<classpathentry kind="lib" path="libs/pay_plugin.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

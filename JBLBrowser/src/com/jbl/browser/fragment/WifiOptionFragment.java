@@ -1,5 +1,7 @@
 package com.jbl.browser.fragment;
 
+import java.util.zip.Inflater;
+
 import android.app.AlertDialog;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -57,8 +59,9 @@ public class WifiOptionFragment extends SherlockFragment implements OnClickListe
 		moreFree.setOnClickListener(this);
 		
 		timeHandler.sendEmptyMessage(0);
-		infoTextView=new TextView(getActivity());
-		infoDialog = new AlertDialog.Builder(getActivity()).setTitle("连接网络").setView(infoTextView).create();
+		View layout = inflater.inflate(R.layout.wifi_process_dialog,container,false);
+		infoTextView=(TextView)layout.findViewById(R.id.wifi_info);
+		infoDialog = new AlertDialog.Builder(getActivity()).setTitle("连接网络").setView(layout).create();
 		infoDialog.setCancelable(false);
 		return view;
 	}
@@ -107,42 +110,62 @@ public class WifiOptionFragment extends SherlockFragment implements OnClickListe
 	 * 检测联网进程
 	 */
 	Handler onLineChecker = new Handler(){
+		Class previousState = InitState.class;
+		boolean infoUpdate = false;
 		
 		public void handleMessage(android.os.Message msg) {
 
 			infoDialog.show();
 			IState state = ((WifiOptionActivity)WifiOptionFragment.this.getActivity()).getWifiStatus();
 			
-			if(state instanceof InitState){//初始状态
-				info = "正在获取当前热点信息...";
+			infoUpdate = previousState == state.getClass()?false:true;
+			previousState = state.getClass();
+			 
+			if (state instanceof InitState) {// 初始状态
+				info = "正在初始化...";
 				infoTextView.setText(info);
-			}else if(state instanceof MobileDataState){//数据网络状态
-				info = "正在获取当前热点信息...";
-				infoTextView.setText(info);
-			}else if(state instanceof NormalWifiState){//普通网络状态
-				info = "正在获取当前热点信息...";
-				infoTextView.setText(info);
-			}else if(state instanceof NoCMCCState){//no cmcc状态
-				info += "\n没有检测到热点...";
-				infoTextView.setText(info);
-			}else if(state instanceof CMCCState){//cmcc状态 未验证
-				info += "\n正在验证...";
-				infoTextView.setText(info);
-			}else if(state instanceof AuthFailedState){//cmcc验证失败
-				info += "\n验证失败...";
-				infoTextView.setText(info);
-			}else if(state instanceof HeartBeatState){//心跳状态
-				offlineLayout.setVisibility(View.VISIBLE);
-				onlineLayout.setVisibility(View.GONE);
-				info += "\n验证成功...";
-				infoTextView.setText(info);
-				infoDialog.dismiss();
+			} else if (state instanceof MobileDataState) {// 数据网络状态
+				if (infoUpdate) {
+					info += "\n\n获取wifi账号...";
+					infoTextView.setText(info);
+				}
+			} else if (state instanceof NormalWifiState) {// 普通网络状态
+				if (infoUpdate) {
+					info += "\n\n正在获取当前热点信息...";
+					infoTextView.setText(info);
+				}
+			} else if (state instanceof NoCMCCState) {// no cmcc状态
+				if (infoUpdate) {
+					info += "\n\n没有检测到热点...";
+					infoTextView.setText(info);
+				}
+			} else if (state instanceof CMCCState) {// cmcc状态 未验证
+				if (infoUpdate) {
+					info += "\n\n正在验证...";
+					infoTextView.setText(info);
+				}
+			} else if (state instanceof AuthFailedState) {// cmcc验证失败
+				if (infoUpdate) {
+					info += "\n\n验证失败...";
+					infoTextView.setText(info);
+				}
+			} else if (state instanceof HeartBeatState) {// 心跳状态
+				if (infoUpdate) {
+					offlineLayout.setVisibility(View.VISIBLE);
+					onlineLayout.setVisibility(View.GONE);
+					info += "\n\n验证成功...";
+					infoTextView.setText(info);
+					infoDialog.dismiss();
+				}
 				return;
-			}else if(state instanceof OfflineState){//cmcc 下线
-				info="正在下线";
-				infoTextView.setText(info);
-			}else if(state instanceof ExceptionState){//异常
-				((WifiOptionActivity)WifiOptionFragment.this.getActivity()).changeState(InitState.class);
+			} else if (state instanceof OfflineState) {// cmcc 下线
+				if (infoUpdate) {
+					info = "正在下线";
+					infoTextView.setText(info);
+				}
+			} else if (state instanceof ExceptionState) {// 异常
+				((WifiOptionActivity) WifiOptionFragment.this.getActivity())
+						.changeState(InitState.class);
 				infoDialog.dismiss();
 				return;
 			}
